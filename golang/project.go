@@ -1,4 +1,4 @@
-package sdk
+package golang
 
 import (
 	"crypto/sha256"

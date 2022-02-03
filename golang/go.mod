@@ -1,4 +1,4 @@
-module github.com/bopmatic/sdk/go
+module github.com/bopmatic/sdk/golang
 
 go 1.17
 
