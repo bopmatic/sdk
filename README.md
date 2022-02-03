@@ -12,7 +12,7 @@ cd go; make
 ## Installing
 
 ```bash
-go install github.com/bopmatic/sdk/golang@v0.1
+go install github.com/bopmatic/sdk/golang@v0.2
 ```
 
 ## Usage
