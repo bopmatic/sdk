@@ -28,6 +28,7 @@ type Service struct {
 	Description   string `yaml:"desc"`
 	ApiDefinition string `yaml:"apidef"`
 	Port          uint64 `yaml:"port"`
+	Executable    string `yaml:"executable"`
 
 	Rpcs       []string
 	ImportPath string
@@ -39,6 +40,7 @@ type ProjectDesc struct {
 	Description string    `yaml:"desc"`
 	Services    []Service `yaml:"services"`
 	SiteAssets  string    `yaml:"sitedir"`
+	BuildCmd    string    `yaml:"buildcmd"`
 
 	Root string
 }
@@ -65,6 +67,9 @@ func (proj *Project) String() string {
 	sb.WriteString(fmt.Sprintf("\tFormat: %v\n", proj.FormatVersion))
 	sb.WriteString(fmt.Sprintf("\tName: %v\n", proj.Desc.Name))
 	sb.WriteString(fmt.Sprintf("\tSiteAssets: %v\n", proj.Desc.SiteAssets))
+	if proj.Desc.BuildCmd != "" {
+		sb.WriteString(fmt.Sprintf("\tBuildCmd: %v\n", proj.Desc.BuildCmd))
+	}
 	sb.WriteString(fmt.Sprintf("\tRoot: %v\n", proj.Desc.Root))
 	if proj.Desc.Description != "" {
 		sb.WriteString(fmt.Sprintf("\tDescription: %v\n", proj.Desc.Description))
@@ -79,6 +84,7 @@ func (proj *Project) String() string {
 		sb.WriteString(fmt.Sprintf("\t\tApiDef: %v\n", svc.ApiDefinition))
 		sb.WriteString(fmt.Sprintf("\t\tPort: %v\n", svc.Port))
 		sb.WriteString(fmt.Sprintf("\t\tImportPath: %v\n", svc.ImportPath))
+		sb.WriteString(fmt.Sprintf("\t\tExecutable: %v\n", svc.Executable))
 		sb.WriteString(fmt.Sprintf("\t\tRpcs: %v\n", len(svc.Rpcs)))
 		for idx2, funcName := range svc.Rpcs {
 			sb.WriteString(fmt.Sprintf("\t\tRpc[%v]: %v\n", idx2, funcName))
@@ -203,6 +209,10 @@ func (proj *Project) validateProject(projFile string) error {
 		}
 	}
 
+	if len(proj.Desc.Services) > 0 && proj.Desc.BuildCmd == "" {
+		return fmt.Errorf(missingFieldFmt, "Project", proj.Desc.Name, "buildcmd")
+	}
+
 	var usedPorts []uint64
 	for idx, _ := range proj.Desc.Services {
 		svc := &proj.Desc.Services[idx]
@@ -214,6 +224,9 @@ func (proj *Project) validateProject(projFile string) error {
 		}
 		if svc.Port == 0 {
 			return fmt.Errorf(missingFieldFmt, "Service", svc.Name, "port")
+		}
+		if svc.Executable == "" {
+			return fmt.Errorf(missingFieldFmt, "Service", svc.Name, "executable")
 		}
 
 		for portIdx, port := range usedPorts {

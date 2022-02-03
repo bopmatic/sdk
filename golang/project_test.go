@@ -25,18 +25,21 @@ func TestProject(t *testing.T) {
 		"noRpcsInSvc":        "Service Greeter in pb/greeter.proto must define at least 1 RPC",
 		"noSvcInApiDef":      "pb/greeter.proto does not define any services; looking for Greeter",
 		"portConflict":       "Service Orders port 26001 conflicts with service Greeter",
-		"missingApiDef":      "Failed to open API definition for Service Greeter: open test_assets/project/missingApiDef/pb/greeter.proto: no such file or directory",
+		"missingApiDefField": "Service Greeter definition is missing required field apidef",
+		"missingApiDefFile":  "Failed to open API definition for Service Greeter: open test_assets/project/missingApiDefFile/pb/greeter.proto: no such file or directory",
 		"missingProject":     "Failed to open project test_assets/project/missingProject/Bopmatic.yaml: open test_assets/project/missingProject/Bopmatic.yaml: no such file or directory",
 		"missingImportPath":  "API def(pb/greeter.proto) for service Greeter missing go_package import",
 		"corruptApiDef":      "Failed to parse pb/greeter.proto for service Greeter: found \"CORRUPT\" but expected [;]",
+		"missingBuildCmd":    "Project Foo definition is missing required field buildcmd",
+		"missingExecutable":  "Service Greeter definition is missing required field executable",
 	}
 	expectedSuccesses := map[string]string{
-		"multiSvcMultiRpc": "jNx753jfnTZPRRaBHxiIXYqwI7PdFRD2O1m2GM1hgRk=",
-		"multiSvcOneRpc":   "YPG_L5rFNTFfqcYr0yFgWc1upxu5K-mYP8aRpBL31Wc=",
-		"oneSvcMultiRpc":   "3RBV3sSpR9V1yDF6ydLrq4A1vAL32O-y08Cn3-1XvGc=",
-		"oneSvcOneRpc":     "6y-0JwSX204i2Qb6ejU0Ld0cjeBnOXtob6LhnfWm2qk=",
+		"multiSvcMultiRpc": "cn7GaJqd3zqPJsx6F2euLuoXahW8XHC7G_JRm5SIBfQ=",
+		"multiSvcOneRpc":   "E-m0AfUJSpvti1qurplY-eZf0cv12skjJLpBGU0X9pU=",
+		"oneSvcMultiRpc":   "i5qL8eKF3SDB7tZGEwtIfe7P2qAw_6T2lelE4ckpaaA=",
+		"oneSvcOneRpc":     "26QkvHShlN_W_UP_LfGl0kQt-Lbp7WY7o8fL9iLCnlE=",
 		"staticOnly":       "fhioOjBw0HMxpHYiRl8VIfvctOP_Vl6fE3iIlzwwCg4=",
-		"svcsOnly":         "vNCrurr14X45c8ziRCA1eXfmC5tosuX-XrjJ8yD_m0Q=",
+		"svcsOnly":         "iSI_fvhubpBlSil2g0Sx83oQEWKvS8956qzXSKIfLxc=",
 	}
 
 	for idx, tCase := range testCases {
