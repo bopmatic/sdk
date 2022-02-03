@@ -1,0 +1,10 @@
+formatversion: "1.0"
+project:
+  name: "Foo"
+  desc: "Foo Project"
+  sitedir: "site"
+  services:
+  - name: "Greeter"
+    desc: "Service for greeting customers"
+    apidef: "pb/greeter.proto"
+    port: 26001

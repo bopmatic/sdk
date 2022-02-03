@@ -1,0 +1,5 @@
+syntax = "proto3";
+option go_package = "example.com/greeter/pb";
+
+service Greeter {
+  CORRUPT 
