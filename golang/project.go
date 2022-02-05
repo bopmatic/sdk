@@ -1,20 +1,27 @@
 package golang
 
 import (
+	"context"
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net"
+	"net/url"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
 
+	"github.com/bopmatic/sdk/golang/util"
+
 	"github.com/yoheimuta/go-protoparser/v4"
 
 	"gopkg.in/yaml.v2"
 )
+
+const DefaultProjectFilename = "Bopmatic.yaml"
 
 // Service is a representation of an individual service defined within
 // a Bopmatic project. This includes its name, a short description, a link
@@ -57,6 +64,30 @@ type ProjectDesc struct {
 type Project struct {
 	FormatVersion string      `yaml:"formatversion"`
 	Desc          ProjectDesc `yaml:"project"`
+}
+
+func IsGoodProjectName(projectName string) (bool, error) {
+	if projectName == "" {
+		return false, fmt.Errorf("Project name must be a non-empty string")
+	}
+	projectName = strings.ToLower(projectName)
+	url, err := url.ParseRequestURI("https://" + projectName + ".bopmatic.com")
+	if err != nil {
+		return false, fmt.Errorf("%v.bopmatic.com is not a valid endpoint",
+			projectName)
+	}
+	_, err = net.LookupIP(url.Host)
+	if err == nil {
+		return false, fmt.Errorf("%v is already taken by another Bopmatic customer", url.Host)
+	}
+
+	_, err = os.Stat(projectName)
+	if err == nil {
+		return false, fmt.Errorf("%v already exists in your current directory",
+			projectName)
+	} // else
+
+	return true, nil
 }
 
 // String converts a Project into a human-friendly printable string
@@ -248,6 +279,26 @@ func (proj *Project) validateProject(projFile string) error {
 		if err != nil {
 			return err
 		}
+	}
+
+	return nil
+}
+
+// Compile the project
+func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
+	if proj.Desc.BuildCmd == "" {
+		return nil
+	}
+
+	err := os.Chdir(proj.Desc.Root)
+	if err != nil {
+		return err
+	}
+
+	err = util.RunContainerCommand(context.Background(),
+		[]string{proj.Desc.BuildCmd}, stdOut, stdErr)
+	if err != nil {
+		return err
 	}
 
 	return nil

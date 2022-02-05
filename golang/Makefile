@@ -4,6 +4,7 @@ export GOFLAGS=-mod=vendor
 .PHONY: build
 build: vendor FORCE
 	go build
+	go build github.com/bopmatic/sdk/golang/util
 
 .PHONY: test
 test: build FORCE
