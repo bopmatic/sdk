@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/docker/docker v20.10.12+incompatible
-	github.com/yoheimuta/go-protoparser/v4 v4.5.0
+	github.com/yoheimuta/go-protoparser/v4 v4.5.1
 	gopkg.in/yaml.v2 v2.4.0
 )
 

@@ -12,9 +12,10 @@ test: build FORCE
 
 go.sum vendor: go.mod
 	go mod vendor
+	go mod tidy
 
 .PHONY: clean
 clean:
-	rm -rf go.sum vendor
+	rm -rf go.sum vendor ./test_assets/package/stub/.bopmatic
 
 FORCE:

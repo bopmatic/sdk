@@ -22,6 +22,8 @@ import (
 )
 
 const DefaultProjectFilename = "Bopmatic.yaml"
+const DefaultArtifactDir = ".bopmatic"
+const PackagesSubdir = "pkgs"
 
 // Service is a representation of an individual service defined within
 // a Bopmatic project. This includes its name, a short description, a link
@@ -290,7 +292,11 @@ func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
 		return nil
 	}
 
-	err := os.Chdir(proj.Desc.Root)
+	curWd, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+	err = os.Chdir(proj.Desc.Root)
 	if err != nil {
 		return err
 	}
@@ -301,7 +307,18 @@ func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
 		return err
 	}
 
+	_ = os.Chdir(curWd)
+
 	return nil
+}
+
+// NewPackage collects all of the build & project artifacts required in order
+// to submit to Bopmatic's ServiceRunner for deployment. Upon success a Package
+// instance is returned.
+func (proj *Project) NewPackage(pkgName string, stdOut io.Writer,
+	stdErr io.Writer) (*Package, error) {
+
+	return NewPackage(pkgName, proj, stdOut, stdErr)
 }
 
 // NewProject instantiates a new Project instance from the specified project
@@ -320,10 +337,12 @@ func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
 //     desc: "Service for greeting customers"
 //     apidef: "pb/greeter.proto"
 //     port: 26001
+//     executable: "greeter_server"
 //   - name: "Orders"
 //     desc: "Service for taking customer orders"
 //     apidef: "pb/orders.proto"
 //     port: 26002
+//     executable: "orders_server"
 func NewProject(projFile string) (*Project, error) {
 	proj, err := parseProject(projFile)
 	if err != nil {
