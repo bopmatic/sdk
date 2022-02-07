@@ -1,17 +1,27 @@
 package golang
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
 
+	"google.golang.org/protobuf/encoding/protojson"
+
+	"github.com/bopmatic/sdk/golang/goswag"
+	"github.com/bopmatic/sdk/golang/goswag/service_runner"
+	"github.com/bopmatic/sdk/golang/models"
+	"github.com/bopmatic/sdk/golang/openapi"
+	"github.com/bopmatic/sdk/golang/pb"
 	"github.com/bopmatic/sdk/golang/util"
 )
 
@@ -166,4 +176,143 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 
 func (pkg *Package) AbsTarballPath() string {
 	return filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+}
+
+func (pkg *Package) Deploy() error {
+	// the go-swagger generated client seems to produce the cleanest most
+	// concise client code between the 3 approaches so make this the default
+	return pkg.DeployViaGoSwagger()
+}
+
+// Deploy() implemented using protojson & http.Post()
+func (pkg *Package) DeployViaProtoJson() error {
+	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	tarballData, err := ioutil.ReadFile(tarballAbsPath)
+	if err != nil {
+		return err
+	}
+
+	deployPackageReq := &pb.DeployPackageRequest{
+		Desc: &pb.PackageDescription{
+			ProjectName: pkg.Proj.Desc.Name,
+			PackageId:   pkg.Id,
+			PackageName: pkg.Name,
+			// protojson.Marshal() will base64 encode byte fields so caller does
+			// not have to
+			PackageXsum:        pkg.Xsum,
+			PackageTarballData: tarballData,
+		},
+	}
+
+	marshalledReq, err := protojson.Marshal(deployPackageReq)
+	if err != nil {
+		return fmt.Errorf("Marshal failure: %v", err)
+	}
+
+	endpoint := "https://api.bopmatic.com/ServiceRunner/DeployPackage"
+	resp, err := http.Post(endpoint, "application/json", bytes.NewReader(marshalledReq))
+	if err != nil {
+		return fmt.Errorf("Client failure: %v", err)
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("HTTP failure: %v", resp)
+	}
+
+	buf := &bytes.Buffer{}
+	buf.ReadFrom(resp.Body)
+
+	var deployReply pb.DeployPackageReply
+	err = protojson.Unmarshal(buf.Bytes(), &deployReply)
+	if err != nil {
+		return fmt.Errorf("Unmarshal failure: %v", err)
+	}
+	if deployReply.State != pb.PackageState_UPLOADED {
+		return fmt.Errorf("DeployPackage failure state: %v", deployReply.State)
+	}
+
+	return nil
+}
+
+// Deploy() implemented using a client generated with openapi-generator:
+//   https://github.com/OpenAPITools/openapi-generator
+func (pkg *Package) DeployViaOpenApiGenerator() error {
+	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	tarballData, err := ioutil.ReadFile(tarballAbsPath)
+	if err != nil {
+		return err
+	}
+	// openapi-generator appears to not base64 encode byte fields so caller
+	// has to
+	encodedTarData := base64.StdEncoding.EncodeToString(tarballData)
+	encodedXsum := base64.StdEncoding.EncodeToString(pkg.Xsum)
+
+	deployPackageReq := openapi.DeployPackageRequest{
+		Desc: &openapi.PackageDescription{
+			ProjectName:        openapi.PtrString(pkg.Proj.Desc.Name),
+			PackageId:          openapi.PtrString(pkg.Id),
+			PackageName:        openapi.PtrString(pkg.Name),
+			PackageXsum:        openapi.PtrString(encodedXsum),
+			PackageTarballData: openapi.PtrString(encodedTarData),
+		},
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	config := openapi.NewConfiguration()
+	client := openapi.NewAPIClient(config)
+	ctx := context.Background()
+	deployReply, httpResp, err :=
+		client.ServiceRunnerApi.DeployPackage(ctx).Body(deployPackageReq).Execute()
+	if err != nil {
+		return fmt.Errorf("Client failure: %v", err)
+	}
+	if httpResp.StatusCode != 200 {
+		return fmt.Errorf("HTTP failure: %v", httpResp)
+	}
+	if *deployReply.State != openapi.UPLOADED {
+		return fmt.Errorf("DeployPackage failure state: %v",
+			*deployReply.State)
+	}
+
+	return nil
+}
+
+// Deploy() implemented using a client generated with go-swagger:
+//  https://github.com/go-swagger/go-swagger
+func (pkg *Package) DeployViaGoSwagger() error {
+	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	tarballData, err := ioutil.ReadFile(tarballAbsPath)
+	if err != nil {
+		return err
+	}
+
+	deployPackageReq := &models.DeployPackageRequest{
+		Desc: &models.PackageDescription{
+			ProjectName: pkg.Proj.Desc.Name,
+			PackageID:   pkg.Id,
+			PackageName: pkg.Name,
+			// go-swagger will base64 encode byte fields so caller does
+			// not have to
+			PackageXsum:        pkg.Xsum,
+			PackageTarballData: tarballData,
+		},
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	deployPackageParams :=
+		service_runner.NewDeployPackageParams().WithBody(deployPackageReq)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+	resp, err := client.ServiceRunner.DeployPackage(deployPackageParams)
+	if err != nil {
+		return fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	deployReply := resp.GetPayload()
+
+	if *deployReply.State != models.PackageStateUPLOADED {
+		return fmt.Errorf("DeployPackage failure state: %v", deployReply.State)
+	}
+
+	return nil
 }

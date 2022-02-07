@@ -60,5 +60,24 @@ func TestPackage(t *testing.T) {
 			t.Errorf("Package %v checksum failed", pkg.Id)
 		}
 
+		fmt.Printf("Attempting upload via openapi-generator....\n")
+		err = pkg.DeployViaOpenApiGenerator()
+		if err != nil {
+			t.Errorf("Failed to upload package via openapi-generator: %v", err)
+		}
+
+		fmt.Printf("Attempting upload via protojson....\n")
+
+		err = pkg.DeployViaProtoJson()
+		if err != nil {
+			t.Errorf("Failed to upload package via protojson: %v", err)
+		}
+
+		fmt.Printf("Attempting upload via go-swagger....\n")
+
+		err = pkg.DeployViaGoSwagger()
+		if err != nil {
+			t.Errorf("Failed to upload package via go-swagger: %v", err)
+		}
 	}
 }

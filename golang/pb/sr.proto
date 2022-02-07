@@ -1,0 +1,57 @@
+syntax = "proto3";
+option go_package = "bopmatic.com/servicerunner/pb";
+
+service ServiceRunner {
+  rpc DescribePackage (DescribePackageRequest) returns (DescribePackageReply) {}
+  rpc DeletePackage (DeletePackageRequest) returns (DeletePackageReply) {}
+  rpc DeployPackage (DeployPackageRequest) returns (DeployPackageReply) {}
+}
+
+enum PackageState {
+  UPLOADING = 0;        // package is currently in the process of being uploaded
+  UPLOADED = 1;         // upload has completed; the package has not yet started validataion
+  VALIDATING = 2;       // the package is in the process of being validated
+  INVALID = 3;          // the package failed validation checks and cannot be deployed
+  DEPLOYING = 5;        // the package is in the process of being deployed to production
+  PRODUCTION = 6;       // the package is active in production
+  DEACTIVATING = 7;     // the package is in the process of being deactivated from production
+  DELETING = 9;         // the package is in the process of being deleted
+
+  UNKNOWN_PKG_STATE = 2147483647; // MAX_INT
+}
+
+message PackageDescription {
+  string projectName = 1;        // name of the Bopmatic project; must be unique
+  string packageId = 2;          // hex string of first 4 bytes of packageXsum
+  bytes packageXsum = 3;         // sha256 checksum of packageTarballData
+  bytes packageTarballData = 4;  // package tarball content in .tar.xz format
+  string packageName = 5;        // user prescribed name; may not be unique; may be empty string
+}
+
+message DeployPackageRequest {
+  PackageDescription desc = 1;
+}
+
+message DeployPackageReply {
+  PackageState state = 1;
+}
+
+message DescribePackageRequest {
+  string projectName = 1;
+}
+
+message DescribePackageReply {
+  PackageDescription desc = 1;
+  PackageState packageState = 2;
+  // the following fields are only valid when packageState==PRODUCTION
+  string siteEndpoint = 3;
+  repeated string rpcEndpoints = 4;
+}
+
+message DeletePackageRequest {
+  string projectName = 1;
+}
+
+message DeletePackageReply {
+  PackageState state = 1;
+}
