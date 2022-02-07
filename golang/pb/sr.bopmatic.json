@@ -1,0 +1,247 @@
+{
+  "schemes": [
+    "https"
+  ],
+  "host": "api.bopmatic.com",
+  "swagger": "2.0",
+  "info": {
+    "title": "pb/sr.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ServiceRunner"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/ServiceRunner/DeletePackage": {
+      "post": {
+        "operationId": "DeletePackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeletePackageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeletePackageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DeployPackage": {
+      "post": {
+        "operationId": "DeployPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeployPackageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeployPackageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribePackage": {
+      "post": {
+        "operationId": "DescribePackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribePackageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribePackageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "DeletePackageReply": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/definitions/PackageState"
+        }
+      }
+    },
+    "DeletePackageRequest": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        }
+      }
+    },
+    "DeployPackageReply": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "$ref": "#/definitions/PackageState"
+        }
+      }
+    },
+    "DeployPackageRequest": {
+      "type": "object",
+      "properties": {
+        "desc": {
+          "$ref": "#/definitions/PackageDescription"
+        }
+      }
+    },
+    "DescribePackageReply": {
+      "type": "object",
+      "properties": {
+        "desc": {
+          "$ref": "#/definitions/PackageDescription"
+        },
+        "packageState": {
+          "$ref": "#/definitions/PackageState"
+        },
+        "siteEndpoint": {
+          "type": "string",
+          "title": "the following fields are only valid when packageState==PRODUCTION"
+        },
+        "rpcEndpoints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "DescribePackageRequest": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        }
+      }
+    },
+    "PackageDescription": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "packageId": {
+          "type": "string"
+        },
+        "packageXsum": {
+          "type": "string",
+          "format": "byte"
+        },
+        "packageTarballData": {
+          "type": "string",
+          "format": "byte"
+        },
+        "packageName": {
+          "type": "string"
+        }
+      }
+    },
+    "PackageState": {
+      "type": "string",
+      "enum": [
+        "UPLOADING",
+        "UPLOADED",
+        "VALIDATING",
+        "INVALID",
+        "DEPLOYING",
+        "PRODUCTION",
+        "DEACTIVATING",
+        "DELETING",
+        "UNKNOWN_PKG_STATE"
+      ],
+      "default": "UPLOADING"
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}

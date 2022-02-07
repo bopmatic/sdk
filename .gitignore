@@ -2,10 +2,3 @@
 /golang/vendor
 /golang/test_assets/package/stub/.bopmatic/
 /golang/openapi-generator-cli.jar
-/golang/pb/sr.bopmatic.json
-/golang/pb/sr.swagger.json
-/golang/pb/*.pb.go
-/golang/openapi
-/golang/goswag
-/golang/models
-

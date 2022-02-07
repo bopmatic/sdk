@@ -1,0 +1,56 @@
+# DescribePackageRequest
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**ProjectName** | Pointer to **string** |  | [optional] 
+
+## Methods
+
+### NewDescribePackageRequest
+
+`func NewDescribePackageRequest() *DescribePackageRequest`
+
+NewDescribePackageRequest instantiates a new DescribePackageRequest object
+This constructor will assign default values to properties that have it defined,
+and makes sure properties required by API are set, but the set of arguments
+will change when the set of required properties is changed
+
+### NewDescribePackageRequestWithDefaults
+
+`func NewDescribePackageRequestWithDefaults() *DescribePackageRequest`
+
+NewDescribePackageRequestWithDefaults instantiates a new DescribePackageRequest object
+This constructor will only assign default values to properties that have it defined,
+but it doesn't guarantee that properties required by API are set
+
+### GetProjectName
+
+`func (o *DescribePackageRequest) GetProjectName() string`
+
+GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
+
+### GetProjectNameOk
+
+`func (o *DescribePackageRequest) GetProjectNameOk() (*string, bool)`
+
+GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetProjectName
+
+`func (o *DescribePackageRequest) SetProjectName(v string)`
+
+SetProjectName sets ProjectName field to given value.
+
+### HasProjectName
+
+`func (o *DescribePackageRequest) HasProjectName() bool`
+
+HasProjectName returns a boolean if a field has been set.
+
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
