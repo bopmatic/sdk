@@ -131,5 +131,5 @@ func RenameFile(src string, dst string) error {
 
 func RenameFileToDir(src string, dstDir string) error {
 	dst := filepath.Join(dstDir, path.Base(src))
-	return SymlinkFile(src, dst)
+	return RenameFile(src, dst)
 }
