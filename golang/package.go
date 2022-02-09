@@ -178,14 +178,43 @@ func (pkg *Package) AbsTarballPath() string {
 	return filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 }
 
-func (pkg *Package) Deploy() error {
+type deployOptions struct {
+	httpClient *http.Client
+}
+
+type DeployOption func(*deployOptions) *deployOptions
+
+func DeployOptHttpClient(httpClient *http.Client) DeployOption {
+	return func(do *deployOptions) *deployOptions {
+		do.httpClient = httpClient
+
+		return do
+	}
+}
+
+func (pkg *Package) Deploy(opts ...DeployOption) error {
 	// the go-swagger generated client seems to produce the cleanest most
 	// concise client code between the 3 approaches so make this the default
-	return pkg.DeployViaGoSwagger()
+	return pkg.DeployViaGoSwagger(opts...)
+}
+
+func fillOptions(opts ...DeployOption) *deployOptions {
+	options := &deployOptions{
+		httpClient: http.DefaultClient,
+	}
+	for _, optApplyFunc := range opts {
+		if optApplyFunc != nil {
+			options = optApplyFunc(options)
+		}
+	}
+
+	return options
 }
 
 // Deploy() implemented using protojson & http.Post()
-func (pkg *Package) DeployViaProtoJson() error {
+func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
+	deployOpts := fillOptions(opts...)
+
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
 	if err != nil {
@@ -210,7 +239,7 @@ func (pkg *Package) DeployViaProtoJson() error {
 	}
 
 	endpoint := "https://api.bopmatic.com/ServiceRunner/DeployPackage"
-	resp, err := http.Post(endpoint, "application/json", bytes.NewReader(marshalledReq))
+	resp, err := deployOpts.httpClient.Post(endpoint, "application/json", bytes.NewReader(marshalledReq))
 	if err != nil {
 		return fmt.Errorf("Client failure: %v", err)
 	}
@@ -237,7 +266,9 @@ func (pkg *Package) DeployViaProtoJson() error {
 
 // Deploy() implemented using a client generated with openapi-generator:
 //   https://github.com/OpenAPITools/openapi-generator
-func (pkg *Package) DeployViaOpenApiGenerator() error {
+func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
+	deployOpts := fillOptions(opts...)
+
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
 	if err != nil {
@@ -260,6 +291,7 @@ func (pkg *Package) DeployViaOpenApiGenerator() error {
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
 	config := openapi.NewConfiguration()
+	config.HTTPClient = deployOpts.httpClient
 	client := openapi.NewAPIClient(config)
 	ctx := context.Background()
 	deployReply, httpResp, err :=
@@ -280,7 +312,9 @@ func (pkg *Package) DeployViaOpenApiGenerator() error {
 
 // Deploy() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
-func (pkg *Package) DeployViaGoSwagger() error {
+func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
+	deployOpts := fillOptions(opts...)
+
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
 	if err != nil {
@@ -300,8 +334,8 @@ func (pkg *Package) DeployViaGoSwagger() error {
 	}
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
-	deployPackageParams :=
-		service_runner.NewDeployPackageParams().WithBody(deployPackageReq)
+	deployPackageParams := service_runner.NewDeployPackageParams().
+		WithBody(deployPackageReq).WithHTTPClient(deployOpts.httpClient)
 	config := goswag.DefaultTransportConfig()
 	client := goswag.NewHTTPClientWithConfig(nil, config)
 	resp, err := client.ServiceRunner.DeployPackage(deployPackageParams)

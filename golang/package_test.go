@@ -3,13 +3,18 @@ package golang
 import (
 	"bytes"
 	"crypto/sha256"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/hex"
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"path/filepath"
 	"testing"
 )
+
+const useMtls = true
 
 func TestPackage(t *testing.T) {
 	var testCasesDir = filepath.Join("test_assets", "package")
@@ -60,22 +65,52 @@ func TestPackage(t *testing.T) {
 			t.Errorf("Package %v checksum failed", pkg.Id)
 		}
 
+		var client *http.Client = http.DefaultClient
+		if useMtls {
+			caCert, err := ioutil.ReadFile("truststore.pem")
+			if err != nil {
+				t.Errorf("Failed to read truststore: %v", err)
+			}
+			caCertPool, err := x509.SystemCertPool()
+			if err != nil {
+				t.Errorf("Failed to get system cert pool: %v", err)
+			}
+			caCertPool.AppendCertsFromPEM(caCert)
+
+			// Read the key pair to create certificate
+			clientCert, err := tls.LoadX509KeyPair("user.cert.pem", "user.key.pem")
+			if err != nil {
+				t.Errorf("Failed to read user keypair: %v", err)
+			}
+
+			client = &http.Client{
+				Transport: &http.Transport{
+					TLSClientConfig: &tls.Config{
+						RootCAs:      caCertPool,
+						Certificates: []tls.Certificate{clientCert},
+					},
+				},
+			}
+		} else {
+			client = &http.Client{}
+		}
+
 		fmt.Printf("Attempting upload via openapi-generator....\n")
-		err = pkg.DeployViaOpenApiGenerator()
+		err = pkg.DeployViaOpenApiGenerator(DeployOptHttpClient(client))
 		if err != nil {
 			t.Errorf("Failed to upload package via openapi-generator: %v", err)
 		}
 
 		fmt.Printf("Attempting upload via protojson....\n")
 
-		err = pkg.DeployViaProtoJson()
+		err = pkg.DeployViaProtoJson(DeployOptHttpClient(client))
 		if err != nil {
 			t.Errorf("Failed to upload package via protojson: %v", err)
 		}
 
 		fmt.Printf("Attempting upload via go-swagger....\n")
 
-		err = pkg.DeployViaGoSwagger()
+		err = pkg.DeployViaGoSwagger(DeployOptHttpClient(client))
 		if err != nil {
 			t.Errorf("Failed to upload package via go-swagger: %v", err)
 		}
