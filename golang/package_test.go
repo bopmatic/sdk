@@ -16,7 +16,7 @@ import (
 
 const useMtls = true
 
-func TestPackage(t *testing.T) {
+func TestDeployPackage(t *testing.T) {
 	var testCasesDir = filepath.Join("test_assets", "package")
 
 	testCases, err := ioutil.ReadDir(testCasesDir)
@@ -114,5 +114,38 @@ func TestPackage(t *testing.T) {
 		if err != nil {
 			t.Errorf("Failed to upload package via go-swagger: %v", err)
 		}
+	}
+}
+
+func TestNewProjFromPackage(t *testing.T) {
+	proj, err := NewProject("test_assets/package/stub/Bopmatic.yaml")
+	if err != nil {
+		t.Errorf("Failed to parse project: %v", err)
+	}
+
+	pkg, err := proj.NewPackage("somepkg", os.Stdout, os.Stderr)
+	if err != nil {
+		t.Errorf("Failed to create package: %v", err)
+	}
+
+	workPath, err := ioutil.TempDir(".", "test")
+	if err != nil {
+		t.Errorf("Failed to create tempdir: %v", err)
+	}
+	os.RemoveAll(workPath)
+
+	projFromPkg, err := NewProjectFromPackage(pkg.AbsTarballPath(), workPath)
+	if err != nil {
+		t.Fatalf("Failed to instantiate project: %v", err)
+	}
+	defer os.RemoveAll(workPath)
+
+	fmt.Printf("proj is %v\n", projFromPkg)
+	if projFromPkg.Desc.Name != proj.Desc.Name ||
+		len(projFromPkg.Desc.Services) != 1 ||
+		len(projFromPkg.Desc.Services[0].Rpcs) != 1 ||
+		projFromPkg.Desc.Services[0].Rpcs[0] !=
+			proj.Desc.Services[0].Rpcs[0] {
+		t.Errorf("Unexpected projFromPkg: %v", projFromPkg.String())
 	}
 }

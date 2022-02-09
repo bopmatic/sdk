@@ -10,7 +10,7 @@ build: vendor openapi FORCE
 
 .PHONY: test
 test: build FORCE
-	go test
+	go test -v
 
 go.sum vendor: go.mod openapi goswag pb/sr.pb.go pb/sr_grpc.pb.go
 	go mod vendor

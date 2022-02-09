@@ -25,6 +25,8 @@ import (
 	"github.com/bopmatic/sdk/golang/util"
 )
 
+const tarRootPath = "pkg"
+
 type Package struct {
 	Proj        *Project
 	Id          string
@@ -77,7 +79,6 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	// statement will execute subsequent to Chdir() back to curWd
 	defer os.RemoveAll(filepath.Join(proj.Desc.Root, workPath))
 
-	const tarRootPath = "pkg"
 	pkgWorkPath := filepath.Join(workPath, tarRootPath)
 	err = os.MkdirAll(pkgWorkPath, 0755)
 	if err != nil {
@@ -349,4 +350,67 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 	}
 
 	return nil
+}
+
+// NewProjectFromPackage instantiates a new Project instance from the specified
+// package file
+func NewProjectFromPackage(pkgFile string, projRoot string) (*Project, error) {
+
+	curWd, err := os.Getwd()
+	if err != nil {
+		return nil, err
+	}
+
+	projRootParent := path.Dir(projRoot)
+	projRootBase := path.Base(projRoot)
+	pkgFileBase := path.Base(pkgFile)
+
+	tmpDir, err := ioutil.TempDir(projRootParent, projRootBase)
+	if err != nil {
+		return nil, err
+	}
+	defer os.RemoveAll(tmpDir)
+
+	tarballData, err := ioutil.ReadFile(pkgFile)
+	if err != nil {
+		return nil, err
+	}
+	hasher := sha256.New()
+	hasher.Write(tarballData)
+	actualXsum := hex.EncodeToString(hasher.Sum(nil))
+	expectedXsum := strings.TrimSuffix(pkgFileBase, ".tar.xz")
+	if actualXsum != expectedXsum {
+		return nil, fmt.Errorf("%v failed checksum verification", pkgFile)
+	}
+
+	err = util.CopyFileToDir(pkgFile, projRootParent)
+	if err != nil {
+		return nil, err
+	}
+
+	pkgFileCopy := filepath.Join(projRootParent, pkgFileBase)
+	defer os.Remove(pkgFileCopy)
+
+	err = os.Chdir(projRootParent)
+	if err != nil {
+		return nil, err
+	}
+
+	tmpDirBase := path.Base(tmpDir)
+	err = util.RunContainerCommand(context.Background(),
+		[]string{"tar", "-Jxvf", pkgFileBase, "-C", tmpDirBase}, os.Stdout,
+		os.Stdout)
+	if err != nil {
+		_ = os.Chdir(curWd)
+		return nil, err
+	}
+
+	err = os.Rename(filepath.Join(tmpDirBase, tarRootPath), projRootBase)
+	if err != nil {
+		_ = os.Chdir(curWd)
+		return nil, err
+	}
+	_ = os.Chdir(curWd)
+
+	return NewProject(filepath.Join(projRoot, DefaultProjectFilename))
 }
