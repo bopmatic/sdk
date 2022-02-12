@@ -352,6 +352,103 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 	return nil
 }
 
+// Delete() implemented using a client generated with go-swagger:
+//  https://github.com/go-swagger/go-swagger
+func Delete(projName string, packageId string, opts ...DeployOption) error {
+	deployOpts := fillOptions(opts...)
+
+	deletePackageReq := &models.DeletePackageRequest{
+		ProjectName: projName,
+		PackageID:   packageId,
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	deletePackageParams := service_runner.NewDeletePackageParams().
+		WithBody(deletePackageReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+	resp, err := client.ServiceRunner.DeletePackage(deletePackageParams)
+	if err != nil {
+		return fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	deleteReply := resp.GetPayload()
+
+	if *deleteReply.State != models.PackageStateDELETING &&
+		*deleteReply.State != models.PackageStateDEACTIVATING {
+		return fmt.Errorf("DeletePackage failure state: %v", deleteReply.State)
+	}
+
+	return nil
+}
+
+// Describe() implemented using a client generated with go-swagger:
+//  https://github.com/go-swagger/go-swagger
+func Describe(projName string, packageId string,
+	opts ...DeployOption) (*pb.DescribePackageReply, error) {
+
+	deployOpts := fillOptions(opts...)
+
+	describePackageReq := &models.DescribePackageRequest{
+		ProjectName: projName,
+		PackageID:   packageId,
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	describePackageParams := service_runner.NewDescribePackageParams().
+		WithBody(describePackageReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+	resp, err := client.ServiceRunner.DescribePackage(describePackageParams)
+	if err != nil {
+		return nil, fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	describeReply := resp.GetPayload()
+
+	pkgStateInt, ok :=
+		pb.PackageState_value[string(*describeReply.PackageState)]
+	pkgState := pb.PackageState(pkgStateInt)
+	if !ok {
+		pkgState = pb.PackageState_UNKNOWN_PKG_STATE
+	}
+	ret := &pb.DescribePackageReply{
+		Desc: &pb.PackageDescription{
+			ProjectName: describeReply.Desc.ProjectName,
+			PackageId:   describeReply.Desc.PackageID,
+			PackageName: describeReply.Desc.PackageName,
+		},
+		PackageState: pkgState,
+	}
+	if *describeReply.PackageState == models.PackageStatePRODUCTION {
+		ret.SiteEndpoint = describeReply.SiteEndpoint
+		ret.RpcEndpoints = describeReply.RPCEndpoints
+	}
+
+	return ret, nil
+}
+
+// List() implemented using a client generated with go-swagger:
+//  https://github.com/go-swagger/go-swagger
+func List(projName string, opts ...DeployOption) ([]string, error) {
+	deployOpts := fillOptions(opts...)
+
+	listPackagesReq := &models.ListPackagesRequest{
+		ProjectName: projName,
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	listPackagesParams := service_runner.NewListPackagesParams().
+		WithBody(listPackagesReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+	resp, err := client.ServiceRunner.ListPackages(listPackagesParams)
+	if err != nil {
+		return []string{}, fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	listReply := resp.GetPayload()
+
+	return listReply.PackageIds, nil
+}
+
 // NewProjectFromPackage instantiates a new Project instance from the specified
 // package file
 func NewProjectFromPackage(pkgFile string, projRoot string) (*Project, error) {

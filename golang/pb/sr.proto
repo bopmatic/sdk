@@ -4,6 +4,7 @@ option go_package = "bopmatic.com/servicerunner/pb";
 service ServiceRunner {
   rpc DescribePackage (DescribePackageRequest) returns (DescribePackageReply) {}
   rpc DeletePackage (DeletePackageRequest) returns (DeletePackageReply) {}
+  rpc ListPackages (ListPackagesRequest) returns (ListPackagesReply) {}
   rpc DeployPackage (DeployPackageRequest) returns (DeployPackageReply) {}
 }
 
@@ -38,6 +39,7 @@ message DeployPackageReply {
 
 message DescribePackageRequest {
   string projectName = 1;
+  string packageId = 2;
 }
 
 message DescribePackageReply {
@@ -48,8 +50,17 @@ message DescribePackageReply {
   repeated string rpcEndpoints = 4;
 }
 
+message ListPackagesRequest {
+  string projectName = 1;
+}
+
+message ListPackagesReply {
+  repeated string packageIds = 2;
+}
+
 message DeletePackageRequest {
   string projectName = 1;
+  string packageId = 2;
 }
 
 message DeletePackageReply {
