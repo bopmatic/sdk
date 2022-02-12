@@ -3,14 +3,14 @@ module github.com/bopmatic/sdk/golang
 go 1.17
 
 require (
-	github.com/bopmatic/sdk/golang/openapi v0.0.0-00010101000000-000000000000
 	github.com/docker/docker v20.10.12+incompatible
 	github.com/go-openapi/errors v0.20.2
 	github.com/go-openapi/runtime v0.23.0
 	github.com/go-openapi/strfmt v0.21.2
-	github.com/go-openapi/swag v0.19.15
+	github.com/go-openapi/swag v0.21.1
 	github.com/go-openapi/validate v0.20.3
-	github.com/yoheimuta/go-protoparser/v4 v4.5.1
+	github.com/yoheimuta/go-protoparser/v4 v4.5.3
+	golang.org/x/oauth2 v0.0.0-20211104180415-d3ed0bb246c8
 	google.golang.org/grpc v1.44.0
 	google.golang.org/protobuf v1.27.1
 	gopkg.in/yaml.v2 v2.4.0
@@ -45,11 +45,8 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	go.mongodb.org/mongo-driver v1.7.5 // indirect
 	golang.org/x/net v0.0.0-20210421230115-4e50805a0758 // indirect
-	golang.org/x/oauth2 v0.0.0-20210323180902-22b0adad7558 // indirect
 	golang.org/x/sys v0.0.0-20210426230700-d19ff857e887 // indirect
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/appengine v1.6.6 // indirect
 	google.golang.org/genproto v0.0.0-20201110150050-8816d57aaa9a // indirect
 )
-
-replace github.com/bopmatic/sdk/golang/openapi => ./openapi

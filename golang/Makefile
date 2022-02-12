@@ -31,7 +31,7 @@ openapi-generator-cli.jar:
 
 openapi: openapi-generator-cli.jar pb/sr.bopmatic.json
 	$(OPENAPIGENGO) -i ./pb/sr.bopmatic.json
-	cd openapi; go mod vendor
+	rm openapi/go.mod
 
 .PHONY: clean
 clean:
