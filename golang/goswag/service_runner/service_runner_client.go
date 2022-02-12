@@ -34,6 +34,8 @@ type ClientService interface {
 
 	DescribePackage(params *DescribePackageParams, opts ...ClientOption) (*DescribePackageOK, error)
 
+	ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
 }
 
@@ -145,6 +147,43 @@ func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOp
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*DescribePackageDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  ListPackages list packages API
+*/
+func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListPackagesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListPackages",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListPackages",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListPackagesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListPackagesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListPackagesDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

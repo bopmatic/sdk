@@ -12,6 +12,8 @@ docs/DeployPackageReply.md
 docs/DeployPackageRequest.md
 docs/DescribePackageReply.md
 docs/DescribePackageRequest.md
+docs/ListPackagesReply.md
+docs/ListPackagesRequest.md
 docs/PackageDescription.md
 docs/PackageState.md
 docs/ProtobufAny.md
@@ -26,6 +28,8 @@ model_deploy_package_reply.go
 model_deploy_package_request.go
 model_describe_package_reply.go
 model_describe_package_request.go
+model_list_packages_reply.go
+model_list_packages_request.go
 model_package_description.go
 model_package_state.go
 model_protobuf_any.go

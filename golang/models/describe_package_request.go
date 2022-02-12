@@ -17,6 +17,9 @@ import (
 // swagger:model DescribePackageRequest
 type DescribePackageRequest struct {
 
+	// package Id
+	PackageID string `json:"packageId,omitempty"`
+
 	// project name
 	ProjectName string `json:"projectName,omitempty"`
 }

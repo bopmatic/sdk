@@ -82,6 +82,31 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/ListPackages:
+    post:
+      operationId: ListPackages
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListPackagesRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPackagesReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
 components:
   schemas:
     DeletePackageReply:
@@ -92,9 +117,12 @@ components:
       type: object
     DeletePackageRequest:
       example:
+        packageId: packageId
         projectName: projectName
       properties:
         projectName:
+          type: string
+        packageId:
           type: string
       type: object
     DeployPackageReply:
@@ -141,6 +169,27 @@ components:
           type: array
       type: object
     DescribePackageRequest:
+      example:
+        packageId: packageId
+        projectName: projectName
+      properties:
+        projectName:
+          type: string
+        packageId:
+          type: string
+      type: object
+    ListPackagesReply:
+      example:
+        packageIds:
+        - packageIds
+        - packageIds
+      properties:
+        packageIds:
+          items:
+            type: string
+          type: array
+      type: object
+    ListPackagesRequest:
       example:
         projectName: projectName
       properties:

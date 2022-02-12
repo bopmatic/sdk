@@ -17,6 +17,7 @@ import (
 // DescribePackageRequest struct for DescribePackageRequest
 type DescribePackageRequest struct {
 	ProjectName *string `json:"projectName,omitempty"`
+	PackageId *string `json:"packageId,omitempty"`
 }
 
 // NewDescribePackageRequest instantiates a new DescribePackageRequest object
@@ -68,10 +69,45 @@ func (o *DescribePackageRequest) SetProjectName(v string) {
 	o.ProjectName = &v
 }
 
+// GetPackageId returns the PackageId field value if set, zero value otherwise.
+func (o *DescribePackageRequest) GetPackageId() string {
+	if o == nil || o.PackageId == nil {
+		var ret string
+		return ret
+	}
+	return *o.PackageId
+}
+
+// GetPackageIdOk returns a tuple with the PackageId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DescribePackageRequest) GetPackageIdOk() (*string, bool) {
+	if o == nil || o.PackageId == nil {
+		return nil, false
+	}
+	return o.PackageId, true
+}
+
+// HasPackageId returns a boolean if a field has been set.
+func (o *DescribePackageRequest) HasPackageId() bool {
+	if o != nil && o.PackageId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageId gets a reference to the given string and assigns it to the PackageId field.
+func (o *DescribePackageRequest) SetPackageId(v string) {
+	o.PackageId = &v
+}
+
 func (o DescribePackageRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ProjectName != nil {
 		toSerialize["projectName"] = o.ProjectName
+	}
+	if o.PackageId != nil {
+		toSerialize["packageId"] = o.PackageId
 	}
 	return json.Marshal(toSerialize)
 }

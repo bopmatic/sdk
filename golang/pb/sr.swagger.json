@@ -111,6 +111,38 @@
           "ServiceRunner"
         ]
       }
+    },
+    "/ServiceRunner/ListPackages": {
+      "post": {
+        "operationId": "ListPackages",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListPackagesReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListPackagesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
     }
   },
   "definitions": {
@@ -126,6 +158,9 @@
       "type": "object",
       "properties": {
         "projectName": {
+          "type": "string"
+        },
+        "packageId": {
           "type": "string"
         }
       }
@@ -168,6 +203,28 @@
       }
     },
     "DescribePackageRequest": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "packageId": {
+          "type": "string"
+        }
+      }
+    },
+    "ListPackagesReply": {
+      "type": "object",
+      "properties": {
+        "packageIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ListPackagesRequest": {
       "type": "object",
       "properties": {
         "projectName": {

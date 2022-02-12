@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectName** | Pointer to **string** |  | [optional] 
+**PackageId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -49,6 +50,31 @@ SetProjectName sets ProjectName field to given value.
 `func (o *DeletePackageRequest) HasProjectName() bool`
 
 HasProjectName returns a boolean if a field has been set.
+
+### GetPackageId
+
+`func (o *DeletePackageRequest) GetPackageId() string`
+
+GetPackageId returns the PackageId field if non-nil, zero value otherwise.
+
+### GetPackageIdOk
+
+`func (o *DeletePackageRequest) GetPackageIdOk() (*string, bool)`
+
+GetPackageIdOk returns a tuple with the PackageId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageId
+
+`func (o *DeletePackageRequest) SetPackageId(v string)`
+
+SetPackageId sets PackageId field to given value.
+
+### HasPackageId
+
+`func (o *DeletePackageRequest) HasPackageId() bool`
+
+HasPackageId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

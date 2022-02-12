@@ -20,6 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 type ServiceRunnerClient interface {
 	DescribePackage(ctx context.Context, in *DescribePackageRequest, opts ...grpc.CallOption) (*DescribePackageReply, error)
 	DeletePackage(ctx context.Context, in *DeletePackageRequest, opts ...grpc.CallOption) (*DeletePackageReply, error)
+	ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesReply, error)
 	DeployPackage(ctx context.Context, in *DeployPackageRequest, opts ...grpc.CallOption) (*DeployPackageReply, error)
 }
 
@@ -49,6 +50,15 @@ func (c *serviceRunnerClient) DeletePackage(ctx context.Context, in *DeletePacka
 	return out, nil
 }
 
+func (c *serviceRunnerClient) ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesReply, error) {
+	out := new(ListPackagesReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListPackages", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *serviceRunnerClient) DeployPackage(ctx context.Context, in *DeployPackageRequest, opts ...grpc.CallOption) (*DeployPackageReply, error) {
 	out := new(DeployPackageReply)
 	err := c.cc.Invoke(ctx, "/ServiceRunner/DeployPackage", in, out, opts...)
@@ -64,6 +74,7 @@ func (c *serviceRunnerClient) DeployPackage(ctx context.Context, in *DeployPacka
 type ServiceRunnerServer interface {
 	DescribePackage(context.Context, *DescribePackageRequest) (*DescribePackageReply, error)
 	DeletePackage(context.Context, *DeletePackageRequest) (*DeletePackageReply, error)
+	ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesReply, error)
 	DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error)
 	mustEmbedUnimplementedServiceRunnerServer()
 }
@@ -77,6 +88,9 @@ func (UnimplementedServiceRunnerServer) DescribePackage(context.Context, *Descri
 }
 func (UnimplementedServiceRunnerServer) DeletePackage(context.Context, *DeletePackageRequest) (*DeletePackageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeletePackage not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListPackages not implemented")
 }
 func (UnimplementedServiceRunnerServer) DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeployPackage not implemented")
@@ -130,6 +144,24 @@ func _ServiceRunner_DeletePackage_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceRunner_ListPackages_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPackagesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListPackages(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListPackages",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListPackages(ctx, req.(*ListPackagesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _ServiceRunner_DeployPackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeployPackageRequest)
 	if err := dec(in); err != nil {
@@ -162,6 +194,10 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeletePackage",
 			Handler:    _ServiceRunner_DeletePackage_Handler,
+		},
+		{
+			MethodName: "ListPackages",
+			Handler:    _ServiceRunner_ListPackages_Handler,
 		},
 		{
 			MethodName: "DeployPackage",

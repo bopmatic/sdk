@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**DeletePackage**](ServiceRunnerApi.md#DeletePackage) | **Post** /ServiceRunner/DeletePackage | 
 [**DeployPackage**](ServiceRunnerApi.md#DeployPackage) | **Post** /ServiceRunner/DeployPackage | 
 [**DescribePackage**](ServiceRunnerApi.md#DescribePackage) | **Post** /ServiceRunner/DescribePackage | 
+[**ListPackages**](ServiceRunnerApi.md#ListPackages) | **Post** /ServiceRunner/ListPackages | 
 
 
 
@@ -187,6 +188,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DescribePackageReply**](DescribePackageReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListPackages
+
+> ListPackagesReply ListPackages(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+    "context"
+    "fmt"
+    "os"
+    openapiclient "./openapi"
+)
+
+func main() {
+    body := *openapiclient.NewListPackagesRequest() // ListPackagesRequest | 
+
+    configuration := openapiclient.NewConfiguration()
+    apiClient := openapiclient.NewAPIClient(configuration)
+    resp, r, err := apiClient.ServiceRunnerApi.ListPackages(context.Background()).Body(body).Execute()
+    if err != nil {
+        fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerApi.ListPackages``: %v\n", err)
+        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+    }
+    // response from `ListPackages`: ListPackagesReply
+    fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerApi.ListPackages`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListPackagesRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**ListPackagesRequest**](ListPackagesRequest.md) |  | 
+
+### Return type
+
+[**ListPackagesReply**](ListPackagesReply.md)
 
 ### Authorization
 
