@@ -93,6 +93,7 @@ Class | Method | HTTP request | Description
  - [DescribePackageReply](docs/DescribePackageReply.md)
  - [DescribePackageRequest](docs/DescribePackageRequest.md)
  - [ListPackagesReply](docs/ListPackagesReply.md)
+ - [ListPackagesReplyListPackagesItem](docs/ListPackagesReplyListPackagesItem.md)
  - [ListPackagesRequest](docs/ListPackagesRequest.md)
  - [PackageDescription](docs/PackageDescription.md)
  - [PackageState](docs/PackageState.md)

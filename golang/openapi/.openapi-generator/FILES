@@ -13,6 +13,7 @@ docs/DeployPackageRequest.md
 docs/DescribePackageReply.md
 docs/DescribePackageRequest.md
 docs/ListPackagesReply.md
+docs/ListPackagesReplyListPackagesItem.md
 docs/ListPackagesRequest.md
 docs/PackageDescription.md
 docs/PackageState.md
@@ -29,6 +30,7 @@ model_deploy_package_request.go
 model_describe_package_reply.go
 model_describe_package_request.go
 model_list_packages_reply.go
+model_list_packages_reply_list_packages_item.go
 model_list_packages_request.go
 model_package_description.go
 model_package_state.go

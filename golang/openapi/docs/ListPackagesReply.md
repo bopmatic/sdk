@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**PackageIds** | Pointer to **[]string** |  | [optional] 
+**Items** | Pointer to [**[]ListPackagesReplyListPackagesItem**](ListPackagesReplyListPackagesItem.md) |  | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewListPackagesReplyWithDefaults instantiates a new ListPackagesReply object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetPackageIds
+### GetItems
 
-`func (o *ListPackagesReply) GetPackageIds() []string`
+`func (o *ListPackagesReply) GetItems() []ListPackagesReplyListPackagesItem`
 
-GetPackageIds returns the PackageIds field if non-nil, zero value otherwise.
+GetItems returns the Items field if non-nil, zero value otherwise.
 
-### GetPackageIdsOk
+### GetItemsOk
 
-`func (o *ListPackagesReply) GetPackageIdsOk() (*[]string, bool)`
+`func (o *ListPackagesReply) GetItemsOk() (*[]ListPackagesReplyListPackagesItem, bool)`
 
-GetPackageIdsOk returns a tuple with the PackageIds field if it's non-nil, zero value otherwise
+GetItemsOk returns a tuple with the Items field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPackageIds
+### SetItems
 
-`func (o *ListPackagesReply) SetPackageIds(v []string)`
+`func (o *ListPackagesReply) SetItems(v []ListPackagesReplyListPackagesItem)`
 
-SetPackageIds sets PackageIds field to given value.
+SetItems sets Items field to given value.
 
-### HasPackageIds
+### HasItems
 
-`func (o *ListPackagesReply) HasPackageIds() bool`
+`func (o *ListPackagesReply) HasItems() bool`
 
-HasPackageIds returns a boolean if a field has been set.
+HasItems returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

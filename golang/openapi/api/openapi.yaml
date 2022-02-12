@@ -180,14 +180,26 @@ components:
       type: object
     ListPackagesReply:
       example:
-        packageIds:
-        - packageIds
-        - packageIds
+        items:
+        - packageId: packageId
+          projectName: projectName
+        - packageId: packageId
+          projectName: projectName
       properties:
-        packageIds:
+        items:
           items:
-            type: string
+            $ref: '#/components/schemas/ListPackagesReplyListPackagesItem'
           type: array
+      type: object
+    ListPackagesReplyListPackagesItem:
+      example:
+        packageId: packageId
+        projectName: projectName
+      properties:
+        projectName:
+          type: string
+        packageId:
+          type: string
       type: object
     ListPackagesRequest:
       example:

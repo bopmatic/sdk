@@ -392,7 +392,7 @@ type ListPackagesRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ProjectName string `protobuf:"bytes,1,opt,name=projectName,proto3" json:"projectName,omitempty"`
+	ProjectName string `protobuf:"bytes,1,opt,name=projectName,proto3" json:"projectName,omitempty"` // leave empty for all projects
 }
 
 func (x *ListPackagesRequest) Reset() {
@@ -439,7 +439,7 @@ type ListPackagesReply struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PackageIds []string `protobuf:"bytes,2,rep,name=packageIds,proto3" json:"packageIds,omitempty"`
+	Items []*ListPackagesReply_ListPackagesItem `protobuf:"bytes,1,rep,name=items,proto3" json:"items,omitempty"`
 }
 
 func (x *ListPackagesReply) Reset() {
@@ -474,9 +474,9 @@ func (*ListPackagesReply) Descriptor() ([]byte, []int) {
 	return file_pb_sr_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ListPackagesReply) GetPackageIds() []string {
+func (x *ListPackagesReply) GetItems() []*ListPackagesReply_ListPackagesItem {
 	if x != nil {
-		return x.PackageIds
+		return x.Items
 	}
 	return nil
 }
@@ -583,6 +583,61 @@ func (x *DeletePackageReply) GetState() PackageState {
 	return PackageState_UPLOADING
 }
 
+type ListPackagesReply_ListPackagesItem struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ProjectName string `protobuf:"bytes,1,opt,name=projectName,proto3" json:"projectName,omitempty"`
+	PackageId   string `protobuf:"bytes,2,opt,name=packageId,proto3" json:"packageId,omitempty"`
+}
+
+func (x *ListPackagesReply_ListPackagesItem) Reset() {
+	*x = ListPackagesReply_ListPackagesItem{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[9]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListPackagesReply_ListPackagesItem) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPackagesReply_ListPackagesItem) ProtoMessage() {}
+
+func (x *ListPackagesReply_ListPackagesItem) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[9]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPackagesReply_ListPackagesItem.ProtoReflect.Descriptor instead.
+func (*ListPackagesReply_ListPackagesItem) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{6, 0}
+}
+
+func (x *ListPackagesReply_ListPackagesItem) GetProjectName() string {
+	if x != nil {
+		return x.ProjectName
+	}
+	return ""
+}
+
+func (x *ListPackagesReply_ListPackagesItem) GetPackageId() string {
+	if x != nil {
+		return x.PackageId
+	}
+	return ""
+}
+
 var File_pb_sr_proto protoreflect.FileDescriptor
 
 var file_pb_sr_proto_rawDesc = []byte{
@@ -628,10 +683,17 @@ var file_pb_sr_proto_rawDesc = []byte{
 	0x69, 0x73, 0x74, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65,
 	0x73, 0x74, 0x12, 0x20, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d,
 	0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74,
-	0x4e, 0x61, 0x6d, 0x65, 0x22, 0x33, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x61, 0x63, 0x6b,
-	0x61, 0x67, 0x65, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x1e, 0x0a, 0x0a, 0x70, 0x61, 0x63,
-	0x6b, 0x61, 0x67, 0x65, 0x49, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28, 0x09, 0x52, 0x0a, 0x70,
-	0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x49, 0x64, 0x73, 0x22, 0x56, 0x0a, 0x14, 0x44, 0x65, 0x6c,
+	0x4e, 0x61, 0x6d, 0x65, 0x22, 0xa2, 0x01, 0x0a, 0x11, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x61, 0x63,
+	0x6b, 0x61, 0x67, 0x65, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x39, 0x0a, 0x05, 0x69, 0x74,
+	0x65, 0x6d, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x0b, 0x32, 0x23, 0x2e, 0x4c, 0x69, 0x73, 0x74,
+	0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x73, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x2e, 0x4c, 0x69,
+	0x73, 0x74, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x73, 0x49, 0x74, 0x65, 0x6d, 0x52, 0x05,
+	0x69, 0x74, 0x65, 0x6d, 0x73, 0x1a, 0x52, 0x0a, 0x10, 0x4c, 0x69, 0x73, 0x74, 0x50, 0x61, 0x63,
+	0x6b, 0x61, 0x67, 0x65, 0x73, 0x49, 0x74, 0x65, 0x6d, 0x12, 0x20, 0x0a, 0x0b, 0x70, 0x72, 0x6f,
+	0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b,
+	0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x70,
+	0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09,
+	0x70, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x49, 0x64, 0x22, 0x56, 0x0a, 0x14, 0x44, 0x65, 0x6c,
 	0x65, 0x74, 0x65, 0x50, 0x61, 0x63, 0x6b, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
 	0x74, 0x12, 0x20, 0x0a, 0x0b, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e, 0x61, 0x6d, 0x65,
 	0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x70, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x4e,
@@ -686,38 +748,40 @@ func file_pb_sr_proto_rawDescGZIP() []byte {
 }
 
 var file_pb_sr_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_pb_sr_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_pb_sr_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_pb_sr_proto_goTypes = []interface{}{
-	(PackageState)(0),              // 0: PackageState
-	(*PackageDescription)(nil),     // 1: PackageDescription
-	(*DeployPackageRequest)(nil),   // 2: DeployPackageRequest
-	(*DeployPackageReply)(nil),     // 3: DeployPackageReply
-	(*DescribePackageRequest)(nil), // 4: DescribePackageRequest
-	(*DescribePackageReply)(nil),   // 5: DescribePackageReply
-	(*ListPackagesRequest)(nil),    // 6: ListPackagesRequest
-	(*ListPackagesReply)(nil),      // 7: ListPackagesReply
-	(*DeletePackageRequest)(nil),   // 8: DeletePackageRequest
-	(*DeletePackageReply)(nil),     // 9: DeletePackageReply
+	(PackageState)(0),                          // 0: PackageState
+	(*PackageDescription)(nil),                 // 1: PackageDescription
+	(*DeployPackageRequest)(nil),               // 2: DeployPackageRequest
+	(*DeployPackageReply)(nil),                 // 3: DeployPackageReply
+	(*DescribePackageRequest)(nil),             // 4: DescribePackageRequest
+	(*DescribePackageReply)(nil),               // 5: DescribePackageReply
+	(*ListPackagesRequest)(nil),                // 6: ListPackagesRequest
+	(*ListPackagesReply)(nil),                  // 7: ListPackagesReply
+	(*DeletePackageRequest)(nil),               // 8: DeletePackageRequest
+	(*DeletePackageReply)(nil),                 // 9: DeletePackageReply
+	(*ListPackagesReply_ListPackagesItem)(nil), // 10: ListPackagesReply.ListPackagesItem
 }
 var file_pb_sr_proto_depIdxs = []int32{
-	1, // 0: DeployPackageRequest.desc:type_name -> PackageDescription
-	0, // 1: DeployPackageReply.state:type_name -> PackageState
-	1, // 2: DescribePackageReply.desc:type_name -> PackageDescription
-	0, // 3: DescribePackageReply.packageState:type_name -> PackageState
-	0, // 4: DeletePackageReply.state:type_name -> PackageState
-	4, // 5: ServiceRunner.DescribePackage:input_type -> DescribePackageRequest
-	8, // 6: ServiceRunner.DeletePackage:input_type -> DeletePackageRequest
-	6, // 7: ServiceRunner.ListPackages:input_type -> ListPackagesRequest
-	2, // 8: ServiceRunner.DeployPackage:input_type -> DeployPackageRequest
-	5, // 9: ServiceRunner.DescribePackage:output_type -> DescribePackageReply
-	9, // 10: ServiceRunner.DeletePackage:output_type -> DeletePackageReply
-	7, // 11: ServiceRunner.ListPackages:output_type -> ListPackagesReply
-	3, // 12: ServiceRunner.DeployPackage:output_type -> DeployPackageReply
-	9, // [9:13] is the sub-list for method output_type
-	5, // [5:9] is the sub-list for method input_type
-	5, // [5:5] is the sub-list for extension type_name
-	5, // [5:5] is the sub-list for extension extendee
-	0, // [0:5] is the sub-list for field type_name
+	1,  // 0: DeployPackageRequest.desc:type_name -> PackageDescription
+	0,  // 1: DeployPackageReply.state:type_name -> PackageState
+	1,  // 2: DescribePackageReply.desc:type_name -> PackageDescription
+	0,  // 3: DescribePackageReply.packageState:type_name -> PackageState
+	10, // 4: ListPackagesReply.items:type_name -> ListPackagesReply.ListPackagesItem
+	0,  // 5: DeletePackageReply.state:type_name -> PackageState
+	4,  // 6: ServiceRunner.DescribePackage:input_type -> DescribePackageRequest
+	8,  // 7: ServiceRunner.DeletePackage:input_type -> DeletePackageRequest
+	6,  // 8: ServiceRunner.ListPackages:input_type -> ListPackagesRequest
+	2,  // 9: ServiceRunner.DeployPackage:input_type -> DeployPackageRequest
+	5,  // 10: ServiceRunner.DescribePackage:output_type -> DescribePackageReply
+	9,  // 11: ServiceRunner.DeletePackage:output_type -> DeletePackageReply
+	7,  // 12: ServiceRunner.ListPackages:output_type -> ListPackagesReply
+	3,  // 13: ServiceRunner.DeployPackage:output_type -> DeployPackageReply
+	10, // [10:14] is the sub-list for method output_type
+	6,  // [6:10] is the sub-list for method input_type
+	6,  // [6:6] is the sub-list for extension type_name
+	6,  // [6:6] is the sub-list for extension extendee
+	0,  // [0:6] is the sub-list for field type_name
 }
 
 func init() { file_pb_sr_proto_init() }
@@ -834,6 +898,18 @@ func file_pb_sr_proto_init() {
 				return nil
 			}
 		}
+		file_pb_sr_proto_msgTypes[9].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ListPackagesReply_ListPackagesItem); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -841,7 +917,7 @@ func file_pb_sr_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pb_sr_proto_rawDesc,
 			NumEnums:      1,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

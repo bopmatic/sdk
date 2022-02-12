@@ -220,11 +220,22 @@
     "ListPackagesReply": {
       "type": "object",
       "properties": {
-        "packageIds": {
+        "items": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/ListPackagesReplyListPackagesItem"
           }
+        }
+      }
+    },
+    "ListPackagesReplyListPackagesItem": {
+      "type": "object",
+      "properties": {
+        "projectName": {
+          "type": "string"
+        },
+        "packageId": {
+          "type": "string"
         }
       }
     },

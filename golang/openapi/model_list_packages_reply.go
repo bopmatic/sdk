@@ -16,7 +16,7 @@ import (
 
 // ListPackagesReply struct for ListPackagesReply
 type ListPackagesReply struct {
-	PackageIds []string `json:"packageIds,omitempty"`
+	Items []ListPackagesReplyListPackagesItem `json:"items,omitempty"`
 }
 
 // NewListPackagesReply instantiates a new ListPackagesReply object
@@ -36,42 +36,42 @@ func NewListPackagesReplyWithDefaults() *ListPackagesReply {
 	return &this
 }
 
-// GetPackageIds returns the PackageIds field value if set, zero value otherwise.
-func (o *ListPackagesReply) GetPackageIds() []string {
-	if o == nil || o.PackageIds == nil {
-		var ret []string
+// GetItems returns the Items field value if set, zero value otherwise.
+func (o *ListPackagesReply) GetItems() []ListPackagesReplyListPackagesItem {
+	if o == nil || o.Items == nil {
+		var ret []ListPackagesReplyListPackagesItem
 		return ret
 	}
-	return o.PackageIds
+	return o.Items
 }
 
-// GetPackageIdsOk returns a tuple with the PackageIds field value if set, nil otherwise
+// GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListPackagesReply) GetPackageIdsOk() ([]string, bool) {
-	if o == nil || o.PackageIds == nil {
+func (o *ListPackagesReply) GetItemsOk() ([]ListPackagesReplyListPackagesItem, bool) {
+	if o == nil || o.Items == nil {
 		return nil, false
 	}
-	return o.PackageIds, true
+	return o.Items, true
 }
 
-// HasPackageIds returns a boolean if a field has been set.
-func (o *ListPackagesReply) HasPackageIds() bool {
-	if o != nil && o.PackageIds != nil {
+// HasItems returns a boolean if a field has been set.
+func (o *ListPackagesReply) HasItems() bool {
+	if o != nil && o.Items != nil {
 		return true
 	}
 
 	return false
 }
 
-// SetPackageIds gets a reference to the given []string and assigns it to the PackageIds field.
-func (o *ListPackagesReply) SetPackageIds(v []string) {
-	o.PackageIds = v
+// SetItems gets a reference to the given []ListPackagesReplyListPackagesItem and assigns it to the Items field.
+func (o *ListPackagesReply) SetItems(v []ListPackagesReplyListPackagesItem) {
+	o.Items = v
 }
 
 func (o ListPackagesReply) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.PackageIds != nil {
-		toSerialize["packageIds"] = o.PackageIds
+	if o.Items != nil {
+		toSerialize["items"] = o.Items
 	}
 	return json.Marshal(toSerialize)
 }

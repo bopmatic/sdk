@@ -7,7 +7,9 @@ package models
 
 import (
 	"context"
+	"strconv"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -17,17 +19,81 @@ import (
 // swagger:model ListPackagesReply
 type ListPackagesReply struct {
 
-	// package ids
-	PackageIds []string `json:"packageIds"`
+	// items
+	Items []*ListPackagesReplyListPackagesItem `json:"items"`
 }
 
 // Validate validates this list packages reply
 func (m *ListPackagesReply) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateItems(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this list packages reply based on context it is used
+func (m *ListPackagesReply) validateItems(formats strfmt.Registry) error {
+	if swag.IsZero(m.Items) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Items); i++ {
+		if swag.IsZero(m.Items[i]) { // not required
+			continue
+		}
+
+		if m.Items[i] != nil {
+			if err := m.Items[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("items" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("items" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
+// ContextValidate validate this list packages reply based on the context it is used
 func (m *ListPackagesReply) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateItems(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *ListPackagesReply) contextValidateItems(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Items); i++ {
+
+		if m.Items[i] != nil {
+			if err := m.Items[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("items" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("items" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
