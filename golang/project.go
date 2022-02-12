@@ -315,10 +315,19 @@ func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
 // NewPackage collects all of the build & project artifacts required in order
 // to submit to Bopmatic's ServiceRunner for deployment. Upon success a Package
 // instance is returned.
-func (proj *Project) NewPackage(pkgName string, stdOut io.Writer,
+func (proj *Project) NewPackageCreate(pkgName string, stdOut io.Writer,
 	stdErr io.Writer) (*Package, error) {
 
 	return NewPackage(pkgName, proj, stdOut, stdErr)
+}
+
+func (proj *Project) NewPackageExisting(pkgId string) (*Package, error) {
+	return NewPackageFromExisting(proj, pkgId)
+}
+
+// RemoveStalePackages deletes any previously created project packages
+func (proj *Project) RemoveStalePackages() error {
+	return RemoveStalePackages(proj)
 }
 
 // NewProject instantiates a new Project instance from the specified project

@@ -51,11 +51,15 @@ message DescribePackageReply {
 }
 
 message ListPackagesRequest {
-  string projectName = 1;
+  string projectName = 1;  // leave empty for all projects
 }
 
 message ListPackagesReply {
-  repeated string packageIds = 2;
+  message ListPackagesItem {
+    string projectName = 1;
+    string packageId = 2;
+  }
+  repeated ListPackagesItem items = 1;
 }
 
 message DeletePackageRequest {

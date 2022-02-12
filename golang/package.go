@@ -175,6 +175,59 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	return pkg, nil
 }
 
+func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {
+	packagesPath := filepath.Join(proj.Desc.Root, DefaultArtifactDir,
+		PackagesSubdir)
+
+	entries, err := ioutil.ReadDir(packagesPath)
+	if err != nil {
+		return nil, err
+	}
+
+	var pkgFile = ""
+	if pkgId == "" {
+		if len(entries) == 1 {
+			pkgFile = filepath.Join(packagesPath, entries[0].Name())
+		} else {
+			return nil, fmt.Errorf("Multiple packages present; must specify pkgId")
+		}
+	} else {
+		for _, entry := range entries {
+			if strings.HasPrefix(entry.Name(), pkgId) {
+				if pkgFile == "" {
+					pkgFile = filepath.Join(packagesPath, entry.Name())
+				} else {
+					return nil, fmt.Errorf("Abiguous pkgId:%v; multiple matches", pkgId)
+				}
+			}
+		}
+	}
+
+	if pkgFile == "" {
+		return nil, fmt.Errorf("Cannot find pkgId:%v", pkgId)
+	}
+
+	tarballData, err := ioutil.ReadFile(pkgFile)
+	if err != nil {
+		return nil, err
+	}
+	hasher := sha256.New()
+	hasher.Write(tarballData)
+	xsumVal := hasher.Sum(nil)
+	actualXsum := hex.EncodeToString(xsumVal)
+	pkgFileBase := path.Base(pkgFile)
+	expectedXsum := strings.TrimSuffix(pkgFileBase, ".tar.xz")
+	if actualXsum != expectedXsum {
+		return nil, fmt.Errorf("%v failed checksum verification", pkgFile)
+	}
+	return &Package{
+		Proj:        proj,
+		Id:          actualXsum[0:8],
+		TarballPath: pkgFile,
+		Xsum:        xsumVal,
+	}, nil
+}
+
 func (pkg *Package) AbsTarballPath() string {
 	return filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 }
@@ -428,7 +481,9 @@ func Describe(projName string, packageId string,
 
 // List() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
-func List(projName string, opts ...DeployOption) ([]string, error) {
+func List(projName string,
+	opts ...DeployOption) ([]pb.ListPackagesReply_ListPackagesItem, error) {
+
 	deployOpts := fillOptions(opts...)
 
 	listPackagesReq := &models.ListPackagesRequest{
@@ -442,11 +497,20 @@ func List(projName string, opts ...DeployOption) ([]string, error) {
 	client := goswag.NewHTTPClientWithConfig(nil, config)
 	resp, err := client.ServiceRunner.ListPackages(listPackagesParams)
 	if err != nil {
-		return []string{}, fmt.Errorf("Client/HTTP failure: %v", err)
+		return []pb.ListPackagesReply_ListPackagesItem{},
+			fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	listReply := resp.GetPayload()
 
-	return listReply.PackageIds, nil
+	var itemList []pb.ListPackagesReply_ListPackagesItem
+	for _, itemSwag := range listReply.Items {
+		itemList = append(itemList, pb.ListPackagesReply_ListPackagesItem{
+			ProjectName: itemSwag.ProjectName,
+			PackageId:   itemSwag.PackageID,
+		})
+	}
+
+	return itemList, nil
 }
 
 // NewProjectFromPackage instantiates a new Project instance from the specified
@@ -510,4 +574,12 @@ func NewProjectFromPackage(pkgFile string, projRoot string) (*Project, error) {
 	_ = os.Chdir(curWd)
 
 	return NewProject(filepath.Join(projRoot, DefaultProjectFilename))
+}
+
+func RemoveStalePackages(proj *Project) error {
+
+	packagesPath := filepath.Join(proj.Desc.Root, DefaultArtifactDir,
+		PackagesSubdir)
+
+	return os.RemoveAll(packagesPath)
 }
