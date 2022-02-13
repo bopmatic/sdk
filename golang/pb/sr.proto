@@ -38,8 +38,7 @@ message DeployPackageReply {
 }
 
 message DescribePackageRequest {
-  string projectName = 1;
-  string packageId = 2;
+  string packageId = 1;
 }
 
 message DescribePackageReply {

@@ -436,14 +436,12 @@ func Delete(projName string, packageId string, opts ...DeployOption) error {
 
 // Describe() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
-func Describe(projName string, packageId string,
-	opts ...DeployOption) (*pb.DescribePackageReply, error) {
+func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply, error) {
 
 	deployOpts := fillOptions(opts...)
 
 	describePackageReq := &models.DescribePackageRequest{
-		ProjectName: projName,
-		PackageID:   packageId,
+		PackageID: packageId,
 	}
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
