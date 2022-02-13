@@ -171,10 +171,7 @@ components:
     DescribePackageRequest:
       example:
         packageId: packageId
-        projectName: projectName
       properties:
-        projectName:
-          type: string
         packageId:
           type: string
       type: object

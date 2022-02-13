@@ -209,9 +209,6 @@
     "DescribePackageRequest": {
       "type": "object",
       "properties": {
-        "projectName": {
-          "type": "string"
-        },
         "packageId": {
           "type": "string"
         }

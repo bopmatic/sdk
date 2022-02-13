@@ -19,9 +19,6 @@ type DescribePackageRequest struct {
 
 	// package Id
 	PackageID string `json:"packageId,omitempty"`
-
-	// project name
-	ProjectName string `json:"projectName,omitempty"`
 }
 
 // Validate validates this describe package request
