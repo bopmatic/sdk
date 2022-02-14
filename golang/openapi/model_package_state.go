@@ -24,10 +24,12 @@ const (
 	UPLOADED PackageState = "UPLOADED"
 	VALIDATING PackageState = "VALIDATING"
 	INVALID PackageState = "INVALID"
+	BUILDING PackageState = "BUILDING"
 	DEPLOYING PackageState = "DEPLOYING"
 	PRODUCTION PackageState = "PRODUCTION"
 	DEACTIVATING PackageState = "DEACTIVATING"
 	DELETING PackageState = "DELETING"
+	SUPPORT_NEEDED PackageState = "SUPPORT_NEEDED"
 	UNKNOWN_PKG_STATE PackageState = "UNKNOWN_PKG_STATE"
 )
 
@@ -37,10 +39,12 @@ var AllowedPackageStateEnumValues = []PackageState{
 	"UPLOADED",
 	"VALIDATING",
 	"INVALID",
+	"BUILDING",
 	"DEPLOYING",
 	"PRODUCTION",
 	"DEACTIVATING",
 	"DELETING",
+	"SUPPORT_NEEDED",
 	"UNKNOWN_PKG_STATE",
 }
 

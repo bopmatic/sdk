@@ -11,6 +11,8 @@
 
 * `INVALID` (value: `"INVALID"`)
 
+* `BUILDING` (value: `"BUILDING"`)
+
 * `DEPLOYING` (value: `"DEPLOYING"`)
 
 * `PRODUCTION` (value: `"PRODUCTION"`)
@@ -18,6 +20,8 @@
 * `DEACTIVATING` (value: `"DEACTIVATING"`)
 
 * `DELETING` (value: `"DELETING"`)
+
+* `SUPPORT_NEEDED` (value: `"SUPPORT_NEEDED"`)
 
 * `UNKNOWN_PKG_STATE` (value: `"UNKNOWN_PKG_STATE"`)
 

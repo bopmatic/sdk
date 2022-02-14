@@ -273,10 +273,12 @@
         "UPLOADED",
         "VALIDATING",
         "INVALID",
+        "BUILDING",
         "DEPLOYING",
         "PRODUCTION",
         "DEACTIVATING",
         "DELETING",
+        "SUPPORT_NEEDED",
         "UNKNOWN_PKG_STATE"
       ],
       "default": "UPLOADING"
