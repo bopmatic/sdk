@@ -13,10 +13,12 @@ enum PackageState {
   UPLOADED = 1;         // upload has completed; the package has not yet started validataion
   VALIDATING = 2;       // the package is in the process of being validated
   INVALID = 3;          // the package failed validation checks and cannot be deployed
-  DEPLOYING = 5;        // the package is in the process of being deployed to production
+  BUILDING = 4;         // the package passed validation and is in the process of being built
+  DEPLOYING = 5;        // the package is built and in the process of being deployed to production
   PRODUCTION = 6;       // the package is active in production
   DEACTIVATING = 7;     // the package is in the process of being deactivated from production
-  DELETING = 9;         // the package is in the process of being deleted
+  DELETING = 8;         // the package is in the process of being deleted
+  SUPPORT_NEEDED = 9;   // something went wrong and Bopmatic support needs to investigate
 
   UNKNOWN_PKG_STATE = 2147483647; // MAX_INT
 }
