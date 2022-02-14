@@ -19,9 +19,6 @@ type DeletePackageRequest struct {
 
 	// package Id
 	PackageID string `json:"packageId,omitempty"`
-
-	// project name
-	ProjectName string `json:"projectName,omitempty"`
 }
 
 // Validate validates this delete package request

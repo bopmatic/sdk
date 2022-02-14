@@ -16,7 +16,6 @@ import (
 
 // DeletePackageRequest struct for DeletePackageRequest
 type DeletePackageRequest struct {
-	ProjectName *string `json:"projectName,omitempty"`
 	PackageId *string `json:"packageId,omitempty"`
 }
 
@@ -35,38 +34,6 @@ func NewDeletePackageRequest() *DeletePackageRequest {
 func NewDeletePackageRequestWithDefaults() *DeletePackageRequest {
 	this := DeletePackageRequest{}
 	return &this
-}
-
-// GetProjectName returns the ProjectName field value if set, zero value otherwise.
-func (o *DeletePackageRequest) GetProjectName() string {
-	if o == nil || o.ProjectName == nil {
-		var ret string
-		return ret
-	}
-	return *o.ProjectName
-}
-
-// GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *DeletePackageRequest) GetProjectNameOk() (*string, bool) {
-	if o == nil || o.ProjectName == nil {
-		return nil, false
-	}
-	return o.ProjectName, true
-}
-
-// HasProjectName returns a boolean if a field has been set.
-func (o *DeletePackageRequest) HasProjectName() bool {
-	if o != nil && o.ProjectName != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
-func (o *DeletePackageRequest) SetProjectName(v string) {
-	o.ProjectName = &v
 }
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
@@ -103,9 +70,6 @@ func (o *DeletePackageRequest) SetPackageId(v string) {
 
 func (o DeletePackageRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.ProjectName != nil {
-		toSerialize["projectName"] = o.ProjectName
-	}
 	if o.PackageId != nil {
 		toSerialize["packageId"] = o.PackageId
 	}
