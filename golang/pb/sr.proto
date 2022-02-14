@@ -64,8 +64,7 @@ message ListPackagesReply {
 }
 
 message DeletePackageRequest {
-  string projectName = 1;
-  string packageId = 2;
+  string packageId = 1;
 }
 
 message DeletePackageReply {

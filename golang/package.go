@@ -407,12 +407,11 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 
 // Delete() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
-func Delete(projName string, packageId string, opts ...DeployOption) error {
+func Delete(packageId string, opts ...DeployOption) error {
 	deployOpts := fillOptions(opts...)
 
 	deletePackageReq := &models.DeletePackageRequest{
-		ProjectName: projName,
-		PackageID:   packageId,
+		PackageID: packageId,
 	}
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
