@@ -35,7 +35,7 @@ func TestDeployPackage(t *testing.T) {
 			t.Errorf("Failed to parse project: %v", err)
 		}
 
-		pkg, err := proj.NewPackage("somepkg", os.Stdout, os.Stderr)
+		pkg, err := proj.NewPackageCreate("somepkg", os.Stdout, os.Stderr)
 		if err != nil {
 			t.Errorf("Failed to create package: %v", err)
 		}
@@ -123,7 +123,7 @@ func TestNewProjFromPackage(t *testing.T) {
 		t.Errorf("Failed to parse project: %v", err)
 	}
 
-	pkg, err := proj.NewPackage("somepkg", os.Stdout, os.Stderr)
+	pkg, err := proj.NewPackageCreate("somepkg", os.Stdout, os.Stderr)
 	if err != nil {
 		t.Errorf("Failed to create package: %v", err)
 	}
@@ -132,20 +132,33 @@ func TestNewProjFromPackage(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to create tempdir: %v", err)
 	}
+
+	for i := 0; i < 2; i++ {
+		os.RemoveAll(workPath)
+
+		var projFromPkg *Project
+		if i == 1 {
+			projFromPkg, err = NewProjectFromPackage(pkg.AbsTarballPath(),
+				workPath, PkgOptUseHostOS())
+
+		} else {
+			projFromPkg, err = NewProjectFromPackage(pkg.AbsTarballPath(),
+				workPath)
+		}
+		if err != nil {
+			t.Fatalf("Failed to instantiate project: %v", err)
+		}
+		defer os.RemoveAll(workPath)
+
+		fmt.Printf("proj is %v\n", projFromPkg)
+		if projFromPkg.Desc.Name != proj.Desc.Name ||
+			len(projFromPkg.Desc.Services) != 1 ||
+			len(projFromPkg.Desc.Services[0].Rpcs) != 1 ||
+			projFromPkg.Desc.Services[0].Rpcs[0] !=
+				proj.Desc.Services[0].Rpcs[0] {
+			t.Errorf("Unexpected projFromPkg: %v", projFromPkg.String())
+		}
+	}
+
 	os.RemoveAll(workPath)
-
-	projFromPkg, err := NewProjectFromPackage(pkg.AbsTarballPath(), workPath)
-	if err != nil {
-		t.Fatalf("Failed to instantiate project: %v", err)
-	}
-	defer os.RemoveAll(workPath)
-
-	fmt.Printf("proj is %v\n", projFromPkg)
-	if projFromPkg.Desc.Name != proj.Desc.Name ||
-		len(projFromPkg.Desc.Services) != 1 ||
-		len(projFromPkg.Desc.Services[0].Rpcs) != 1 ||
-		projFromPkg.Desc.Services[0].Rpcs[0] !=
-			proj.Desc.Services[0].Rpcs[0] {
-		t.Errorf("Unexpected projFromPkg: %v", projFromPkg.String())
-	}
 }

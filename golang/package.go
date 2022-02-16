@@ -252,7 +252,7 @@ func (pkg *Package) Deploy(opts ...DeployOption) error {
 	return pkg.DeployViaGoSwagger(opts...)
 }
 
-func fillOptions(opts ...DeployOption) *deployOptions {
+func fillDeployOptions(opts ...DeployOption) *deployOptions {
 	options := &deployOptions{
 		httpClient: http.DefaultClient,
 	}
@@ -267,7 +267,7 @@ func fillOptions(opts ...DeployOption) *deployOptions {
 
 // Deploy() implemented using protojson & http.Post()
 func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
-	deployOpts := fillOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
@@ -321,7 +321,7 @@ func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
 // Deploy() implemented using a client generated with openapi-generator:
 //   https://github.com/OpenAPITools/openapi-generator
 func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
-	deployOpts := fillOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
@@ -367,7 +367,7 @@ func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
 // Deploy() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
 func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
-	deployOpts := fillOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
@@ -408,7 +408,7 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 // Delete() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
 func Delete(packageId string, opts ...DeployOption) error {
-	deployOpts := fillOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	deletePackageReq := &models.DeletePackageRequest{
 		PackageID: packageId,
@@ -437,7 +437,7 @@ func Delete(packageId string, opts ...DeployOption) error {
 //  https://github.com/go-swagger/go-swagger
 func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply, error) {
 
-	deployOpts := fillOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	describePackageReq := &models.DescribePackageRequest{
 		PackageID: packageId,
@@ -481,7 +481,7 @@ func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply,
 func List(projName string,
 	opts ...DeployOption) ([]pb.ListPackagesReply_ListPackagesItem, error) {
 
-	deployOpts := fillOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	listPackagesReq := &models.ListPackagesRequest{
 		ProjectName: projName,
@@ -510,9 +510,44 @@ func List(projName string,
 	return itemList, nil
 }
 
+type pkgOptions struct {
+	useHostOS bool
+}
+
+type PkgOption func(*pkgOptions) *pkgOptions
+
+// PkgOptUseHostOS() instructs NewProjectFromPackage() to utilize tar&xz
+// from the host operating system directly rather than the default behavior
+// of utilizing them via the Bopmatic Build container. It is the caller's
+// responsibility to ensure tar&xz are installed on the host OS when utilizing
+// this option.
+func PkgOptUseHostOS() PkgOption {
+	return func(po *pkgOptions) *pkgOptions {
+		po.useHostOS = true
+
+		return po
+	}
+}
+
+func fillPkgOptions(opts ...PkgOption) *pkgOptions {
+	options := &pkgOptions{
+		useHostOS: false,
+	}
+	for _, optApplyFunc := range opts {
+		if optApplyFunc != nil {
+			options = optApplyFunc(options)
+		}
+	}
+
+	return options
+}
+
 // NewProjectFromPackage instantiates a new Project instance from the specified
 // package file
-func NewProjectFromPackage(pkgFile string, projRoot string) (*Project, error) {
+func NewProjectFromPackage(pkgFile string, projRoot string,
+	opts ...PkgOption) (*Project, error) {
+
+	pkgOpts := fillPkgOptions(opts...)
 
 	curWd, err := os.Getwd()
 	if err != nil {
@@ -555,9 +590,15 @@ func NewProjectFromPackage(pkgFile string, projRoot string) (*Project, error) {
 	}
 
 	tmpDirBase := path.Base(tmpDir)
-	err = util.RunContainerCommand(context.Background(),
-		[]string{"tar", "-Jxvf", pkgFileBase, "-C", tmpDirBase}, os.Stdout,
-		os.Stdout)
+	if pkgOpts.useHostOS {
+		err = util.RunHostCommand(context.Background(),
+			[]string{"tar", "-Jxvf", pkgFileBase, "-C", tmpDirBase}, os.Stdout,
+			os.Stdout)
+	} else {
+		err = util.RunContainerCommand(context.Background(),
+			[]string{"tar", "-Jxvf", pkgFileBase, "-C", tmpDirBase}, os.Stdout,
+			os.Stdout)
+	}
 	if err != nil {
 		_ = os.Chdir(curWd)
 		return nil, err
