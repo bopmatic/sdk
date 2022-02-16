@@ -3,6 +3,7 @@ package golang
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"testing"
 )
@@ -71,4 +72,31 @@ func TestProject(t *testing.T) {
 				idx, tCase.Name(), proj.HashString(), expectedSuccessStr, proj.String())
 		}
 	}
+}
+
+func TestProjectName(t *testing.T) {
+	goodNames := []string{"foo", "barreaasdfasdfasdfasdfreallylongname", "SomeNameWithCaps"}
+	for _, name := range goodNames {
+		isGood, err := IsGoodProjectName(name)
+		if err != nil || isGood == false {
+			t.Errorf("IsGoodProjectName(%v) failed but should have succeeded: %v",
+				name, err)
+		}
+	}
+
+	workPath, err := ioutil.TempDir(".", "test")
+	if err != nil {
+		t.Errorf("Failed to create tempdir: %v", err)
+	}
+
+	badNames := []string{"", ",@#$", "name.withperiod", workPath}
+	for _, name := range badNames {
+		isGood, err := IsGoodProjectName(name)
+		if err == nil || isGood == true {
+			t.Errorf("IsGoodProjectName(%v) succeeded but should have failed: %v",
+				name, err)
+		}
+	}
+
+	os.RemoveAll(workPath)
 }
