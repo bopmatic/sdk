@@ -77,6 +77,10 @@ func IsGoodProjectName(projectName string) (bool, error) {
 		return false,
 			fmt.Errorf("Project names containing a '.' are not yet supported")
 	}
+	if strings.ContainsRune(projectName, '_') {
+		return false,
+			fmt.Errorf("Project names containing an '_' are not yet supported")
+	}
 	url, err := url.ParseRequestURI("https://" + projectName + ".bopmatic.com")
 	if err != nil {
 		return false, fmt.Errorf("%v.bopmatic.com is not a valid endpoint",

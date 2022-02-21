@@ -89,7 +89,8 @@ func TestProjectName(t *testing.T) {
 		t.Errorf("Failed to create tempdir: %v", err)
 	}
 
-	badNames := []string{"", ",@#$", "name.withperiod", workPath}
+	badNames := []string{"", ",@#$", "name.withperiod", workPath,
+		"name_withunderscore"}
 	for _, name := range badNames {
 		isGood, err := IsGoodProjectName(name)
 		if err == nil || isGood == true {
