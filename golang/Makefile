@@ -16,6 +16,19 @@ go.sum vendor: go.mod openapi goswag.generated pb/sr.pb.go pb/sr_grpc.pb.go
 	go mod vendor
 	go mod tidy
 
+# swagger install via:
+# dir=$(mktemp -d) 
+# git clone https://github.com/go-swagger/go-swagger "$dir" 
+# cd "$dir"
+# go mod vendor
+# go install ./cmd/swagger
+
+# protoc-gen-openapiv2 install via:
+# GOFLAGS='' go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+
+# jq install:
+# sudo apt install jq
+
 goswag.generated: pb/sr.bopmatic.json
 	swagger generate client -f pb/sr.bopmatic.json -c goswag --default-scheme='https' -A goswag
 	touch goswag.generated
