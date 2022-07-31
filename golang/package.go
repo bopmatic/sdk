@@ -104,24 +104,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	}
 
 	for _, svc := range proj.Desc.Services {
-		dstExeDir := filepath.Join(pkgWorkPath, path.Dir(svc.Executable))
-		err = os.MkdirAll(dstExeDir, 0755)
-		if err != nil {
-			return nil, err
-		}
-		err = util.CopyFileToDir(svc.Executable, dstExeDir)
-		if err != nil {
-			return nil, err
-		}
-
-		dstExePath := filepath.Join(dstExeDir, path.Base(svc.Executable))
-		err = util.RunContainerCommand(context.Background(),
-			[]string{"strip", dstExePath}, stdOut, stdErr)
-		if err != nil {
-			return nil, err
-		}
-
-		err = os.Chmod(dstExePath, 0755)
+		err = copyExecAssets(pkgWorkPath, &svc, stdOut, stdErr)
 		if err != nil {
 			return nil, err
 		}
@@ -173,6 +156,38 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	}
 
 	return pkg, nil
+}
+
+func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
+	stdErr io.Writer) error {
+
+	if svc.ExecAssets == "" {
+		dstExeDir := filepath.Join(pkgWorkPath, path.Dir(svc.Executable))
+		err := os.MkdirAll(dstExeDir, 0755)
+		if err != nil {
+			return err
+		}
+		err = util.CopyFileToDir(svc.Executable, dstExeDir)
+		if err != nil {
+			return err
+		}
+
+		dstExePath := filepath.Join(dstExeDir, path.Base(svc.Executable))
+		err = util.RunContainerCommand(context.Background(),
+			[]string{"strip", dstExePath}, stdOut, stdErr)
+		if err != nil {
+			return err
+		}
+
+		err = os.Chmod(dstExePath, 0755)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	} // else
+
+	return util.CopyDir(svc.ExecAssets, pkgWorkPath)
 }
 
 func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {

@@ -38,9 +38,9 @@ type Service struct {
 	ApiDefinition string `yaml:"apidef"`
 	Port          uint64 `yaml:"port"`
 	Executable    string `yaml:"executable"`
+	ExecAssets    string `yaml:"executable_assets"`
 
-	Rpcs       []string
-	ImportPath string
+	Rpcs []string
 }
 
 // ProjectDesc see Project for a complete description
@@ -124,8 +124,10 @@ func (proj *Project) String() string {
 		}
 		sb.WriteString(fmt.Sprintf("\t\tApiDef: %v\n", svc.ApiDefinition))
 		sb.WriteString(fmt.Sprintf("\t\tPort: %v\n", svc.Port))
-		sb.WriteString(fmt.Sprintf("\t\tImportPath: %v\n", svc.ImportPath))
 		sb.WriteString(fmt.Sprintf("\t\tExecutable: %v\n", svc.Executable))
+		if svc.ExecAssets != "" {
+			sb.WriteString(fmt.Sprintf("\t\tExecAssets: %v\n", svc.ExecAssets))
+		}
 		sb.WriteString(fmt.Sprintf("\t\tRpcs: %v\n", len(svc.Rpcs)))
 		for idx2, funcName := range svc.Rpcs {
 			sb.WriteString(fmt.Sprintf("\t\tRpc[%v]: %v\n", idx2, funcName))
@@ -166,7 +168,7 @@ func parseProject(projFile string) (*Project, error) {
 	return &proj, nil
 }
 
-func (svc *Service) populateRpcsAndImportPath(svcName string,
+func (svc *Service) populateRpcs(svcName string,
 	protoFileName string,
 	protoFileInput io.Reader) error {
 
@@ -205,18 +207,6 @@ func (svc *Service) populateRpcsAndImportPath(svcName string,
 	if len(svc.Rpcs) == 0 {
 		return fmt.Errorf("Service %v in %v must define at least 1 RPC", svcName,
 			protoFileName)
-	}
-
-	for _, opt := range up.ProtoBody.Options {
-		if opt.OptionName == "go_package" {
-			svc.ImportPath = opt.Constant
-			break
-		}
-	}
-
-	if svc.ImportPath == "" {
-		return fmt.Errorf("API def(%v) for service %v missing go_package import",
-			protoFileName, svcName)
 	}
 
 	return nil
@@ -269,7 +259,6 @@ func (proj *Project) validateProject(projFile string) error {
 		if svc.Executable == "" {
 			return fmt.Errorf(missingFieldFmt, "Service", svc.Name, "executable")
 		}
-
 		for portIdx, port := range usedPorts {
 			if svc.Port == port {
 				return fmt.Errorf("Service %v port %v conflicts with service %v",
@@ -285,7 +274,7 @@ func (proj *Project) validateProject(projFile string) error {
 		}
 		defer file.Close()
 
-		err = svc.populateRpcsAndImportPath(svc.Name, svc.ApiDefinition, file)
+		err = svc.populateRpcs(svc.Name, svc.ApiDefinition, file)
 		if err != nil {
 			return err
 		}
