@@ -30,7 +30,11 @@ func CopyFile(src string, dst string) error {
 		}
 	}
 
-	err = ioutil.WriteFile(dst, content, 0644)
+	statbuf, err := os.Stat(src)
+	if err != nil {
+		return fmt.Errorf("Failed to read %v: %w", src, err)
+	}
+	err = ioutil.WriteFile(dst, content, statbuf.Mode())
 	if err != nil {
 		return fmt.Errorf("Failed to write %v: %w", dst, err)
 	}
