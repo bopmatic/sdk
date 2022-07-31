@@ -76,44 +76,53 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		WorkingDir: pwd,
 	}
 
-	resp, err := cli.ContainerCreate(ctx, containerConfig, hostConfig, nil,
-		nil, "")
-	if err != nil {
-		return fmt.Errorf("Failed to create container: %w", err)
-	}
-
-	err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{})
-	if err != nil {
-		return fmt.Errorf("Failed to run container: %w", err)
-	}
-
-	logOutputOpts := types.ContainerLogsOptions{
-		ShowStdout: true,
-		ShowStderr: true,
-		Follow:     true,
-	}
-	logOutput, err := cli.ContainerLogs(ctx, resp.ID, logOutputOpts)
-	if err != nil {
-		return fmt.Errorf("Failed to get container output: %w", err)
-	}
-	defer logOutput.Close()
-
-	// the container's stdout and stderr are muxed into a Docker specific
-	// output format; so we demux them here
-	stdcopy.StdCopy(stdOut, stdErr, logOutput)
-
-	statusCh, errCh := cli.ContainerWait(ctx, resp.ID,
-		container.WaitConditionNotRunning)
-	select {
-	case err := <-errCh:
+	// retry due to occasional spurious 'container not found'
+	for {
+		resp, err := cli.ContainerCreate(ctx, containerConfig, hostConfig, nil,
+			nil, "")
 		if err != nil {
-			return fmt.Errorf("Container run failed: %w\n", err)
+			return fmt.Errorf("Failed to create container: %w", err)
 		}
-	case status := <-statusCh:
-		if status.StatusCode != 0 {
-			return fmt.Errorf("%v failed with status:%v", cmdAndArgs[0],
-				status.StatusCode)
+
+		err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{})
+		if err != nil {
+			return fmt.Errorf("Failed to start container: %w", err)
 		}
+
+		logOutputOpts := types.ContainerLogsOptions{
+			ShowStdout: true,
+			ShowStderr: true,
+			Follow:     true,
+		}
+		logOutput, err := cli.ContainerLogs(ctx, resp.ID, logOutputOpts)
+		if err != nil {
+			return fmt.Errorf("Failed to get container output: %w", err)
+		}
+		defer logOutput.Close()
+
+		// the container's stdout and stderr are muxed into a Docker specific
+		// output format; so we demux them here
+		stdcopy.StdCopy(stdOut, stdErr, logOutput)
+
+		statusCh, errCh := cli.ContainerWait(ctx, resp.ID,
+			container.WaitConditionRemoved)
+		select {
+		case err := <-errCh:
+			if err != nil {
+				if dockerClient.IsErrNotFound(err) {
+					continue
+				}
+
+				return fmt.Errorf("Container run failed: %w\n", err)
+			}
+		case status := <-statusCh:
+			if status.StatusCode != 0 {
+				return fmt.Errorf("%v failed with status:%v", cmdAndArgs[0],
+					status.StatusCode)
+			}
+		}
+
+		break
 	}
 
 	return nil
