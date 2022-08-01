@@ -6,6 +6,7 @@ service ServiceRunner {
   rpc DeletePackage (DeletePackageRequest) returns (DeletePackageReply) {}
   rpc ListPackages (ListPackagesRequest) returns (ListPackagesReply) {}
   rpc DeployPackage (DeployPackageRequest) returns (DeployPackageReply) {}
+  rpc GetUploadURL (GetUploadURLRequest) returns (GetUploadURLReply) {}
 }
 
 enum PackageState {
@@ -27,8 +28,10 @@ message PackageDescription {
   string projectName = 1;        // name of the Bopmatic project; must be unique
   string packageId = 2;          // hex string of first 4 bytes of packageXsum
   bytes packageXsum = 3;         // sha256 checksum of packageTarballData
-  bytes packageTarballData = 4;  // package tarball content in .tar.xz format
+  bytes packageTarballData = 4;  // package tarball content in .tar.xz format (limited to 6MiB);
   string packageName = 5;        // user prescribed name; may not be unique; may be empty string
+  string packageTarballURL = 6;  // URL to package tarball (when larger than 6MiB)
+  // packageTarballData and packageTarballURL are mutually exclusive
 }
 
 message DeployPackageRequest {
@@ -69,4 +72,12 @@ message DeletePackageRequest {
 
 message DeletePackageReply {
   PackageState state = 1;
+}
+
+message GetUploadURLRequest {
+  string key = 1;
+}
+
+message GetUploadURLReply {
+  string URL = 1;
 }
