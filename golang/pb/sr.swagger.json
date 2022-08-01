@@ -112,6 +112,38 @@
         ]
       }
     },
+    "/ServiceRunner/GetUploadURL": {
+      "post": {
+        "operationId": "GetUploadURL",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetUploadURLReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetUploadURLRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/ListPackages": {
       "post": {
         "operationId": "ListPackages",
@@ -207,6 +239,22 @@
         }
       }
     },
+    "GetUploadURLReply": {
+      "type": "object",
+      "properties": {
+        "URL": {
+          "type": "string"
+        }
+      }
+    },
+    "GetUploadURLRequest": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        }
+      }
+    },
     "ListPackagesReply": {
       "type": "object",
       "properties": {
@@ -255,6 +303,9 @@
           "format": "byte"
         },
         "packageName": {
+          "type": "string"
+        },
+        "packageTarballURL": {
           "type": "string"
         }
       }

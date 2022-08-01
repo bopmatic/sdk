@@ -1,5 +1,4 @@
 .gitignore
-.openapi-generator-ignore
 .travis.yml
 README.md
 api/openapi.yaml
@@ -12,6 +11,8 @@ docs/DeployPackageReply.md
 docs/DeployPackageRequest.md
 docs/DescribePackageReply.md
 docs/DescribePackageRequest.md
+docs/GetUploadURLReply.md
+docs/GetUploadURLRequest.md
 docs/ListPackagesReply.md
 docs/ListPackagesReplyListPackagesItem.md
 docs/ListPackagesRequest.md
@@ -29,6 +30,8 @@ model_deploy_package_reply.go
 model_deploy_package_request.go
 model_describe_package_reply.go
 model_describe_package_request.go
+model_get_upload_url_reply.go
+model_get_upload_url_request.go
 model_list_packages_reply.go
 model_list_packages_reply_list_packages_item.go
 model_list_packages_request.go

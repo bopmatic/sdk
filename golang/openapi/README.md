@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
 *ServiceRunnerApi* | [**DeletePackage**](docs/ServiceRunnerApi.md#deletepackage) | **Post** /ServiceRunner/DeletePackage | 
 *ServiceRunnerApi* | [**DeployPackage**](docs/ServiceRunnerApi.md#deploypackage) | **Post** /ServiceRunner/DeployPackage | 
 *ServiceRunnerApi* | [**DescribePackage**](docs/ServiceRunnerApi.md#describepackage) | **Post** /ServiceRunner/DescribePackage | 
+*ServiceRunnerApi* | [**GetUploadURL**](docs/ServiceRunnerApi.md#getuploadurl) | **Post** /ServiceRunner/GetUploadURL | 
 *ServiceRunnerApi* | [**ListPackages**](docs/ServiceRunnerApi.md#listpackages) | **Post** /ServiceRunner/ListPackages | 
 
 
@@ -92,6 +93,8 @@ Class | Method | HTTP request | Description
  - [DeployPackageRequest](docs/DeployPackageRequest.md)
  - [DescribePackageReply](docs/DescribePackageReply.md)
  - [DescribePackageRequest](docs/DescribePackageRequest.md)
+ - [GetUploadURLReply](docs/GetUploadURLReply.md)
+ - [GetUploadURLRequest](docs/GetUploadURLRequest.md)
  - [ListPackagesReply](docs/ListPackagesReply.md)
  - [ListPackagesReplyListPackagesItem](docs/ListPackagesReplyListPackagesItem.md)
  - [ListPackagesRequest](docs/ListPackagesRequest.md)

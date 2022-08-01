@@ -21,6 +21,7 @@ type PackageDescription struct {
 	PackageXsum *string `json:"packageXsum,omitempty"`
 	PackageTarballData *string `json:"packageTarballData,omitempty"`
 	PackageName *string `json:"packageName,omitempty"`
+	PackageTarballURL *string `json:"packageTarballURL,omitempty"`
 }
 
 // NewPackageDescription instantiates a new PackageDescription object
@@ -200,6 +201,38 @@ func (o *PackageDescription) SetPackageName(v string) {
 	o.PackageName = &v
 }
 
+// GetPackageTarballURL returns the PackageTarballURL field value if set, zero value otherwise.
+func (o *PackageDescription) GetPackageTarballURL() string {
+	if o == nil || o.PackageTarballURL == nil {
+		var ret string
+		return ret
+	}
+	return *o.PackageTarballURL
+}
+
+// GetPackageTarballURLOk returns a tuple with the PackageTarballURL field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PackageDescription) GetPackageTarballURLOk() (*string, bool) {
+	if o == nil || o.PackageTarballURL == nil {
+		return nil, false
+	}
+	return o.PackageTarballURL, true
+}
+
+// HasPackageTarballURL returns a boolean if a field has been set.
+func (o *PackageDescription) HasPackageTarballURL() bool {
+	if o != nil && o.PackageTarballURL != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageTarballURL gets a reference to the given string and assigns it to the PackageTarballURL field.
+func (o *PackageDescription) SetPackageTarballURL(v string) {
+	o.PackageTarballURL = &v
+}
+
 func (o PackageDescription) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.ProjectName != nil {
@@ -216,6 +249,9 @@ func (o PackageDescription) MarshalJSON() ([]byte, error) {
 	}
 	if o.PackageName != nil {
 		toSerialize["packageName"] = o.PackageName
+	}
+	if o.PackageTarballURL != nil {
+		toSerialize["packageTarballURL"] = o.PackageTarballURL
 	}
 	return json.Marshal(toSerialize)
 }

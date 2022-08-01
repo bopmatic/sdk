@@ -22,6 +22,7 @@ type ServiceRunnerClient interface {
 	DeletePackage(ctx context.Context, in *DeletePackageRequest, opts ...grpc.CallOption) (*DeletePackageReply, error)
 	ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesReply, error)
 	DeployPackage(ctx context.Context, in *DeployPackageRequest, opts ...grpc.CallOption) (*DeployPackageReply, error)
+	GetUploadURL(ctx context.Context, in *GetUploadURLRequest, opts ...grpc.CallOption) (*GetUploadURLReply, error)
 }
 
 type serviceRunnerClient struct {
@@ -68,6 +69,15 @@ func (c *serviceRunnerClient) DeployPackage(ctx context.Context, in *DeployPacka
 	return out, nil
 }
 
+func (c *serviceRunnerClient) GetUploadURL(ctx context.Context, in *GetUploadURLRequest, opts ...grpc.CallOption) (*GetUploadURLReply, error) {
+	out := new(GetUploadURLReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/GetUploadURL", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceRunnerServer is the server API for ServiceRunner service.
 // All implementations must embed UnimplementedServiceRunnerServer
 // for forward compatibility
@@ -76,6 +86,7 @@ type ServiceRunnerServer interface {
 	DeletePackage(context.Context, *DeletePackageRequest) (*DeletePackageReply, error)
 	ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesReply, error)
 	DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error)
+	GetUploadURL(context.Context, *GetUploadURLRequest) (*GetUploadURLReply, error)
 	mustEmbedUnimplementedServiceRunnerServer()
 }
 
@@ -94,6 +105,9 @@ func (UnimplementedServiceRunnerServer) ListPackages(context.Context, *ListPacka
 }
 func (UnimplementedServiceRunnerServer) DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeployPackage not implemented")
+}
+func (UnimplementedServiceRunnerServer) GetUploadURL(context.Context, *GetUploadURLRequest) (*GetUploadURLReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUploadURL not implemented")
 }
 func (UnimplementedServiceRunnerServer) mustEmbedUnimplementedServiceRunnerServer() {}
 
@@ -180,6 +194,24 @@ func _ServiceRunner_DeployPackage_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceRunner_GetUploadURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUploadURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).GetUploadURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/GetUploadURL",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).GetUploadURL(ctx, req.(*GetUploadURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceRunner_ServiceDesc is the grpc.ServiceDesc for ServiceRunner service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -202,6 +234,10 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeployPackage",
 			Handler:    _ServiceRunner_DeployPackage_Handler,
+		},
+		{
+			MethodName: "GetUploadURL",
+			Handler:    _ServiceRunner_GetUploadURL_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

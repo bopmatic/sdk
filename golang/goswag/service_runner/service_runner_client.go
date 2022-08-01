@@ -34,6 +34,8 @@ type ClientService interface {
 
 	DescribePackage(params *DescribePackageParams, opts ...ClientOption) (*DescribePackageOK, error)
 
+	GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error)
+
 	ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
@@ -147,6 +149,43 @@ func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOp
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*DescribePackageDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+  GetUploadURL get upload URL API
+*/
+func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetUploadURLParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "GetUploadURL",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/GetUploadURL",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetUploadURLReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetUploadURLOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetUploadURLDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

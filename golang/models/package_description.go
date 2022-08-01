@@ -27,6 +27,9 @@ type PackageDescription struct {
 	// Format: byte
 	PackageTarballData strfmt.Base64 `json:"packageTarballData,omitempty"`
 
+	// package tarball URL
+	PackageTarballURL string `json:"packageTarballURL,omitempty"`
+
 	// package xsum
 	// Format: byte
 	PackageXsum strfmt.Base64 `json:"packageXsum,omitempty"`
