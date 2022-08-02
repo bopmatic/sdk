@@ -379,6 +379,29 @@ func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
 	return nil
 }
 
+func uploadToURL(url string, data []byte) error {
+	req, err := http.NewRequest(http.MethodPut, url, bytes.NewReader(data))
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/x-gtar")
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		errMsg := fmt.Sprintf("HTTP Put failed status:%v headers:%v\n",
+			resp.Status, resp.Header)
+
+		return fmt.Errorf(errMsg)
+	}
+
+	return nil
+}
+
 // Deploy() implemented using a client generated with go-swagger:
 //  https://github.com/go-swagger/go-swagger
 func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
@@ -390,6 +413,25 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 		return err
 	}
 
+	uploadUrlReq := &models.GetUploadURLRequest{
+		Key: path.Base(pkg.TarballPath),
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	uploadUrlParams := service_runner.NewGetUploadURLParams().
+		WithBody(uploadUrlReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+	uploadUrlResp, err := client.ServiceRunner.GetUploadURL(uploadUrlParams)
+	if err != nil {
+		return fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	uploadUrlReply := uploadUrlResp.GetPayload()
+	err = uploadToURL(uploadUrlReply.URL, tarballData)
+	if err != nil {
+		return err
+	}
+
 	deployPackageReq := &models.DeployPackageRequest{
 		Desc: &models.PackageDescription{
 			ProjectName: pkg.Proj.Desc.Name,
@@ -397,16 +439,13 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 			PackageName: pkg.Name,
 			// go-swagger will base64 encode byte fields so caller does
 			// not have to
-			PackageXsum:        pkg.Xsum,
-			PackageTarballData: tarballData,
+			PackageXsum:       pkg.Xsum,
+			PackageTarballURL: uploadUrlReply.URL,
 		},
 	}
 
-	// default endpoint is inferred from host field in sr.bopmatic.json
 	deployPackageParams := service_runner.NewDeployPackageParams().
 		WithBody(deployPackageReq).WithHTTPClient(deployOpts.httpClient)
-	config := goswag.DefaultTransportConfig()
-	client := goswag.NewHTTPClientWithConfig(nil, config)
 	resp, err := client.ServiceRunner.DeployPackage(deployPackageParams)
 	if err != nil {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
