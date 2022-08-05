@@ -187,7 +187,8 @@ func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
 		return nil
 	} // else
 
-	return util.CopyDir(svc.ExecAssets, pkgWorkPath)
+	return util.CopyDir(svc.ExecAssets,
+		filepath.Join(pkgWorkPath, path.Base(svc.ExecAssets)))
 }
 
 func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {
