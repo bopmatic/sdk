@@ -25,6 +25,24 @@ const DefaultProjectFilename = "Bopmatic.yaml"
 const DefaultArtifactDir = ".bopmatic"
 const PackagesSubdir = "pkgs"
 
+// DatabaseTable is a representation of persistent state organized by a set of
+// related key/value pairs.
+type DatabaseTable struct {
+	Name        string `yaml:"name"`
+	Description string `yaml:"desc"`
+}
+
+// Database is a group of DatabaseTables accessible by one or more services.
+// Running services may access databases by employing the DAPR state store APIs
+// via the SDK of the user's preferred programming language. See
+// https://docs.dapr.io/developing-applications/sdks/ for further detail.
+type Database struct {
+	Name        string          `yaml:"name"`
+	Description string          `yaml:"desc"`
+	Tables      []DatabaseTable `yaml:"tables"`
+	Services    []string        `yaml:"services_access"`
+}
+
 // Service is a representation of an individual service defined within
 // a Bopmatic project. This includes its name, a short description, a link
 // to the set of APIs it defines, and the port it should run on. Fields marked
@@ -45,11 +63,12 @@ type Service struct {
 
 // ProjectDesc see Project for a complete description
 type ProjectDesc struct {
-	Name        string    `yaml:"name"`
-	Description string    `yaml:"desc"`
-	Services    []Service `yaml:"services"`
-	SiteAssets  string    `yaml:"sitedir"`
-	BuildCmd    string    `yaml:"buildcmd"`
+	Name        string     `yaml:"name"`
+	Description string     `yaml:"desc"`
+	Services    []Service  `yaml:"services"`
+	Databases   []Database `yaml:"databases"`
+	SiteAssets  string     `yaml:"sitedir"`
+	BuildCmd    string     `yaml:"buildcmd"`
 
 	Root string
 }
@@ -133,7 +152,27 @@ func (proj *Project) String() string {
 			sb.WriteString(fmt.Sprintf("\t\tRpc[%v]: %v\n", idx2, funcName))
 		}
 	}
-
+	sb.WriteString(fmt.Sprintf("\tDatabases: %v\n", len(proj.Desc.Databases)))
+	for idx, db := range proj.Desc.Databases {
+		sb.WriteString(fmt.Sprintf("\tDatabase[%v]:\n", idx))
+		sb.WriteString(fmt.Sprintf("\t\tName: %v\n", db.Name))
+		if db.Description != "" {
+			sb.WriteString(fmt.Sprintf("\t\tDescription: %v\n", db.Description))
+		}
+		sb.WriteString(fmt.Sprintf("\t\tTables: %v\n", len(db.Tables)))
+		for idx2, tbl := range db.Tables {
+			sb.WriteString(fmt.Sprintf("\t\tTable[%v]:\n", idx2))
+			sb.WriteString(fmt.Sprintf("\t\t\tName: %v\n", tbl.Name))
+			if tbl.Description != "" {
+				sb.WriteString(fmt.Sprintf("\t\t\tDescription: %v\n",
+					tbl.Description))
+			}
+		}
+		sb.WriteString(fmt.Sprintf("\t\tServicesAccess: %v\n", len(db.Services)))
+		for idx2, svc := range db.Services {
+			sb.WriteString(fmt.Sprintf("\t\tService[%v]: %v\n", idx2, svc))
+		}
+	}
 	return sb.String()
 }
 
@@ -280,6 +319,49 @@ func (proj *Project) validateProject(projFile string) error {
 		}
 	}
 
+	for idx, _ := range proj.Desc.Databases {
+		db := &proj.Desc.Databases[idx]
+
+		if db.Name == "" {
+			return fmt.Errorf(missingFieldFmt, "Database in Project",
+				proj.Desc.Name, "name")
+		}
+		if len(db.Tables) == 0 {
+			return fmt.Errorf("Database %v in Project %v must define at least 1 table",
+				db.Name, proj.Desc.Name)
+		}
+
+		for tidx, _ := range db.Tables {
+			tbl := &db.Tables[tidx]
+
+			if tbl.Name == "" {
+				return fmt.Errorf(missingFieldFmt, "Table in Database",
+					db.Name, "name")
+			}
+		}
+
+		if len(db.Services) == 0 {
+			return fmt.Errorf("Database %v in Project %v must define at least 1 service access",
+				db.Name, proj.Desc.Name)
+		}
+
+		var found bool
+		for _, svcAccess := range db.Services {
+			found = false
+			for sidx, _ := range proj.Desc.Services {
+				svc := &proj.Desc.Services[sidx]
+				if svcAccess == svc.Name {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return fmt.Errorf("Database %v in Project %v defines access for service %v but no service named %v is defined",
+					db.Name, proj.Desc.Name, svcAccess, svcAccess)
+			}
+		}
+	}
+
 	return nil
 }
 
@@ -349,6 +431,15 @@ func (proj *Project) RemoveStalePackages() error {
 //     apidef: "pb/orders.proto"
 //     port: 26002
 //     executable: "orders_server"
+//   databases:
+//   - name: "Customers"
+//     desc: "Customer database"
+//     tables:
+//     - name: "ContactDetails"
+//       desc: "Customer names, shipping address, phone, etc."
+//     - name: "Orders"
+//       desc: "Customer orders"
+//     services_access: [ "Greeter" ]
 func NewProject(projFile string) (*Project, error) {
 	proj, err := parseProject(projFile)
 	if err != nil {

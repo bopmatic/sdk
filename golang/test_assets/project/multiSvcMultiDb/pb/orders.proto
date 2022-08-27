@@ -1,0 +1,14 @@
+syntax = "proto3";
+option go_package = "example.com/greeter/pb";
+
+service Orders {
+  rpc PlaceOrder (OrderRequest) returns (OrderReply) {}
+}
+
+message OrderRequest {
+  string item = 1;
+}
+
+message OrderReply {
+  string price = 1;
+}

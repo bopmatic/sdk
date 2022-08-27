@@ -10,3 +10,11 @@ project:
     apidef: "pb/greeter.proto"
     port: 26001
     executable: "greeter_server"
+  databases:
+  - name: "Customers"
+    desc: "Customer database"
+    tables:
+    - desc: "Customer names, shipping address, phone, etc."
+    - name: "Orders"
+      desc: "Customer orders"
+    services_access: [ "Greeter" ]

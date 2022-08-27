@@ -28,19 +28,25 @@ func TestProject(t *testing.T) {
 		"portConflict":       "Service Orders port 26001 conflicts with service Greeter",
 		"missingApiDefField": "Service Greeter definition is missing required field apidef",
 		"missingApiDefFile":  "Failed to open API definition for Service Greeter: open test_assets/project/missingApiDefFile/pb/greeter.proto: no such file or directory",
+		"missingDbName":      "Database in Project Foo definition is missing required field name",
+		"missingDbTable":     "Database Customers in Project Foo must define at least 1 table",
+		"missingDbTableName": "Table in Database Customers definition is missing required field name",
+		"missingDbSvcAccess": "Database Customers in Project Foo must define at least 1 service access",
 		"missingProject":     "Failed to open project test_assets/project/missingProject/Bopmatic.yaml: open test_assets/project/missingProject/Bopmatic.yaml: no such file or directory",
-		"missingImportPath":  "API def(pb/greeter.proto) for service Greeter missing go_package import",
 		"corruptApiDef":      "Failed to parse pb/greeter.proto for service Greeter: found \"CORRUPT\" but expected [;]",
 		"missingBuildCmd":    "Project Foo definition is missing required field buildcmd",
 		"missingExecutable":  "Service Greeter definition is missing required field executable",
+		"noSuchDbSvcAccess":  "Database Customers in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
 	}
 	expectedSuccesses := map[string]string{
-		"multiSvcMultiRpc": "cn7GaJqd3zqPJsx6F2euLuoXahW8XHC7G_JRm5SIBfQ=",
-		"multiSvcOneRpc":   "E-m0AfUJSpvti1qurplY-eZf0cv12skjJLpBGU0X9pU=",
-		"oneSvcMultiRpc":   "i5qL8eKF3SDB7tZGEwtIfe7P2qAw_6T2lelE4ckpaaA=",
-		"oneSvcOneRpc":     "26QkvHShlN_W_UP_LfGl0kQt-Lbp7WY7o8fL9iLCnlE=",
-		"staticOnly":       "fhioOjBw0HMxpHYiRl8VIfvctOP_Vl6fE3iIlzwwCg4=",
-		"svcsOnly":         "iSI_fvhubpBlSil2g0Sx83oQEWKvS8956qzXSKIfLxc=",
+		"multiSvcMultiDb":  "qmw1EEvv6ElphVdobA1aowMC6OPAPe-NRCEc-Tz1ofE=",
+		"multiSvcMultiRpc": "bqhsBRoQ8DkBq3J4PcTJ-yS0XlQnN4NTEt_ljAI84y0=",
+		"multiSvcOneRpc":   "L3AMBkLJ9mcGOS_EdLjhh6j1eCbKGg7-Xgc2R-T3KGU=",
+		"oneSvcOneDb":      "xue3VPpRy1iLEhgm-lHEFjUsGdvq82rtV2EurLKCTOE=",
+		"oneSvcMultiRpc":   "grCSNtGtcIU4wgCzc7EWKE7chxlzvq0rlJzPQqu1lfo=",
+		"oneSvcOneRpc":     "oAantAxe_EmpZa9FShPEiML968ODqs84mbFpH9ErhaQ=",
+		"staticOnly":       "j-yzmjEWgOi4ybhNGY5j1DAKFoALFt62HFU20CjEfWI=",
+		"svcsOnly":         "m1Wo0vRbEOE8KMg3kzvdxIQIHp6-81ugYYxdXrLwAbQ=",
 	}
 
 	for idx, tCase := range testCases {
