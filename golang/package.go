@@ -54,7 +54,9 @@ func (pkg *Package) String() string {
 // non-trivial since golang's os.Stat() doesn't return st_atim and os.Chtimes()
 // isn't nanosecond precision
 func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
-	stdErr io.Writer) (*Package, error) {
+	stdErr io.Writer, opts ...PkgOption) (*Package, error) {
+
+	pkgOpts := fillPkgOptions(opts...)
 
 	curWd, err := os.Getwd()
 	if err != nil {
@@ -104,7 +106,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	}
 
 	for _, svc := range proj.Desc.Services {
-		err = copyExecAssets(pkgWorkPath, &svc, stdOut, stdErr)
+		err = copyExecAssets(pkgWorkPath, &svc, stdOut, stdErr, pkgOpts)
 		if err != nil {
 			return nil, err
 		}
@@ -121,9 +123,15 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	}
 
 	tarFileName := filepath.Join(workPath, "pkg.tar.xz")
-	err = util.RunContainerCommand(context.Background(),
-		[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
-		stdOut, stdErr)
+	if pkgOpts.useHostOS {
+		err = util.RunHostCommand(context.Background(),
+			[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
+			stdOut, stdErr)
+	} else {
+		err = util.RunContainerCommand(context.Background(),
+			[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
+			stdOut, stdErr)
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -159,7 +167,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 }
 
 func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
-	stdErr io.Writer) error {
+	stdErr io.Writer, pkgOpts *pkgOptions) error {
 
 	if svc.ExecAssets == "" {
 		dstExeDir := filepath.Join(pkgWorkPath, path.Dir(svc.Executable))
@@ -173,8 +181,13 @@ func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
 		}
 
 		dstExePath := filepath.Join(dstExeDir, path.Base(svc.Executable))
-		err = util.RunContainerCommand(context.Background(),
-			[]string{"strip", dstExePath}, stdOut, stdErr)
+		if pkgOpts.useHostOS {
+			err = util.RunHostCommand(context.Background(),
+				[]string{"strip", dstExePath}, stdOut, stdErr)
+		} else {
+			err = util.RunContainerCommand(context.Background(),
+				[]string{"strip", dstExePath}, stdOut, stdErr)
+		}
 		if err != nil {
 			return err
 		}

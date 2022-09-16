@@ -1,0 +1,48 @@
+# https://circleci.com/docs/2.0/configuration-reference
+version: 2.1
+
+# https://circleci.com/docs/2.0/configuration-reference/#jobs
+jobs:
+  build:
+    working_directory: ~/repo
+    # https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: bopmatic/build:latest
+    # https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - go-mod-v4-take2-{{ checksum "golang/go.sum" }}
+      - run:
+          name: Install Dependencies
+          command: |
+            GOFLAGS="" go install github.com/go-swagger/go-swagger/cmd/swagger@latest
+            GOFLAGS="" go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
+            cd golang; make vendor
+      - save_cache:
+          key: go-mod-v4-take2-{{ checksum "golang/go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+            - "$HOME/go"
+      - run:
+          name: Build
+          command: |
+            cd golang; PATH=$PATH:$HOME/go/bin make build
+      - run:
+          name: Run tests
+          command: cd golang; make unit-tests.xml
+      - store_test_results:
+          path: golang/unit-tests.xml
+
+# https://circleci.com/docs/2.0/configuration-reference/#workflows
+workflows:
+  version: 2
+  build-and-release:
+    jobs:
+      - build:
+          context:
+            - global
+          filters:
+            branches:
+              only: main

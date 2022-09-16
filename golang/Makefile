@@ -8,9 +8,16 @@ build: goswag.generated vendor openapi FORCE
 	go build
 	go build github.com/bopmatic/sdk/golang/util
 
+# https://git.wiki.kernel.org/index.php/GitFaq#Can_I_add_empty_directories.3F
+test_assets/project/emptySiteAssets/siteAssetsEmpty:
+	mkdir test_assets/project/emptySiteAssets/siteAssetsEmpty
+
 .PHONY: test
-test: build FORCE
+test: build test_assets/project/emptySiteAssets/siteAssetsEmpty FORCE
 	go test -v
+
+unit-tests.xml: test_assets/project/emptySiteAssets/siteAssetsEmpty FORCE
+	gotestsum --junitfile unit-tests.xml
 
 vendor: go.mod
 	go mod download
@@ -46,7 +53,7 @@ pb/sr.bopmatic.json: pb/sr.swagger.json
 	jq '{"host":"api.bopmatic.com"} + .' pb/sr.swagger.json | jq '{"schemes":["https"]} + .' > pb/sr.bopmatic.json
 
 openapi-generator-cli.jar:
-	wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.4.0/openapi-generator-cli-5.4.0.jar -O openapi-generator-cli.jar
+	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.4.0/openapi-generator-cli-5.4.0.jar --output openapi-generator-cli.jar
 
 .PHONY: openapi
 openapi: openapi-generator-cli.jar pb/sr.bopmatic.json

@@ -2,5 +2,6 @@
 /golang/test_assets/package/stub/.bopmatic/
 /golang/openapi-generator-cli.jar
 /golang/truststore.pem
+/golang/unit-tests.xml
 /golang/user.cert.pem
 /golang/user.key.pem

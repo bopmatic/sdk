@@ -395,9 +395,9 @@ func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
 // to submit to Bopmatic's ServiceRunner for deployment. Upon success a Package
 // instance is returned.
 func (proj *Project) NewPackageCreate(pkgName string, stdOut io.Writer,
-	stdErr io.Writer) (*Package, error) {
+	stdErr io.Writer, opts ...PkgOption) (*Package, error) {
 
-	return NewPackage(pkgName, proj, stdOut, stdErr)
+	return NewPackage(pkgName, proj, stdOut, stdErr, opts...)
 }
 
 func (proj *Project) NewPackageExisting(pkgId string) (*Package, error) {

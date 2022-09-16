@@ -32,9 +32,9 @@ func TestDeployPackage(t *testing.T) {
 			t.Errorf("Failed to parse project: %v", err)
 		}
 
-		pkg, err := proj.NewPackageCreate("somepkg", os.Stdout, os.Stderr)
+		pkg, err := proj.NewPackageCreate("somepkg", os.Stdout, os.Stderr, PkgOptUseHostOS())
 		if err != nil {
-			t.Errorf("Failed to create package: %v", err)
+			t.Fatalf("Failed to create package: %v", err)
 		}
 
 		derivedPkgId := hex.EncodeToString(pkg.Xsum)[0:8]
@@ -120,9 +120,9 @@ func TestNewProjFromPackage(t *testing.T) {
 		t.Errorf("Failed to parse project: %v", err)
 	}
 
-	pkg, err := proj.NewPackageCreate("somepkg", os.Stdout, os.Stderr)
+	pkg, err := proj.NewPackageCreate("somepkg", os.Stdout, os.Stderr, PkgOptUseHostOS())
 	if err != nil {
-		t.Errorf("Failed to create package: %v", err)
+		t.Fatalf("Failed to create package: %v", err)
 	}
 
 	workPath, err := ioutil.TempDir(".", "test")
@@ -130,31 +130,23 @@ func TestNewProjFromPackage(t *testing.T) {
 		t.Errorf("Failed to create tempdir: %v", err)
 	}
 
-	for i := 0; i < 2; i++ {
-		os.RemoveAll(workPath)
+	os.RemoveAll(workPath)
 
-		var projFromPkg *Project
-		if i == 1 {
-			projFromPkg, err = NewProjectFromPackage(pkg.AbsTarballPath(),
-				workPath, PkgOptUseHostOS())
+	var projFromPkg *Project
+	projFromPkg, err = NewProjectFromPackage(pkg.AbsTarballPath(),
+		workPath, PkgOptUseHostOS())
+	if err != nil {
+		t.Fatalf("Failed to instantiate project: %v", err)
+	}
+	defer os.RemoveAll(workPath)
 
-		} else {
-			projFromPkg, err = NewProjectFromPackage(pkg.AbsTarballPath(),
-				workPath)
-		}
-		if err != nil {
-			t.Fatalf("Failed to instantiate project: %v", err)
-		}
-		defer os.RemoveAll(workPath)
-
-		fmt.Printf("proj is %v\n", projFromPkg)
-		if projFromPkg.Desc.Name != proj.Desc.Name ||
-			len(projFromPkg.Desc.Services) != 1 ||
-			len(projFromPkg.Desc.Services[0].Rpcs) != 1 ||
-			projFromPkg.Desc.Services[0].Rpcs[0] !=
-				proj.Desc.Services[0].Rpcs[0] {
-			t.Errorf("Unexpected projFromPkg: %v", projFromPkg.String())
-		}
+	fmt.Printf("proj is %v\n", projFromPkg)
+	if projFromPkg.Desc.Name != proj.Desc.Name ||
+		len(projFromPkg.Desc.Services) != 1 ||
+		len(projFromPkg.Desc.Services[0].Rpcs) != 1 ||
+		projFromPkg.Desc.Services[0].Rpcs[0] !=
+			proj.Desc.Services[0].Rpcs[0] {
+		t.Errorf("Unexpected projFromPkg: %v", projFromPkg.String())
 	}
 
 	os.RemoveAll(workPath)
