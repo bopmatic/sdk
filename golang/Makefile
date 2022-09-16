@@ -4,7 +4,7 @@ export GOFLAGS=-mod=vendor
 OPENAPIGENGO=java -jar ./openapi-generator-cli.jar generate -g go -o openapi --git-host github.com --git-user-id bopmatic --git-repo-id sdk/golang/openapi
 
 .PHONY: build
-build: vendor openapi FORCE
+build: goswag.generated vendor openapi FORCE
 	go build
 	go build github.com/bopmatic/sdk/golang/util
 
@@ -12,9 +12,15 @@ build: vendor openapi FORCE
 test: build FORCE
 	go test -v
 
-go.sum vendor: go.mod openapi goswag.generated pb/sr.pb.go pb/sr_grpc.pb.go
+vendor: go.mod
+	go mod download
 	go mod vendor
-	go mod tidy
+
+.PHONY: deps
+deps: goswag.generated openapi
+	rm -rf go.mod go.sum vendor
+	go mod init github.com/bopmatic/sdk/golang
+	GOPROXY=direct go mod tidy
 
 # swagger install via:
 # dir=$(mktemp -d) 
@@ -42,12 +48,13 @@ pb/sr.bopmatic.json: pb/sr.swagger.json
 openapi-generator-cli.jar:
 	wget https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.4.0/openapi-generator-cli-5.4.0.jar -O openapi-generator-cli.jar
 
+.PHONY: openapi
 openapi: openapi-generator-cli.jar pb/sr.bopmatic.json
 	$(OPENAPIGENGO) -i ./pb/sr.bopmatic.json
 	rm openapi/go.mod
 
 .PHONY: clean
 clean:
-	rm -rf go.sum vendor pb/sr.pb.go pb/sr_grpc.pb.go ./test_assets/package/stub/.bopmatic pb/sr.swagger.json pb/sr.bopmatic.json openapi goswag models goswag.generated
+	rm -rf pb/sr.pb.go pb/sr_grpc.pb.go ./test_assets/package/stub/.bopmatic pb/sr.swagger.json pb/sr.bopmatic.json openapi goswag models goswag.generated
 
 FORCE:

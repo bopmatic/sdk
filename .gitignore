@@ -1,4 +1,3 @@
-/golang/go.sum
 /golang/vendor
 /golang/test_assets/package/stub/.bopmatic/
 /golang/openapi-generator-cli.jar
