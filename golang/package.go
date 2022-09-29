@@ -14,6 +14,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"time"
 
 	"google.golang.org/protobuf/encoding/protojson"
 
@@ -26,6 +27,7 @@ import (
 )
 
 const tarRootPath = "pkg"
+const defaultRetries = 10
 
 type Package struct {
 	Proj        *Project
@@ -436,7 +438,19 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 		WithBody(uploadUrlReq).WithHTTPClient(deployOpts.httpClient)
 	config := goswag.DefaultTransportConfig()
 	client := goswag.NewHTTPClientWithConfig(nil, config)
-	uploadUrlResp, err := client.ServiceRunner.GetUploadURL(uploadUrlParams)
+
+	var uploadUrlResp *service_runner.GetUploadURLOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		uploadUrlResp, err = client.ServiceRunner.GetUploadURL(uploadUrlParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
 	if err != nil {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
@@ -460,7 +474,18 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 
 	deployPackageParams := service_runner.NewDeployPackageParams().
 		WithBody(deployPackageReq).WithHTTPClient(deployOpts.httpClient)
-	resp, err := client.ServiceRunner.DeployPackage(deployPackageParams)
+	var resp *service_runner.DeployPackageOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.DeployPackage(deployPackageParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
 	if err != nil {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
@@ -487,7 +512,20 @@ func Delete(packageId string, opts ...DeployOption) error {
 		WithBody(deletePackageReq).WithHTTPClient(deployOpts.httpClient)
 	config := goswag.DefaultTransportConfig()
 	client := goswag.NewHTTPClientWithConfig(nil, config)
-	resp, err := client.ServiceRunner.DeletePackage(deletePackageParams)
+
+	var err error
+	var resp *service_runner.DeletePackageOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.DeletePackage(deletePackageParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
 	if err != nil {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
@@ -516,7 +554,20 @@ func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply,
 		WithBody(describePackageReq).WithHTTPClient(deployOpts.httpClient)
 	config := goswag.DefaultTransportConfig()
 	client := goswag.NewHTTPClientWithConfig(nil, config)
-	resp, err := client.ServiceRunner.DescribePackage(describePackageParams)
+
+	var err error
+	var resp *service_runner.DescribePackageOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.DescribePackage(describePackageParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
 	if err != nil {
 		return nil, fmt.Errorf("Client/HTTP failure: %v", err)
 	}
@@ -560,7 +611,20 @@ func List(projName string,
 		WithBody(listPackagesReq).WithHTTPClient(deployOpts.httpClient)
 	config := goswag.DefaultTransportConfig()
 	client := goswag.NewHTTPClientWithConfig(nil, config)
-	resp, err := client.ServiceRunner.ListPackages(listPackagesParams)
+
+	var err error
+	var resp *service_runner.ListPackagesOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.ListPackages(listPackagesParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
 	if err != nil {
 		return []pb.ListPackagesReply_ListPackagesItem{},
 			fmt.Errorf("Client/HTTP failure: %v", err)
