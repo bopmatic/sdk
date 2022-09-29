@@ -14,6 +14,8 @@ import (
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
+const defaultRetries = 10
+
 const BopmaticBuildImageName = "bopmatic/build:latest"
 const DockerInstallErrMsg = "Could not invoke docker; please double check that you have docker installed: %w"
 
@@ -76,8 +78,11 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		WorkingDir: pwd,
 	}
 
-	// retry due to occasional spurious 'container not found'
-	for {
+	var retErr error
+
+	// retry due to occasional spurious 'container not found' & 'no such file
+	// or directory'
+	for retries := defaultRetries; retries > 0; retries-- {
 		resp, err := cli.ContainerCreate(ctx, containerConfig, hostConfig, nil,
 			nil, "")
 		if err != nil {
@@ -96,7 +101,8 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		}
 		logOutput, err := cli.ContainerLogs(ctx, resp.ID, logOutputOpts)
 		if err != nil {
-			return fmt.Errorf("Failed to get container output: %w", err)
+			retErr = fmt.Errorf("Failed to get container output: %w", err)
+			continue
 		}
 		defer logOutput.Close()
 
@@ -110,6 +116,7 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		case err := <-errCh:
 			if err != nil {
 				if dockerClient.IsErrNotFound(err) {
+					retErr = fmt.Errorf("Container run failed: %w\n", err)
 					continue
 				}
 
@@ -125,5 +132,5 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		break
 	}
 
-	return nil
+	return retErr
 }
