@@ -18,10 +18,6 @@ import (
 	"net/url"
 )
 
-// Linger please
-var (
-	_ context.Context
-)
 
 // ServiceRunnerApiService ServiceRunnerApi service
 type ServiceRunnerApiService service

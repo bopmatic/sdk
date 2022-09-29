@@ -25,7 +25,7 @@ vendor: go.mod
 
 .PHONY: deps
 deps: goswag.generated openapi
-	rm -rf go.mod go.sum vendor
+	rm -rf go.mod go.sum vendor openapi-generator-cli.jar
 	go mod init github.com/bopmatic/sdk/golang
 	GOPROXY=direct go mod tidy
 
@@ -53,7 +53,7 @@ pb/sr.bopmatic.json: pb/sr.swagger.json
 	jq '{"host":"api.bopmatic.com"} + .' pb/sr.swagger.json | jq '{"schemes":["https"]} + .' > pb/sr.bopmatic.json
 
 openapi-generator-cli.jar:
-	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.4.0/openapi-generator-cli-5.4.0.jar --output openapi-generator-cli.jar
+	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.0/openapi-generator-cli-6.2.0.jar --output openapi-generator-cli.jar
 
 .PHONY: openapi
 openapi: openapi-generator-cli.jar pb/sr.bopmatic.json
