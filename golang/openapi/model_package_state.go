@@ -30,6 +30,7 @@ const (
 	DEACTIVATING PackageState = "DEACTIVATING"
 	DELETING PackageState = "DELETING"
 	SUPPORT_NEEDED PackageState = "SUPPORT_NEEDED"
+	DELETED PackageState = "DELETED"
 	UNKNOWN_PKG_STATE PackageState = "UNKNOWN_PKG_STATE"
 )
 
@@ -45,6 +46,7 @@ var AllowedPackageStateEnumValues = []PackageState{
 	"DEACTIVATING",
 	"DELETING",
 	"SUPPORT_NEEDED",
+	"DELETED",
 	"UNKNOWN_PKG_STATE",
 }
 

@@ -20,6 +20,7 @@ enum PackageState {
   DEACTIVATING = 7;     // the package is in the process of being deactivated from production
   DELETING = 8;         // the package is in the process of being deleted
   SUPPORT_NEEDED = 9;   // something went wrong and Bopmatic support needs to investigate
+  DELETED = 10;         // the package has been deleted
 
   UNKNOWN_PKG_STATE = 2147483647; // MAX_INT
 }

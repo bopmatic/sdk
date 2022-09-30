@@ -23,6 +23,8 @@
 
 * `SUPPORT_NEEDED` (value: `"SUPPORT_NEEDED"`)
 
+* `DELETED` (value: `"DELETED"`)
+
 * `UNKNOWN_PKG_STATE` (value: `"UNKNOWN_PKG_STATE"`)
 
 

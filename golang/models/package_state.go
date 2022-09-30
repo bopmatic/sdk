@@ -60,6 +60,9 @@ const (
 	// PackageStateSUPPORTNEEDED captures enum value "SUPPORT_NEEDED"
 	PackageStateSUPPORTNEEDED PackageState = "SUPPORT_NEEDED"
 
+	// PackageStateDELETED captures enum value "DELETED"
+	PackageStateDELETED PackageState = "DELETED"
+
 	// PackageStateUNKNOWNPKGSTATE captures enum value "UNKNOWN_PKG_STATE"
 	PackageStateUNKNOWNPKGSTATE PackageState = "UNKNOWN_PKG_STATE"
 )
@@ -69,7 +72,7 @@ var packageStateEnum []interface{}
 
 func init() {
 	var res []PackageState
-	if err := json.Unmarshal([]byte(`["UPLOADING","UPLOADED","VALIDATING","INVALID","BUILDING","DEPLOYING","PRODUCTION","DEACTIVATING","DELETING","SUPPORT_NEEDED","UNKNOWN_PKG_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["UPLOADING","UPLOADED","VALIDATING","INVALID","BUILDING","DEPLOYING","PRODUCTION","DEACTIVATING","DELETING","SUPPORT_NEEDED","DELETED","UNKNOWN_PKG_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

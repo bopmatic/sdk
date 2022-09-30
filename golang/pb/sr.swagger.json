@@ -323,6 +323,7 @@
         "DEACTIVATING",
         "DELETING",
         "SUPPORT_NEEDED",
+        "DELETED",
         "UNKNOWN_PKG_STATE"
       ],
       "default": "UPLOADING"
