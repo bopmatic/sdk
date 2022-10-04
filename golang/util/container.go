@@ -14,7 +14,7 @@ import (
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
-const defaultRetries = 10
+const defaultRetries = 1000
 
 const BopmaticBuildImageName = "bopmatic/build:latest"
 const DockerInstallErrMsg = "Could not invoke docker; please double check that you have docker installed: %w"
@@ -102,6 +102,7 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		logOutput, err := cli.ContainerLogs(ctx, resp.ID, logOutputOpts)
 		if err != nil {
 			retErr = fmt.Errorf("Failed to get container output: %w", err)
+			time.Sleep(10 * time.Millisecond)
 			continue
 		}
 		defer logOutput.Close()
@@ -116,7 +117,8 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		case err := <-errCh:
 			if err != nil {
 				if dockerClient.IsErrNotFound(err) {
-					retErr = fmt.Errorf("Container run failed: %w\n", err)
+					retErr = fmt.Errorf("Container run failed/ not found: %w\n", err)
+					time.Sleep(10 * time.Millisecond)
 					continue
 				}
 
