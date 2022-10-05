@@ -21,8 +21,6 @@ func TestProject(t *testing.T) {
 		"missingProjectName": "Project test_assets/project/missingProjectName/Bopmatic.yaml definition is missing required field name",
 		"missingSvcInApiDef": "Failed to find service Missing in pb/greeter.proto",
 		"missingSvcName":     "Service 0 definition is missing required field name",
-		"missingSiteAssets":  "Could not open site assets missing: open test_assets/project/missingSiteAssets/missing: no such file or directory",
-		"emptySiteAssets":    "Site assets siteAssetsEmpty is missing index.html",
 		"noRpcsInSvc":        "Service Greeter in pb/greeter.proto must define at least 1 RPC",
 		"noSvcInApiDef":      "pb/greeter.proto does not define any services; looking for Greeter",
 		"portConflict":       "Service Orders port 26001 conflicts with service Greeter",
@@ -39,14 +37,16 @@ func TestProject(t *testing.T) {
 		"noSuchDbSvcAccess":  "Database Customers in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
 	}
 	expectedSuccesses := map[string]string{
-		"multiSvcMultiDb":  "qmw1EEvv6ElphVdobA1aowMC6OPAPe-NRCEc-Tz1ofE=",
-		"multiSvcMultiRpc": "bqhsBRoQ8DkBq3J4PcTJ-yS0XlQnN4NTEt_ljAI84y0=",
-		"multiSvcOneRpc":   "L3AMBkLJ9mcGOS_EdLjhh6j1eCbKGg7-Xgc2R-T3KGU=",
-		"oneSvcOneDb":      "xue3VPpRy1iLEhgm-lHEFjUsGdvq82rtV2EurLKCTOE=",
-		"oneSvcMultiRpc":   "grCSNtGtcIU4wgCzc7EWKE7chxlzvq0rlJzPQqu1lfo=",
-		"oneSvcOneRpc":     "oAantAxe_EmpZa9FShPEiML968ODqs84mbFpH9ErhaQ=",
-		"staticOnly":       "j-yzmjEWgOi4ybhNGY5j1DAKFoALFt62HFU20CjEfWI=",
-		"svcsOnly":         "m1Wo0vRbEOE8KMg3kzvdxIQIHp6-81ugYYxdXrLwAbQ=",
+		"emptySiteAssets":   "8I_SlNiXf7gz-xZKn-r9SsPiJlfViIBTdwbNJhu7oQo=",
+		"missingSiteAssets": "GxETJTWJ59Arzy03s0H9fzWjR6aBAciOwOnsrYMt39Y=",
+		"multiSvcMultiDb":   "qmw1EEvv6ElphVdobA1aowMC6OPAPe-NRCEc-Tz1ofE=",
+		"multiSvcMultiRpc":  "bqhsBRoQ8DkBq3J4PcTJ-yS0XlQnN4NTEt_ljAI84y0=",
+		"multiSvcOneRpc":    "L3AMBkLJ9mcGOS_EdLjhh6j1eCbKGg7-Xgc2R-T3KGU=",
+		"oneSvcOneDb":       "xue3VPpRy1iLEhgm-lHEFjUsGdvq82rtV2EurLKCTOE=",
+		"oneSvcMultiRpc":    "grCSNtGtcIU4wgCzc7EWKE7chxlzvq0rlJzPQqu1lfo=",
+		"oneSvcOneRpc":      "oAantAxe_EmpZa9FShPEiML968ODqs84mbFpH9ErhaQ=",
+		"staticOnly":        "j-yzmjEWgOi4ybhNGY5j1DAKFoALFt62HFU20CjEfWI=",
+		"svcsOnly":          "m1Wo0vRbEOE8KMg3kzvdxIQIHp6-81ugYYxdXrLwAbQ=",
 	}
 
 	for idx, tCase := range testCases {

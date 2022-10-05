@@ -251,7 +251,7 @@ func (svc *Service) populateRpcs(svcName string,
 	return nil
 }
 
-func (proj *Project) validateProject(projFile string) error {
+func (proj *Project) validateProject(projFile string, validateSiteAssets bool) error {
 	const missingFieldFmt = "%v %v definition is missing required field %v"
 
 	if proj.FormatVersion == "" {
@@ -261,7 +261,7 @@ func (proj *Project) validateProject(projFile string) error {
 		return fmt.Errorf(missingFieldFmt, "Project", projFile, "name")
 	}
 
-	if proj.Desc.SiteAssets != "" {
+	if validateSiteAssets && proj.Desc.SiteAssets != "" {
 		siteAssetsPath := filepath.Join(proj.Desc.Root, proj.Desc.SiteAssets)
 		assetEntries, err := ioutil.ReadDir(siteAssetsPath)
 		if err != nil {
@@ -409,6 +409,37 @@ func (proj *Project) RemoveStalePackages() error {
 	return RemoveStalePackages(proj)
 }
 
+type projectOptions struct {
+	validateSiteAssets bool
+}
+
+type ProjectOption func(*projectOptions) *projectOptions
+
+// ProjectOptValidateSiteAssets()instructs NewProject() to validate the existence and
+// content (e.g. whether index.html is present) of a project's specified
+// sitedir. The default is false because projects may create sitedir at build
+// time so it may not be present prior to a build
+func ProjectOptValidateSiteAssets() ProjectOption {
+	return func(po *projectOptions) *projectOptions {
+		po.validateSiteAssets = true
+
+		return po
+	}
+}
+
+func fillProjectOptions(opts ...ProjectOption) *projectOptions {
+	options := &projectOptions{
+		validateSiteAssets: false,
+	}
+	for _, optApplyFunc := range opts {
+		if optApplyFunc != nil {
+			options = optApplyFunc(options)
+		}
+	}
+
+	return options
+}
+
 // NewProject instantiates a new Project instance from the specified project
 // filename. It will parse the project file & derivative API definitions for
 // each service defined in the project file and validate that it is well
@@ -440,13 +471,16 @@ func (proj *Project) RemoveStalePackages() error {
 //     - name: "Orders"
 //       desc: "Customer orders"
 //     services_access: [ "Greeter" ]
-func NewProject(projFile string) (*Project, error) {
+func NewProject(projFile string, opts ...ProjectOption) (*Project, error) {
+
+	projectOpts := fillProjectOptions(opts...)
+
 	proj, err := parseProject(projFile)
 	if err != nil {
 		return nil, err
 	}
 
-	err = proj.validateProject(projFile)
+	err = proj.validateProject(projFile, projectOpts.validateSiteAssets)
 	if err != nil {
 		return nil, err
 	}

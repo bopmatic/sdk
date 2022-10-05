@@ -743,7 +743,8 @@ func NewProjectFromPackage(pkgFile string, projRoot string,
 	}
 	_ = os.Chdir(curWd)
 
-	return NewProject(filepath.Join(projRoot, DefaultProjectFilename))
+	return NewProject(filepath.Join(projRoot, DefaultProjectFilename),
+		ProjectOptValidateSiteAssets())
 }
 
 func RemoveStalePackages(proj *Project) error {
