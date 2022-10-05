@@ -49,6 +49,11 @@ func HasBopmaticBuildImage() (bool, error) {
 func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 	stdOut io.Writer, stdErr io.Writer) error {
 
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		homeDir = ""
+	}
+
 	cli, err := dockerClient.NewClientWithOpts(dockerClient.FromEnv,
 		dockerClient.WithAPIVersionNegotiation())
 	if err != nil {
@@ -69,6 +74,17 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 				Target: pwd,
 			},
 		},
+		Binds: []string{
+			"/etc/passwd:/etc/passwd",
+		},
+	}
+
+	if homeDir != "" {
+		hostConfig.Mounts = append(hostConfig.Mounts, mount.Mount{
+			Type:   mount.TypeBind,
+			Source: homeDir,
+			Target: homeDir,
+		})
 	}
 
 	containerConfig := &container.Config{
