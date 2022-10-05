@@ -14,7 +14,7 @@ import (
 	"github.com/docker/docker/pkg/stdcopy"
 )
 
-const defaultRetries = 1000
+const defaultRetries = 100
 
 const BopmaticBuildImageName = "bopmatic/build:latest"
 const DockerInstallErrMsg = "Could not invoke docker; please double check that you have docker installed: %w"
@@ -83,6 +83,8 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 	// retry due to occasional spurious 'container not found' & 'no such file
 	// or directory'
 	for retries := defaultRetries; retries > 0; retries-- {
+		retErr = nil
+
 		resp, err := cli.ContainerCreate(ctx, containerConfig, hostConfig, nil,
 			nil, "")
 		if err != nil {
