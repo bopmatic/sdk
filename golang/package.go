@@ -14,6 +14,7 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"syscall"
 	"time"
 
 	"google.golang.org/protobuf/encoding/protojson"
@@ -124,6 +125,9 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 		}
 	}
 
+	// try to mitigate spurious "file changed as we read it" errors from tar
+	syscall.Sync()
+
 	tarFileName := filepath.Join(workPath, "pkg.tar.xz")
 	if pkgOpts.useHostOS {
 		err = util.RunHostCommand(context.Background(),
@@ -134,6 +138,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 			[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
 			stdOut, stdErr)
 	}
+
 	if err != nil {
 		return nil, err
 	}
