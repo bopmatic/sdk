@@ -35,18 +35,28 @@ func TestProject(t *testing.T) {
 		"missingBuildCmd":    "Project Foo definition is missing required field buildcmd",
 		"missingExecutable":  "Service Greeter definition is missing required field executable",
 		"noSuchDbSvcAccess":  "Database Customers in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
+		"badFormatVersion": "Project test_assets/project/badFormatVersion/Bopmatic.yaml specifies an unsupported formatversion 0.9. The latest supported formatversion is " +
+			FormatVersionCurrent + ".",
+		"missingUserGroup":      "Service Greeter in Project Foo defines access for user group NoSuchUserGroup but no user group named NoSuchUserGroup is defined",
+		"missingUserGroupName":  "UserGroup in Project Foo definition is missing required field name",
+		"reservedUserGroupName": "UserGroup in Project Foo is using reserved name anon_public. Please choose a different user group name.",
+		"missingUserGroupType":  "UserGroup CustomerGroup definition is missing required field type",
+		"missingUserGroupRef":   "Usergroup CustomerUserGroup in Project Foo is defined but no service references user access to it",
+		"bogusUserGroupType":    "Unsupported user group type randomUnsupportedType defined in UserGroup Foo for Project CustomerUserGroup",
 	}
 	expectedSuccesses := map[string]string{
-		"emptySiteAssets":   "8I_SlNiXf7gz-xZKn-r9SsPiJlfViIBTdwbNJhu7oQo=",
-		"missingSiteAssets": "GxETJTWJ59Arzy03s0H9fzWjR6aBAciOwOnsrYMt39Y=",
-		"multiSvcMultiDb":   "qmw1EEvv6ElphVdobA1aowMC6OPAPe-NRCEc-Tz1ofE=",
-		"multiSvcMultiRpc":  "bqhsBRoQ8DkBq3J4PcTJ-yS0XlQnN4NTEt_ljAI84y0=",
-		"multiSvcOneRpc":    "L3AMBkLJ9mcGOS_EdLjhh6j1eCbKGg7-Xgc2R-T3KGU=",
-		"oneSvcOneDb":       "xue3VPpRy1iLEhgm-lHEFjUsGdvq82rtV2EurLKCTOE=",
-		"oneSvcMultiRpc":    "grCSNtGtcIU4wgCzc7EWKE7chxlzvq0rlJzPQqu1lfo=",
-		"oneSvcOneRpc":      "oAantAxe_EmpZa9FShPEiML968ODqs84mbFpH9ErhaQ=",
-		"staticOnly":        "j-yzmjEWgOi4ybhNGY5j1DAKFoALFt62HFU20CjEfWI=",
-		"svcsOnly":          "m1Wo0vRbEOE8KMg3kzvdxIQIHp6-81ugYYxdXrLwAbQ=",
+		"emptySiteAssets":        "kHduySu3EwyCHAhuyD1PhFMpy2vOjEfGE5OtaDo63mk=",
+		"missingSiteAssets":      "I5f9L6reMunNyjmDffNM2qH1oPKE6DYLX3GOD--wL-U=",
+		"multiSvcMultiDb":        "X2konu6DisZiYulAskdwBYp0mcsna_18zm42iyo4_Rw=",
+		"multiSvcMultiRpc":       "i9_h-2oZSBg8MternhT2i4CmCOg1feQ8dI0ovRJfmdM=",
+		"multiSvcOneRpc":         "7MumxaAkGhjDGSp11bi40STguXXpLvlIzrJ7hGqJfdw=",
+		"oneSvcOneDb":            "SsIAGB3C5Q8sP4RSiMlLfedW2zg70dVQKoyHA3qTq5k=",
+		"oneSvcMultiRpc":         "SqkzRfV5o3Z82onxEXitPLAQ3-gaDy5WuW8RTHOU9DU=",
+		"oneSvcOneRpc":           "FeI6TqOQSFwO87V5W74KumLcOIXV79ACUHeEeZkjWyI=",
+		"staticOnly":             "eTqZYv3IzHa6hJIl8UrRWuHNxXQg54Z82xMh4yZYnyc=",
+		"svcsOnly":               "8z9jNFbnaQnm57LouqpRhPxIgTE0UmH8H29rLlI0KPI=",
+		"oneSvcOneUserGroup":     "NPTAlcTQ_CIb8gKhuYADXNcRph6Ni-lxzjhJUiUkMiI=",
+		"multiSvcMultiUserGroup": "vByOh78WqLq7YwSkuJ6ZC4v4B-CkFDqHYv3PD8ii-P8=",
 	}
 
 	for idx, tCase := range testCases {

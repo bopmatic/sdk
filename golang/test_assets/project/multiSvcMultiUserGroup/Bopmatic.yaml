@@ -1,0 +1,26 @@
+formatversion: "1.1"
+project:
+  name: "Foo"
+  desc: "Foo Project"
+  buildcmd: "make"
+  sitedir: "site"
+  services:
+  - name: "Greeter"
+    desc: "Service for greeting customers"
+    apidef: "pb/greeter.proto"
+    port: 26001
+    executable: "greeter_server"
+    user_access: "GreeterCustomerUserGroup"
+  - name: "Orders"
+    desc: "Service for taking customer orders"
+    apidef: "pb/orders.proto"
+    port: 26002
+    executable: "orders_server"
+    user_access: "OrderCustomerUserGroup"
+  usergroups:
+  - name: "GreeterCustomerUserGroup"
+    desc: "customers for Greeter"
+    type: "public"
+  - name: "OrderCustomerUserGroup"
+    desc: "customers for Order"
+    type: "public"

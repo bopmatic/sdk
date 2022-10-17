@@ -50,6 +50,11 @@ type Database struct {
 // derived once the project is parsed (e.g. when NewProject() returns
 // successfully).
 // Currently the only supported ApiDefinition format is protobuf/GRPC
+const (
+	UserAccessAnonPublic = "anon_public"
+	UserAccessNone       = "none"
+)
+
 type Service struct {
 	Name          string `yaml:"name"`
 	Description   string `yaml:"desc"`
@@ -57,31 +62,77 @@ type Service struct {
 	Port          uint64 `yaml:"port"`
 	Executable    string `yaml:"executable"`
 	ExecAssets    string `yaml:"executable_assets"`
+	// The user access refers to the name of user group which is allowed to
+	// invoke a service's APIs. The user group should either also be defined
+	// in the same Bopmatic.yaml or refer to one of the following two built-in
+	// user accesses:
+	//     1. anon_public - Access to the APIs is public and does not require
+	//                      any authentication. e.g. a google search
+	//     2. none        - No users are allowed to access the service directly.
+	//                      e.g. an internal sales analytics service that is
+	//                      only invoked by other services and not by end users
+	//                      directly. This is the default.
+	UserAccess string `yaml:"user_access"`
 
 	Rpcs []string
 }
 
 // ProjectDesc see Project for a complete description
 type ProjectDesc struct {
-	Name        string     `yaml:"name"`
-	Description string     `yaml:"desc"`
-	Services    []Service  `yaml:"services"`
-	Databases   []Database `yaml:"databases"`
-	SiteAssets  string     `yaml:"sitedir"`
-	BuildCmd    string     `yaml:"buildcmd"`
+	Name        string      `yaml:"name"`
+	Description string      `yaml:"desc"`
+	Services    []Service   `yaml:"services"`
+	Databases   []Database  `yaml:"databases"`
+	UserGroups  []UserGroup `yaml:"usergroups"`
+	SiteAssets  string      `yaml:"sitedir"`
+	BuildCmd    string      `yaml:"buildcmd"`
 
 	Root string
+}
+
+const (
+	UserGroupTypePublic  = "public"
+	UserGroupTypePrivate = "private"
+)
+
+type UserGroup struct {
+	Name        string `yaml:"name"`
+	Description string `yaml:"desc"`
+
+	// 2 usergroup types are currently defined:
+	//
+	// 1. public - membership to the group is available to the public. users
+	//             can sign themselves up without any interaction from service
+	//             administrators. e.g. a new customer can signup
+	//             at will.
+	// 2. private - membership to the group is controlled by service
+	//             administrators. Users may not sign themselves up. e.g.
+	//             a new employee has to be onboarded by HR.
+	Type string `yaml:"type"`
 }
 
 // Project is a full representation of a Bopmatic project, which defines
 // a set of services to publish, their RPCs, their TCP ports to run on,
 // and a collection of static website assets to publish. FormatVersion
 // describes the set of supported and expected fields within a Bopmatic.yaml
-// project description. Currently this is expected to be "1.0" and is unused;
-// however it is intended to be used in the future for backward compatibility
-// purposes. Fields marked with yaml are parsed from Bopmatic.yaml while the
-// remaining fields are derived once the project is parsed (e.g. when
-// NewProject() returns successfully).
+// project description. Currently this is expected to be "1.1". Older "1.0"
+// existing templates are also supported. This field is intended to be used
+// for backward compatibility. Fields marked with yaml are parsed from
+// Bopmatic.yaml while the remaining fields are derived once the project is
+// parsed (e.g. when NewProject() returns successfully).
+//
+// Differences between formatversion 1.0 and 1.1:
+//     1.1 introduces usergroups & relationships between usersgroups and
+//         services for access control purposes. In version 1.0 as usergroups
+//         had not yet been introduced, all defined services were implictly
+//         vended with anonymous public access by default. In version 1.1, the
+//         default access is instead none.
+const (
+	FormatVersion1_0     = "1.0"
+	FormatVersion1_1     = "1.1"
+	FormatVersionCurrent = FormatVersion1_1
+)
+
 type Project struct {
 	FormatVersion string      `yaml:"formatversion"`
 	Desc          ProjectDesc `yaml:"project"`
@@ -142,6 +193,7 @@ func (proj *Project) String() string {
 			sb.WriteString(fmt.Sprintf("\t\tDescription: %v\n", svc.Description))
 		}
 		sb.WriteString(fmt.Sprintf("\t\tApiDef: %v\n", svc.ApiDefinition))
+		sb.WriteString(fmt.Sprintf("\t\tUserAccess: %v\n", svc.UserAccess))
 		sb.WriteString(fmt.Sprintf("\t\tPort: %v\n", svc.Port))
 		sb.WriteString(fmt.Sprintf("\t\tExecutable: %v\n", svc.Executable))
 		if svc.ExecAssets != "" {
@@ -173,6 +225,16 @@ func (proj *Project) String() string {
 			sb.WriteString(fmt.Sprintf("\t\tService[%v]: %v\n", idx2, svc))
 		}
 	}
+	sb.WriteString(fmt.Sprintf("\tUserGroups: %v\n", len(proj.Desc.UserGroups)))
+	for idx, ug := range proj.Desc.UserGroups {
+		sb.WriteString(fmt.Sprintf("\tUserGroup[%v]:\n", idx))
+		sb.WriteString(fmt.Sprintf("\t\tName: %v\n", ug.Name))
+		if ug.Description != "" {
+			sb.WriteString(fmt.Sprintf("\t\tDescription: %v\n", ug.Description))
+		}
+		sb.WriteString(fmt.Sprintf("\t\tType: %v\n", ug.Type))
+	}
+
 	return sb.String()
 }
 
@@ -257,6 +319,11 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 	if proj.FormatVersion == "" {
 		return fmt.Errorf(missingFieldFmt, "Project", projFile, "formatversion")
 	}
+	if proj.FormatVersion != FormatVersion1_0 &&
+		proj.FormatVersion != FormatVersion1_1 {
+		return fmt.Errorf("Project %v specifies an unsupported formatversion %v. The latest supported formatversion is %v.",
+			projFile, proj.FormatVersion, FormatVersionCurrent)
+	}
 	if proj.Desc.Name == "" {
 		return fmt.Errorf(missingFieldFmt, "Project", projFile, "name")
 	}
@@ -302,6 +369,28 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 			if svc.Port == port {
 				return fmt.Errorf("Service %v port %v conflicts with service %v",
 					svc.Name, port, proj.Desc.Services[portIdx].Name)
+			}
+		}
+
+		if svc.UserAccess == "" {
+			if proj.FormatVersion == FormatVersion1_0 {
+				svc.UserAccess = UserAccessAnonPublic
+			} else {
+				svc.UserAccess = UserAccessNone
+			}
+		} else if svc.UserAccess != UserAccessAnonPublic &&
+			svc.UserAccess != UserAccessNone {
+			var found bool
+			for _, ug := range proj.Desc.UserGroups {
+				found = false
+				if ug.Name == svc.UserAccess {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return fmt.Errorf("Service %v in Project %v defines access for user group %v but no user group named %v is defined",
+					svc.Name, proj.Desc.Name, svc.UserAccess, svc.UserAccess)
 			}
 		}
 
@@ -359,6 +448,38 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 				return fmt.Errorf("Database %v in Project %v defines access for service %v but no service named %v is defined",
 					db.Name, proj.Desc.Name, svcAccess, svcAccess)
 			}
+		}
+	}
+
+	for idx, _ := range proj.Desc.UserGroups {
+		ug := &proj.Desc.UserGroups[idx]
+
+		if ug.Name == "" {
+			return fmt.Errorf(missingFieldFmt, "UserGroup in Project",
+				proj.Desc.Name, "name")
+		} else if ug.Name == UserAccessAnonPublic || ug.Name == UserAccessNone {
+			return fmt.Errorf("UserGroup in Project %v is using reserved name %v. Please choose a different user group name.",
+				proj.Desc.Name, ug.Name)
+		}
+		if ug.Type == "" {
+			return fmt.Errorf(missingFieldFmt, "UserGroup", ug.Name, "type")
+		}
+		if ug.Type != UserGroupTypePublic {
+			return fmt.Errorf("Unsupported user group type %v defined in UserGroup %v for Project %v",
+				ug.Type, proj.Desc.Name, ug.Name)
+		}
+
+		var found bool
+		for idx, _ := range proj.Desc.Services {
+			svc := &proj.Desc.Services[idx]
+			if svc.UserAccess == ug.Name {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return fmt.Errorf("Usergroup %v in Project %v is defined but no service references user access to it",
+				ug.Name, proj.Desc.Name)
 		}
 	}
 
@@ -446,7 +567,7 @@ func fillProjectOptions(opts ...ProjectOption) *projectOptions {
 // formed. Otherwise, an error is returned. Here is an example Bopmatic.yaml
 // project file:
 //
-// formatversion: "1.0"
+// formatversion: "1.1"
 // project:
 //   name: "Foo"
 //   desc: "Foo Project"
@@ -457,11 +578,13 @@ func fillProjectOptions(opts ...ProjectOption) *projectOptions {
 //     apidef: "pb/greeter.proto"
 //     port: 26001
 //     executable: "greeter_server"
+//     useraccess: "anon_public"
 //   - name: "Orders"
 //     desc: "Service for taking customer orders"
 //     apidef: "pb/orders.proto"
 //     port: 26002
 //     executable: "orders_server"
+//     useraccess: "CustomerUserGroup"
 //   databases:
 //   - name: "Customers"
 //     desc: "Customer database"
@@ -471,6 +594,10 @@ func fillProjectOptions(opts ...ProjectOption) *projectOptions {
 //     - name: "Orders"
 //       desc: "Customer orders"
 //     services_access: [ "Greeter" ]
+//   usergroups:
+//   - name: "CustomerUserGroup"
+//     desc: "Customer user group"
+//     type: "public"
 func NewProject(projFile string, opts ...ProjectOption) (*Project, error) {
 
 	projectOpts := fillProjectOptions(opts...)
