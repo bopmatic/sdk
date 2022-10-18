@@ -29,7 +29,7 @@ const PackagesSubdir = "pkgs"
 // related key/value pairs.
 type DatabaseTable struct {
 	Name        string `yaml:"name"`
-	Description string `yaml:"desc"`
+	Description string `yaml:"desc,omitempty"`
 }
 
 // Database is a group of DatabaseTables accessible by one or more services.
@@ -38,9 +38,9 @@ type DatabaseTable struct {
 // https://docs.dapr.io/developing-applications/sdks/ for further detail.
 type Database struct {
 	Name        string          `yaml:"name"`
-	Description string          `yaml:"desc"`
-	Tables      []DatabaseTable `yaml:"tables"`
-	Services    []string        `yaml:"services_access"`
+	Description string          `yaml:"desc,omitempty"`
+	Tables      []DatabaseTable `yaml:"tables,flow"`
+	Services    []string        `yaml:"services_access,flow"`
 }
 
 // Service is a representation of an individual service defined within
@@ -57,11 +57,11 @@ const (
 
 type Service struct {
 	Name          string `yaml:"name"`
-	Description   string `yaml:"desc"`
+	Description   string `yaml:"desc,omitempty"`
 	ApiDefinition string `yaml:"apidef"`
 	Port          uint64 `yaml:"port"`
 	Executable    string `yaml:"executable"`
-	ExecAssets    string `yaml:"executable_assets"`
+	ExecAssets    string `yaml:"executable_assets,omitempty"`
 	// The user access refers to the name of user group which is allowed to
 	// invoke a service's APIs. The user group should either also be defined
 	// in the same Bopmatic.yaml or refer to one of the following two built-in
@@ -72,22 +72,30 @@ type Service struct {
 	//                      e.g. an internal sales analytics service that is
 	//                      only invoked by other services and not by end users
 	//                      directly. This is the default.
-	UserAccess string `yaml:"user_access"`
+	UserAccess string `yaml:"user_access,omitempty"`
 
-	Rpcs []string
+	rpcs []string
+}
+
+func (svc *Service) GetRpcs() []string {
+	return svc.rpcs
 }
 
 // ProjectDesc see Project for a complete description
 type ProjectDesc struct {
 	Name        string      `yaml:"name"`
-	Description string      `yaml:"desc"`
-	Services    []Service   `yaml:"services"`
-	Databases   []Database  `yaml:"databases"`
-	UserGroups  []UserGroup `yaml:"usergroups"`
-	SiteAssets  string      `yaml:"sitedir"`
+	Description string      `yaml:"desc,omitempty"`
+	Services    []Service   `yaml:"services,omitempty,flow"`
+	Databases   []Database  `yaml:"databases,omitempty,flow"`
+	UserGroups  []UserGroup `yaml:"usergroups,omitempty,flow"`
+	SiteAssets  string      `yaml:"sitedir,omitempty"`
 	BuildCmd    string      `yaml:"buildcmd"`
 
-	Root string
+	root string
+}
+
+func (desc *ProjectDesc) GetRoot() string {
+	return desc.root
 }
 
 const (
@@ -97,7 +105,7 @@ const (
 
 type UserGroup struct {
 	Name        string `yaml:"name"`
-	Description string `yaml:"desc"`
+	Description string `yaml:"desc,omitempty"`
 
 	// 2 usergroup types are currently defined:
 	//
@@ -181,7 +189,7 @@ func (proj *Project) String() string {
 	if proj.Desc.BuildCmd != "" {
 		sb.WriteString(fmt.Sprintf("\tBuildCmd: %v\n", proj.Desc.BuildCmd))
 	}
-	sb.WriteString(fmt.Sprintf("\tRoot: %v\n", proj.Desc.Root))
+	sb.WriteString(fmt.Sprintf("\tRoot: %v\n", proj.Desc.root))
 	if proj.Desc.Description != "" {
 		sb.WriteString(fmt.Sprintf("\tDescription: %v\n", proj.Desc.Description))
 	}
@@ -199,8 +207,8 @@ func (proj *Project) String() string {
 		if svc.ExecAssets != "" {
 			sb.WriteString(fmt.Sprintf("\t\tExecAssets: %v\n", svc.ExecAssets))
 		}
-		sb.WriteString(fmt.Sprintf("\t\tRpcs: %v\n", len(svc.Rpcs)))
-		for idx2, funcName := range svc.Rpcs {
+		sb.WriteString(fmt.Sprintf("\t\tRpcs: %v\n", len(svc.rpcs)))
+		for idx2, funcName := range svc.rpcs {
 			sb.WriteString(fmt.Sprintf("\t\tRpc[%v]: %v\n", idx2, funcName))
 		}
 	}
@@ -261,9 +269,9 @@ func parseProject(projFile string) (*Project, error) {
 	}
 
 	if projFile[0] != os.PathSeparator {
-		proj.Desc.Root = path.Dir(projFile)
+		proj.Desc.root = path.Dir(projFile)
 	} else {
-		proj.Desc.Root = path.Dir(projFile)
+		proj.Desc.root = path.Dir(projFile)
 	}
 
 	return &proj, nil
@@ -295,7 +303,7 @@ func (svc *Service) populateRpcs(svcName string,
 		if upSvc.ServiceName == svcName {
 			foundSvc = true
 			for _, rpc := range upSvc.ServiceBody.RPCs {
-				svc.Rpcs = append(svc.Rpcs, rpc.RPCName)
+				svc.rpcs = append(svc.rpcs, rpc.RPCName)
 			}
 		}
 	}
@@ -305,7 +313,7 @@ func (svc *Service) populateRpcs(svcName string,
 			protoFileName)
 	}
 
-	if len(svc.Rpcs) == 0 {
+	if len(svc.rpcs) == 0 {
 		return fmt.Errorf("Service %v in %v must define at least 1 RPC", svcName,
 			protoFileName)
 	}
@@ -329,7 +337,7 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 	}
 
 	if validateSiteAssets && proj.Desc.SiteAssets != "" {
-		siteAssetsPath := filepath.Join(proj.Desc.Root, proj.Desc.SiteAssets)
+		siteAssetsPath := filepath.Join(proj.Desc.root, proj.Desc.SiteAssets)
 		assetEntries, err := ioutil.ReadDir(siteAssetsPath)
 		if err != nil {
 			return fmt.Errorf("Could not open site assets %v: %w", proj.Desc.SiteAssets, err)
@@ -395,7 +403,7 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 		}
 
 		usedPorts = append(usedPorts, svc.Port)
-		apiDefPath := filepath.Join(proj.Desc.Root, svc.ApiDefinition)
+		apiDefPath := filepath.Join(proj.Desc.root, svc.ApiDefinition)
 		file, err := os.Open(apiDefPath)
 		if err != nil {
 			return fmt.Errorf("Failed to open API definition for Service %v: %w", svc.Name, err)
@@ -496,7 +504,7 @@ func (proj *Project) Build(stdOut io.Writer, stdErr io.Writer) error {
 	if err != nil {
 		return err
 	}
-	err = os.Chdir(proj.Desc.Root)
+	err = os.Chdir(proj.Desc.root)
 	if err != nil {
 		return err
 	}
@@ -528,6 +536,171 @@ func (proj *Project) NewPackageExisting(pkgId string) (*Package, error) {
 // RemoveStalePackages deletes any previously created project packages
 func (proj *Project) RemoveStalePackages() error {
 	return RemoveStalePackages(proj)
+}
+
+// ExportToFile export Project to a new Bopmatic.yaml file
+func (proj *Project) ExportToFile(projFile string) error {
+	tmpVer := proj.FormatVersion
+	proj.FormatVersion = FormatVersionCurrent
+	defer func() { proj.FormatVersion = tmpVer }()
+
+	file, err := os.Create(projFile)
+	if err != nil {
+		return fmt.Errorf("Failed to open %v: %w", projFile, err)
+	}
+	defer file.Close()
+
+	encoder := yaml.NewEncoder(file)
+	err = encoder.Encode(&proj)
+	if err != nil {
+		return fmt.Errorf("Failed to encode %v: %w", projFile, err)
+	}
+
+	return nil
+}
+
+// IsEqual compares project with cmpProj to determine whether they are equivalent
+func (proj *Project) IsEqual(cmpProj *Project) bool {
+	if proj.Desc.Name != cmpProj.Desc.Name {
+		return false
+	}
+	if proj.Desc.Description != cmpProj.Desc.Description {
+		return false
+	}
+	if proj.Desc.SiteAssets != cmpProj.Desc.SiteAssets {
+		return false
+	}
+	if proj.Desc.BuildCmd != cmpProj.Desc.BuildCmd {
+		return false
+	}
+	if len(proj.Desc.Services) != len(cmpProj.Desc.Services) {
+		return false
+	}
+	if len(proj.Desc.Databases) != len(cmpProj.Desc.Databases) {
+		return false
+	}
+	if len(proj.Desc.UserGroups) != len(cmpProj.Desc.UserGroups) {
+		return false
+	}
+	var found bool
+	for _, svc := range proj.Desc.Services {
+		found = false
+		for _, cmpSvc := range cmpProj.Desc.Services {
+			if svc.Name != cmpSvc.Name {
+				continue
+			}
+
+			found = true
+			if svc.Description != cmpSvc.Description {
+				return false
+			}
+			if svc.ApiDefinition != cmpSvc.ApiDefinition {
+				return false
+			}
+			if svc.Port != cmpSvc.Port {
+				return false
+			}
+			if svc.Executable != cmpSvc.Executable {
+				return false
+			}
+			if svc.ExecAssets != cmpSvc.ExecAssets {
+				return false
+			}
+			if svc.UserAccess != cmpSvc.UserAccess {
+				return false
+			}
+
+			break
+		}
+
+		if !found {
+			return false
+		}
+	}
+
+	for _, db := range proj.Desc.Databases {
+		found = false
+		for _, cmpDb := range cmpProj.Desc.Databases {
+			if db.Name != cmpDb.Name {
+				continue
+			}
+
+			found = true
+			if db.Description != cmpDb.Description {
+				return false
+			}
+			if len(db.Tables) != len(cmpDb.Tables) {
+				return false
+			}
+			if len(db.Services) != len(cmpDb.Services) {
+				return false
+			}
+
+			var found2 bool
+			for _, tbl := range db.Tables {
+				found2 = false
+				for _, cmpTbl := range cmpDb.Tables {
+					if tbl.Name != cmpTbl.Name {
+						continue
+					}
+					found2 = true
+					if tbl.Description != cmpTbl.Description {
+						return false
+					}
+					break
+				}
+
+				if !found2 {
+					return false
+				}
+			}
+			for _, svc := range db.Services {
+				found2 = false
+				for _, cmpSvc := range cmpDb.Services {
+					if svc != cmpSvc {
+						continue
+					}
+					found2 = true
+					break
+				}
+
+				if !found2 {
+					return false
+				}
+			}
+
+			break
+		}
+
+		if !found {
+			return false
+		}
+	}
+
+	for _, ug := range proj.Desc.UserGroups {
+		found = false
+		for _, cmpUg := range cmpProj.Desc.UserGroups {
+			if ug.Name != cmpUg.Name {
+				continue
+			}
+
+			found = true
+			if ug.Description != cmpUg.Description {
+				return false
+			}
+			if ug.Type != cmpUg.Type {
+				return false
+			}
+
+			break
+		}
+
+		if !found {
+			return false
+		}
+	}
+
+	return true
 }
 
 type projectOptions struct {

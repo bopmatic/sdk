@@ -143,9 +143,9 @@ func TestNewProjFromPackage(t *testing.T) {
 	fmt.Printf("proj is %v\n", projFromPkg)
 	if projFromPkg.Desc.Name != proj.Desc.Name ||
 		len(projFromPkg.Desc.Services) != 1 ||
-		len(projFromPkg.Desc.Services[0].Rpcs) != 1 ||
-		projFromPkg.Desc.Services[0].Rpcs[0] !=
-			proj.Desc.Services[0].Rpcs[0] {
+		len(projFromPkg.Desc.Services[0].rpcs) != 1 ||
+		projFromPkg.Desc.Services[0].rpcs[0] !=
+			proj.Desc.Services[0].rpcs[0] {
 		t.Errorf("Unexpected projFromPkg: %v", projFromPkg.String())
 	}
 

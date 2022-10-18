@@ -65,7 +65,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	if err != nil {
 		return nil, err
 	}
-	err = os.Chdir(proj.Desc.Root)
+	err = os.Chdir(proj.Desc.root)
 	if err != nil {
 		return nil, err
 	}
@@ -82,7 +82,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	}
 	// subtle; Join() required here since workPath is relative and the defer
 	// statement will execute subsequent to Chdir() back to curWd
-	defer os.RemoveAll(filepath.Join(proj.Desc.Root, workPath))
+	defer os.RemoveAll(filepath.Join(proj.Desc.root, workPath))
 
 	pkgWorkPath := filepath.Join(workPath, tarRootPath)
 	err = os.MkdirAll(pkgWorkPath, 0755)
@@ -212,7 +212,7 @@ func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
 }
 
 func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {
-	packagesPath := filepath.Join(proj.Desc.Root, DefaultArtifactDir,
+	packagesPath := filepath.Join(proj.Desc.root, DefaultArtifactDir,
 		PackagesSubdir)
 
 	entries, err := ioutil.ReadDir(packagesPath)
@@ -265,7 +265,7 @@ func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {
 }
 
 func (pkg *Package) AbsTarballPath() string {
-	return filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	return filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
 }
 
 type deployOptions struct {
@@ -305,7 +305,7 @@ func fillDeployOptions(opts ...DeployOption) *deployOptions {
 func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
-	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	tarballAbsPath := filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
 	if err != nil {
 		return err
@@ -359,7 +359,7 @@ func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
 func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
-	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	tarballAbsPath := filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
 	if err != nil {
 		return err
@@ -428,7 +428,7 @@ func uploadToURL(url string, data []byte) error {
 func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
-	tarballAbsPath := filepath.Join(pkg.Proj.Desc.Root, pkg.TarballPath)
+	tarballAbsPath := filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
 	tarballData, err := ioutil.ReadFile(tarballAbsPath)
 	if err != nil {
 		return err
@@ -754,7 +754,7 @@ func NewProjectFromPackage(pkgFile string, projRoot string,
 
 func RemoveStalePackages(proj *Project) error {
 
-	packagesPath := filepath.Join(proj.Desc.Root, DefaultArtifactDir,
+	packagesPath := filepath.Join(proj.Desc.root, DefaultArtifactDir,
 		PackagesSubdir)
 
 	return os.RemoveAll(packagesPath)
