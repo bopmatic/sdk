@@ -53,8 +53,8 @@ func HasImage(repository string, tag string) (bool, error) {
 	}
 
 	for _, img := range images {
-		for _, tag := range img.RepoTags {
-			if tag == repository+":"+tag {
+		for _, t := range img.RepoTags {
+			if t == repository+":"+tag {
 				return true, nil
 			}
 		}
