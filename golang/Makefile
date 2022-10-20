@@ -15,6 +15,7 @@ test_assets/project/emptySiteAssets/siteAssetsEmpty:
 .PHONY: test
 test: build test_assets/project/emptySiteAssets/siteAssetsEmpty FORCE
 	go test -v
+	go test -v github.com/bopmatic/sdk/golang/util
 
 unit-tests.xml: test_assets/project/emptySiteAssets/siteAssetsEmpty FORCE
 	gotestsum --junitfile unit-tests.xml
