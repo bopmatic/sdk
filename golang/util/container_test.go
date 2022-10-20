@@ -2,10 +2,15 @@ package util
 
 import (
 	"errors"
+	"os"
 	"testing"
 )
 
 func TestContainerUtils(t *testing.T) {
+	if os.Getenv("CIRCLECI") == "true" {
+		t.Skipf("Skipping container func tests in CI environment")
+	}
+
 	hasImage, err := HasImage("foo", "bar")
 	if err != nil {
 		t.Errorf("HasImage(foo,bar) failed: %v", err)
@@ -14,7 +19,7 @@ func TestContainerUtils(t *testing.T) {
 	}
 	_, err = GetLocalImageDigest("foo", "bar")
 	if !errors.Is(err, ErrImageNotFound) {
-		t.Errorf("GetRemoteImageDigest(foo,bar) failed to return ErrImageNotFound: %v",
+		t.Errorf("GetLocalImageDigest(foo,bar) failed to return ErrImageNotFound: %v",
 			err)
 	}
 
