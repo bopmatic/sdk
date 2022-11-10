@@ -113,13 +113,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 		if err != nil {
 			return nil, err
 		}
-
-		apiDefDstDir := filepath.Join(pkgWorkPath, path.Dir(svc.ApiDefinition))
-		err = os.MkdirAll(apiDefDstDir, 0755)
-		if err != nil {
-			return nil, err
-		}
-		err = util.CopyFileToDir(svc.ApiDefinition, apiDefDstDir)
+		err = copyApiDefAssets(pkgWorkPath, &svc, stdOut, stdErr, pkgOpts)
 		if err != nil {
 			return nil, err
 		}
@@ -209,6 +203,27 @@ func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
 
 	return util.CopyDir(svc.ExecAssets,
 		filepath.Join(pkgWorkPath, path.Base(svc.ExecAssets)))
+}
+
+func copyApiDefAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
+	stdErr io.Writer, pkgOpts *pkgOptions) error {
+
+	if svc.ApiDefAssets == "" {
+		apiDefDstDir := filepath.Join(pkgWorkPath, path.Dir(svc.ApiDefinition))
+		err := os.MkdirAll(apiDefDstDir, 0755)
+		if err != nil {
+			return err
+		}
+		err = util.CopyFileToDir(svc.ApiDefinition, apiDefDstDir)
+		if err != nil {
+			return err
+		}
+
+		return nil
+	} // else
+
+	return util.CopyDir(svc.ApiDefAssets,
+		filepath.Join(pkgWorkPath, path.Base(svc.ApiDefAssets)))
 }
 
 func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {

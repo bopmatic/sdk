@@ -21,6 +21,7 @@ var expectedSuccesses = map[string]string{
 	"svcsOnly":               "8z9jNFbnaQnm57LouqpRhPxIgTE0UmH8H29rLlI0KPI=",
 	"oneSvcOneUserGroup":     "NPTAlcTQ_CIb8gKhuYADXNcRph6Ni-lxzjhJUiUkMiI=",
 	"multiSvcMultiUserGroup": "vByOh78WqLq7YwSkuJ6ZC4v4B-CkFDqHYv3PD8ii-P8=",
+	"oneSvcWithApiAssets":    "FtYzjgXGDGL7OqG9g8fUmyadFvNn-b_OCcJLUSbp7Jg=",
 }
 
 func TestProjectParse(t *testing.T) {
@@ -58,6 +59,8 @@ func TestProjectParse(t *testing.T) {
 		"missingUserGroupType":  "UserGroup CustomerGroup definition is missing required field type",
 		"missingUserGroupRef":   "Usergroup CustomerUserGroup in Project Foo is defined but no service references user access to it",
 		"bogusUserGroupType":    "Unsupported user group type randomUnsupportedType defined in UserGroup Foo for Project CustomerUserGroup",
+		"missingApiAssets":      "Failed to open API def assets directory for Service Greeter: stat test_assets/project/missingApiAssets/pb: no such file or directory",
+		"apiAssetsNotDir":       "Failed to open API def assets directory for Service Greeter: test_assets/project/apiAssetsNotDir/pb is not a directory",
 	}
 
 	for idx, tCase := range testCases {

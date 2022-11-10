@@ -59,6 +59,7 @@ type Service struct {
 	Name          string `yaml:"name"`
 	Description   string `yaml:"desc,omitempty"`
 	ApiDefinition string `yaml:"apidef"`
+	ApiDefAssets  string `yaml:"apidef_assets,omitempty"`
 	Port          uint64 `yaml:"port"`
 	Executable    string `yaml:"executable"`
 	ExecAssets    string `yaml:"executable_assets,omitempty"`
@@ -201,6 +202,10 @@ func (proj *Project) String() string {
 			sb.WriteString(fmt.Sprintf("\t\tDescription: %v\n", svc.Description))
 		}
 		sb.WriteString(fmt.Sprintf("\t\tApiDef: %v\n", svc.ApiDefinition))
+		if svc.ApiDefAssets != "" {
+			sb.WriteString(fmt.Sprintf("\t\tApiDefAssets: %v\n",
+				svc.ApiDefAssets))
+		}
 		sb.WriteString(fmt.Sprintf("\t\tUserAccess: %v\n", svc.UserAccess))
 		sb.WriteString(fmt.Sprintf("\t\tPort: %v\n", svc.Port))
 		sb.WriteString(fmt.Sprintf("\t\tExecutable: %v\n", svc.Executable))
@@ -410,6 +415,17 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 		}
 		defer file.Close()
 
+		apiDefAssetsPath := filepath.Join(proj.Desc.root, svc.ApiDefAssets)
+		apiDefAssetsStat, err := os.Stat(apiDefAssetsPath)
+		if err != nil {
+			return fmt.Errorf("Failed to open API def assets directory for Service %v: %w",
+				svc.Name, err)
+		}
+		if !apiDefAssetsStat.IsDir() {
+			return fmt.Errorf("Failed to open API def assets directory for Service %v: %v is not a directory",
+				svc.Name, apiDefAssetsPath)
+		}
+
 		err = svc.populateRpcs(svc.Name, svc.ApiDefinition, file)
 		if err != nil {
 			return err
@@ -595,6 +611,9 @@ func (proj *Project) IsEqual(cmpProj *Project) bool {
 				return false
 			}
 			if svc.ApiDefinition != cmpSvc.ApiDefinition {
+				return false
+			}
+			if svc.ApiDefAssets != cmpSvc.ApiDefAssets {
 				return false
 			}
 			if svc.Port != cmpSvc.Port {

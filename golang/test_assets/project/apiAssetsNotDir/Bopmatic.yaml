@@ -1,0 +1,14 @@
+formatversion: "1.0"
+project:
+  name: "Foo"
+  desc: "Foo Project"
+  buildcmd: "make"
+  sitedir: "site"
+  services:
+  - name: "Greeter"
+    desc: "Service for greeting customers"
+    apidef: "greeter.proto"
+    apidef_assets: "pb"
+    port: 26001
+    executable: "greeter_server"
+
