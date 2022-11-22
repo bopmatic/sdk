@@ -84,13 +84,14 @@ func (svc *Service) GetRpcs() []string {
 
 // ProjectDesc see Project for a complete description
 type ProjectDesc struct {
-	Name        string      `yaml:"name"`
-	Description string      `yaml:"desc,omitempty"`
-	Services    []Service   `yaml:"services,omitempty,flow"`
-	Databases   []Database  `yaml:"databases,omitempty,flow"`
-	UserGroups  []UserGroup `yaml:"usergroups,omitempty,flow"`
-	SiteAssets  string      `yaml:"sitedir,omitempty"`
-	BuildCmd    string      `yaml:"buildcmd"`
+	Name          string      `yaml:"name"`
+	Description   string      `yaml:"desc,omitempty"`
+	Services      []Service   `yaml:"services,omitempty,flow"`
+	Databases     []Database  `yaml:"databases,omitempty,flow"`
+	UserGroups    []UserGroup `yaml:"usergroups,omitempty,flow"`
+	SiteAssets    string      `yaml:"sitedir,omitempty"`
+	RuntimeConfig string      `yaml:"runtime_config,omitempty"`
+	BuildCmd      string      `yaml:"buildcmd"`
 
 	root string
 }
@@ -187,6 +188,10 @@ func (proj *Project) String() string {
 	sb.WriteString(fmt.Sprintf("\tFormat: %v\n", proj.FormatVersion))
 	sb.WriteString(fmt.Sprintf("\tName: %v\n", proj.Desc.Name))
 	sb.WriteString(fmt.Sprintf("\tSiteAssets: %v\n", proj.Desc.SiteAssets))
+	if proj.Desc.RuntimeConfig != "" {
+		sb.WriteString(fmt.Sprintf("\tRuntimeConfig: %v\n",
+			proj.Desc.RuntimeConfig))
+	}
 	if proj.Desc.BuildCmd != "" {
 		sb.WriteString(fmt.Sprintf("\tBuildCmd: %v\n", proj.Desc.BuildCmd))
 	}
@@ -356,6 +361,15 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 		}
 		if !foundIndex {
 			return fmt.Errorf("Site assets %v is missing index.html", proj.Desc.SiteAssets)
+		}
+		if proj.Desc.RuntimeConfig != "" {
+			runtimeConfigPath := filepath.Join(siteAssetsPath,
+				proj.Desc.RuntimeConfig)
+			_, err := ioutil.ReadFile(runtimeConfigPath)
+			if err != nil {
+				return fmt.Errorf("Could not open site assets(%v)' runtime config(%v): %v",
+					proj.Desc.SiteAssets, proj.Desc.RuntimeConfig, err)
+			}
 		}
 	}
 
@@ -584,6 +598,9 @@ func (proj *Project) IsEqual(cmpProj *Project) bool {
 		return false
 	}
 	if proj.Desc.SiteAssets != cmpProj.Desc.SiteAssets {
+		return false
+	}
+	if proj.Desc.RuntimeConfig != cmpProj.Desc.RuntimeConfig {
 		return false
 	}
 	if proj.Desc.BuildCmd != cmpProj.Desc.BuildCmd {

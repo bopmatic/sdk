@@ -9,19 +9,18 @@ import (
 )
 
 var expectedSuccesses = map[string]string{
-	"emptySiteAssets":        "kHduySu3EwyCHAhuyD1PhFMpy2vOjEfGE5OtaDo63mk=",
-	"missingSiteAssets":      "I5f9L6reMunNyjmDffNM2qH1oPKE6DYLX3GOD--wL-U=",
-	"multiSvcMultiDb":        "X2konu6DisZiYulAskdwBYp0mcsna_18zm42iyo4_Rw=",
-	"multiSvcMultiRpc":       "i9_h-2oZSBg8MternhT2i4CmCOg1feQ8dI0ovRJfmdM=",
-	"multiSvcOneRpc":         "7MumxaAkGhjDGSp11bi40STguXXpLvlIzrJ7hGqJfdw=",
-	"oneSvcOneDb":            "SsIAGB3C5Q8sP4RSiMlLfedW2zg70dVQKoyHA3qTq5k=",
-	"oneSvcMultiRpc":         "SqkzRfV5o3Z82onxEXitPLAQ3-gaDy5WuW8RTHOU9DU=",
-	"oneSvcOneRpc":           "FeI6TqOQSFwO87V5W74KumLcOIXV79ACUHeEeZkjWyI=",
-	"staticOnly":             "eTqZYv3IzHa6hJIl8UrRWuHNxXQg54Z82xMh4yZYnyc=",
-	"svcsOnly":               "8z9jNFbnaQnm57LouqpRhPxIgTE0UmH8H29rLlI0KPI=",
-	"oneSvcOneUserGroup":     "NPTAlcTQ_CIb8gKhuYADXNcRph6Ni-lxzjhJUiUkMiI=",
-	"multiSvcMultiUserGroup": "vByOh78WqLq7YwSkuJ6ZC4v4B-CkFDqHYv3PD8ii-P8=",
-	"oneSvcWithApiAssets":    "FtYzjgXGDGL7OqG9g8fUmyadFvNn-b_OCcJLUSbp7Jg=",
+	"multiSvcMultiDb":         "X2konu6DisZiYulAskdwBYp0mcsna_18zm42iyo4_Rw=",
+	"multiSvcMultiRpc":        "i9_h-2oZSBg8MternhT2i4CmCOg1feQ8dI0ovRJfmdM=",
+	"multiSvcOneRpc":          "7MumxaAkGhjDGSp11bi40STguXXpLvlIzrJ7hGqJfdw=",
+	"oneSvcOneDb":             "SsIAGB3C5Q8sP4RSiMlLfedW2zg70dVQKoyHA3qTq5k=",
+	"oneSvcMultiRpc":          "SqkzRfV5o3Z82onxEXitPLAQ3-gaDy5WuW8RTHOU9DU=",
+	"oneSvcOneRpc":            "FeI6TqOQSFwO87V5W74KumLcOIXV79ACUHeEeZkjWyI=",
+	"staticOnly":              "eTqZYv3IzHa6hJIl8UrRWuHNxXQg54Z82xMh4yZYnyc=",
+	"svcsOnly":                "8z9jNFbnaQnm57LouqpRhPxIgTE0UmH8H29rLlI0KPI=",
+	"oneSvcOneUserGroup":      "NPTAlcTQ_CIb8gKhuYADXNcRph6Ni-lxzjhJUiUkMiI=",
+	"multiSvcMultiUserGroup":  "vByOh78WqLq7YwSkuJ6ZC4v4B-CkFDqHYv3PD8ii-P8=",
+	"oneSvcWithApiAssets":     "FtYzjgXGDGL7OqG9g8fUmyadFvNn-b_OCcJLUSbp7Jg=",
+	"oneSvcWithRuntimeConfig": "hzh9-H_AQFurjZ3hut0P-RuhHQxTHRccOsZoe6_4r5g=",
 }
 
 func TestProjectParse(t *testing.T) {
@@ -33,24 +32,27 @@ func TestProjectParse(t *testing.T) {
 	}
 
 	expectedFailures := map[string]string{
-		"missingPort":        "Service Greeter definition is missing required field port",
-		"missingProjectName": "Project test_assets/project/missingProjectName/Bopmatic.yaml definition is missing required field name",
-		"missingSvcInApiDef": "Failed to find service Missing in pb/greeter.proto",
-		"missingSvcName":     "Service 0 definition is missing required field name",
-		"noRpcsInSvc":        "Service Greeter in pb/greeter.proto must define at least 1 RPC",
-		"noSvcInApiDef":      "pb/greeter.proto does not define any services; looking for Greeter",
-		"portConflict":       "Service Orders port 26001 conflicts with service Greeter",
-		"missingApiDefField": "Service Greeter definition is missing required field apidef",
-		"missingApiDefFile":  "Failed to open API definition for Service Greeter: open test_assets/project/missingApiDefFile/pb/greeter.proto: no such file or directory",
-		"missingDbName":      "Database in Project Foo definition is missing required field name",
-		"missingDbTable":     "Database Customers in Project Foo must define at least 1 table",
-		"missingDbTableName": "Table in Database Customers definition is missing required field name",
-		"missingDbSvcAccess": "Database Customers in Project Foo must define at least 1 service access",
-		"missingProject":     "Failed to open project test_assets/project/missingProject/Bopmatic.yaml: open test_assets/project/missingProject/Bopmatic.yaml: no such file or directory",
-		"corruptApiDef":      "Failed to parse pb/greeter.proto for service Greeter: found \"CORRUPT\" but expected [;]",
-		"missingBuildCmd":    "Project Foo definition is missing required field buildcmd",
-		"missingExecutable":  "Service Greeter definition is missing required field executable",
-		"noSuchDbSvcAccess":  "Database Customers in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
+		"emptySiteAssets":      "Site assets siteAssetsEmpty is missing index.html",
+		"missingSiteAssets":    "Could not open site assets missing: open test_assets/project/missingSiteAssets/missing: no such file or directory",
+		"missingRuntimeConfig": "Could not open site assets(site)' runtime config(bopmatic-config.js): open test_assets/project/missingRuntimeConfig/site/bopmatic-config.js: no such file or directory",
+		"missingPort":          "Service Greeter definition is missing required field port",
+		"missingProjectName":   "Project test_assets/project/missingProjectName/Bopmatic.yaml definition is missing required field name",
+		"missingSvcInApiDef":   "Failed to find service Missing in pb/greeter.proto",
+		"missingSvcName":       "Service 0 definition is missing required field name",
+		"noRpcsInSvc":          "Service Greeter in pb/greeter.proto must define at least 1 RPC",
+		"noSvcInApiDef":        "pb/greeter.proto does not define any services; looking for Greeter",
+		"portConflict":         "Service Orders port 26001 conflicts with service Greeter",
+		"missingApiDefField":   "Service Greeter definition is missing required field apidef",
+		"missingApiDefFile":    "Failed to open API definition for Service Greeter: open test_assets/project/missingApiDefFile/pb/greeter.proto: no such file or directory",
+		"missingDbName":        "Database in Project Foo definition is missing required field name",
+		"missingDbTable":       "Database Customers in Project Foo must define at least 1 table",
+		"missingDbTableName":   "Table in Database Customers definition is missing required field name",
+		"missingDbSvcAccess":   "Database Customers in Project Foo must define at least 1 service access",
+		"missingProject":       "Failed to open project test_assets/project/missingProject/Bopmatic.yaml: open test_assets/project/missingProject/Bopmatic.yaml: no such file or directory",
+		"corruptApiDef":        "Failed to parse pb/greeter.proto for service Greeter: found \"CORRUPT\" but expected [;]",
+		"missingBuildCmd":      "Project Foo definition is missing required field buildcmd",
+		"missingExecutable":    "Service Greeter definition is missing required field executable",
+		"noSuchDbSvcAccess":    "Database Customers in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
 		"badFormatVersion": "Project test_assets/project/badFormatVersion/Bopmatic.yaml specifies an unsupported formatversion 0.9. The latest supported formatversion is " +
 			FormatVersionCurrent + ".",
 		"missingUserGroup":      "Service Greeter in Project Foo defines access for user group NoSuchUserGroup but no user group named NoSuchUserGroup is defined",
@@ -69,7 +71,7 @@ func TestProjectParse(t *testing.T) {
 		}
 
 		projFile := filepath.Join(testCasesDir, tCase.Name(), "Bopmatic.yaml")
-		proj, err := NewProject(projFile)
+		proj, err := NewProject(projFile, ProjectOptValidateSiteAssets())
 		expectedErrStr, hasExpectedFailure := expectedFailures[tCase.Name()]
 		expectedSuccessStr, hasExpectedSuccess := expectedSuccesses[tCase.Name()]
 

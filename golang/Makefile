@@ -43,6 +43,9 @@ deps: goswag.generated openapi
 # jq install:
 # sudo apt install jq
 
+# mockgen install:
+# GOFLAGS="" go install github.com/golang/mock/mockgen@v1.6.0
+
 goswag.generated: pb/sr.bopmatic.json
 	swagger generate client -f pb/sr.bopmatic.json -c goswag --default-scheme='https' -A goswag
 	touch goswag.generated
