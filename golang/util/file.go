@@ -56,6 +56,9 @@ func CopyDir(src string, dst string) error {
 	}
 
 	entries, err := ioutil.ReadDir(src)
+	if err != nil {
+		return err
+	}
 	for _, entry := range entries {
 		srcPath := filepath.Join(src, entry.Name())
 		if entry.IsDir() {
