@@ -43,6 +43,15 @@ type Database struct {
 	Services    []string        `yaml:"services_access,flow"`
 }
 
+// ObjectStore is an object storage container accessible by one or more
+// services. Running services may access object stores by employing the
+// S3 APIs in the AWS SDK of the user's preferred programming language.
+type ObjectStore struct {
+	Name        string   `yaml:"name"`
+	Description string   `yaml:"desc,omitempty"`
+	Services    []string `yaml:"services_access,flow"`
+}
+
 // Service is a representation of an individual service defined within
 // a Bopmatic project. This includes its name, a short description, a link
 // to the set of APIs it defines, and the port it should run on. Fields marked
@@ -84,14 +93,15 @@ func (svc *Service) GetRpcs() []string {
 
 // ProjectDesc see Project for a complete description
 type ProjectDesc struct {
-	Name          string      `yaml:"name"`
-	Description   string      `yaml:"desc,omitempty"`
-	Services      []Service   `yaml:"services,omitempty,flow"`
-	Databases     []Database  `yaml:"databases,omitempty,flow"`
-	UserGroups    []UserGroup `yaml:"usergroups,omitempty,flow"`
-	SiteAssets    string      `yaml:"sitedir,omitempty"`
-	RuntimeConfig string      `yaml:"runtime_config,omitempty"`
-	BuildCmd      string      `yaml:"buildcmd"`
+	Name          string        `yaml:"name"`
+	Description   string        `yaml:"desc,omitempty"`
+	Services      []Service     `yaml:"services,omitempty,flow"`
+	Databases     []Database    `yaml:"databases,omitempty,flow"`
+	ObjectStores  []ObjectStore `yaml:"object_stores,omitempty,flow"`
+	UserGroups    []UserGroup   `yaml:"usergroups,omitempty,flow"`
+	SiteAssets    string        `yaml:"sitedir,omitempty"`
+	RuntimeConfig string        `yaml:"runtime_config,omitempty"`
+	BuildCmd      string        `yaml:"buildcmd"`
 
 	root string
 }
@@ -132,11 +142,12 @@ type UserGroup struct {
 // parsed (e.g. when NewProject() returns successfully).
 //
 // Differences between formatversion 1.0 and 1.1:
-//     1.1 introduces usergroups & relationships between usersgroups and
-//         services for access control purposes. In version 1.0 as usergroups
-//         had not yet been introduced, all defined services were implictly
-//         vended with anonymous public access by default. In version 1.1, the
-//         default access is instead none.
+//
+//	1.1 introduces usergroups & relationships between usersgroups and
+//	    services for access control purposes. In version 1.0 as usergroups
+//	    had not yet been introduced, all defined services were implictly
+//	    vended with anonymous public access by default. In version 1.1, the
+//	    default access is instead none.
 const (
 	FormatVersion1_0     = "1.0"
 	FormatVersion1_1     = "1.1"
@@ -240,6 +251,20 @@ func (proj *Project) String() string {
 		}
 		sb.WriteString(fmt.Sprintf("\t\tServicesAccess: %v\n", len(db.Services)))
 		for idx2, svc := range db.Services {
+			sb.WriteString(fmt.Sprintf("\t\tService[%v]: %v\n", idx2, svc))
+		}
+	}
+	sb.WriteString(fmt.Sprintf("\tObject Stores: %v\n", len(proj.Desc.ObjectStores)))
+	for idx, objStore := range proj.Desc.ObjectStores {
+		sb.WriteString(fmt.Sprintf("\tObject Store[%v]:\n", idx))
+		sb.WriteString(fmt.Sprintf("\t\tName: %v\n", objStore.Name))
+		if objStore.Description != "" {
+			sb.WriteString(fmt.Sprintf("\t\tDescription: %v\n",
+				objStore.Description))
+		}
+		sb.WriteString(fmt.Sprintf("\t\tServicesAccess: %v\n",
+			len(objStore.Services)))
+		for idx2, svc := range objStore.Services {
 			sb.WriteString(fmt.Sprintf("\t\tService[%v]: %v\n", idx2, svc))
 		}
 	}
@@ -489,6 +514,36 @@ func (proj *Project) validateProject(projFile string, validateSiteAssets bool) e
 		}
 	}
 
+	for idx, _ := range proj.Desc.ObjectStores {
+		objStore := &proj.Desc.ObjectStores[idx]
+
+		if objStore.Name == "" {
+			return fmt.Errorf(missingFieldFmt, "Object Store in Project",
+				proj.Desc.Name, "name")
+		}
+
+		if len(objStore.Services) == 0 {
+			return fmt.Errorf("Object Store %v in Project %v must define at least 1 service access",
+				objStore.Name, proj.Desc.Name)
+		}
+
+		var found bool
+		for _, svcAccess := range objStore.Services {
+			found = false
+			for sidx, _ := range proj.Desc.Services {
+				svc := &proj.Desc.Services[sidx]
+				if svcAccess == svc.Name {
+					found = true
+					break
+				}
+			}
+			if !found {
+				return fmt.Errorf("Object Store %v in Project %v defines access for service %v but no service named %v is defined",
+					objStore.Name, proj.Desc.Name, svcAccess, svcAccess)
+			}
+		}
+	}
+
 	for idx, _ := range proj.Desc.UserGroups {
 		ug := &proj.Desc.UserGroups[idx]
 
@@ -612,6 +667,9 @@ func (proj *Project) IsEqual(cmpProj *Project) bool {
 	if len(proj.Desc.Databases) != len(cmpProj.Desc.Databases) {
 		return false
 	}
+	if len(proj.Desc.ObjectStores) != len(cmpProj.Desc.ObjectStores) {
+		return false
+	}
 	if len(proj.Desc.UserGroups) != len(cmpProj.Desc.UserGroups) {
 		return false
 	}
@@ -713,6 +771,45 @@ func (proj *Project) IsEqual(cmpProj *Project) bool {
 		}
 	}
 
+	for _, objStore := range proj.Desc.ObjectStores {
+		found = false
+		for _, cmpObjStore := range cmpProj.Desc.ObjectStores {
+			if objStore.Name != cmpObjStore.Name {
+				continue
+			}
+
+			found = true
+			if objStore.Description != cmpObjStore.Description {
+				return false
+			}
+			if len(objStore.Services) != len(cmpObjStore.Services) {
+				return false
+			}
+
+			var found2 bool
+			for _, svc := range objStore.Services {
+				found2 = false
+				for _, cmpSvc := range cmpObjStore.Services {
+					if svc != cmpSvc {
+						continue
+					}
+					found2 = true
+					break
+				}
+
+				if !found2 {
+					return false
+				}
+			}
+
+			break
+		}
+
+		if !found {
+			return false
+		}
+	}
+
 	for _, ug := range proj.Desc.UserGroups {
 		found = false
 		for _, cmpUg := range cmpProj.Desc.UserGroups {
@@ -778,35 +875,40 @@ func fillProjectOptions(opts ...ProjectOption) *projectOptions {
 //
 // formatversion: "1.1"
 // project:
-//   name: "Foo"
-//   desc: "Foo Project"
-//   sitedir: "site"
-//   services:
-//   - name: "Greeter"
-//     desc: "Service for greeting customers"
-//     apidef: "pb/greeter.proto"
-//     port: 26001
-//     executable: "greeter_server"
-//     useraccess: "anon_public"
-//   - name: "Orders"
-//     desc: "Service for taking customer orders"
-//     apidef: "pb/orders.proto"
-//     port: 26002
-//     executable: "orders_server"
-//     useraccess: "CustomerUserGroup"
-//   databases:
-//   - name: "Customers"
-//     desc: "Customer database"
-//     tables:
-//     - name: "ContactDetails"
-//       desc: "Customer names, shipping address, phone, etc."
-//     - name: "Orders"
-//       desc: "Customer orders"
-//     services_access: [ "Greeter" ]
-//   usergroups:
-//   - name: "CustomerUserGroup"
-//     desc: "Customer user group"
-//     type: "public"
+//
+//	name: "Foo"
+//	desc: "Foo Project"
+//	sitedir: "site"
+//	services:
+//	- name: "Greeter"
+//	  desc: "Service for greeting customers"
+//	  apidef: "pb/greeter.proto"
+//	  port: 26001
+//	  executable: "greeter_server"
+//	  useraccess: "anon_public"
+//	- name: "Orders"
+//	  desc: "Service for taking customer orders"
+//	  apidef: "pb/orders.proto"
+//	  port: 26002
+//	  executable: "orders_server"
+//	  useraccess: "CustomerUserGroup"
+//	databases:
+//	- name: "Customers"
+//	  desc: "Customer database"
+//	  tables:
+//	  - name: "ContactDetails"
+//	    desc: "Customer names, shipping address, phone, etc."
+//	  - name: "Orders"
+//	    desc: "Customer orders"
+//	  services_access: [ "Greeter" ]
+//	object_stores:
+//	- name: "UploadBucket"
+//	  desc: "Bucket for uploading data"
+//	  services_access: [ "Orders" ]
+//	usergroups:
+//	- name: "CustomerUserGroup"
+//	  desc: "Customer user group"
+//	  type: "public"
 func NewProject(projFile string, opts ...ProjectOption) (*Project, error) {
 
 	projectOpts := fillProjectOptions(opts...)

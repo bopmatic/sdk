@@ -9,18 +9,20 @@ import (
 )
 
 var expectedSuccesses = map[string]string{
-	"multiSvcMultiDb":         "X2konu6DisZiYulAskdwBYp0mcsna_18zm42iyo4_Rw=",
-	"multiSvcMultiRpc":        "i9_h-2oZSBg8MternhT2i4CmCOg1feQ8dI0ovRJfmdM=",
-	"multiSvcOneRpc":          "7MumxaAkGhjDGSp11bi40STguXXpLvlIzrJ7hGqJfdw=",
-	"oneSvcOneDb":             "SsIAGB3C5Q8sP4RSiMlLfedW2zg70dVQKoyHA3qTq5k=",
-	"oneSvcMultiRpc":          "SqkzRfV5o3Z82onxEXitPLAQ3-gaDy5WuW8RTHOU9DU=",
-	"oneSvcOneRpc":            "FeI6TqOQSFwO87V5W74KumLcOIXV79ACUHeEeZkjWyI=",
-	"staticOnly":              "eTqZYv3IzHa6hJIl8UrRWuHNxXQg54Z82xMh4yZYnyc=",
-	"svcsOnly":                "8z9jNFbnaQnm57LouqpRhPxIgTE0UmH8H29rLlI0KPI=",
-	"oneSvcOneUserGroup":      "NPTAlcTQ_CIb8gKhuYADXNcRph6Ni-lxzjhJUiUkMiI=",
-	"multiSvcMultiUserGroup":  "vByOh78WqLq7YwSkuJ6ZC4v4B-CkFDqHYv3PD8ii-P8=",
-	"oneSvcWithApiAssets":     "FtYzjgXGDGL7OqG9g8fUmyadFvNn-b_OCcJLUSbp7Jg=",
-	"oneSvcWithRuntimeConfig": "hzh9-H_AQFurjZ3hut0P-RuhHQxTHRccOsZoe6_4r5g=",
+	"multiSvcMultiDb":         "AoRGICrBWT3X1vEVCzZ_8BceOBdui8xnvoE4CakmxIo=",
+	"multiSvcMultiRpc":        "zngIO3KMWHzBB296nwuAKL05iNIomZVCc-dpCGaK_7A=",
+	"multiSvcOneRpc":          "2hSRbBxU5GIaVq5Nrk2_63wToYu675MrDd-GvRJHsJQ=",
+	"oneSvcOneDb":             "l_oIVApKgcjugJ4NYEQ4-QDdNIrkEA3t7ylDxhfVWV4=",
+	"oneSvcMultiRpc":          "vU8ae5ZIS51Lf2bGsL8p2pKHrAvwB8kVhYzZoBEvMHU=",
+	"oneSvcOneRpc":            "cTEdYL572lNMeer_JU0K-j44hewJ-v708GE_5XYOVSU=",
+	"staticOnly":              "cFFz0ff1CLvOmjGOVcL0z39SF_NTIeYIyID4Qj2wBm4=",
+	"svcsOnly":                "UzRKDEQ4WFKW7LgrEgU57h1OSrOzB_V70zh5ranwubg=",
+	"oneSvcOneUserGroup":      "uvQSroXeUn4WCw0sTdRNupuKHx4LqZaw9e4ZNZjw0bE=",
+	"multiSvcMultiUserGroup":  "YHDepdKUmgAsT2PxSkaENJ5PjFOi9W9GItfv0or4uxY=",
+	"oneSvcWithApiAssets":     "pqItjeJrKhxXYLbz8Hw2NSSUUJ7rZ5F4Y3ePyykC1pQ=",
+	"oneSvcWithRuntimeConfig": "26suPRpTK8lssw3TEz-_mVKhSLGoJvZ6GfnVQT93LwM=",
+	"oneSvcOneObjStore":       "3IrKn2JkDzJAj1CqwLOZsTV7J_FSqzAEomnbCHDV4_c=",
+	"multiSvcMultiObjStore":   "_os6gjbOovAEQMM3fMgkSgI4QXsWE7aFF55H9pIE1EI=",
 }
 
 func TestProjectParse(t *testing.T) {
@@ -55,14 +57,17 @@ func TestProjectParse(t *testing.T) {
 		"noSuchDbSvcAccess":    "Database Customers in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
 		"badFormatVersion": "Project test_assets/project/badFormatVersion/Bopmatic.yaml specifies an unsupported formatversion 0.9. The latest supported formatversion is " +
 			FormatVersionCurrent + ".",
-		"missingUserGroup":      "Service Greeter in Project Foo defines access for user group NoSuchUserGroup but no user group named NoSuchUserGroup is defined",
-		"missingUserGroupName":  "UserGroup in Project Foo definition is missing required field name",
-		"reservedUserGroupName": "UserGroup in Project Foo is using reserved name anon_public. Please choose a different user group name.",
-		"missingUserGroupType":  "UserGroup CustomerGroup definition is missing required field type",
-		"missingUserGroupRef":   "Usergroup CustomerUserGroup in Project Foo is defined but no service references user access to it",
-		"bogusUserGroupType":    "Unsupported user group type randomUnsupportedType defined in UserGroup Foo for Project CustomerUserGroup",
-		"missingApiAssets":      "Failed to open API def assets directory for Service Greeter: stat test_assets/project/missingApiAssets/pb: no such file or directory",
-		"apiAssetsNotDir":       "Failed to open API def assets directory for Service Greeter: test_assets/project/apiAssetsNotDir/pb is not a directory",
+		"missingUserGroup":         "Service Greeter in Project Foo defines access for user group NoSuchUserGroup but no user group named NoSuchUserGroup is defined",
+		"missingUserGroupName":     "UserGroup in Project Foo definition is missing required field name",
+		"reservedUserGroupName":    "UserGroup in Project Foo is using reserved name anon_public. Please choose a different user group name.",
+		"missingUserGroupType":     "UserGroup CustomerGroup definition is missing required field type",
+		"missingUserGroupRef":      "Usergroup CustomerUserGroup in Project Foo is defined but no service references user access to it",
+		"bogusUserGroupType":       "Unsupported user group type randomUnsupportedType defined in UserGroup Foo for Project CustomerUserGroup",
+		"missingApiAssets":         "Failed to open API def assets directory for Service Greeter: stat test_assets/project/missingApiAssets/pb: no such file or directory",
+		"apiAssetsNotDir":          "Failed to open API def assets directory for Service Greeter: test_assets/project/apiAssetsNotDir/pb is not a directory",
+		"missingObjStoreName":      "Object Store in Project Foo definition is missing required field name",
+		"missingObjStoreSvcAccess": "Object Store Uploads in Project Foo must define at least 1 service access",
+		"noSuchObjSToreSvcAccess":  "Object Store Uploads in Project Foo defines access for service NoSuchSvc but no service named NoSuchSvc is defined",
 	}
 
 	for idx, tCase := range testCases {
