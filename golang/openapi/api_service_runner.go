@@ -13,18 +13,18 @@ package openapi
 import (
 	"bytes"
 	"context"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 )
 
 
-// ServiceRunnerApiService ServiceRunnerApi service
-type ServiceRunnerApiService service
+// ServiceRunnerAPIService ServiceRunnerAPI service
+type ServiceRunnerAPIService service
 
 type ApiDeletePackageRequest struct {
 	ctx context.Context
-	ApiService *ServiceRunnerApiService
+	ApiService *ServiceRunnerAPIService
 	body *DeletePackageRequest
 }
 
@@ -43,7 +43,7 @@ DeletePackage Method for DeletePackage
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDeletePackageRequest
 */
-func (a *ServiceRunnerApiService) DeletePackage(ctx context.Context) ApiDeletePackageRequest {
+func (a *ServiceRunnerAPIService) DeletePackage(ctx context.Context) ApiDeletePackageRequest {
 	return ApiDeletePackageRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -52,7 +52,7 @@ func (a *ServiceRunnerApiService) DeletePackage(ctx context.Context) ApiDeletePa
 
 // Execute executes the request
 //  @return DeletePackageReply
-func (a *ServiceRunnerApiService) DeletePackageExecute(r ApiDeletePackageRequest) (*DeletePackageReply, *http.Response, error) {
+func (a *ServiceRunnerAPIService) DeletePackageExecute(r ApiDeletePackageRequest) (*DeletePackageReply, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -60,7 +60,7 @@ func (a *ServiceRunnerApiService) DeletePackageExecute(r ApiDeletePackageRequest
 		localVarReturnValue  *DeletePackageReply
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerApiService.DeletePackage")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerAPIService.DeletePackage")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -103,9 +103,9 @@ func (a *ServiceRunnerApiService) DeletePackageExecute(r ApiDeletePackageRequest
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -121,7 +121,8 @@ func (a *ServiceRunnerApiService) DeletePackageExecute(r ApiDeletePackageRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -139,7 +140,7 @@ func (a *ServiceRunnerApiService) DeletePackageExecute(r ApiDeletePackageRequest
 
 type ApiDeployPackageRequest struct {
 	ctx context.Context
-	ApiService *ServiceRunnerApiService
+	ApiService *ServiceRunnerAPIService
 	body *DeployPackageRequest
 }
 
@@ -158,7 +159,7 @@ DeployPackage Method for DeployPackage
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDeployPackageRequest
 */
-func (a *ServiceRunnerApiService) DeployPackage(ctx context.Context) ApiDeployPackageRequest {
+func (a *ServiceRunnerAPIService) DeployPackage(ctx context.Context) ApiDeployPackageRequest {
 	return ApiDeployPackageRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -167,7 +168,7 @@ func (a *ServiceRunnerApiService) DeployPackage(ctx context.Context) ApiDeployPa
 
 // Execute executes the request
 //  @return DeployPackageReply
-func (a *ServiceRunnerApiService) DeployPackageExecute(r ApiDeployPackageRequest) (*DeployPackageReply, *http.Response, error) {
+func (a *ServiceRunnerAPIService) DeployPackageExecute(r ApiDeployPackageRequest) (*DeployPackageReply, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -175,7 +176,7 @@ func (a *ServiceRunnerApiService) DeployPackageExecute(r ApiDeployPackageRequest
 		localVarReturnValue  *DeployPackageReply
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerApiService.DeployPackage")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerAPIService.DeployPackage")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -218,9 +219,9 @@ func (a *ServiceRunnerApiService) DeployPackageExecute(r ApiDeployPackageRequest
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -236,7 +237,8 @@ func (a *ServiceRunnerApiService) DeployPackageExecute(r ApiDeployPackageRequest
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -254,7 +256,7 @@ func (a *ServiceRunnerApiService) DeployPackageExecute(r ApiDeployPackageRequest
 
 type ApiDescribePackageRequest struct {
 	ctx context.Context
-	ApiService *ServiceRunnerApiService
+	ApiService *ServiceRunnerAPIService
 	body *DescribePackageRequest
 }
 
@@ -273,7 +275,7 @@ DescribePackage Method for DescribePackage
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiDescribePackageRequest
 */
-func (a *ServiceRunnerApiService) DescribePackage(ctx context.Context) ApiDescribePackageRequest {
+func (a *ServiceRunnerAPIService) DescribePackage(ctx context.Context) ApiDescribePackageRequest {
 	return ApiDescribePackageRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -282,7 +284,7 @@ func (a *ServiceRunnerApiService) DescribePackage(ctx context.Context) ApiDescri
 
 // Execute executes the request
 //  @return DescribePackageReply
-func (a *ServiceRunnerApiService) DescribePackageExecute(r ApiDescribePackageRequest) (*DescribePackageReply, *http.Response, error) {
+func (a *ServiceRunnerAPIService) DescribePackageExecute(r ApiDescribePackageRequest) (*DescribePackageReply, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -290,7 +292,7 @@ func (a *ServiceRunnerApiService) DescribePackageExecute(r ApiDescribePackageReq
 		localVarReturnValue  *DescribePackageReply
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerApiService.DescribePackage")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerAPIService.DescribePackage")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -333,9 +335,9 @@ func (a *ServiceRunnerApiService) DescribePackageExecute(r ApiDescribePackageReq
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -351,7 +353,8 @@ func (a *ServiceRunnerApiService) DescribePackageExecute(r ApiDescribePackageReq
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -369,7 +372,7 @@ func (a *ServiceRunnerApiService) DescribePackageExecute(r ApiDescribePackageReq
 
 type ApiGetUploadURLRequest struct {
 	ctx context.Context
-	ApiService *ServiceRunnerApiService
+	ApiService *ServiceRunnerAPIService
 	body *GetUploadURLRequest
 }
 
@@ -388,7 +391,7 @@ GetUploadURL Method for GetUploadURL
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiGetUploadURLRequest
 */
-func (a *ServiceRunnerApiService) GetUploadURL(ctx context.Context) ApiGetUploadURLRequest {
+func (a *ServiceRunnerAPIService) GetUploadURL(ctx context.Context) ApiGetUploadURLRequest {
 	return ApiGetUploadURLRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -397,7 +400,7 @@ func (a *ServiceRunnerApiService) GetUploadURL(ctx context.Context) ApiGetUpload
 
 // Execute executes the request
 //  @return GetUploadURLReply
-func (a *ServiceRunnerApiService) GetUploadURLExecute(r ApiGetUploadURLRequest) (*GetUploadURLReply, *http.Response, error) {
+func (a *ServiceRunnerAPIService) GetUploadURLExecute(r ApiGetUploadURLRequest) (*GetUploadURLReply, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -405,7 +408,7 @@ func (a *ServiceRunnerApiService) GetUploadURLExecute(r ApiGetUploadURLRequest) 
 		localVarReturnValue  *GetUploadURLReply
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerApiService.GetUploadURL")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerAPIService.GetUploadURL")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -448,9 +451,9 @@ func (a *ServiceRunnerApiService) GetUploadURLExecute(r ApiGetUploadURLRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -466,7 +469,8 @@ func (a *ServiceRunnerApiService) GetUploadURLExecute(r ApiGetUploadURLRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -484,7 +488,7 @@ func (a *ServiceRunnerApiService) GetUploadURLExecute(r ApiGetUploadURLRequest) 
 
 type ApiListPackagesRequest struct {
 	ctx context.Context
-	ApiService *ServiceRunnerApiService
+	ApiService *ServiceRunnerAPIService
 	body *ListPackagesRequest
 }
 
@@ -503,7 +507,7 @@ ListPackages Method for ListPackages
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiListPackagesRequest
 */
-func (a *ServiceRunnerApiService) ListPackages(ctx context.Context) ApiListPackagesRequest {
+func (a *ServiceRunnerAPIService) ListPackages(ctx context.Context) ApiListPackagesRequest {
 	return ApiListPackagesRequest{
 		ApiService: a,
 		ctx: ctx,
@@ -512,7 +516,7 @@ func (a *ServiceRunnerApiService) ListPackages(ctx context.Context) ApiListPacka
 
 // Execute executes the request
 //  @return ListPackagesReply
-func (a *ServiceRunnerApiService) ListPackagesExecute(r ApiListPackagesRequest) (*ListPackagesReply, *http.Response, error) {
+func (a *ServiceRunnerAPIService) ListPackagesExecute(r ApiListPackagesRequest) (*ListPackagesReply, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
@@ -520,7 +524,7 @@ func (a *ServiceRunnerApiService) ListPackagesExecute(r ApiListPackagesRequest) 
 		localVarReturnValue  *ListPackagesReply
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerApiService.ListPackages")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ServiceRunnerAPIService.ListPackages")
 	if err != nil {
 		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
 	}
@@ -563,9 +567,9 @@ func (a *ServiceRunnerApiService) ListPackagesExecute(r ApiListPackagesRequest) 
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
 
-	localVarBody, err := ioutil.ReadAll(localVarHTTPResponse.Body)
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
 	localVarHTTPResponse.Body.Close()
-	localVarHTTPResponse.Body = ioutil.NopCloser(bytes.NewBuffer(localVarBody))
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
 	if err != nil {
 		return localVarReturnValue, localVarHTTPResponse, err
 	}
@@ -581,7 +585,8 @@ func (a *ServiceRunnerApiService) ListPackagesExecute(r ApiListPackagesRequest) 
 				newErr.error = err.Error()
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
-			newErr.model = v
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

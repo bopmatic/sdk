@@ -17,7 +17,7 @@ import (
 // swagger:model ListPackagesRequest
 type ListPackagesRequest struct {
 
-	// project name
+	// leave empty for all projects
 	ProjectName string `json:"projectName,omitempty"`
 }
 

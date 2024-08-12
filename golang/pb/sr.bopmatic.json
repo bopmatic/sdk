@@ -265,6 +265,7 @@
         "items": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/ListPackagesReplyListPackagesItem"
           }
         }
@@ -285,7 +286,8 @@
       "type": "object",
       "properties": {
         "projectName": {
-          "type": "string"
+          "type": "string",
+          "title": "leave empty for all projects"
         }
       }
     },
@@ -293,24 +295,30 @@
       "type": "object",
       "properties": {
         "projectName": {
-          "type": "string"
+          "type": "string",
+          "title": "name of the Bopmatic project; must be unique"
         },
         "packageId": {
-          "type": "string"
+          "type": "string",
+          "title": "hex string of first 4 bytes of packageXsum"
         },
         "packageXsum": {
           "type": "string",
-          "format": "byte"
+          "format": "byte",
+          "title": "sha256 checksum of packageTarballData"
         },
         "packageTarballData": {
           "type": "string",
-          "format": "byte"
+          "format": "byte",
+          "title": "package tarball content in .tar.xz format (limited to 6MiB);"
         },
         "packageName": {
-          "type": "string"
+          "type": "string",
+          "title": "user prescribed name; may not be unique; may be empty string"
         },
         "packageTarballURL": {
-          "type": "string"
+          "type": "string",
+          "title": "URL to package tarball (when larger than 6MiB)"
         }
       }
     },
@@ -330,7 +338,8 @@
         "DELETED",
         "UNKNOWN_PKG_STATE"
       ],
-      "default": "UPLOADING"
+      "default": "UPLOADING",
+      "title": "- UPLOADING: package is currently in the process of being uploaded\n - UPLOADED: upload has completed; the package has not yet started validataion\n - VALIDATING: the package is in the process of being validated\n - INVALID: the package failed validation checks and cannot be deployed\n - BUILDING: the package passed validation and is in the process of being built\n - DEPLOYING: the package is built and in the process of being deployed to production\n - PRODUCTION: the package is active in production\n - DEACTIVATING: the package is in the process of being deactivated from production\n - DELETING: the package is in the process of being deleted\n - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate\n - DELETED: the package has been deleted\n - UNKNOWN_PKG_STATE: MAX_INT"
     },
     "protobufAny": {
       "type": "object",
@@ -354,6 +363,7 @@
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
         }

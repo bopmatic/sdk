@@ -1,14 +1,14 @@
-# \ServiceRunnerApi
+# \ServiceRunnerAPI
 
 All URIs are relative to *https://api.bopmatic.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeletePackage**](ServiceRunnerApi.md#DeletePackage) | **Post** /ServiceRunner/DeletePackage | 
-[**DeployPackage**](ServiceRunnerApi.md#DeployPackage) | **Post** /ServiceRunner/DeployPackage | 
-[**DescribePackage**](ServiceRunnerApi.md#DescribePackage) | **Post** /ServiceRunner/DescribePackage | 
-[**GetUploadURL**](ServiceRunnerApi.md#GetUploadURL) | **Post** /ServiceRunner/GetUploadURL | 
-[**ListPackages**](ServiceRunnerApi.md#ListPackages) | **Post** /ServiceRunner/ListPackages | 
+[**DeletePackage**](ServiceRunnerAPI.md#DeletePackage) | **Post** /ServiceRunner/DeletePackage | 
+[**DeployPackage**](ServiceRunnerAPI.md#DeployPackage) | **Post** /ServiceRunner/DeployPackage | 
+[**DescribePackage**](ServiceRunnerAPI.md#DescribePackage) | **Post** /ServiceRunner/DescribePackage | 
+[**GetUploadURL**](ServiceRunnerAPI.md#GetUploadURL) | **Post** /ServiceRunner/GetUploadURL | 
+[**ListPackages**](ServiceRunnerAPI.md#ListPackages) | **Post** /ServiceRunner/ListPackages | 
 
 
 
@@ -24,24 +24,24 @@ Method | HTTP request | Description
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
 )
 
 func main() {
-    body := *openapiclient.NewDeletePackageRequest() // DeletePackageRequest | 
+	body := *openapiclient.NewDeletePackageRequest() // DeletePackageRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ServiceRunnerApi.DeletePackage(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerApi.DeletePackage``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `DeletePackage`: DeletePackageReply
-    fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerApi.DeletePackage`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.DeletePackage(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.DeletePackage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeletePackage`: DeletePackageReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.DeletePackage`: %v\n", resp)
 }
 ```
 
@@ -88,24 +88,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
 )
 
 func main() {
-    body := *openapiclient.NewDeployPackageRequest() // DeployPackageRequest | 
+	body := *openapiclient.NewDeployPackageRequest() // DeployPackageRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ServiceRunnerApi.DeployPackage(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerApi.DeployPackage``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `DeployPackage`: DeployPackageReply
-    fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerApi.DeployPackage`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.DeployPackage(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.DeployPackage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeployPackage`: DeployPackageReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.DeployPackage`: %v\n", resp)
 }
 ```
 
@@ -152,24 +152,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
 )
 
 func main() {
-    body := *openapiclient.NewDescribePackageRequest() // DescribePackageRequest | 
+	body := *openapiclient.NewDescribePackageRequest() // DescribePackageRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ServiceRunnerApi.DescribePackage(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerApi.DescribePackage``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `DescribePackage`: DescribePackageReply
-    fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerApi.DescribePackage`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.DescribePackage(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.DescribePackage``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DescribePackage`: DescribePackageReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.DescribePackage`: %v\n", resp)
 }
 ```
 
@@ -216,24 +216,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
 )
 
 func main() {
-    body := *openapiclient.NewGetUploadURLRequest() // GetUploadURLRequest | 
+	body := *openapiclient.NewGetUploadURLRequest() // GetUploadURLRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ServiceRunnerApi.GetUploadURL(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerApi.GetUploadURL``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `GetUploadURL`: GetUploadURLReply
-    fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerApi.GetUploadURL`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.GetUploadURL(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.GetUploadURL``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetUploadURL`: GetUploadURLReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.GetUploadURL`: %v\n", resp)
 }
 ```
 
@@ -280,24 +280,24 @@ No authorization required
 package main
 
 import (
-    "context"
-    "fmt"
-    "os"
-    openapiclient "./openapi"
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
 )
 
 func main() {
-    body := *openapiclient.NewListPackagesRequest() // ListPackagesRequest | 
+	body := *openapiclient.NewListPackagesRequest() // ListPackagesRequest | 
 
-    configuration := openapiclient.NewConfiguration()
-    apiClient := openapiclient.NewAPIClient(configuration)
-    resp, r, err := apiClient.ServiceRunnerApi.ListPackages(context.Background()).Body(body).Execute()
-    if err != nil {
-        fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerApi.ListPackages``: %v\n", err)
-        fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-    }
-    // response from `ListPackages`: ListPackagesReply
-    fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerApi.ListPackages`: %v\n", resp)
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.ListPackages(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.ListPackages``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListPackages`: ListPackagesReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.ListPackages`: %v\n", resp)
 }
 ```
 

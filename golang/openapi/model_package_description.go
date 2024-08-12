@@ -14,12 +14,15 @@ import (
 	"encoding/json"
 )
 
+// checks if the PackageDescription type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &PackageDescription{}
+
 // PackageDescription struct for PackageDescription
 type PackageDescription struct {
 	ProjectName *string `json:"projectName,omitempty"`
 	PackageId *string `json:"packageId,omitempty"`
-	PackageXsum *string `json:"packageXsum,omitempty"`
-	PackageTarballData *string `json:"packageTarballData,omitempty"`
+	PackageXsum *string `json:"packageXsum,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
+	PackageTarballData *string `json:"packageTarballData,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
 	PackageName *string `json:"packageName,omitempty"`
 	PackageTarballURL *string `json:"packageTarballURL,omitempty"`
 }
@@ -43,7 +46,7 @@ func NewPackageDescriptionWithDefaults() *PackageDescription {
 
 // GetProjectName returns the ProjectName field value if set, zero value otherwise.
 func (o *PackageDescription) GetProjectName() string {
-	if o == nil || o.ProjectName == nil {
+	if o == nil || IsNil(o.ProjectName) {
 		var ret string
 		return ret
 	}
@@ -53,7 +56,7 @@ func (o *PackageDescription) GetProjectName() string {
 // GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PackageDescription) GetProjectNameOk() (*string, bool) {
-	if o == nil || o.ProjectName == nil {
+	if o == nil || IsNil(o.ProjectName) {
 		return nil, false
 	}
 	return o.ProjectName, true
@@ -61,7 +64,7 @@ func (o *PackageDescription) GetProjectNameOk() (*string, bool) {
 
 // HasProjectName returns a boolean if a field has been set.
 func (o *PackageDescription) HasProjectName() bool {
-	if o != nil && o.ProjectName != nil {
+	if o != nil && !IsNil(o.ProjectName) {
 		return true
 	}
 
@@ -75,7 +78,7 @@ func (o *PackageDescription) SetProjectName(v string) {
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
 func (o *PackageDescription) GetPackageId() string {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		var ret string
 		return ret
 	}
@@ -85,7 +88,7 @@ func (o *PackageDescription) GetPackageId() string {
 // GetPackageIdOk returns a tuple with the PackageId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PackageDescription) GetPackageIdOk() (*string, bool) {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		return nil, false
 	}
 	return o.PackageId, true
@@ -93,7 +96,7 @@ func (o *PackageDescription) GetPackageIdOk() (*string, bool) {
 
 // HasPackageId returns a boolean if a field has been set.
 func (o *PackageDescription) HasPackageId() bool {
-	if o != nil && o.PackageId != nil {
+	if o != nil && !IsNil(o.PackageId) {
 		return true
 	}
 
@@ -107,7 +110,7 @@ func (o *PackageDescription) SetPackageId(v string) {
 
 // GetPackageXsum returns the PackageXsum field value if set, zero value otherwise.
 func (o *PackageDescription) GetPackageXsum() string {
-	if o == nil || o.PackageXsum == nil {
+	if o == nil || IsNil(o.PackageXsum) {
 		var ret string
 		return ret
 	}
@@ -117,7 +120,7 @@ func (o *PackageDescription) GetPackageXsum() string {
 // GetPackageXsumOk returns a tuple with the PackageXsum field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PackageDescription) GetPackageXsumOk() (*string, bool) {
-	if o == nil || o.PackageXsum == nil {
+	if o == nil || IsNil(o.PackageXsum) {
 		return nil, false
 	}
 	return o.PackageXsum, true
@@ -125,7 +128,7 @@ func (o *PackageDescription) GetPackageXsumOk() (*string, bool) {
 
 // HasPackageXsum returns a boolean if a field has been set.
 func (o *PackageDescription) HasPackageXsum() bool {
-	if o != nil && o.PackageXsum != nil {
+	if o != nil && !IsNil(o.PackageXsum) {
 		return true
 	}
 
@@ -139,7 +142,7 @@ func (o *PackageDescription) SetPackageXsum(v string) {
 
 // GetPackageTarballData returns the PackageTarballData field value if set, zero value otherwise.
 func (o *PackageDescription) GetPackageTarballData() string {
-	if o == nil || o.PackageTarballData == nil {
+	if o == nil || IsNil(o.PackageTarballData) {
 		var ret string
 		return ret
 	}
@@ -149,7 +152,7 @@ func (o *PackageDescription) GetPackageTarballData() string {
 // GetPackageTarballDataOk returns a tuple with the PackageTarballData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PackageDescription) GetPackageTarballDataOk() (*string, bool) {
-	if o == nil || o.PackageTarballData == nil {
+	if o == nil || IsNil(o.PackageTarballData) {
 		return nil, false
 	}
 	return o.PackageTarballData, true
@@ -157,7 +160,7 @@ func (o *PackageDescription) GetPackageTarballDataOk() (*string, bool) {
 
 // HasPackageTarballData returns a boolean if a field has been set.
 func (o *PackageDescription) HasPackageTarballData() bool {
-	if o != nil && o.PackageTarballData != nil {
+	if o != nil && !IsNil(o.PackageTarballData) {
 		return true
 	}
 
@@ -171,7 +174,7 @@ func (o *PackageDescription) SetPackageTarballData(v string) {
 
 // GetPackageName returns the PackageName field value if set, zero value otherwise.
 func (o *PackageDescription) GetPackageName() string {
-	if o == nil || o.PackageName == nil {
+	if o == nil || IsNil(o.PackageName) {
 		var ret string
 		return ret
 	}
@@ -181,7 +184,7 @@ func (o *PackageDescription) GetPackageName() string {
 // GetPackageNameOk returns a tuple with the PackageName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PackageDescription) GetPackageNameOk() (*string, bool) {
-	if o == nil || o.PackageName == nil {
+	if o == nil || IsNil(o.PackageName) {
 		return nil, false
 	}
 	return o.PackageName, true
@@ -189,7 +192,7 @@ func (o *PackageDescription) GetPackageNameOk() (*string, bool) {
 
 // HasPackageName returns a boolean if a field has been set.
 func (o *PackageDescription) HasPackageName() bool {
-	if o != nil && o.PackageName != nil {
+	if o != nil && !IsNil(o.PackageName) {
 		return true
 	}
 
@@ -203,7 +206,7 @@ func (o *PackageDescription) SetPackageName(v string) {
 
 // GetPackageTarballURL returns the PackageTarballURL field value if set, zero value otherwise.
 func (o *PackageDescription) GetPackageTarballURL() string {
-	if o == nil || o.PackageTarballURL == nil {
+	if o == nil || IsNil(o.PackageTarballURL) {
 		var ret string
 		return ret
 	}
@@ -213,7 +216,7 @@ func (o *PackageDescription) GetPackageTarballURL() string {
 // GetPackageTarballURLOk returns a tuple with the PackageTarballURL field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *PackageDescription) GetPackageTarballURLOk() (*string, bool) {
-	if o == nil || o.PackageTarballURL == nil {
+	if o == nil || IsNil(o.PackageTarballURL) {
 		return nil, false
 	}
 	return o.PackageTarballURL, true
@@ -221,7 +224,7 @@ func (o *PackageDescription) GetPackageTarballURLOk() (*string, bool) {
 
 // HasPackageTarballURL returns a boolean if a field has been set.
 func (o *PackageDescription) HasPackageTarballURL() bool {
-	if o != nil && o.PackageTarballURL != nil {
+	if o != nil && !IsNil(o.PackageTarballURL) {
 		return true
 	}
 
@@ -234,26 +237,34 @@ func (o *PackageDescription) SetPackageTarballURL(v string) {
 }
 
 func (o PackageDescription) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProjectName != nil {
-		toSerialize["projectName"] = o.ProjectName
-	}
-	if o.PackageId != nil {
-		toSerialize["packageId"] = o.PackageId
-	}
-	if o.PackageXsum != nil {
-		toSerialize["packageXsum"] = o.PackageXsum
-	}
-	if o.PackageTarballData != nil {
-		toSerialize["packageTarballData"] = o.PackageTarballData
-	}
-	if o.PackageName != nil {
-		toSerialize["packageName"] = o.PackageName
-	}
-	if o.PackageTarballURL != nil {
-		toSerialize["packageTarballURL"] = o.PackageTarballURL
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o PackageDescription) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProjectName) {
+		toSerialize["projectName"] = o.ProjectName
+	}
+	if !IsNil(o.PackageId) {
+		toSerialize["packageId"] = o.PackageId
+	}
+	if !IsNil(o.PackageXsum) {
+		toSerialize["packageXsum"] = o.PackageXsum
+	}
+	if !IsNil(o.PackageTarballData) {
+		toSerialize["packageTarballData"] = o.PackageTarballData
+	}
+	if !IsNil(o.PackageName) {
+		toSerialize["packageName"] = o.PackageName
+	}
+	if !IsNil(o.PackageTarballURL) {
+		toSerialize["packageTarballURL"] = o.PackageTarballURL
+	}
+	return toSerialize, nil
 }
 
 type NullablePackageDescription struct {

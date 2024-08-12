@@ -17,24 +17,24 @@ import (
 // swagger:model PackageDescription
 type PackageDescription struct {
 
-	// package Id
+	// hex string of first 4 bytes of packageXsum
 	PackageID string `json:"packageId,omitempty"`
 
-	// package name
+	// user prescribed name; may not be unique; may be empty string
 	PackageName string `json:"packageName,omitempty"`
 
-	// package tarball data
+	// package tarball content in .tar.xz format (limited to 6MiB);
 	// Format: byte
 	PackageTarballData strfmt.Base64 `json:"packageTarballData,omitempty"`
 
-	// package tarball URL
+	// URL to package tarball (when larger than 6MiB)
 	PackageTarballURL string `json:"packageTarballURL,omitempty"`
 
-	// package xsum
+	// sha256 checksum of packageTarballData
 	// Format: byte
 	PackageXsum strfmt.Base64 `json:"packageXsum,omitempty"`
 
-	// project name
+	// name of the Bopmatic project; must be unique
 	ProjectName string `json:"projectName,omitempty"`
 }
 

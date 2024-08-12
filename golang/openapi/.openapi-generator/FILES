@@ -20,7 +20,7 @@ docs/PackageDescription.md
 docs/PackageState.md
 docs/ProtobufAny.md
 docs/RpcStatus.md
-docs/ServiceRunnerApi.md
+docs/ServiceRunnerAPI.md
 git_push.sh
 go.mod
 go.sum

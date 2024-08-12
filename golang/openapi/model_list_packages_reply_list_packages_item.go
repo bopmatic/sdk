@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ListPackagesReplyListPackagesItem type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListPackagesReplyListPackagesItem{}
+
 // ListPackagesReplyListPackagesItem struct for ListPackagesReplyListPackagesItem
 type ListPackagesReplyListPackagesItem struct {
 	ProjectName *string `json:"projectName,omitempty"`
@@ -39,7 +42,7 @@ func NewListPackagesReplyListPackagesItemWithDefaults() *ListPackagesReplyListPa
 
 // GetProjectName returns the ProjectName field value if set, zero value otherwise.
 func (o *ListPackagesReplyListPackagesItem) GetProjectName() string {
-	if o == nil || o.ProjectName == nil {
+	if o == nil || IsNil(o.ProjectName) {
 		var ret string
 		return ret
 	}
@@ -49,7 +52,7 @@ func (o *ListPackagesReplyListPackagesItem) GetProjectName() string {
 // GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListPackagesReplyListPackagesItem) GetProjectNameOk() (*string, bool) {
-	if o == nil || o.ProjectName == nil {
+	if o == nil || IsNil(o.ProjectName) {
 		return nil, false
 	}
 	return o.ProjectName, true
@@ -57,7 +60,7 @@ func (o *ListPackagesReplyListPackagesItem) GetProjectNameOk() (*string, bool) {
 
 // HasProjectName returns a boolean if a field has been set.
 func (o *ListPackagesReplyListPackagesItem) HasProjectName() bool {
-	if o != nil && o.ProjectName != nil {
+	if o != nil && !IsNil(o.ProjectName) {
 		return true
 	}
 
@@ -71,7 +74,7 @@ func (o *ListPackagesReplyListPackagesItem) SetProjectName(v string) {
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
 func (o *ListPackagesReplyListPackagesItem) GetPackageId() string {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		var ret string
 		return ret
 	}
@@ -81,7 +84,7 @@ func (o *ListPackagesReplyListPackagesItem) GetPackageId() string {
 // GetPackageIdOk returns a tuple with the PackageId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListPackagesReplyListPackagesItem) GetPackageIdOk() (*string, bool) {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		return nil, false
 	}
 	return o.PackageId, true
@@ -89,7 +92,7 @@ func (o *ListPackagesReplyListPackagesItem) GetPackageIdOk() (*string, bool) {
 
 // HasPackageId returns a boolean if a field has been set.
 func (o *ListPackagesReplyListPackagesItem) HasPackageId() bool {
-	if o != nil && o.PackageId != nil {
+	if o != nil && !IsNil(o.PackageId) {
 		return true
 	}
 
@@ -102,14 +105,22 @@ func (o *ListPackagesReplyListPackagesItem) SetPackageId(v string) {
 }
 
 func (o ListPackagesReplyListPackagesItem) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProjectName != nil {
-		toSerialize["projectName"] = o.ProjectName
-	}
-	if o.PackageId != nil {
-		toSerialize["packageId"] = o.PackageId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListPackagesReplyListPackagesItem) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProjectName) {
+		toSerialize["projectName"] = o.ProjectName
+	}
+	if !IsNil(o.PackageId) {
+		toSerialize["packageId"] = o.PackageId
+	}
+	return toSerialize, nil
 }
 
 type NullableListPackagesReplyListPackagesItem struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DescribePackageRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DescribePackageRequest{}
+
 // DescribePackageRequest struct for DescribePackageRequest
 type DescribePackageRequest struct {
 	PackageId *string `json:"packageId,omitempty"`
@@ -38,7 +41,7 @@ func NewDescribePackageRequestWithDefaults() *DescribePackageRequest {
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
 func (o *DescribePackageRequest) GetPackageId() string {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		var ret string
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *DescribePackageRequest) GetPackageId() string {
 // GetPackageIdOk returns a tuple with the PackageId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DescribePackageRequest) GetPackageIdOk() (*string, bool) {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		return nil, false
 	}
 	return o.PackageId, true
@@ -56,7 +59,7 @@ func (o *DescribePackageRequest) GetPackageIdOk() (*string, bool) {
 
 // HasPackageId returns a boolean if a field has been set.
 func (o *DescribePackageRequest) HasPackageId() bool {
-	if o != nil && o.PackageId != nil {
+	if o != nil && !IsNil(o.PackageId) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *DescribePackageRequest) SetPackageId(v string) {
 }
 
 func (o DescribePackageRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PackageId != nil {
-		toSerialize["packageId"] = o.PackageId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DescribePackageRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PackageId) {
+		toSerialize["packageId"] = o.PackageId
+	}
+	return toSerialize, nil
 }
 
 type NullableDescribePackageRequest struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ListPackagesReply type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListPackagesReply{}
+
 // ListPackagesReply struct for ListPackagesReply
 type ListPackagesReply struct {
 	Items []ListPackagesReplyListPackagesItem `json:"items,omitempty"`
@@ -38,7 +41,7 @@ func NewListPackagesReplyWithDefaults() *ListPackagesReply {
 
 // GetItems returns the Items field value if set, zero value otherwise.
 func (o *ListPackagesReply) GetItems() []ListPackagesReplyListPackagesItem {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		var ret []ListPackagesReplyListPackagesItem
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *ListPackagesReply) GetItems() []ListPackagesReplyListPackagesItem {
 // GetItemsOk returns a tuple with the Items field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListPackagesReply) GetItemsOk() ([]ListPackagesReplyListPackagesItem, bool) {
-	if o == nil || o.Items == nil {
+	if o == nil || IsNil(o.Items) {
 		return nil, false
 	}
 	return o.Items, true
@@ -56,7 +59,7 @@ func (o *ListPackagesReply) GetItemsOk() ([]ListPackagesReplyListPackagesItem, b
 
 // HasItems returns a boolean if a field has been set.
 func (o *ListPackagesReply) HasItems() bool {
-	if o != nil && o.Items != nil {
+	if o != nil && !IsNil(o.Items) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *ListPackagesReply) SetItems(v []ListPackagesReplyListPackagesItem) {
 }
 
 func (o ListPackagesReply) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Items != nil {
-		toSerialize["items"] = o.Items
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListPackagesReply) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Items) {
+		toSerialize["items"] = o.Items
+	}
+	return toSerialize, nil
 }
 
 type NullableListPackagesReply struct {

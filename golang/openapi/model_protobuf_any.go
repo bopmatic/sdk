@@ -14,10 +14,16 @@ import (
 	"encoding/json"
 )
 
+// checks if the ProtobufAny type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ProtobufAny{}
+
 // ProtobufAny struct for ProtobufAny
 type ProtobufAny struct {
 	Type *string `json:"@type,omitempty"`
+	AdditionalProperties map[string]interface{}
 }
+
+type _ProtobufAny ProtobufAny
 
 // NewProtobufAny instantiates a new ProtobufAny object
 // This constructor will assign default values to properties that have it defined,
@@ -38,7 +44,7 @@ func NewProtobufAnyWithDefaults() *ProtobufAny {
 
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ProtobufAny) GetType() string {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		var ret string
 		return ret
 	}
@@ -48,7 +54,7 @@ func (o *ProtobufAny) GetType() string {
 // GetTypeOk returns a tuple with the Type field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ProtobufAny) GetTypeOk() (*string, bool) {
-	if o == nil || o.Type == nil {
+	if o == nil || IsNil(o.Type) {
 		return nil, false
 	}
 	return o.Type, true
@@ -56,7 +62,7 @@ func (o *ProtobufAny) GetTypeOk() (*string, bool) {
 
 // HasType returns a boolean if a field has been set.
 func (o *ProtobufAny) HasType() bool {
-	if o != nil && o.Type != nil {
+	if o != nil && !IsNil(o.Type) {
 		return true
 	}
 
@@ -69,11 +75,45 @@ func (o *ProtobufAny) SetType(v string) {
 }
 
 func (o ProtobufAny) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Type != nil {
-		toSerialize["@type"] = o.Type
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ProtobufAny) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Type) {
+		toSerialize["@type"] = o.Type
+	}
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
+	return toSerialize, nil
+}
+
+func (o *ProtobufAny) UnmarshalJSON(data []byte) (err error) {
+	varProtobufAny := _ProtobufAny{}
+
+	err = json.Unmarshal(data, &varProtobufAny)
+
+	if err != nil {
+		return err
+	}
+
+	*o = ProtobufAny(varProtobufAny)
+
+	additionalProperties := make(map[string]interface{})
+
+	if err = json.Unmarshal(data, &additionalProperties); err == nil {
+		delete(additionalProperties, "@type")
+		o.AdditionalProperties = additionalProperties
+	}
+
+	return err
 }
 
 type NullableProtobufAny struct {

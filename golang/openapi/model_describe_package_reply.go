@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DescribePackageReply type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DescribePackageReply{}
+
 // DescribePackageReply struct for DescribePackageReply
 type DescribePackageReply struct {
 	Desc *PackageDescription `json:"desc,omitempty"`
@@ -45,7 +48,7 @@ func NewDescribePackageReplyWithDefaults() *DescribePackageReply {
 
 // GetDesc returns the Desc field value if set, zero value otherwise.
 func (o *DescribePackageReply) GetDesc() PackageDescription {
-	if o == nil || o.Desc == nil {
+	if o == nil || IsNil(o.Desc) {
 		var ret PackageDescription
 		return ret
 	}
@@ -55,7 +58,7 @@ func (o *DescribePackageReply) GetDesc() PackageDescription {
 // GetDescOk returns a tuple with the Desc field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DescribePackageReply) GetDescOk() (*PackageDescription, bool) {
-	if o == nil || o.Desc == nil {
+	if o == nil || IsNil(o.Desc) {
 		return nil, false
 	}
 	return o.Desc, true
@@ -63,7 +66,7 @@ func (o *DescribePackageReply) GetDescOk() (*PackageDescription, bool) {
 
 // HasDesc returns a boolean if a field has been set.
 func (o *DescribePackageReply) HasDesc() bool {
-	if o != nil && o.Desc != nil {
+	if o != nil && !IsNil(o.Desc) {
 		return true
 	}
 
@@ -77,7 +80,7 @@ func (o *DescribePackageReply) SetDesc(v PackageDescription) {
 
 // GetPackageState returns the PackageState field value if set, zero value otherwise.
 func (o *DescribePackageReply) GetPackageState() PackageState {
-	if o == nil || o.PackageState == nil {
+	if o == nil || IsNil(o.PackageState) {
 		var ret PackageState
 		return ret
 	}
@@ -87,7 +90,7 @@ func (o *DescribePackageReply) GetPackageState() PackageState {
 // GetPackageStateOk returns a tuple with the PackageState field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DescribePackageReply) GetPackageStateOk() (*PackageState, bool) {
-	if o == nil || o.PackageState == nil {
+	if o == nil || IsNil(o.PackageState) {
 		return nil, false
 	}
 	return o.PackageState, true
@@ -95,7 +98,7 @@ func (o *DescribePackageReply) GetPackageStateOk() (*PackageState, bool) {
 
 // HasPackageState returns a boolean if a field has been set.
 func (o *DescribePackageReply) HasPackageState() bool {
-	if o != nil && o.PackageState != nil {
+	if o != nil && !IsNil(o.PackageState) {
 		return true
 	}
 
@@ -109,7 +112,7 @@ func (o *DescribePackageReply) SetPackageState(v PackageState) {
 
 // GetSiteEndpoint returns the SiteEndpoint field value if set, zero value otherwise.
 func (o *DescribePackageReply) GetSiteEndpoint() string {
-	if o == nil || o.SiteEndpoint == nil {
+	if o == nil || IsNil(o.SiteEndpoint) {
 		var ret string
 		return ret
 	}
@@ -119,7 +122,7 @@ func (o *DescribePackageReply) GetSiteEndpoint() string {
 // GetSiteEndpointOk returns a tuple with the SiteEndpoint field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DescribePackageReply) GetSiteEndpointOk() (*string, bool) {
-	if o == nil || o.SiteEndpoint == nil {
+	if o == nil || IsNil(o.SiteEndpoint) {
 		return nil, false
 	}
 	return o.SiteEndpoint, true
@@ -127,7 +130,7 @@ func (o *DescribePackageReply) GetSiteEndpointOk() (*string, bool) {
 
 // HasSiteEndpoint returns a boolean if a field has been set.
 func (o *DescribePackageReply) HasSiteEndpoint() bool {
-	if o != nil && o.SiteEndpoint != nil {
+	if o != nil && !IsNil(o.SiteEndpoint) {
 		return true
 	}
 
@@ -141,7 +144,7 @@ func (o *DescribePackageReply) SetSiteEndpoint(v string) {
 
 // GetRpcEndpoints returns the RpcEndpoints field value if set, zero value otherwise.
 func (o *DescribePackageReply) GetRpcEndpoints() []string {
-	if o == nil || o.RpcEndpoints == nil {
+	if o == nil || IsNil(o.RpcEndpoints) {
 		var ret []string
 		return ret
 	}
@@ -151,7 +154,7 @@ func (o *DescribePackageReply) GetRpcEndpoints() []string {
 // GetRpcEndpointsOk returns a tuple with the RpcEndpoints field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DescribePackageReply) GetRpcEndpointsOk() ([]string, bool) {
-	if o == nil || o.RpcEndpoints == nil {
+	if o == nil || IsNil(o.RpcEndpoints) {
 		return nil, false
 	}
 	return o.RpcEndpoints, true
@@ -159,7 +162,7 @@ func (o *DescribePackageReply) GetRpcEndpointsOk() ([]string, bool) {
 
 // HasRpcEndpoints returns a boolean if a field has been set.
 func (o *DescribePackageReply) HasRpcEndpoints() bool {
-	if o != nil && o.RpcEndpoints != nil {
+	if o != nil && !IsNil(o.RpcEndpoints) {
 		return true
 	}
 
@@ -172,20 +175,28 @@ func (o *DescribePackageReply) SetRpcEndpoints(v []string) {
 }
 
 func (o DescribePackageReply) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Desc != nil {
-		toSerialize["desc"] = o.Desc
-	}
-	if o.PackageState != nil {
-		toSerialize["packageState"] = o.PackageState
-	}
-	if o.SiteEndpoint != nil {
-		toSerialize["siteEndpoint"] = o.SiteEndpoint
-	}
-	if o.RpcEndpoints != nil {
-		toSerialize["rpcEndpoints"] = o.RpcEndpoints
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DescribePackageReply) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Desc) {
+		toSerialize["desc"] = o.Desc
+	}
+	if !IsNil(o.PackageState) {
+		toSerialize["packageState"] = o.PackageState
+	}
+	if !IsNil(o.SiteEndpoint) {
+		toSerialize["siteEndpoint"] = o.SiteEndpoint
+	}
+	if !IsNil(o.RpcEndpoints) {
+		toSerialize["rpcEndpoints"] = o.RpcEndpoints
+	}
+	return toSerialize, nil
 }
 
 type NullableDescribePackageReply struct {

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the ListPackagesRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &ListPackagesRequest{}
+
 // ListPackagesRequest struct for ListPackagesRequest
 type ListPackagesRequest struct {
 	ProjectName *string `json:"projectName,omitempty"`
@@ -38,7 +41,7 @@ func NewListPackagesRequestWithDefaults() *ListPackagesRequest {
 
 // GetProjectName returns the ProjectName field value if set, zero value otherwise.
 func (o *ListPackagesRequest) GetProjectName() string {
-	if o == nil || o.ProjectName == nil {
+	if o == nil || IsNil(o.ProjectName) {
 		var ret string
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *ListPackagesRequest) GetProjectName() string {
 // GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ListPackagesRequest) GetProjectNameOk() (*string, bool) {
-	if o == nil || o.ProjectName == nil {
+	if o == nil || IsNil(o.ProjectName) {
 		return nil, false
 	}
 	return o.ProjectName, true
@@ -56,7 +59,7 @@ func (o *ListPackagesRequest) GetProjectNameOk() (*string, bool) {
 
 // HasProjectName returns a boolean if a field has been set.
 func (o *ListPackagesRequest) HasProjectName() bool {
-	if o != nil && o.ProjectName != nil {
+	if o != nil && !IsNil(o.ProjectName) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *ListPackagesRequest) SetProjectName(v string) {
 }
 
 func (o ListPackagesRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.ProjectName != nil {
-		toSerialize["projectName"] = o.ProjectName
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o ListPackagesRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ProjectName) {
+		toSerialize["projectName"] = o.ProjectName
+	}
+	return toSerialize, nil
 }
 
 type NullableListPackagesRequest struct {

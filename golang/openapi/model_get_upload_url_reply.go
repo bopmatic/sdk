@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the GetUploadURLReply type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &GetUploadURLReply{}
+
 // GetUploadURLReply struct for GetUploadURLReply
 type GetUploadURLReply struct {
 	URL *string `json:"URL,omitempty"`
@@ -38,7 +41,7 @@ func NewGetUploadURLReplyWithDefaults() *GetUploadURLReply {
 
 // GetURL returns the URL field value if set, zero value otherwise.
 func (o *GetUploadURLReply) GetURL() string {
-	if o == nil || o.URL == nil {
+	if o == nil || IsNil(o.URL) {
 		var ret string
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *GetUploadURLReply) GetURL() string {
 // GetURLOk returns a tuple with the URL field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *GetUploadURLReply) GetURLOk() (*string, bool) {
-	if o == nil || o.URL == nil {
+	if o == nil || IsNil(o.URL) {
 		return nil, false
 	}
 	return o.URL, true
@@ -56,7 +59,7 @@ func (o *GetUploadURLReply) GetURLOk() (*string, bool) {
 
 // HasURL returns a boolean if a field has been set.
 func (o *GetUploadURLReply) HasURL() bool {
-	if o != nil && o.URL != nil {
+	if o != nil && !IsNil(o.URL) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *GetUploadURLReply) SetURL(v string) {
 }
 
 func (o GetUploadURLReply) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.URL != nil {
-		toSerialize["URL"] = o.URL
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o GetUploadURLReply) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.URL) {
+		toSerialize["URL"] = o.URL
+	}
+	return toSerialize, nil
 }
 
 type NullableGetUploadURLReply struct {

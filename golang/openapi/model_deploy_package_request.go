@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeployPackageRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeployPackageRequest{}
+
 // DeployPackageRequest struct for DeployPackageRequest
 type DeployPackageRequest struct {
 	Desc *PackageDescription `json:"desc,omitempty"`
@@ -38,7 +41,7 @@ func NewDeployPackageRequestWithDefaults() *DeployPackageRequest {
 
 // GetDesc returns the Desc field value if set, zero value otherwise.
 func (o *DeployPackageRequest) GetDesc() PackageDescription {
-	if o == nil || o.Desc == nil {
+	if o == nil || IsNil(o.Desc) {
 		var ret PackageDescription
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *DeployPackageRequest) GetDesc() PackageDescription {
 // GetDescOk returns a tuple with the Desc field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeployPackageRequest) GetDescOk() (*PackageDescription, bool) {
-	if o == nil || o.Desc == nil {
+	if o == nil || IsNil(o.Desc) {
 		return nil, false
 	}
 	return o.Desc, true
@@ -56,7 +59,7 @@ func (o *DeployPackageRequest) GetDescOk() (*PackageDescription, bool) {
 
 // HasDesc returns a boolean if a field has been set.
 func (o *DeployPackageRequest) HasDesc() bool {
-	if o != nil && o.Desc != nil {
+	if o != nil && !IsNil(o.Desc) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *DeployPackageRequest) SetDesc(v PackageDescription) {
 }
 
 func (o DeployPackageRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Desc != nil {
-		toSerialize["desc"] = o.Desc
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeployPackageRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Desc) {
+		toSerialize["desc"] = o.Desc
+	}
+	return toSerialize, nil
 }
 
 type NullableDeployPackageRequest struct {

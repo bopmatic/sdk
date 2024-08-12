@@ -136,7 +136,7 @@ components:
   schemas:
     DeletePackageReply:
       example:
-        state: null
+        state: UPLOADING
       properties:
         state:
           $ref: '#/components/schemas/PackageState'
@@ -150,7 +150,7 @@ components:
       type: object
     DeployPackageReply:
       example:
-        state: null
+        state: UPLOADING
       properties:
         state:
           $ref: '#/components/schemas/PackageState'
@@ -173,7 +173,7 @@ components:
         rpcEndpoints:
         - rpcEndpoints
         - rpcEndpoints
-        packageState: null
+        packageState: UPLOADING
         desc:
           packageTarballData: packageTarballData
           packageXsum: packageXsum
@@ -244,6 +244,7 @@ components:
         projectName: projectName
       properties:
         projectName:
+          title: leave empty for all projects
           type: string
       type: object
     PackageDescription:
@@ -256,20 +257,26 @@ components:
         projectName: projectName
       properties:
         projectName:
+          title: name of the Bopmatic project; must be unique
           type: string
         packageId:
+          title: hex string of first 4 bytes of packageXsum
           type: string
         packageXsum:
           format: byte
           pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+          title: sha256 checksum of packageTarballData
           type: string
         packageTarballData:
           format: byte
           pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+          title: package tarball content in .tar.xz format (limited to 6MiB);
           type: string
         packageName:
+          title: user prescribed name; may not be unique; may be empty string
           type: string
         packageTarballURL:
+          title: URL to package tarball (when larger than 6MiB)
           type: string
       type: object
     PackageState:
@@ -287,15 +294,36 @@ components:
       - SUPPORT_NEEDED
       - DELETED
       - UNKNOWN_PKG_STATE
+      title: |-
+        - UPLOADING: package is currently in the process of being uploaded
+         - UPLOADED: upload has completed; the package has not yet started validataion
+         - VALIDATING: the package is in the process of being validated
+         - INVALID: the package failed validation checks and cannot be deployed
+         - BUILDING: the package passed validation and is in the process of being built
+         - DEPLOYING: the package is built and in the process of being deployed to production
+         - PRODUCTION: the package is active in production
+         - DEACTIVATING: the package is in the process of being deactivated from production
+         - DELETING: the package is in the process of being deleted
+         - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate
+         - DELETED: the package has been deleted
+         - UNKNOWN_PKG_STATE: MAX_INT
       type: string
     protobufAny:
       additionalProperties:
         type: object
+      example:
+        '@type': '@type'
       properties:
         '@type':
           type: string
       type: object
     rpcStatus:
+      example:
+        code: 0
+        details:
+        - '@type': '@type'
+        - '@type': '@type'
+        message: message
       properties:
         code:
           format: int32

@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeletePackageReply type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeletePackageReply{}
+
 // DeletePackageReply struct for DeletePackageReply
 type DeletePackageReply struct {
 	State *PackageState `json:"state,omitempty"`
@@ -42,7 +45,7 @@ func NewDeletePackageReplyWithDefaults() *DeletePackageReply {
 
 // GetState returns the State field value if set, zero value otherwise.
 func (o *DeletePackageReply) GetState() PackageState {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		var ret PackageState
 		return ret
 	}
@@ -52,7 +55,7 @@ func (o *DeletePackageReply) GetState() PackageState {
 // GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeletePackageReply) GetStateOk() (*PackageState, bool) {
-	if o == nil || o.State == nil {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
 	return o.State, true
@@ -60,7 +63,7 @@ func (o *DeletePackageReply) GetStateOk() (*PackageState, bool) {
 
 // HasState returns a boolean if a field has been set.
 func (o *DeletePackageReply) HasState() bool {
-	if o != nil && o.State != nil {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
@@ -73,11 +76,19 @@ func (o *DeletePackageReply) SetState(v PackageState) {
 }
 
 func (o DeletePackageReply) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.State != nil {
-		toSerialize["state"] = o.State
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeletePackageReply) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
+	}
+	return toSerialize, nil
 }
 
 type NullableDeletePackageReply struct {

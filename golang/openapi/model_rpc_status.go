@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the RpcStatus type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &RpcStatus{}
+
 // RpcStatus struct for RpcStatus
 type RpcStatus struct {
 	Code *int32 `json:"code,omitempty"`
@@ -40,7 +43,7 @@ func NewRpcStatusWithDefaults() *RpcStatus {
 
 // GetCode returns the Code field value if set, zero value otherwise.
 func (o *RpcStatus) GetCode() int32 {
-	if o == nil || o.Code == nil {
+	if o == nil || IsNil(o.Code) {
 		var ret int32
 		return ret
 	}
@@ -50,7 +53,7 @@ func (o *RpcStatus) GetCode() int32 {
 // GetCodeOk returns a tuple with the Code field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RpcStatus) GetCodeOk() (*int32, bool) {
-	if o == nil || o.Code == nil {
+	if o == nil || IsNil(o.Code) {
 		return nil, false
 	}
 	return o.Code, true
@@ -58,7 +61,7 @@ func (o *RpcStatus) GetCodeOk() (*int32, bool) {
 
 // HasCode returns a boolean if a field has been set.
 func (o *RpcStatus) HasCode() bool {
-	if o != nil && o.Code != nil {
+	if o != nil && !IsNil(o.Code) {
 		return true
 	}
 
@@ -72,7 +75,7 @@ func (o *RpcStatus) SetCode(v int32) {
 
 // GetMessage returns the Message field value if set, zero value otherwise.
 func (o *RpcStatus) GetMessage() string {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		var ret string
 		return ret
 	}
@@ -82,7 +85,7 @@ func (o *RpcStatus) GetMessage() string {
 // GetMessageOk returns a tuple with the Message field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RpcStatus) GetMessageOk() (*string, bool) {
-	if o == nil || o.Message == nil {
+	if o == nil || IsNil(o.Message) {
 		return nil, false
 	}
 	return o.Message, true
@@ -90,7 +93,7 @@ func (o *RpcStatus) GetMessageOk() (*string, bool) {
 
 // HasMessage returns a boolean if a field has been set.
 func (o *RpcStatus) HasMessage() bool {
-	if o != nil && o.Message != nil {
+	if o != nil && !IsNil(o.Message) {
 		return true
 	}
 
@@ -104,7 +107,7 @@ func (o *RpcStatus) SetMessage(v string) {
 
 // GetDetails returns the Details field value if set, zero value otherwise.
 func (o *RpcStatus) GetDetails() []ProtobufAny {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		var ret []ProtobufAny
 		return ret
 	}
@@ -114,7 +117,7 @@ func (o *RpcStatus) GetDetails() []ProtobufAny {
 // GetDetailsOk returns a tuple with the Details field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RpcStatus) GetDetailsOk() ([]ProtobufAny, bool) {
-	if o == nil || o.Details == nil {
+	if o == nil || IsNil(o.Details) {
 		return nil, false
 	}
 	return o.Details, true
@@ -122,7 +125,7 @@ func (o *RpcStatus) GetDetailsOk() ([]ProtobufAny, bool) {
 
 // HasDetails returns a boolean if a field has been set.
 func (o *RpcStatus) HasDetails() bool {
-	if o != nil && o.Details != nil {
+	if o != nil && !IsNil(o.Details) {
 		return true
 	}
 
@@ -135,17 +138,25 @@ func (o *RpcStatus) SetDetails(v []ProtobufAny) {
 }
 
 func (o RpcStatus) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.Code != nil {
-		toSerialize["code"] = o.Code
-	}
-	if o.Message != nil {
-		toSerialize["message"] = o.Message
-	}
-	if o.Details != nil {
-		toSerialize["details"] = o.Details
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o RpcStatus) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Code) {
+		toSerialize["code"] = o.Code
+	}
+	if !IsNil(o.Message) {
+		toSerialize["message"] = o.Message
+	}
+	if !IsNil(o.Details) {
+		toSerialize["details"] = o.Details
+	}
+	return toSerialize, nil
 }
 
 type NullableRpcStatus struct {

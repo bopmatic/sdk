@@ -14,6 +14,9 @@ import (
 	"encoding/json"
 )
 
+// checks if the DeletePackageRequest type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &DeletePackageRequest{}
+
 // DeletePackageRequest struct for DeletePackageRequest
 type DeletePackageRequest struct {
 	PackageId *string `json:"packageId,omitempty"`
@@ -38,7 +41,7 @@ func NewDeletePackageRequestWithDefaults() *DeletePackageRequest {
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
 func (o *DeletePackageRequest) GetPackageId() string {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		var ret string
 		return ret
 	}
@@ -48,7 +51,7 @@ func (o *DeletePackageRequest) GetPackageId() string {
 // GetPackageIdOk returns a tuple with the PackageId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *DeletePackageRequest) GetPackageIdOk() (*string, bool) {
-	if o == nil || o.PackageId == nil {
+	if o == nil || IsNil(o.PackageId) {
 		return nil, false
 	}
 	return o.PackageId, true
@@ -56,7 +59,7 @@ func (o *DeletePackageRequest) GetPackageIdOk() (*string, bool) {
 
 // HasPackageId returns a boolean if a field has been set.
 func (o *DeletePackageRequest) HasPackageId() bool {
-	if o != nil && o.PackageId != nil {
+	if o != nil && !IsNil(o.PackageId) {
 		return true
 	}
 
@@ -69,11 +72,19 @@ func (o *DeletePackageRequest) SetPackageId(v string) {
 }
 
 func (o DeletePackageRequest) MarshalJSON() ([]byte, error) {
-	toSerialize := map[string]interface{}{}
-	if o.PackageId != nil {
-		toSerialize["packageId"] = o.PackageId
+	toSerialize,err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
 	}
 	return json.Marshal(toSerialize)
+}
+
+func (o DeletePackageRequest) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.PackageId) {
+		toSerialize["packageId"] = o.PackageId
+	}
+	return toSerialize, nil
 }
 
 type NullableDeletePackageRequest struct {
