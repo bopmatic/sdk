@@ -42,7 +42,7 @@ type ClientService interface {
 }
 
 /*
-  DeletePackage delete package API
+DeletePackage delete package API
 */
 func (a *Client) DeletePackage(params *DeletePackageParams, opts ...ClientOption) (*DeletePackageOK, error) {
 	// TODO: Validate the params before sending
@@ -79,7 +79,7 @@ func (a *Client) DeletePackage(params *DeletePackageParams, opts ...ClientOption
 }
 
 /*
-  DeployPackage deploy package API
+DeployPackage deploy package API
 */
 func (a *Client) DeployPackage(params *DeployPackageParams, opts ...ClientOption) (*DeployPackageOK, error) {
 	// TODO: Validate the params before sending
@@ -116,7 +116,7 @@ func (a *Client) DeployPackage(params *DeployPackageParams, opts ...ClientOption
 }
 
 /*
-  DescribePackage describe package API
+DescribePackage describe package API
 */
 func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOption) (*DescribePackageOK, error) {
 	// TODO: Validate the params before sending
@@ -153,7 +153,7 @@ func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOp
 }
 
 /*
-  GetUploadURL get upload URL API
+GetUploadURL get upload URL API
 */
 func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error) {
 	// TODO: Validate the params before sending
@@ -190,7 +190,7 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) 
 }
 
 /*
-  ListPackages list packages API
+ListPackages list packages API
 */
 func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error) {
 	// TODO: Validate the params before sending

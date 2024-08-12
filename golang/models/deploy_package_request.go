@@ -72,6 +72,11 @@ func (m *DeployPackageRequest) ContextValidate(ctx context.Context, formats strf
 func (m *DeployPackageRequest) contextValidateDesc(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Desc != nil {
+
+		if swag.IsZero(m.Desc) { // not required
+			return nil
+		}
+
 		if err := m.Desc.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("desc")

@@ -54,10 +54,12 @@ func NewDescribePackageParamsWithHTTPClient(client *http.Client) *DescribePackag
 	}
 }
 
-/* DescribePackageParams contains all the parameters to send to the API endpoint
-   for the describe package operation.
+/*
+DescribePackageParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the describe package operation.
+
+	Typically these are written to a http.Request.
 */
 type DescribePackageParams struct {
 

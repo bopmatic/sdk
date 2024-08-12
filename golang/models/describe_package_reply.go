@@ -108,6 +108,11 @@ func (m *DescribePackageReply) ContextValidate(ctx context.Context, formats strf
 func (m *DescribePackageReply) contextValidateDesc(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.Desc != nil {
+
+		if swag.IsZero(m.Desc) { // not required
+			return nil
+		}
+
 		if err := m.Desc.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("desc")
@@ -124,6 +129,11 @@ func (m *DescribePackageReply) contextValidateDesc(ctx context.Context, formats 
 func (m *DescribePackageReply) contextValidatePackageState(ctx context.Context, formats strfmt.Registry) error {
 
 	if m.PackageState != nil {
+
+		if swag.IsZero(m.PackageState) { // not required
+			return nil
+		}
+
 		if err := m.PackageState.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
 				return ve.ValidateName("packageState")

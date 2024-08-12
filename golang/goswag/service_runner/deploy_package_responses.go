@@ -46,7 +46,8 @@ func NewDeployPackageOK() *DeployPackageOK {
 	return &DeployPackageOK{}
 }
 
-/* DeployPackageOK describes a response with status code 200, with default header values.
+/*
+DeployPackageOK describes a response with status code 200, with default header values.
 
 A successful response.
 */
@@ -54,9 +55,44 @@ type DeployPackageOK struct {
 	Payload *models.DeployPackageReply
 }
 
+// IsSuccess returns true when this deploy package o k response has a 2xx status code
+func (o *DeployPackageOK) IsSuccess() bool {
+	return true
+}
+
+// IsRedirect returns true when this deploy package o k response has a 3xx status code
+func (o *DeployPackageOK) IsRedirect() bool {
+	return false
+}
+
+// IsClientError returns true when this deploy package o k response has a 4xx status code
+func (o *DeployPackageOK) IsClientError() bool {
+	return false
+}
+
+// IsServerError returns true when this deploy package o k response has a 5xx status code
+func (o *DeployPackageOK) IsServerError() bool {
+	return false
+}
+
+// IsCode returns true when this deploy package o k response a status code equal to that given
+func (o *DeployPackageOK) IsCode(code int) bool {
+	return code == 200
+}
+
+// Code gets the status code for the deploy package o k response
+func (o *DeployPackageOK) Code() int {
+	return 200
+}
+
 func (o *DeployPackageOK) Error() string {
 	return fmt.Sprintf("[POST /ServiceRunner/DeployPackage][%d] deployPackageOK  %+v", 200, o.Payload)
 }
+
+func (o *DeployPackageOK) String() string {
+	return fmt.Sprintf("[POST /ServiceRunner/DeployPackage][%d] deployPackageOK  %+v", 200, o.Payload)
+}
+
 func (o *DeployPackageOK) GetPayload() *models.DeployPackageReply {
 	return o.Payload
 }
@@ -80,7 +116,8 @@ func NewDeployPackageDefault(code int) *DeployPackageDefault {
 	}
 }
 
-/* DeployPackageDefault describes a response with status code -1, with default header values.
+/*
+DeployPackageDefault describes a response with status code -1, with default header values.
 
 An unexpected error response.
 */
@@ -88,6 +125,31 @@ type DeployPackageDefault struct {
 	_statusCode int
 
 	Payload *models.RPCStatus
+}
+
+// IsSuccess returns true when this deploy package default response has a 2xx status code
+func (o *DeployPackageDefault) IsSuccess() bool {
+	return o._statusCode/100 == 2
+}
+
+// IsRedirect returns true when this deploy package default response has a 3xx status code
+func (o *DeployPackageDefault) IsRedirect() bool {
+	return o._statusCode/100 == 3
+}
+
+// IsClientError returns true when this deploy package default response has a 4xx status code
+func (o *DeployPackageDefault) IsClientError() bool {
+	return o._statusCode/100 == 4
+}
+
+// IsServerError returns true when this deploy package default response has a 5xx status code
+func (o *DeployPackageDefault) IsServerError() bool {
+	return o._statusCode/100 == 5
+}
+
+// IsCode returns true when this deploy package default response a status code equal to that given
+func (o *DeployPackageDefault) IsCode(code int) bool {
+	return o._statusCode == code
 }
 
 // Code gets the status code for the deploy package default response
@@ -98,6 +160,11 @@ func (o *DeployPackageDefault) Code() int {
 func (o *DeployPackageDefault) Error() string {
 	return fmt.Sprintf("[POST /ServiceRunner/DeployPackage][%d] DeployPackage default  %+v", o._statusCode, o.Payload)
 }
+
+func (o *DeployPackageDefault) String() string {
+	return fmt.Sprintf("[POST /ServiceRunner/DeployPackage][%d] DeployPackage default  %+v", o._statusCode, o.Payload)
+}
+
 func (o *DeployPackageDefault) GetPayload() *models.RPCStatus {
 	return o.Payload
 }

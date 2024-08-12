@@ -15,17 +15,17 @@ import (
 )
 
 // PackageState - UPLOADING: package is currently in the process of being uploaded
-//  - UPLOADED: upload has completed; the package has not yet started validataion
-//  - VALIDATING: the package is in the process of being validated
-//  - INVALID: the package failed validation checks and cannot be deployed
-//  - BUILDING: the package passed validation and is in the process of being built
-//  - DEPLOYING: the package is built and in the process of being deployed to production
-//  - PRODUCTION: the package is active in production
-//  - DEACTIVATING: the package is in the process of being deactivated from production
-//  - DELETING: the package is in the process of being deleted
-//  - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate
-//  - DELETED: the package has been deleted
-//  - UNKNOWN_PKG_STATE: MAX_INT
+//   - UPLOADED: upload has completed; the package has not yet started validataion
+//   - VALIDATING: the package is in the process of being validated
+//   - INVALID: the package failed validation checks and cannot be deployed
+//   - BUILDING: the package passed validation and is in the process of being built
+//   - DEPLOYING: the package is built and in the process of being deployed to production
+//   - PRODUCTION: the package is active in production
+//   - DEACTIVATING: the package is in the process of being deactivated from production
+//   - DELETING: the package is in the process of being deleted
+//   - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate
+//   - DELETED: the package has been deleted
+//   - UNKNOWN_PKG_STATE: MAX_INT
 //
 // swagger:model PackageState
 type PackageState string

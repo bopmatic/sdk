@@ -54,10 +54,12 @@ func NewListPackagesParamsWithHTTPClient(client *http.Client) *ListPackagesParam
 	}
 }
 
-/* ListPackagesParams contains all the parameters to send to the API endpoint
-   for the list packages operation.
+/*
+ListPackagesParams contains all the parameters to send to the API endpoint
 
-   Typically these are written to a http.Request.
+	for the list packages operation.
+
+	Typically these are written to a http.Request.
 */
 type ListPackagesParams struct {
 
