@@ -40,6 +40,15 @@ deps: goswag.generated openapi
 # protoc-gen-openapiv2 install via:
 # GOFLAGS='' go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
+# protoc install via:
+# wget https://github.com/protocolbuffers/protobuf/releases/download/v27.3/protobuf-27.3.zip
+# unzip protobuf-27.3.zip
+# sudo mv protoc /usr/local/bin
+# sudo mv include/google /usr/local/include
+
+# protoc-gen-go install via:
+# GOFLAGS="" go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+
 # jq install:
 # sudo apt install jq
 
@@ -57,7 +66,7 @@ pb/sr.bopmatic.json: pb/sr.swagger.json
 	jq '{"host":"api.bopmatic.com"} + .' pb/sr.swagger.json | jq '{"schemes":["https"]} + .' > pb/sr.bopmatic.json
 
 openapi-generator-cli.jar:
-	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/6.2.0/openapi-generator-cli-6.2.0.jar --output openapi-generator-cli.jar
+	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.7.0/openapi-generator-cli-7.7.0.jar --output openapi-generator-cli.jar
 
 .PHONY: openapi
 openapi: openapi-generator-cli.jar pb/sr.bopmatic.json

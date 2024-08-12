@@ -12,8 +12,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/image"
 	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/client"
 	dockerClient "github.com/docker/docker/client"
@@ -47,7 +47,7 @@ func HasImage(repository string, tag string) (bool, error) {
 	ctx, cancelFunc := context.WithTimeout(ctx, time.Second*5)
 	defer cancelFunc()
 
-	images, err := cli.ImageList(ctx, types.ImageListOptions{})
+	images, err := cli.ImageList(ctx, image.ListOptions{})
 	if err != nil {
 		return false, fmt.Errorf("Failed to list images: %w", err)
 	}
@@ -228,12 +228,12 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 			return fmt.Errorf("Failed to create container: %w", err)
 		}
 
-		err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{})
+		err = cli.ContainerStart(ctx, resp.ID, container.StartOptions{})
 		if err != nil {
 			return fmt.Errorf("Failed to start container: %w", err)
 		}
 
-		logOutputOpts := types.ContainerLogsOptions{
+		logOutputOpts := container.LogsOptions{
 			ShowStdout: true,
 			ShowStderr: true,
 			Follow:     true,

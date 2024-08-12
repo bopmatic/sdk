@@ -370,7 +370,8 @@ func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
 }
 
 // Deploy() implemented using a client generated with openapi-generator:
-//   https://github.com/OpenAPITools/openapi-generator
+//
+//	https://github.com/OpenAPITools/openapi-generator
 func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
@@ -400,7 +401,7 @@ func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
 	client := openapi.NewAPIClient(config)
 	ctx := context.Background()
 	deployReply, httpResp, err :=
-		client.ServiceRunnerApi.DeployPackage(ctx).Body(deployPackageReq).Execute()
+		client.ServiceRunnerAPI.DeployPackage(ctx).Body(deployPackageReq).Execute()
 	if err != nil {
 		return fmt.Errorf("Client failure: %v", err)
 	}
@@ -439,7 +440,8 @@ func uploadToURL(url string, data []byte) error {
 }
 
 // Deploy() implemented using a client generated with go-swagger:
-//  https://github.com/go-swagger/go-swagger
+//
+//	https://github.com/go-swagger/go-swagger
 func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
@@ -519,7 +521,8 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 }
 
 // Delete() implemented using a client generated with go-swagger:
-//  https://github.com/go-swagger/go-swagger
+//
+//	https://github.com/go-swagger/go-swagger
 func Delete(packageId string, opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
@@ -560,7 +563,8 @@ func Delete(packageId string, opts ...DeployOption) error {
 }
 
 // Describe() implemented using a client generated with go-swagger:
-//  https://github.com/go-swagger/go-swagger
+//
+//	https://github.com/go-swagger/go-swagger
 func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply, error) {
 
 	deployOpts := fillDeployOptions(opts...)
@@ -616,7 +620,8 @@ func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply,
 }
 
 // List() implemented using a client generated with go-swagger:
-//  https://github.com/go-swagger/go-swagger
+//
+//	https://github.com/go-swagger/go-swagger
 func List(projName string,
 	opts ...DeployOption) ([]pb.ListPackagesReply_ListPackagesItem, error) {
 
