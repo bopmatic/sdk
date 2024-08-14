@@ -200,7 +200,7 @@ func RunContainerCommand(ctx context.Context, cmdAndArgs []string,
 		},
 	}
 
-	if homeDir != "" {
+	if homeDir != "" && homeDir != pwd {
 		hostConfig.Mounts = append(hostConfig.Mounts, mount.Mount{
 			Type:   mount.TypeBind,
 			Source: homeDir,
