@@ -7,6 +7,7 @@ service ServiceRunner {
   rpc ListPackages (ListPackagesRequest) returns (ListPackagesReply) {}
   rpc DeployPackage (DeployPackageRequest) returns (DeployPackageReply) {}
   rpc GetUploadURL (GetUploadURLRequest) returns (GetUploadURLReply) {}
+  rpc GetLogs (GetLogsRequest) returns (GetLogsReply) {}
 }
 
 enum PackageState {
@@ -81,4 +82,24 @@ message GetUploadURLRequest {
 
 message GetUploadURLReply {
   string URL = 1;
+}
+
+message GetLogsRequest {
+  string projectName = 1;        // name of the Bopmatic project
+  string serviceName = 2;        // name of a service defined within the Bopmatic project
+  string rpcName = 3;            // name of an RPC defined within the service
+  uint64 startTime = 4;          // earliest log message to retrieve expressed as the number
+                                 // of seconds since Jan 1, 1970 00:00:00 UTC
+  uint64 endTime = 5;            // latest log message to retrieve expressed as the number of
+                                 // seconds since Jan 1, 1970 00:00:00 UTC
+}
+
+message GetLogsEntry {
+  uint64 timestamp = 1;          // timestamp of the log message expressed as the number of
+                                 // seconds since Jan 1, 1970 00:00:00 UTC
+  string message = 2;            // log message
+}
+
+message GetLogsReply {
+  repeated GetLogsEntry entries = 1;
 }
