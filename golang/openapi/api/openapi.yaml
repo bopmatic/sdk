@@ -82,6 +82,31 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/GetLogs:
+    post:
+      operationId: GetLogs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetLogsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetLogsReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/GetUploadURL:
     post:
       operationId: GetUploadURL
@@ -200,6 +225,60 @@ components:
         packageId: packageId
       properties:
         packageId:
+          type: string
+      type: object
+    GetLogsEntry:
+      example:
+        message: message
+        timestamp: timestamp
+      properties:
+        timestamp:
+          format: uint64
+          title: timestamp of the log message expressed as the number of
+          type: string
+        message:
+          description: log message
+          title: "seconds since Jan 1, 1970 00:00:00 UTC"
+          type: string
+      type: object
+    GetLogsReply:
+      example:
+        entries:
+        - message: message
+          timestamp: timestamp
+        - message: message
+          timestamp: timestamp
+      properties:
+        entries:
+          items:
+            $ref: '#/components/schemas/GetLogsEntry'
+          type: array
+      type: object
+    GetLogsRequest:
+      example:
+        startTime: startTime
+        endTime: endTime
+        projectName: projectName
+        serviceName: serviceName
+        rpcName: rpcName
+      properties:
+        projectName:
+          title: name of the Bopmatic project
+          type: string
+        serviceName:
+          title: name of a service defined within the Bopmatic project
+          type: string
+        rpcName:
+          title: name of an RPC defined within the service
+          type: string
+        startTime:
+          format: uint64
+          title: earliest log message to retrieve expressed as the number
+          type: string
+        endTime:
+          description: latest log message to retrieve expressed as the number of
+          format: uint64
+          title: "of seconds since Jan 1, 1970 00:00:00 UTC"
           type: string
       type: object
     GetUploadURLReply:

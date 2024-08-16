@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
 *ServiceRunnerAPI* | [**DeletePackage**](docs/ServiceRunnerAPI.md#deletepackage) | **Post** /ServiceRunner/DeletePackage | 
 *ServiceRunnerAPI* | [**DeployPackage**](docs/ServiceRunnerAPI.md#deploypackage) | **Post** /ServiceRunner/DeployPackage | 
 *ServiceRunnerAPI* | [**DescribePackage**](docs/ServiceRunnerAPI.md#describepackage) | **Post** /ServiceRunner/DescribePackage | 
+*ServiceRunnerAPI* | [**GetLogs**](docs/ServiceRunnerAPI.md#getlogs) | **Post** /ServiceRunner/GetLogs | 
 *ServiceRunnerAPI* | [**GetUploadURL**](docs/ServiceRunnerAPI.md#getuploadurl) | **Post** /ServiceRunner/GetUploadURL | 
 *ServiceRunnerAPI* | [**ListPackages**](docs/ServiceRunnerAPI.md#listpackages) | **Post** /ServiceRunner/ListPackages | 
 
@@ -93,6 +94,9 @@ Class | Method | HTTP request | Description
  - [DeployPackageRequest](docs/DeployPackageRequest.md)
  - [DescribePackageReply](docs/DescribePackageReply.md)
  - [DescribePackageRequest](docs/DescribePackageRequest.md)
+ - [GetLogsEntry](docs/GetLogsEntry.md)
+ - [GetLogsReply](docs/GetLogsReply.md)
+ - [GetLogsRequest](docs/GetLogsRequest.md)
  - [GetUploadURLReply](docs/GetUploadURLReply.md)
  - [GetUploadURLRequest](docs/GetUploadURLRequest.md)
  - [ListPackagesReply](docs/ListPackagesReply.md)

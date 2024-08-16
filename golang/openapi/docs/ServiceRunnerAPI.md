@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**DeletePackage**](ServiceRunnerAPI.md#DeletePackage) | **Post** /ServiceRunner/DeletePackage | 
 [**DeployPackage**](ServiceRunnerAPI.md#DeployPackage) | **Post** /ServiceRunner/DeployPackage | 
 [**DescribePackage**](ServiceRunnerAPI.md#DescribePackage) | **Post** /ServiceRunner/DescribePackage | 
+[**GetLogs**](ServiceRunnerAPI.md#GetLogs) | **Post** /ServiceRunner/GetLogs | 
 [**GetUploadURL**](ServiceRunnerAPI.md#GetUploadURL) | **Post** /ServiceRunner/GetUploadURL | 
 [**ListPackages**](ServiceRunnerAPI.md#ListPackages) | **Post** /ServiceRunner/ListPackages | 
 
@@ -189,6 +190,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DescribePackageReply**](DescribePackageReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## GetLogs
+
+> GetLogsReply GetLogs(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
+)
+
+func main() {
+	body := *openapiclient.NewGetLogsRequest() // GetLogsRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.GetLogs(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.GetLogs``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetLogs`: GetLogsReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.GetLogs`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetLogsRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**GetLogsRequest**](GetLogsRequest.md) |  | 
+
+### Return type
+
+[**GetLogsReply**](GetLogsReply.md)
 
 ### Authorization
 

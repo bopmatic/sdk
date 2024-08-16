@@ -27,6 +27,7 @@ type ServiceRunnerClient interface {
 	ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesReply, error)
 	DeployPackage(ctx context.Context, in *DeployPackageRequest, opts ...grpc.CallOption) (*DeployPackageReply, error)
 	GetUploadURL(ctx context.Context, in *GetUploadURLRequest, opts ...grpc.CallOption) (*GetUploadURLReply, error)
+	GetLogs(ctx context.Context, in *GetLogsRequest, opts ...grpc.CallOption) (*GetLogsReply, error)
 }
 
 type serviceRunnerClient struct {
@@ -82,6 +83,15 @@ func (c *serviceRunnerClient) GetUploadURL(ctx context.Context, in *GetUploadURL
 	return out, nil
 }
 
+func (c *serviceRunnerClient) GetLogs(ctx context.Context, in *GetLogsRequest, opts ...grpc.CallOption) (*GetLogsReply, error) {
+	out := new(GetLogsReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/GetLogs", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceRunnerServer is the server API for ServiceRunner service.
 // All implementations must embed UnimplementedServiceRunnerServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type ServiceRunnerServer interface {
 	ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesReply, error)
 	DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error)
 	GetUploadURL(context.Context, *GetUploadURLRequest) (*GetUploadURLReply, error)
+	GetLogs(context.Context, *GetLogsRequest) (*GetLogsReply, error)
 	mustEmbedUnimplementedServiceRunnerServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedServiceRunnerServer) DeployPackage(context.Context, *DeployPa
 }
 func (UnimplementedServiceRunnerServer) GetUploadURL(context.Context, *GetUploadURLRequest) (*GetUploadURLReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUploadURL not implemented")
+}
+func (UnimplementedServiceRunnerServer) GetLogs(context.Context, *GetLogsRequest) (*GetLogsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetLogs not implemented")
 }
 func (UnimplementedServiceRunnerServer) mustEmbedUnimplementedServiceRunnerServer() {}
 
@@ -216,6 +230,24 @@ func _ServiceRunner_GetUploadURL_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceRunner_GetLogs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetLogsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).GetLogs(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/GetLogs",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).GetLogs(ctx, req.(*GetLogsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceRunner_ServiceDesc is the grpc.ServiceDesc for ServiceRunner service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetUploadURL",
 			Handler:    _ServiceRunner_GetUploadURL_Handler,
+		},
+		{
+			MethodName: "GetLogs",
+			Handler:    _ServiceRunner_GetLogs_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
