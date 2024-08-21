@@ -330,7 +330,6 @@ func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
 		Desc: &pb.PackageDescription{
 			ProjectName: pkg.Proj.Desc.Name,
 			PackageId:   pkg.Id,
-			PackageName: pkg.Name,
 			// protojson.Marshal() will base64 encode byte fields so caller does
 			// not have to
 			PackageXsum:        pkg.Xsum,
@@ -389,7 +388,6 @@ func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
 		Desc: &openapi.PackageDescription{
 			ProjectName:        openapi.PtrString(pkg.Proj.Desc.Name),
 			PackageId:          openapi.PtrString(pkg.Id),
-			PackageName:        openapi.PtrString(pkg.Name),
 			PackageXsum:        openapi.PtrString(encodedXsum),
 			PackageTarballData: openapi.PtrString(encodedTarData),
 		},
@@ -486,7 +484,6 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 		Desc: &models.PackageDescription{
 			ProjectName: pkg.Proj.Desc.Name,
 			PackageID:   pkg.Id,
-			PackageName: pkg.Name,
 			// go-swagger will base64 encode byte fields so caller does
 			// not have to
 			PackageXsum:       pkg.Xsum,
@@ -607,7 +604,6 @@ func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply,
 		Desc: &pb.PackageDescription{
 			ProjectName: describeReply.Desc.ProjectName,
 			PackageId:   describeReply.Desc.PackageID,
-			PackageName: describeReply.Desc.PackageName,
 		},
 		PackageState: pkgState,
 	}
