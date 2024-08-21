@@ -20,9 +20,6 @@ type PackageDescription struct {
 	// hex string of first 4 bytes of packageXsum
 	PackageID string `json:"packageId,omitempty"`
 
-	// user prescribed name; may not be unique; may be empty string
-	PackageName string `json:"packageName,omitempty"`
-
 	// package tarball content in .tar.xz format (limited to 6MiB);
 	// Format: byte
 	PackageTarballData strfmt.Base64 `json:"packageTarballData,omitempty"`

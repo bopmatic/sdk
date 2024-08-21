@@ -8,7 +8,6 @@ Name | Type | Description | Notes
 **PackageId** | Pointer to **string** |  | [optional] 
 **PackageXsum** | Pointer to **string** |  | [optional] 
 **PackageTarballData** | Pointer to **string** |  | [optional] 
-**PackageName** | Pointer to **string** |  | [optional] 
 **PackageTarballURL** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -129,31 +128,6 @@ SetPackageTarballData sets PackageTarballData field to given value.
 `func (o *PackageDescription) HasPackageTarballData() bool`
 
 HasPackageTarballData returns a boolean if a field has been set.
-
-### GetPackageName
-
-`func (o *PackageDescription) GetPackageName() string`
-
-GetPackageName returns the PackageName field if non-nil, zero value otherwise.
-
-### GetPackageNameOk
-
-`func (o *PackageDescription) GetPackageNameOk() (*string, bool)`
-
-GetPackageNameOk returns a tuple with the PackageName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetPackageName
-
-`func (o *PackageDescription) SetPackageName(v string)`
-
-SetPackageName sets PackageName field to given value.
-
-### HasPackageName
-
-`func (o *PackageDescription) HasPackageName() bool`
-
-HasPackageName returns a boolean if a field has been set.
 
 ### GetPackageTarballURL
 

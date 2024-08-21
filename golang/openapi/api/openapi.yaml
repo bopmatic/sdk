@@ -187,7 +187,6 @@ components:
           packageXsum: packageXsum
           packageTarballURL: packageTarballURL
           packageId: packageId
-          packageName: packageName
           projectName: projectName
       properties:
         desc:
@@ -204,7 +203,6 @@ components:
           packageXsum: packageXsum
           packageTarballURL: packageTarballURL
           packageId: packageId
-          packageName: packageName
           projectName: projectName
         siteEndpoint: siteEndpoint
       properties:
@@ -332,7 +330,6 @@ components:
         packageXsum: packageXsum
         packageTarballURL: packageTarballURL
         packageId: packageId
-        packageName: packageName
         projectName: projectName
       properties:
         projectName:
@@ -350,9 +347,6 @@ components:
           format: byte
           pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
           title: package tarball content in .tar.xz format (limited to 6MiB);
-          type: string
-        packageName:
-          title: user prescribed name; may not be unique; may be empty string
           type: string
         packageTarballURL:
           title: URL to package tarball (when larger than 6MiB)

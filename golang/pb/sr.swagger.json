@@ -395,10 +395,6 @@
           "format": "byte",
           "title": "package tarball content in .tar.xz format (limited to 6MiB);"
         },
-        "packageName": {
-          "type": "string",
-          "title": "user prescribed name; may not be unique; may be empty string"
-        },
         "packageTarballURL": {
           "type": "string",
           "title": "URL to package tarball (when larger than 6MiB)"

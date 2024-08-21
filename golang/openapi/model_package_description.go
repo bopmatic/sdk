@@ -23,7 +23,6 @@ type PackageDescription struct {
 	PackageId *string `json:"packageId,omitempty"`
 	PackageXsum *string `json:"packageXsum,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
 	PackageTarballData *string `json:"packageTarballData,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
-	PackageName *string `json:"packageName,omitempty"`
 	PackageTarballURL *string `json:"packageTarballURL,omitempty"`
 }
 
@@ -172,38 +171,6 @@ func (o *PackageDescription) SetPackageTarballData(v string) {
 	o.PackageTarballData = &v
 }
 
-// GetPackageName returns the PackageName field value if set, zero value otherwise.
-func (o *PackageDescription) GetPackageName() string {
-	if o == nil || IsNil(o.PackageName) {
-		var ret string
-		return ret
-	}
-	return *o.PackageName
-}
-
-// GetPackageNameOk returns a tuple with the PackageName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PackageDescription) GetPackageNameOk() (*string, bool) {
-	if o == nil || IsNil(o.PackageName) {
-		return nil, false
-	}
-	return o.PackageName, true
-}
-
-// HasPackageName returns a boolean if a field has been set.
-func (o *PackageDescription) HasPackageName() bool {
-	if o != nil && !IsNil(o.PackageName) {
-		return true
-	}
-
-	return false
-}
-
-// SetPackageName gets a reference to the given string and assigns it to the PackageName field.
-func (o *PackageDescription) SetPackageName(v string) {
-	o.PackageName = &v
-}
-
 // GetPackageTarballURL returns the PackageTarballURL field value if set, zero value otherwise.
 func (o *PackageDescription) GetPackageTarballURL() string {
 	if o == nil || IsNil(o.PackageTarballURL) {
@@ -257,9 +224,6 @@ func (o PackageDescription) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PackageTarballData) {
 		toSerialize["packageTarballData"] = o.PackageTarballData
-	}
-	if !IsNil(o.PackageName) {
-		toSerialize["packageName"] = o.PackageName
 	}
 	if !IsNil(o.PackageTarballURL) {
 		toSerialize["packageTarballURL"] = o.PackageTarballURL
