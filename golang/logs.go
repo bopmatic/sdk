@@ -70,7 +70,7 @@ func GetLogs(projName string, svcName string, rpcName string,
 		ServiceName: svcName,
 		RPCName:     rpcName,
 		StartTime:   strconv.FormatInt(startTime.Unix(), 10),
-		EndTime:     strconv.FormatInt(startTime.Unix(), 10),
+		EndTime:     strconv.FormatInt(endTime.Unix(), 10),
 	}
 
 	getLogsParams := service_runner.NewGetLogsParams().
@@ -95,12 +95,13 @@ func GetLogs(projName string, svcName string, rpcName string,
 
 	for _, entry := range getLogsReply.Entries {
 		var timeStr = "<unknown_time>"
-		nsecs, err := strconv.ParseInt(entry.Timestamp, 10, 64)
-		if err != nil {
-			timeStr = fmt.Sprintf("%v", time.Unix(nsecs, 0).UTC())
+
+		secs, err := strconv.ParseInt(entry.Timestamp, 10, 64)
+		if err == nil {
+			timeStr = fmt.Sprintf("%v", time.Unix(secs, 0).UTC())
 		}
 
-		fmt.Fprintf(getLogsOpts.output, "%v: %v\n", timeStr, entry.Message)
+		fmt.Fprintf(getLogsOpts.output, "%v: %v", timeStr, entry.Message)
 	}
 
 	return nil
