@@ -87,7 +87,7 @@ message GetUploadURLReply {
 message GetLogsRequest {
   string projectName = 1;        // name of the Bopmatic project
   string serviceName = 2;        // name of a service defined within the Bopmatic project
-  string rpcName = 3;            // name of an RPC defined within the service
+  reserved 3;                    // Deprecated rpcName
   uint64 startTime = 4;          // earliest log message to retrieve expressed as the number
                                  // of seconds since Jan 1, 1970 00:00:00 UTC
   uint64 endTime = 5;            // latest log message to retrieve expressed as the number of

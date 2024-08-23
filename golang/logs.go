@@ -57,8 +57,8 @@ func fillGetLogsOptions(opts ...GetLogsOption) *getLogsOptions {
 // GetLogs() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func GetLogs(projName string, svcName string, rpcName string,
-	startTime time.Time, endTime time.Time, opts ...GetLogsOption) error {
+func GetLogs(projName string, svcName string, startTime time.Time,
+	endTime time.Time, opts ...GetLogsOption) error {
 
 	getLogsOpts := fillGetLogsOptions(opts...)
 
@@ -68,7 +68,6 @@ func GetLogs(projName string, svcName string, rpcName string,
 	getLogsReq := &models.GetLogsRequest{
 		ProjectName: projName,
 		ServiceName: svcName,
-		RPCName:     rpcName,
 		StartTime:   strconv.FormatInt(startTime.Unix(), 10),
 		EndTime:     strconv.FormatInt(endTime.Unix(), 10),
 	}
