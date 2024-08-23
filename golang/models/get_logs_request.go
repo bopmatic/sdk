@@ -25,9 +25,6 @@ type GetLogsRequest struct {
 	// name of the Bopmatic project
 	ProjectName string `json:"projectName,omitempty"`
 
-	// name of an RPC defined within the service
-	RPCName string `json:"rpcName,omitempty"`
-
 	// name of a service defined within the Bopmatic project
 	ServiceName string `json:"serviceName,omitempty"`
 

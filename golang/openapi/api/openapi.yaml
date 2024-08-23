@@ -258,16 +258,12 @@ components:
         endTime: endTime
         projectName: projectName
         serviceName: serviceName
-        rpcName: rpcName
       properties:
         projectName:
           title: name of the Bopmatic project
           type: string
         serviceName:
           title: name of a service defined within the Bopmatic project
-          type: string
-        rpcName:
-          title: name of an RPC defined within the service
           type: string
         startTime:
           format: uint64

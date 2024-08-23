@@ -309,10 +309,6 @@
           "type": "string",
           "title": "name of a service defined within the Bopmatic project"
         },
-        "rpcName": {
-          "type": "string",
-          "title": "name of an RPC defined within the service"
-        },
         "startTime": {
           "type": "string",
           "format": "uint64",

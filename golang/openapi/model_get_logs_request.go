@@ -21,7 +21,6 @@ var _ MappedNullable = &GetLogsRequest{}
 type GetLogsRequest struct {
 	ProjectName *string `json:"projectName,omitempty"`
 	ServiceName *string `json:"serviceName,omitempty"`
-	RpcName *string `json:"rpcName,omitempty"`
 	StartTime *string `json:"startTime,omitempty"`
 	// latest log message to retrieve expressed as the number of
 	EndTime *string `json:"endTime,omitempty"`
@@ -108,38 +107,6 @@ func (o *GetLogsRequest) SetServiceName(v string) {
 	o.ServiceName = &v
 }
 
-// GetRpcName returns the RpcName field value if set, zero value otherwise.
-func (o *GetLogsRequest) GetRpcName() string {
-	if o == nil || IsNil(o.RpcName) {
-		var ret string
-		return ret
-	}
-	return *o.RpcName
-}
-
-// GetRpcNameOk returns a tuple with the RpcName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *GetLogsRequest) GetRpcNameOk() (*string, bool) {
-	if o == nil || IsNil(o.RpcName) {
-		return nil, false
-	}
-	return o.RpcName, true
-}
-
-// HasRpcName returns a boolean if a field has been set.
-func (o *GetLogsRequest) HasRpcName() bool {
-	if o != nil && !IsNil(o.RpcName) {
-		return true
-	}
-
-	return false
-}
-
-// SetRpcName gets a reference to the given string and assigns it to the RpcName field.
-func (o *GetLogsRequest) SetRpcName(v string) {
-	o.RpcName = &v
-}
-
 // GetStartTime returns the StartTime field value if set, zero value otherwise.
 func (o *GetLogsRequest) GetStartTime() string {
 	if o == nil || IsNil(o.StartTime) {
@@ -219,9 +186,6 @@ func (o GetLogsRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ServiceName) {
 		toSerialize["serviceName"] = o.ServiceName
-	}
-	if !IsNil(o.RpcName) {
-		toSerialize["rpcName"] = o.RpcName
 	}
 	if !IsNil(o.StartTime) {
 		toSerialize["startTime"] = o.StartTime

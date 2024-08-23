@@ -6,7 +6,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjectName** | Pointer to **string** |  | [optional] 
 **ServiceName** | Pointer to **string** |  | [optional] 
-**RpcName** | Pointer to **string** |  | [optional] 
 **StartTime** | Pointer to **string** |  | [optional] 
 **EndTime** | Pointer to **string** | latest log message to retrieve expressed as the number of | [optional] 
 
@@ -78,31 +77,6 @@ SetServiceName sets ServiceName field to given value.
 `func (o *GetLogsRequest) HasServiceName() bool`
 
 HasServiceName returns a boolean if a field has been set.
-
-### GetRpcName
-
-`func (o *GetLogsRequest) GetRpcName() string`
-
-GetRpcName returns the RpcName field if non-nil, zero value otherwise.
-
-### GetRpcNameOk
-
-`func (o *GetLogsRequest) GetRpcNameOk() (*string, bool)`
-
-GetRpcNameOk returns a tuple with the RpcName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetRpcName
-
-`func (o *GetLogsRequest) SetRpcName(v string)`
-
-SetRpcName sets RpcName field to given value.
-
-### HasRpcName
-
-`func (o *GetLogsRequest) HasRpcName() bool`
-
-HasRpcName returns a boolean if a field has been set.
 
 ### GetStartTime
 
