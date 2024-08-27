@@ -793,6 +793,9 @@
     "CreateDeploymentReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "id": {
           "type": "string",
           "title": "a unique identifier associated with this deployment"
@@ -811,6 +814,9 @@
     "CreateEnvironmentReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "id": {
           "type": "string",
           "title": "a unique identifier associated with this environment"
@@ -829,6 +835,9 @@
     "CreateProjectReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "id": {
           "type": "string",
           "title": "a unique identifier associated with this project"
@@ -906,7 +915,12 @@
       }
     },
     "DeleteEnvironmentReply": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        }
+      }
     },
     "DeleteEnvironmentRequest": {
       "type": "object",
@@ -920,6 +934,9 @@
     "DeletePackageReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "state": {
           "$ref": "#/definitions/PackageState"
         }
@@ -934,7 +951,12 @@
       }
     },
     "DeleteProjectReply": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        }
+      }
     },
     "DeleteProjectRequest": {
       "type": "object",
@@ -1070,6 +1092,9 @@
     "DescribeDatabaseReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/DatabaseDescription",
           "title": "database description"
@@ -1088,6 +1113,9 @@
     "DescribeDatastoreReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/DatastoreDescription",
           "title": "datastore description"
@@ -1106,6 +1134,9 @@
     "DescribeDeploymentReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/DeploymentDescription",
           "title": "deployment description"
@@ -1124,6 +1155,9 @@
     "DescribeEnvironmentReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/EnvironmentDescription",
           "title": "environment destription"
@@ -1142,11 +1176,11 @@
     "DescribePackageReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/PackageDescription"
-        },
-        "packageState": {
-          "$ref": "#/definitions/PackageState"
         }
       }
     },
@@ -1161,6 +1195,9 @@
     "DescribeProjectReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/ProjectDescription",
           "title": "project description"
@@ -1179,6 +1216,9 @@
     "DescribeServiceReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/ServiceDescription",
           "title": "service description"
@@ -1197,6 +1237,9 @@
     "DescribeSiteReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "projEnvHeader": {
           "$ref": "#/definitions/ProjEnvHeader",
           "title": "a project/environment tuple"
@@ -1279,6 +1322,9 @@
     "GetLogsReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "entries": {
           "type": "array",
           "items": {
@@ -1319,6 +1365,9 @@
     "GetUploadURLReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "URL": {
           "type": "string"
         }
@@ -1335,6 +1384,9 @@
     "ListDatabasesReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "header": {
           "$ref": "#/definitions/ProjEnvHeader",
           "title": "a project/environment tuple"
@@ -1360,6 +1412,9 @@
     "ListDatastoresReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "header": {
           "$ref": "#/definitions/ProjEnvHeader",
           "title": "a project/environment tuple"
@@ -1385,7 +1440,10 @@
     "ListDeploymentsReply": {
       "type": "object",
       "properties": {
-        "id": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "ids": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1400,6 +1458,9 @@
     "ListEnvironmentsReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "ids": {
           "type": "array",
           "items": {
@@ -1415,6 +1476,9 @@
     "ListPackagesReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "items": {
           "type": "array",
           "items": {
@@ -1447,6 +1511,9 @@
     "ListProjectsReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "ids": {
           "type": "array",
           "items": {
@@ -1462,6 +1529,9 @@
     "ListServicesReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "header": {
           "$ref": "#/definitions/ProjEnvHeader",
           "title": "a project/environment tuple"
@@ -1487,27 +1557,27 @@
     "PackageDescription": {
       "type": "object",
       "properties": {
-        "projId": {
-          "type": "string",
-          "title": "project id associated with this package"
-        },
         "packageId": {
           "type": "string",
           "title": "pkg-<hex string of first 4 bytes of packageXsum>"
         },
-        "packageXsum": {
+        "projId": {
           "type": "string",
-          "format": "byte",
-          "title": "sha256 checksum of packageTarballData"
+          "title": "project id associated with this package"
         },
-        "packageTarballData": {
-          "type": "string",
-          "format": "byte",
-          "title": "package tarball content in .tar.xz format (limited to 6MiB);"
+        "state": {
+          "$ref": "#/definitions/PackageState",
+          "title": "package state"
         },
-        "packageTarballURL": {
+        "uploadTimeTime": {
           "type": "string",
-          "title": "URL to package tarball (when larger than 6MiB)"
+          "format": "uint64",
+          "title": "time the package was first uploaded expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "packageSize": {
+          "type": "string",
+          "format": "uint64",
+          "title": "size of the compressed package in bytes"
         }
       }
     },
@@ -1632,19 +1702,60 @@
         }
       }
     },
+    "ServiceRunnerResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/ServiceRunnerStatus"
+        },
+        "statusDetail": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceRunnerStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_OK",
+        "STATUS_NOT_FOUND",
+        "STATUS_DNS_CONFLICT",
+        "STATUS_ACCT_LIMIT_REACHED",
+        "STATUS_EXISTS",
+        "STATUS_NOT_EXISTS",
+        "STATUS_UNKNOWN"
+      ],
+      "default": "STATUS_OK",
+      "title": "- STATUS_UNKNOWN: MAX_INT"
+    },
     "UploadPackageReply": {
       "type": "object",
       "properties": {
-        "state": {
-          "$ref": "#/definitions/PackageState"
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
         }
       }
     },
     "UploadPackageRequest": {
       "type": "object",
       "properties": {
-        "desc": {
-          "$ref": "#/definitions/PackageDescription"
+        "projId": {
+          "type": "string",
+          "title": "project id associated with this package"
+        },
+        "packageXsum": {
+          "type": "string",
+          "format": "byte",
+          "title": "sha256 checksum of packageTarballData"
+        },
+        "packageTarballData": {
+          "type": "string",
+          "format": "byte",
+          "description": "package tarball content in .tar.xz format (limited to 6MiB);",
+          "title": "packageTarballData and packageTarballURL are mutually exclusive"
+        },
+        "packageTarballURL": {
+          "type": "string",
+          "title": "URL to package tarball (when larger than 6MiB)"
         }
       }
     },

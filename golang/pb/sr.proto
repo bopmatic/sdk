@@ -34,6 +34,22 @@ service ServiceRunner {
   rpc GetLogs (GetLogsRequest) returns (GetLogsReply) {}
 }
 
+enum ServiceRunnerStatus {
+  STATUS_OK = 0;
+  STATUS_NOT_FOUND = 1;
+  STATUS_DNS_CONFLICT = 2;
+  STATUS_ACCT_LIMIT_REACHED = 3;
+  STATUS_EXISTS = 4;
+  STATUS_NOT_EXISTS = 5;
+
+  STATUS_UNKNOWN = 2147483647; // MAX_INT
+}
+
+message ServiceRunnerResult {
+  ServiceRunnerStatus status = 1;
+  string statusDetail = 2;
+}
+
 enum ProjectState {
   // the project has been created but no packages are presently active in any environment
   // and there are no pending deployments
@@ -76,8 +92,10 @@ message CreateProjectRequest {
 }
 
 message CreateProjectReply {
+  ServiceRunnerResult result = 1;
+
   // a unique identifier associated with this project
-  string id = 1;
+  string id = 2;
 }
 
 message DeleteProjectRequest {
@@ -86,14 +104,17 @@ message DeleteProjectRequest {
 }
 
 message DeleteProjectReply {
+  ServiceRunnerResult result = 1;
 }
 
 message ListProjectsRequest {
 }
 
 message ListProjectsReply {
+  ServiceRunnerResult result = 1;
+
   // a list of project ids
-  repeated string ids = 1;
+  repeated string ids = 2;
 }
 
 message DescribeProjectRequest {
@@ -102,8 +123,10 @@ message DescribeProjectRequest {
 }
 
 message DescribeProjectReply {
+  ServiceRunnerResult result = 1;
+
   // project description
-  ProjectDescription desc = 1;
+  ProjectDescription desc = 2;
 }
 
 message EnvironmentHeader {
@@ -134,8 +157,10 @@ message CreateEnvironmentRequest {
 }
 
 message CreateEnvironmentReply {
+  ServiceRunnerResult result = 1;
+
   // a unique identifier associated with this environment
-  string id = 1;
+  string id = 2;
 }
 
 message DeleteEnvironmentRequest {
@@ -144,14 +169,17 @@ message DeleteEnvironmentRequest {
 }
 
 message DeleteEnvironmentReply {
+  ServiceRunnerResult result = 1;
 }
 
 message ListEnvironmentsRequest {
 }
 
 message ListEnvironmentsReply {
+  ServiceRunnerResult result = 1;
+
   // a list of environment ids
-  repeated string ids = 1;
+  repeated string ids = 2;
 }
 
 message DescribeEnvironmentRequest {
@@ -160,8 +188,10 @@ message DescribeEnvironmentRequest {
 }
 
 message DescribeEnvironmentReply {
+  ServiceRunnerResult result = 1;
+
   // environment destription
-  EnvironmentDescription desc = 1;
+  EnvironmentDescription desc = 2;
 }
 
 message ProjEnvHeader {
@@ -177,10 +207,12 @@ message DescribeSiteRequest {
 }
 
 message DescribeSiteReply {
+  ServiceRunnerResult result = 1;
+
   // a project/environment tuple
-  ProjEnvHeader projEnvHeader = 1;
+  ProjEnvHeader projEnvHeader = 2;
   // site endpoint
-  string siteEndpoint = 2;
+  string siteEndpoint = 3;
 }
 
 message ListServicesRequest {
@@ -189,10 +221,12 @@ message ListServicesRequest {
 }
 
 message ListServicesReply {
+  ServiceRunnerResult result = 1;
+
   // a project/environment tuple
-  ProjEnvHeader header = 1;
+  ProjEnvHeader header = 2;
   // a list of service names from the project deployed in the environment
-  repeated string serviceNames = 2;
+  repeated string serviceNames = 3;
 }
 
 message ServiceHeader {
@@ -215,8 +249,10 @@ message ServiceDescription {
 }
 
 message DescribeServiceReply {
+  ServiceRunnerResult result = 1;
+
   // service description
-  ServiceDescription desc = 1;
+  ServiceDescription desc = 2;
 }
 
 message ListDatastoresRequest {
@@ -225,10 +261,12 @@ message ListDatastoresRequest {
 }
 
 message ListDatastoresReply {
+  ServiceRunnerResult result = 1;
+
   // a project/environment tuple
-  ProjEnvHeader header = 1;
+  ProjEnvHeader header = 2;
   // a list of service names from the project deployed in the environment
-  repeated string datastoreNames = 2;
+  repeated string datastoreNames = 3;
 }
 
 message DatastoreHeader {
@@ -253,8 +291,10 @@ message DatastoreDescription {
 }
 
 message DescribeDatastoreReply {
+  ServiceRunnerResult result = 1;
+
   // datastore description
-  DatastoreDescription desc = 1;
+  DatastoreDescription desc = 2;
 }
 
 message ListDatabasesRequest {
@@ -263,10 +303,12 @@ message ListDatabasesRequest {
 }
 
 message ListDatabasesReply {
+  ServiceRunnerResult result = 1;
+
   // a project/environment tuple
-  ProjEnvHeader header = 1;
+  ProjEnvHeader header = 2;
   // a list of service names from the project deployed in the environment
-  repeated string databaseNames = 2;
+  repeated string databaseNames = 3;
 }
 
 message DatabaseHeader {
@@ -289,8 +331,10 @@ message DatabaseDescription {
 }
 
 message DescribeDatabaseReply {
+  ServiceRunnerResult result = 1;
+
   // database description
-  DatabaseDescription desc = 1;
+  DatabaseDescription desc = 2;
 }
 
 enum DeploymentType {
@@ -384,16 +428,20 @@ message CreateDeploymentRequest {
 }
 
 message CreateDeploymentReply {
+  ServiceRunnerResult result = 1;
+
   // a unique identifier associated with this deployment
-  string id = 1;
+  string id = 2;
 }
 
 message ListDeploymentsRequest {
 }
 
 message ListDeploymentsReply {
+  ServiceRunnerResult result = 1;
+
   // list of unique identifiers associated with each deployment
-  repeated string id = 1;
+  repeated string ids = 2;
 }
 
 message DescribeDeploymentRequest {
@@ -402,8 +450,10 @@ message DescribeDeploymentRequest {
 }
 
 message DescribeDeploymentReply {
+  ServiceRunnerResult result = 1;
+
   // deployment description
-  DeploymentDescription desc = 1;
+  DeploymentDescription desc = 2;
 }
 
 enum PackageState {
@@ -425,22 +475,31 @@ enum PackageState {
 }
 
 message PackageDescription {
-  reserved 1;                    // Deprecated name; use projId instead
-  string projId = 7;             // project id associated with this package
-  string packageId = 2;          // pkg-<hex string of first 4 bytes of packageXsum>
-  bytes packageXsum = 3;         // sha256 checksum of packageTarballData
-  bytes packageTarballData = 4;  // package tarball content in .tar.xz format (limited to 6MiB);
-  reserved 5;                    // Deprecated packageName
-  string packageTarballURL = 6;  // URL to package tarball (when larger than 6MiB)
-  // packageTarballData and packageTarballURL are mutually exclusive
+  reserved 1;              // Deprecated name; use projId instead
+  string packageId = 2;    // pkg-<hex string of first 4 bytes of packageXsum>
+  string projId = 7;       // project id associated with this package
+  reserved 3;              // Deprecated packageXum; see UploadPackageRequest instead
+  reserved 4;              // Deprecated packageTarballData; see UploadPackageRequest instead
+  reserved 5;              // Deprecated packageName
+  reserved 6;              // Deprectaed packageTarballURL; see UploadPackageRequest instead
+  // package state
+  PackageState state = 8;
+  // time the package was first uploaded expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 uploadTimeTime = 9;
+  uint64 packageSize = 10; // size of the compressed package in bytes
 }
 
 message UploadPackageRequest {
-  PackageDescription desc = 1;
+  string projId = 1;             // project id associated with this package
+  bytes packageXsum = 2;         // sha256 checksum of packageTarballData
+  // packageTarballData and packageTarballURL are mutually exclusive
+  bytes packageTarballData = 3;  // package tarball content in .tar.xz format (limited to 6MiB);
+  string packageTarballURL = 4;  // URL to package tarball (when larger than 6MiB)
 }
 
 message UploadPackageReply {
-  PackageState state = 1;
+  ServiceRunnerResult result = 1;
 }
 
 message DescribePackageRequest {
@@ -448,9 +507,9 @@ message DescribePackageRequest {
 }
 
 message DescribePackageReply {
+  ServiceRunnerResult result = 5;
   PackageDescription desc = 1;
-  PackageState packageState = 2;
-  // the following fields are only valid when packageState==PRODUCTION
+  reserved 2; // Deprecated state; See PackageDescription.state instead
   reserved 3; // Deprecated siteEndpoint; see DescribeSite instead
   reserved 4; // Deprecated rpcEndpoints = 4; see DescribeService instead
 }
@@ -466,6 +525,8 @@ message ListPackagesReply {
     string projId = 3;
     string packageId = 2;
   }
+
+  ServiceRunnerResult result = 2;
   repeated ListPackagesItem items = 1;
 }
 
@@ -474,6 +535,7 @@ message DeletePackageRequest {
 }
 
 message DeletePackageReply {
+  ServiceRunnerResult result = 2;
   PackageState state = 1;
 }
 
@@ -482,6 +544,7 @@ message GetUploadURLRequest {
 }
 
 message GetUploadURLReply {
+  ServiceRunnerResult result = 2;
   string URL = 1;
 }
 
@@ -504,5 +567,6 @@ message GetLogsEntry {
 }
 
 message GetLogsReply {
+  ServiceRunnerResult result = 2;
   repeated GetLogsEntry entries = 1;
 }
