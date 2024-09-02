@@ -500,14 +500,14 @@
         ]
       }
     },
-    "/ServiceRunner/GetMetrics": {
+    "/ServiceRunner/GetMetricSamples": {
       "post": {
-        "operationId": "GetMetrics",
+        "operationId": "GetMetricSamples",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/GetMetricsReply"
+              "$ref": "#/definitions/GetMetricSamplesReply"
             }
           },
           "default": {
@@ -523,7 +523,7 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/GetMetricsRequest"
+              "$ref": "#/definitions/GetMetricSamplesRequest"
             }
           }
         ],
@@ -684,6 +684,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/ListEnvironmentsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/ListMetrics": {
+      "post": {
+        "operationId": "ListMetrics",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListMetricsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListMetricsRequest"
             }
           }
         ],
@@ -1394,20 +1426,19 @@
         }
       }
     },
-    "GetMetricsReply": {
+    "GetMetricSamplesReply": {
       "type": "object",
       "properties": {
         "result": {
           "$ref": "#/definitions/ServiceRunnerResult"
         },
-        "metrics": {
+        "metricBuf": {
           "type": "string",
-          "format": "byte",
           "title": "the requested metrics in the specified output format"
         }
       }
     },
-    "GetMetricsRequest": {
+    "GetMetricSamplesRequest": {
       "type": "object",
       "properties": {
         "projId": {
@@ -1425,6 +1456,13 @@
         "scopeQualifier": {
           "type": "string",
           "title": "optional; can leave empty for all entities in a given scope class or set to a specific entity to retrieve metrics from only that entity. for example, to retrieve only the metrics\nrelated to a database named 'foo', set scope=METRIC_SCOPE_DATABASE and\nscopeQualifier='foo'"
+        },
+        "metricNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "optional; list of metric names to retrieve; can leave empty for all"
         },
         "startTime": {
           "type": "string",
@@ -1555,6 +1593,48 @@
     "ListEnvironmentsRequest": {
       "type": "object"
     },
+    "ListMetricsEntry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "the name of the metric"
+        },
+        "description": {
+          "type": "string",
+          "title": "a description of the metric"
+        },
+        "samplePeriod": {
+          "type": "string",
+          "format": "uint64",
+          "title": "the duration of each period the metric is sampled in seconds"
+        }
+      }
+    },
+    "ListMetricsReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ListMetricsEntry"
+          }
+        }
+      }
+    },
+    "ListMetricsRequest": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/definitions/MetricsScope",
+          "title": "the scope of the returned metrics names; e.g. all or limited to 1 entity class"
+        }
+      }
+    },
     "ListPackagesReply": {
       "type": "object",
       "properties": {
@@ -1639,10 +1719,10 @@
     "MetricsFormat": {
       "type": "string",
       "enum": [
-        "METRIC_FORMAT_PROMETHEUS",
+        "METRIC_FORMAT_OPENMETRICS",
         "UNKNOWN_METRIC_FORMAT"
       ],
-      "default": "METRIC_FORMAT_PROMETHEUS",
+      "default": "METRIC_FORMAT_OPENMETRICS",
       "title": "- UNKNOWN_METRIC_FORMAT: MAX_INT"
     },
     "MetricsScope": {
