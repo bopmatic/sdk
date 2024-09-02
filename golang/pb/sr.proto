@@ -32,6 +32,7 @@ service ServiceRunner {
   rpc GetUploadURL (GetUploadURLRequest) returns (GetUploadURLReply) {}
 
   rpc GetLogs (GetLogsRequest) returns (GetLogsReply) {}
+  rpc GetMetrics (GetMetricsRequest) returns (GetMetricsReply) {}
 }
 
 enum ServiceRunnerStatus {
@@ -552,7 +553,8 @@ message GetLogsRequest {
   reserved 1; // Deprecated projectName; use projId instead
   string projId = 6;             // project id
   string envId = 7;              // environment id
-  string serviceName = 2;        // name of a service defined within the Bopmatic project
+  // optional; can leave empty for all services otherwise name of a service defined within the Bopmatic project
+  string serviceName = 2;
   reserved 3;                    // Deprecated rpcName
   uint64 startTime = 4;          // earliest log message to retrieve expressed as the number
                                  // of seconds since Jan 1, 1970 00:00:00 UTC
@@ -569,4 +571,39 @@ message GetLogsEntry {
 message GetLogsReply {
   ServiceRunnerResult result = 2;
   repeated GetLogsEntry entries = 1;
+}
+
+enum MetricsScope {
+  METRIC_SCOPE_ALL = 0;
+  METRIC_SCOPE_SERVICE = 1;
+  METRIC_SCOPE_DATASTORE = 2;
+  METRIC_SCOPE_DATABASE = 3;
+
+  UNKNOWN_METRIC_SCOPE = 2147483647; // MAX_INT
+}
+
+enum MetricsFormat {
+  METRIC_FORMAT_PROMETHEUS = 0;
+
+  UNKNOWN_METRIC_FORMAT = 2147483647; // MAX_INT
+}
+
+message GetMetricsRequest {
+  string projId = 1;             // project id
+  string envId = 2;              // environment id
+  MetricsScope scope = 3;        // the scope of the metrics query; e.g. all or limited to 1 entity class
+  // optional; can leave empty for all entities in a given scope class or set to a specific entity to retrieve metrics from only that entity. for example, to retrieve only the metrics
+  // related to a database named 'foo', set scope=METRIC_SCOPE_DATABASE and
+  // scopeQualifier='foo'
+  string scopeQualifier = 4;
+  uint64 startTime = 5;          // earliest metric to retrieve expressed as the number
+                                 // of seconds since Jan 1, 1970 00:00:00 UTC
+  uint64 endTime = 6;            // latest metric to retrieve expressed as the number of
+                                 // seconds since Jan 1, 1970 00:00:00 UTC
+  MetricsFormat format = 7;      // desired output format of the retrieved metrics
+}
+
+message GetMetricsReply {
+  ServiceRunnerResult result = 1;
+  bytes metrics = 2; // the requested metrics in the specified output format
 }

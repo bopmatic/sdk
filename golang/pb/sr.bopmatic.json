@@ -500,6 +500,38 @@
         ]
       }
     },
+    "/ServiceRunner/GetMetrics": {
+      "post": {
+        "operationId": "GetMetrics",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMetricsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetMetricsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/GetUploadURL": {
       "post": {
         "operationId": "GetUploadURL",
@@ -1347,7 +1379,7 @@
         },
         "serviceName": {
           "type": "string",
-          "title": "name of a service defined within the Bopmatic project"
+          "title": "optional; can leave empty for all services otherwise name of a service defined within the Bopmatic project"
         },
         "startTime": {
           "type": "string",
@@ -1359,6 +1391,56 @@
           "format": "uint64",
           "description": "latest log message to retrieve expressed as the number of",
           "title": "of seconds since Jan 1, 1970 00:00:00 UTC"
+        }
+      }
+    },
+    "GetMetricsReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "metrics": {
+          "type": "string",
+          "format": "byte",
+          "title": "the requested metrics in the specified output format"
+        }
+      }
+    },
+    "GetMetricsRequest": {
+      "type": "object",
+      "properties": {
+        "projId": {
+          "type": "string",
+          "title": "project id"
+        },
+        "envId": {
+          "type": "string",
+          "title": "environment id"
+        },
+        "scope": {
+          "$ref": "#/definitions/MetricsScope",
+          "title": "the scope of the metrics query; e.g. all or limited to 1 entity class"
+        },
+        "scopeQualifier": {
+          "type": "string",
+          "title": "optional; can leave empty for all entities in a given scope class or set to a specific entity to retrieve metrics from only that entity. for example, to retrieve only the metrics\nrelated to a database named 'foo', set scope=METRIC_SCOPE_DATABASE and\nscopeQualifier='foo'"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "earliest metric to retrieve expressed as the number"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "uint64",
+          "description": "latest metric to retrieve expressed as the number of",
+          "title": "of seconds since Jan 1, 1970 00:00:00 UTC"
+        },
+        "format": {
+          "$ref": "#/definitions/MetricsFormat",
+          "description": "desired output format of the retrieved metrics",
+          "title": "seconds since Jan 1, 1970 00:00:00 UTC"
         }
       }
     },
@@ -1553,6 +1635,27 @@
           "title": "a project/environment tuple"
         }
       }
+    },
+    "MetricsFormat": {
+      "type": "string",
+      "enum": [
+        "METRIC_FORMAT_PROMETHEUS",
+        "UNKNOWN_METRIC_FORMAT"
+      ],
+      "default": "METRIC_FORMAT_PROMETHEUS",
+      "title": "- UNKNOWN_METRIC_FORMAT: MAX_INT"
+    },
+    "MetricsScope": {
+      "type": "string",
+      "enum": [
+        "METRIC_SCOPE_ALL",
+        "METRIC_SCOPE_SERVICE",
+        "METRIC_SCOPE_DATASTORE",
+        "METRIC_SCOPE_DATABASE",
+        "UNKNOWN_METRIC_SCOPE"
+      ],
+      "default": "METRIC_SCOPE_ALL",
+      "title": "- UNKNOWN_METRIC_SCOPE: MAX_INT"
     },
     "PackageDescription": {
       "type": "object",
