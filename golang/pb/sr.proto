@@ -2,46 +2,507 @@ syntax = "proto3";
 option go_package = "bopmatic.com/servicerunner/pb";
 
 service ServiceRunner {
+  rpc CreateProject (CreateProjectRequest) returns (CreateProjectReply) {}
+  rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectReply) {}
+  rpc ListProjects (ListProjectsRequest) returns (ListProjectsReply) {}
+  rpc DescribeProject (DescribeProjectRequest) returns (DescribeProjectReply) {}
+
+  rpc CreateEnvironment (CreateEnvironmentRequest) returns (CreateEnvironmentReply) {}
+  rpc DeleteEnvironment (DeleteEnvironmentRequest) returns (DeleteEnvironmentReply) {}
+  rpc ListEnvironments (ListEnvironmentsRequest) returns (ListEnvironmentsReply) {}
+  rpc DescribeEnvironment (DescribeEnvironmentRequest) returns (DescribeEnvironmentReply) {}
+
+  rpc DescribeSite (DescribeSiteRequest) returns (DescribeSiteReply) {}
+  rpc ListServices (ListServicesRequest) returns (ListServicesReply) {}
+  rpc DescribeService (DescribeServiceRequest) returns (DescribeServiceReply) {}
+  rpc ListDatastores (ListDatastoresRequest) returns (ListDatastoresReply) {}
+  rpc DescribeDatastore (DescribeDatastoreRequest) returns (DescribeDatastoreReply) {}
+  rpc ListDatabases (ListDatabasesRequest) returns (ListDatabasesReply) {}
+  rpc DescribeDatabase (DescribeDatabaseRequest) returns (DescribeDatabaseReply) {}
+
+  rpc CreateDeployment (CreateDeploymentRequest) returns (CreateDeploymentReply) {}
+  rpc ListDeployments (ListDeploymentsRequest) returns (ListDeploymentsReply) {}
+  rpc DescribeDeployment (DescribeDeploymentRequest) returns (DescribeDeploymentReply) {}
+
   rpc DescribePackage (DescribePackageRequest) returns (DescribePackageReply) {}
   rpc DeletePackage (DeletePackageRequest) returns (DeletePackageReply) {}
   rpc ListPackages (ListPackagesRequest) returns (ListPackagesReply) {}
-  rpc DeployPackage (DeployPackageRequest) returns (DeployPackageReply) {}
+  rpc UploadPackage (UploadPackageRequest) returns (UploadPackageReply) {}
+
   rpc GetUploadURL (GetUploadURLRequest) returns (GetUploadURLReply) {}
+
   rpc GetLogs (GetLogsRequest) returns (GetLogsReply) {}
+  rpc ListMetrics (ListMetricsRequest) returns (ListMetricsReply) {}
+  rpc GetMetricSamples (GetMetricSamplesRequest) returns (GetMetricSamplesReply) {}
+}
+
+enum ServiceRunnerStatus {
+  STATUS_OK = 0;
+  STATUS_NOT_FOUND = 1;
+  STATUS_DNS_CONFLICT = 2;
+  STATUS_ACCT_LIMIT_REACHED = 3;
+  STATUS_EXISTS = 4;
+  STATUS_NOT_EXISTS = 5;
+
+  STATUS_UNKNOWN = 2147483647; // MAX_INT
+}
+
+message ServiceRunnerResult {
+  ServiceRunnerStatus status = 1;
+  string statusDetail = 2;
+}
+
+enum ProjectState {
+  // the project has been created but no packages are presently active in any environment
+  // and there are no pending deployments
+  INACTIVE = 0;
+  // the project has at least one package presently active in at least one environment, or
+  // has at least one pending deployment
+  ACTIVE = 1;
+}
+
+message ProjectHeader {
+  // the name of the project
+  string name = 1;
+  // the dns prefix where this project's endpoints will be surfaced; defaults to 'name'
+  string dnsPrefix = 2;
+  // the base domain where this project's endpoints will be surfaced; defaults to bopmatic.com
+  string dnsDomain = 3;
+}
+
+message ProjectDescription {
+  // a unique identifier associated with this project
+  string id = 1;
+  // project header
+  ProjectHeader header = 2;
+  // the current state of the project
+  ProjectState state = 3;
+  // time the project was created expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 createTime = 4;
+  // a list of previously completed deployment ids which are presently active across all
+  // environments the project has been deployed into
+  repeated string activeDeployIds = 5;
+  // a list of deployment ids which are presently running involving this project across all
+  // environments
+  repeated string pendingDeployIds = 6;
+}
+
+message CreateProjectRequest {
+  // project header
+  ProjectHeader header = 1;
+}
+
+message CreateProjectReply {
+  ServiceRunnerResult result = 1;
+
+  // a unique identifier associated with this project
+  string id = 2;
+}
+
+message DeleteProjectRequest {
+  // a unique identifier associated with this project
+  string id = 1;
+}
+
+message DeleteProjectReply {
+  ServiceRunnerResult result = 1;
+}
+
+message ListProjectsRequest {
+}
+
+message ListProjectsReply {
+  ServiceRunnerResult result = 1;
+
+  // a list of project ids
+  repeated string ids = 2;
+}
+
+message DescribeProjectRequest {
+  // a unique identifier associated with this project
+  string id = 1;
+}
+
+message DescribeProjectReply {
+  ServiceRunnerResult result = 1;
+
+  // project description
+  ProjectDescription desc = 2;
+}
+
+message EnvironmentHeader {
+  // the name of the environment
+  string name = 1;
+  // the dns prefix to use for endpoints in this environment (defaults to name)
+  string dnsPrefix = 2;
+}
+
+message EnvironmentDescription {
+  // a unique identifier associated with this environment
+  string id = 1;
+  // the environment header
+  EnvironmentHeader header = 2;
+  // time the environment was created expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 createTime = 3;
+  // a list of previously completed deployment ids which are presently active in the
+  // environment
+  repeated string activeDeployIds = 4;
+  // a list of deployment ids which are presently running in the environment
+  repeated string pendingDeployIds = 5;
+}
+
+message CreateEnvironmentRequest {
+  // the environment header
+  EnvironmentHeader header = 1;
+}
+
+message CreateEnvironmentReply {
+  ServiceRunnerResult result = 1;
+
+  // a unique identifier associated with this environment
+  string id = 2;
+}
+
+message DeleteEnvironmentRequest {
+  // a unique identifier associated with this environment
+  string id = 1;
+}
+
+message DeleteEnvironmentReply {
+  ServiceRunnerResult result = 1;
+}
+
+message ListEnvironmentsRequest {
+}
+
+message ListEnvironmentsReply {
+  ServiceRunnerResult result = 1;
+
+  // a list of environment ids
+  repeated string ids = 2;
+}
+
+message DescribeEnvironmentRequest {
+  // a unique identifier associated with this environment
+  string id = 1;
+}
+
+message DescribeEnvironmentReply {
+  ServiceRunnerResult result = 1;
+
+  // environment destription
+  EnvironmentDescription desc = 2;
+}
+
+message ProjEnvHeader {
+  // a unique identifier associated with the project to query
+  string projId = 1;
+  // a unique identifier associated with the environment to query
+  string envId = 2;
+}
+
+message DescribeSiteRequest {
+  // a project/environment tuple
+  ProjEnvHeader projEnvHeader = 1;
+}
+
+message DescribeSiteReply {
+  ServiceRunnerResult result = 1;
+
+  // a project/environment tuple
+  ProjEnvHeader projEnvHeader = 2;
+  // site endpoint
+  string siteEndpoint = 3;
+}
+
+message ListServicesRequest {
+  // a project/environment tuple
+  ProjEnvHeader header = 1;
+}
+
+message ListServicesReply {
+  ServiceRunnerResult result = 1;
+
+  // a project/environment tuple
+  ProjEnvHeader header = 2;
+  // a list of service names from the project deployed in the environment
+  repeated string serviceNames = 3;
+}
+
+message ServiceHeader {
+  // a project/environment tuple
+  ProjEnvHeader projEnvHeader = 1;
+  // a unique service name within the project
+  string serviceName = 2;
+}
+
+message DescribeServiceRequest {
+  // service header
+  ServiceHeader svcHeader = 1;
+}
+
+message ServiceDescription {
+  // service header
+  ServiceHeader svcHeader = 1;
+  // endpoints for each RPC within the service
+  repeated string rpcEndpoints = 2;
+}
+
+message DescribeServiceReply {
+  ServiceRunnerResult result = 1;
+
+  // service description
+  ServiceDescription desc = 2;
+}
+
+message ListDatastoresRequest {
+  // a project/environment tuple
+  ProjEnvHeader header = 1;
+}
+
+message ListDatastoresReply {
+  ServiceRunnerResult result = 1;
+
+  // a project/environment tuple
+  ProjEnvHeader header = 2;
+  // a list of service names from the project deployed in the environment
+  repeated string datastoreNames = 3;
+}
+
+message DatastoreHeader {
+  // a project/environment tuple
+  ProjEnvHeader projEnvHeader = 1;
+  // a unique service name within the project
+  string datastoreName = 2;
+}
+
+message DescribeDatastoreRequest {
+  // datastore header
+  DatastoreHeader datastoreHeader = 1;
+}
+
+message DatastoreDescription {
+  // service header
+  DatastoreHeader datastoreHeader = 1;
+  // number of store objects
+  uint64 numObjects = 2;
+  // amount of utilized capacity
+  uint64 capacityConsumedInBytes = 3;
+}
+
+message DescribeDatastoreReply {
+  ServiceRunnerResult result = 1;
+
+  // datastore description
+  DatastoreDescription desc = 2;
+}
+
+message ListDatabasesRequest {
+  // a project/environment tuple
+  ProjEnvHeader header = 1;
+}
+
+message ListDatabasesReply {
+  ServiceRunnerResult result = 1;
+
+  // a project/environment tuple
+  ProjEnvHeader header = 2;
+  // a list of service names from the project deployed in the environment
+  repeated string databaseNames = 3;
+}
+
+message DatabaseHeader {
+  // a project/environment tuple
+  ProjEnvHeader projEnvHeader = 1;
+  // a unique service name within the project
+  string databaseName = 2;
+}
+
+message DescribeDatabaseRequest {
+  // database header
+  DatabaseHeader databaseHeader = 1;
+}
+
+message DatabaseDescription {
+  // service header
+  DatabaseHeader databaseHeader = 1;
+  // a list of service names from the project deployed in the environment
+  repeated string tableNames = 2;
+}
+
+message DescribeDatabaseReply {
+  ServiceRunnerResult result = 1;
+
+  // database description
+  DatabaseDescription desc = 2;
+}
+
+enum DeploymentType {
+  NEW_PACKAGE = 0;   // the deployment was created in order to deploy a new package to
+                     // the environment (customer initiated)
+  ENV_TEARDOWN = 1;  // the deployment was created in order to remove the project from
+                     // the environment (customer initiated)
+  SECURITY_UPDATE = 2;// the deployment was created in order to perform a security update
+                     // on the backend infrastructure (service initiated)
+  INF_UPDATE = 3;    // the deployment was created in order to perform a non-security related
+                     // update on the backend infrastructure (service initiated)
+
+  UNKNOWN_DEPLOY_TYPE = 2147483647; // MAX_INT
+}
+
+enum DeploymentInitiator {
+  CUSTOMER = 0; // the customer initiated the deployment
+  SERVICE = 1;  // Bopmatic initiated the deployment
+
+  UNKNOWN_DEPLOY_INIT = 2147483647; // MAX_INT
+}
+
+enum DeploymentState {
+  CREATED = 0;    // the deployment has been created, but no action has yet been taken
+  DPLY_VALIDATING = 1; // the package associated with the deployment is in the process of being
+                  // validated
+  DPLY_BUILDING = 2;   // the package associated with the deployment passed validation and is in
+                  // the process of being compiled
+  DEPLOYING = 3;  // the package associated with the deployment compiled successfully and is
+                  // in the process of being deployed to the environment specified
+  SUCCESS = 4;    // the deployment was successful and the package associated with the
+                  // deployment is now active in the environment specified
+  FAILED = 5;     // the deployment failed; see DeploymentDescription.stateDetail for further
+                  // information
+
+  UNKNOWN_DEPLOY_STATE = 2147483647; // MAX_INT
+}
+
+enum DeploymentStateDetail {
+  NONE = 0;
+  PKG_INVALID = 1;// the package associated with the deployment failed validation checks and
+                  // cannot be deployed
+  BLD_INVALID = 2;// the package associated with the deployment failed to compile
+  DPLY_SUPPORT_NEEDED = 3;// the deployment failed for an unknown reason; Bopmatic support
+                     // is investigating the problem
+
+  UNKNOWN_DEPLOY_STATE_DET = 2147483647; // MAX_INT
+}
+
+message DeploymentHeader {
+  // the package id associated with this deployment
+  string pkgId = 1;
+  // the project id associated with this deployment
+  string projId = 2;
+  // the environment id associated with this deployment
+  string envId = 3;
+  // the type of the deployment
+  DeploymentType type = 5;
+  // the initiator of the deployment
+  DeploymentInitiator initiator = 6;
+}
+
+message DeploymentDescription {
+  // a unique identifier associated with this deployment
+  string id = 1;
+  // deployment header
+  DeploymentHeader header = 2;
+  // the deployment's state
+  DeploymentState state = 3;
+  // additional detail regarding the deployment's state
+  DeploymentStateDetail stateDetail = 4;
+  // time the deployment was created expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 createTime = 5;
+  // time the package validation began expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 validationStartTime = 6;
+  // time the package build began expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 buildStartTime = 7;
+  // time the environment deployment began expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 deployStartTime = 8;
+  // time the deployment completed
+  uint64 endTime = 9;
+}
+
+message CreateDeploymentRequest {
+  // deployment header
+  DeploymentHeader header = 1;
+}
+
+message CreateDeploymentReply {
+  ServiceRunnerResult result = 1;
+
+  // a unique identifier associated with this deployment
+  string id = 2;
+}
+
+message ListDeploymentsRequest {
+}
+
+message ListDeploymentsReply {
+  ServiceRunnerResult result = 1;
+
+  // list of unique identifiers associated with each deployment
+  repeated string ids = 2;
+}
+
+message DescribeDeploymentRequest {
+  // a unique identifier associated with this deployment
+  string id = 1;
+}
+
+message DescribeDeploymentReply {
+  ServiceRunnerResult result = 1;
+
+  // deployment description
+  DeploymentDescription desc = 2;
 }
 
 enum PackageState {
   UPLOADING = 0;        // package is currently in the process of being uploaded
   UPLOADED = 1;         // upload has completed; the package has not yet started validataion
-  VALIDATING = 2;       // the package is in the process of being validated
-  INVALID = 3;          // the package failed validation checks and cannot be deployed
-  BUILDING = 4;         // the package passed validation and is in the process of being built
-  DEPLOYING = 5;        // the package is built and in the process of being deployed to production
-  PRODUCTION = 6;       // the package is active in production
-  DEACTIVATING = 7;     // the package is in the process of being deactivated from production
-  DELETING = 8;         // the package is in the process of being deleted
-  SUPPORT_NEEDED = 9;   // something went wrong and Bopmatic support needs to investigate
+  PKG_VALIDATING = 2;   // the package is in the process of being validated
+  INVALID = 3;          // the package failed validation checks or builds and cannot be
+                        // deployed
+  PKG_BUILDING = 4;     // the package passed validation and is in the process of being built
+  reserved 5;           // Deprecated DEPLOYING; see DeploymentState instead
+  reserved 6;           // Deprecated PRODUCTION; see DeploymentState instead
+  reserved 7;           // Deprecated DEACTIVATING; see DeploymentState instead
+  reserved 8;           // Deprecated DELETING; see DeploymentState instead
+  PKG_SUPPORT_NEEDED = 9;   // something went wrong and Bopmatic support is investigating
   DELETED = 10;         // the package has been deleted
+  BUILT = 11;           // the package was successfully built and is eligible to be deployed
 
   UNKNOWN_PKG_STATE = 2147483647; // MAX_INT
 }
 
 message PackageDescription {
-  string projectName = 1;        // name of the Bopmatic project; must be unique
-  string packageId = 2;          // hex string of first 4 bytes of packageXsum
-  bytes packageXsum = 3;         // sha256 checksum of packageTarballData
-  bytes packageTarballData = 4;  // package tarball content in .tar.xz format (limited to 6MiB);
-  reserved 5;                    // Deprecated packageName
-  string packageTarballURL = 6;  // URL to package tarball (when larger than 6MiB)
+  reserved 1;              // Deprecated name; use projId instead
+  string packageId = 2;    // pkg-<hex string of first 4 bytes of packageXsum>
+  string projId = 7;       // project id associated with this package
+  reserved 3;              // Deprecated packageXum; see UploadPackageRequest instead
+  reserved 4;              // Deprecated packageTarballData; see UploadPackageRequest instead
+  reserved 5;              // Deprecated packageName
+  reserved 6;              // Deprectaed packageTarballURL; see UploadPackageRequest instead
+  // package state
+  PackageState state = 8;
+  // time the package was first uploaded expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC
+  uint64 uploadTime = 9;
+  uint64 packageSize = 10; // size of the compressed package in bytes
+}
+
+message UploadPackageRequest {
+  string projId = 1;             // project id associated with this package
+  bytes packageXsum = 2;         // sha256 checksum of packageTarballData
   // packageTarballData and packageTarballURL are mutually exclusive
+  bytes packageTarballData = 3;  // package tarball content in .tar.xz format (limited to 6MiB);
+  string packageTarballURL = 4;  // URL to package tarball (when larger than 6MiB)
 }
 
-message DeployPackageRequest {
-  PackageDescription desc = 1;
-}
-
-message DeployPackageReply {
-  PackageState state = 1;
+message UploadPackageReply {
+  ServiceRunnerResult result = 1;
+  string pkgId = 2;             // package id associated with this package
 }
 
 message DescribePackageRequest {
@@ -49,22 +510,26 @@ message DescribePackageRequest {
 }
 
 message DescribePackageReply {
+  ServiceRunnerResult result = 5;
   PackageDescription desc = 1;
-  PackageState packageState = 2;
-  // the following fields are only valid when packageState==PRODUCTION
-  string siteEndpoint = 3;
-  repeated string rpcEndpoints = 4;
+  reserved 2; // Deprecated state; See PackageDescription.state instead
+  reserved 3; // Deprecated siteEndpoint; see DescribeSite instead
+  reserved 4; // Deprecated rpcEndpoints = 4; see DescribeService instead
 }
 
 message ListPackagesRequest {
-  string projectName = 1;  // leave empty for all projects
+  reserved 1; // Deprecated projectName; use projId instead
+  string projId = 2; // leave empty for all projects
 }
 
 message ListPackagesReply {
   message ListPackagesItem {
-    string projectName = 1;
+    reserved 1; // Deprecated projectName; use projId instead
+    string projId = 3;
     string packageId = 2;
   }
+
+  ServiceRunnerResult result = 2;
   repeated ListPackagesItem items = 1;
 }
 
@@ -73,6 +538,7 @@ message DeletePackageRequest {
 }
 
 message DeletePackageReply {
+  ServiceRunnerResult result = 2;
   PackageState state = 1;
 }
 
@@ -81,12 +547,16 @@ message GetUploadURLRequest {
 }
 
 message GetUploadURLReply {
+  ServiceRunnerResult result = 2;
   string URL = 1;
 }
 
 message GetLogsRequest {
-  string projectName = 1;        // name of the Bopmatic project
-  string serviceName = 2;        // name of a service defined within the Bopmatic project
+  reserved 1; // Deprecated projectName; use projId instead
+  string projId = 6;             // project id
+  string envId = 7;              // environment id
+  // optional; can leave empty for all services otherwise name of a service defined within the Bopmatic project
+  string serviceName = 2;
   reserved 3;                    // Deprecated rpcName
   uint64 startTime = 4;          // earliest log message to retrieve expressed as the number
                                  // of seconds since Jan 1, 1970 00:00:00 UTC
@@ -101,5 +571,58 @@ message GetLogsEntry {
 }
 
 message GetLogsReply {
+  ServiceRunnerResult result = 2;
   repeated GetLogsEntry entries = 1;
+}
+
+enum MetricsScope {
+  METRIC_SCOPE_ALL = 0;
+  METRIC_SCOPE_SERVICE = 1;
+  METRIC_SCOPE_DATASTORE = 2;
+  METRIC_SCOPE_DATABASE = 3;
+
+  UNKNOWN_METRIC_SCOPE = 2147483647; // MAX_INT
+}
+
+message ListMetricsRequest {
+  MetricsScope scope = 1;        // the scope of the returned metrics names; e.g. all or limited to 1 entity class
+}
+
+message ListMetricsEntry {
+  string name = 1;               // the name of the metric
+  string description = 2;        // a description of the metric
+  uint64 samplePeriod = 3;       // the duration of each period the metric is sampled in seconds
+}
+
+message ListMetricsReply {
+  ServiceRunnerResult result = 1;
+  repeated ListMetricsEntry entries = 2;
+}
+
+enum MetricsFormat {
+  METRIC_FORMAT_OPENMETRICS = 0;
+
+  UNKNOWN_METRIC_FORMAT = 2147483647; // MAX_INT
+}
+
+message GetMetricSamplesRequest {
+  string projId = 1;             // project id
+  string envId = 2;              // environment id
+  MetricsScope scope = 3;        // the scope of the metrics query; e.g. all or limited to 1 entity class
+  // optional; can leave empty for all entities in a given scope class or set to a specific entity to retrieve metrics from only that entity. for example, to retrieve only the metrics
+  // related to a database named 'foo', set scope=METRIC_SCOPE_DATABASE and
+  // scopeQualifier='foo'
+  string scopeQualifier = 4;
+  // optional; list of metric names to retrieve; can leave empty for all
+  repeated string metricNames = 5;
+  uint64 startTime = 6;          // earliest metric to retrieve expressed as the number
+                                 // of seconds since Jan 1, 1970 00:00:00 UTC
+  uint64 endTime = 7;            // latest metric to retrieve expressed as the number of
+                                 // seconds since Jan 1, 1970 00:00:00 UTC
+  MetricsFormat format = 8;      // desired output format of the retrieved metrics
+}
+
+message GetMetricSamplesReply {
+  ServiceRunnerResult result = 1;
+  string metricBuf = 2; // the requested metrics in the specified output format
 }
