@@ -19,7 +19,7 @@ var _ MappedNullable = &ListPackagesReplyListPackagesItem{}
 
 // ListPackagesReplyListPackagesItem struct for ListPackagesReplyListPackagesItem
 type ListPackagesReplyListPackagesItem struct {
-	ProjectName *string `json:"projectName,omitempty"`
+	ProjId *string `json:"projId,omitempty"`
 	PackageId *string `json:"packageId,omitempty"`
 }
 
@@ -40,36 +40,36 @@ func NewListPackagesReplyListPackagesItemWithDefaults() *ListPackagesReplyListPa
 	return &this
 }
 
-// GetProjectName returns the ProjectName field value if set, zero value otherwise.
-func (o *ListPackagesReplyListPackagesItem) GetProjectName() string {
-	if o == nil || IsNil(o.ProjectName) {
+// GetProjId returns the ProjId field value if set, zero value otherwise.
+func (o *ListPackagesReplyListPackagesItem) GetProjId() string {
+	if o == nil || IsNil(o.ProjId) {
 		var ret string
 		return ret
 	}
-	return *o.ProjectName
+	return *o.ProjId
 }
 
-// GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
+// GetProjIdOk returns a tuple with the ProjId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListPackagesReplyListPackagesItem) GetProjectNameOk() (*string, bool) {
-	if o == nil || IsNil(o.ProjectName) {
+func (o *ListPackagesReplyListPackagesItem) GetProjIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ProjId) {
 		return nil, false
 	}
-	return o.ProjectName, true
+	return o.ProjId, true
 }
 
-// HasProjectName returns a boolean if a field has been set.
-func (o *ListPackagesReplyListPackagesItem) HasProjectName() bool {
-	if o != nil && !IsNil(o.ProjectName) {
+// HasProjId returns a boolean if a field has been set.
+func (o *ListPackagesReplyListPackagesItem) HasProjId() bool {
+	if o != nil && !IsNil(o.ProjId) {
 		return true
 	}
 
 	return false
 }
 
-// SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
-func (o *ListPackagesReplyListPackagesItem) SetProjectName(v string) {
-	o.ProjectName = &v
+// SetProjId gets a reference to the given string and assigns it to the ProjId field.
+func (o *ListPackagesReplyListPackagesItem) SetProjId(v string) {
+	o.ProjId = &v
 }
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
@@ -114,8 +114,8 @@ func (o ListPackagesReplyListPackagesItem) MarshalJSON() ([]byte, error) {
 
 func (o ListPackagesReplyListPackagesItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ProjectName) {
-		toSerialize["projectName"] = o.ProjectName
+	if !IsNil(o.ProjId) {
+		toSerialize["projId"] = o.ProjId
 	}
 	if !IsNil(o.PackageId) {
 		toSerialize["packageId"] = o.PackageId

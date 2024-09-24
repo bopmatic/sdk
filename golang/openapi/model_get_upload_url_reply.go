@@ -19,6 +19,7 @@ var _ MappedNullable = &GetUploadURLReply{}
 
 // GetUploadURLReply struct for GetUploadURLReply
 type GetUploadURLReply struct {
+	Result *ServiceRunnerResult `json:"result,omitempty"`
 	URL *string `json:"URL,omitempty"`
 }
 
@@ -37,6 +38,38 @@ func NewGetUploadURLReply() *GetUploadURLReply {
 func NewGetUploadURLReplyWithDefaults() *GetUploadURLReply {
 	this := GetUploadURLReply{}
 	return &this
+}
+
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *GetUploadURLReply) GetResult() ServiceRunnerResult {
+	if o == nil || IsNil(o.Result) {
+		var ret ServiceRunnerResult
+		return ret
+	}
+	return *o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetUploadURLReply) GetResultOk() (*ServiceRunnerResult, bool) {
+	if o == nil || IsNil(o.Result) {
+		return nil, false
+	}
+	return o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *GetUploadURLReply) HasResult() bool {
+	if o != nil && !IsNil(o.Result) {
+		return true
+	}
+
+	return false
+}
+
+// SetResult gets a reference to the given ServiceRunnerResult and assigns it to the Result field.
+func (o *GetUploadURLReply) SetResult(v ServiceRunnerResult) {
+	o.Result = &v
 }
 
 // GetURL returns the URL field value if set, zero value otherwise.
@@ -81,6 +114,9 @@ func (o GetUploadURLReply) MarshalJSON() ([]byte, error) {
 
 func (o GetUploadURLReply) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
 	if !IsNil(o.URL) {
 		toSerialize["URL"] = o.URL
 	}

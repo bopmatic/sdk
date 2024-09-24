@@ -7,6 +7,106 @@ servers:
 tags:
 - name: ServiceRunner
 paths:
+  /ServiceRunner/CreateDeployment:
+    post:
+      operationId: CreateDeployment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeploymentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateDeploymentReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/CreateEnvironment:
+    post:
+      operationId: CreateEnvironment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEnvironmentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEnvironmentReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/CreateProject:
+    post:
+      operationId: CreateProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateProjectReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DeleteEnvironment:
+    post:
+      operationId: DeleteEnvironment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteEnvironmentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteEnvironmentReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/DeletePackage:
     post:
       operationId: DeletePackage
@@ -32,21 +132,121 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
-  /ServiceRunner/DeployPackage:
+  /ServiceRunner/DeleteProject:
     post:
-      operationId: DeployPackage
+      operationId: DeleteProject
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DeployPackageRequest'
+              $ref: '#/components/schemas/DeleteProjectRequest'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DeployPackageReply'
+                $ref: '#/components/schemas/DeleteProjectReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeDatabase:
+    post:
+      operationId: DescribeDatabase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeDatabaseRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeDatabaseReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeDatastore:
+    post:
+      operationId: DescribeDatastore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeDatastoreRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeDatastoreReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeDeployment:
+    post:
+      operationId: DescribeDeployment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeDeploymentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeDeploymentReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeEnvironment:
+    post:
+      operationId: DescribeEnvironment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeEnvironmentRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeEnvironmentReply'
           description: A successful response.
         default:
           content:
@@ -82,6 +282,81 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/DescribeProject:
+    post:
+      operationId: DescribeProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeProjectRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeProjectReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeService:
+    post:
+      operationId: DescribeService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeServiceRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeServiceReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeSite:
+    post:
+      operationId: DescribeSite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeSiteRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeSiteReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/GetLogs:
     post:
       operationId: GetLogs
@@ -97,6 +372,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetLogsReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/GetMetricSamples:
+    post:
+      operationId: GetMetricSamples
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetMetricSamplesRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMetricSamplesReply'
           description: A successful response.
         default:
           content:
@@ -132,6 +432,131 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/ListDatabases:
+    post:
+      operationId: ListDatabases
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListDatabasesRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDatabasesReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/ListDatastores:
+    post:
+      operationId: ListDatastores
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListDatastoresRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDatastoresReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/ListDeployments:
+    post:
+      operationId: ListDeployments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListDeploymentsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDeploymentsReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/ListEnvironments:
+    post:
+      operationId: ListEnvironments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListEnvironmentsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListEnvironmentsReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/ListMetrics:
+    post:
+      operationId: ListMetrics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListMetricsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListMetricsReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/ListPackages:
     post:
       operationId: ListPackages
@@ -157,12 +582,245 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/ListProjects:
+    post:
+      operationId: ListProjects
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListProjectsRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListProjectsReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/ListServices:
+    post:
+      operationId: ListServices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListServicesRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListServicesReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/UploadPackage:
+    post:
+      operationId: UploadPackage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadPackageRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadPackageReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
 components:
   schemas:
+    CreateDeploymentReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        id: id
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        id:
+          title: a unique identifier associated with this deployment
+          type: string
+      type: object
+    CreateDeploymentRequest:
+      example:
+        header:
+          projId: projId
+          initiator: CUSTOMER
+          pkgId: pkgId
+          envId: envId
+          type: NEW_PACKAGE
+      properties:
+        header:
+          $ref: '#/components/schemas/DeploymentHeader'
+      type: object
+    CreateEnvironmentReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        id: id
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        id:
+          title: a unique identifier associated with this environment
+          type: string
+      type: object
+    CreateEnvironmentRequest:
+      example:
+        header:
+          name: name
+          dnsPrefix: dnsPrefix
+      properties:
+        header:
+          $ref: '#/components/schemas/EnvironmentHeader'
+      type: object
+    CreateProjectReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        id: id
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        id:
+          title: a unique identifier associated with this project
+          type: string
+      type: object
+    CreateProjectRequest:
+      example:
+        header:
+          name: name
+          dnsPrefix: dnsPrefix
+          dnsDomain: dnsDomain
+      properties:
+        header:
+          $ref: '#/components/schemas/ProjectHeader'
+      type: object
+    DatabaseDescription:
+      example:
+        tableNames:
+        - tableNames
+        - tableNames
+        databaseHeader:
+          projEnvHeader:
+            projId: projId
+            envId: envId
+          databaseName: databaseName
+      properties:
+        databaseHeader:
+          $ref: '#/components/schemas/DatabaseHeader'
+        tableNames:
+          items:
+            type: string
+          title: a list of service names from the project deployed in the environment
+          type: array
+      type: object
+    DatabaseHeader:
+      example:
+        projEnvHeader:
+          projId: projId
+          envId: envId
+        databaseName: databaseName
+      properties:
+        projEnvHeader:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        databaseName:
+          title: a unique service name within the project
+          type: string
+      type: object
+    DatastoreDescription:
+      example:
+        datastoreHeader:
+          projEnvHeader:
+            projId: projId
+            envId: envId
+          datastoreName: datastoreName
+        capacityConsumedInBytes: capacityConsumedInBytes
+        numObjects: numObjects
+      properties:
+        datastoreHeader:
+          $ref: '#/components/schemas/DatastoreHeader'
+        numObjects:
+          format: uint64
+          title: number of store objects
+          type: string
+        capacityConsumedInBytes:
+          format: uint64
+          title: amount of utilized capacity
+          type: string
+      type: object
+    DatastoreHeader:
+      example:
+        projEnvHeader:
+          projId: projId
+          envId: envId
+        datastoreName: datastoreName
+      properties:
+        projEnvHeader:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        datastoreName:
+          title: a unique service name within the project
+          type: string
+      type: object
+    DeleteEnvironmentReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+      type: object
+    DeleteEnvironmentRequest:
+      example:
+        id: id
+      properties:
+        id:
+          title: a unique identifier associated with this environment
+          type: string
+      type: object
     DeletePackageReply:
       example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
         state: UPLOADING
       properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
         state:
           $ref: '#/components/schemas/PackageState'
       type: object
@@ -173,56 +831,465 @@ components:
         packageId:
           type: string
       type: object
-    DeployPackageReply:
+    DeleteProjectReply:
       example:
-        state: UPLOADING
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
       properties:
-        state:
-          $ref: '#/components/schemas/PackageState'
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
       type: object
-    DeployPackageRequest:
+    DeleteProjectRequest:
       example:
-        desc:
-          packageTarballData: packageTarballData
-          packageXsum: packageXsum
-          packageTarballURL: packageTarballURL
-          packageId: packageId
-          projectName: projectName
+        id: id
       properties:
+        id:
+          title: a unique identifier associated with this project
+          type: string
+      type: object
+    DeploymentDescription:
+      example:
+        validationStartTime: validationStartTime
+        createTime: createTime
+        buildStartTime: buildStartTime
+        header:
+          projId: projId
+          initiator: CUSTOMER
+          pkgId: pkgId
+          envId: envId
+          type: NEW_PACKAGE
+        deployStartTime: deployStartTime
+        id: id
+        state: CREATED
+        endTime: endTime
+        stateDetail: NONE
+      properties:
+        id:
+          title: a unique identifier associated with this deployment
+          type: string
+        header:
+          $ref: '#/components/schemas/DeploymentHeader'
+        state:
+          $ref: '#/components/schemas/DeploymentState'
+        stateDetail:
+          $ref: '#/components/schemas/DeploymentStateDetail'
+        createTime:
+          format: uint64
+          title: |-
+            time the deployment was created expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        validationStartTime:
+          format: uint64
+          title: |-
+            time the package validation began expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        buildStartTime:
+          format: uint64
+          title: |-
+            time the package build began expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        deployStartTime:
+          format: uint64
+          title: |-
+            time the environment deployment began expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        endTime:
+          format: uint64
+          title: time the deployment completed
+          type: string
+      type: object
+    DeploymentHeader:
+      example:
+        projId: projId
+        initiator: CUSTOMER
+        pkgId: pkgId
+        envId: envId
+        type: NEW_PACKAGE
+      properties:
+        pkgId:
+          title: the package id associated with this deployment
+          type: string
+        projId:
+          title: the project id associated with this deployment
+          type: string
+        envId:
+          title: the environment id associated with this deployment
+          type: string
+        type:
+          $ref: '#/components/schemas/DeploymentType'
+        initiator:
+          $ref: '#/components/schemas/DeploymentInitiator'
+      type: object
+    DeploymentInitiator:
+      default: CUSTOMER
+      enum:
+      - CUSTOMER
+      - SERVICE
+      - UNKNOWN_DEPLOY_INIT
+      title: |-
+        - CUSTOMER: the customer initiated the deployment
+         - SERVICE: Bopmatic initiated the deployment
+         - UNKNOWN_DEPLOY_INIT: MAX_INT
+      type: string
+    DeploymentState:
+      default: CREATED
+      description: |-
+        the package associated with the deployment passed validation and is in
+         - DEPLOYING: the process of being compiled
+
+        the package associated with the deployment compiled successfully and is
+         - SUCCESS: in the process of being deployed to the environment specified
+
+        the deployment was successful and the package associated with the
+         - FAILED: deployment is now active in the environment specified
+
+        the deployment failed; see DeploymentDescription.stateDetail for further
+         - UNKNOWN_DEPLOY_STATE: MAX_INT
+      enum:
+      - CREATED
+      - DPLY_VALIDATING
+      - DPLY_BUILDING
+      - DEPLOYING
+      - SUCCESS
+      - FAILED
+      - UNKNOWN_DEPLOY_STATE
+      title: |-
+        - CREATED: the deployment has been created, but no action has yet been taken
+         - DPLY_VALIDATING: the package associated with the deployment is in the process of being
+         - DPLY_BUILDING: validated
+      type: string
+    DeploymentStateDetail:
+      default: NONE
+      description: |-
+        the package associated with the deployment failed to compile
+         - DPLY_SUPPORT_NEEDED: the deployment failed for an unknown reason; Bopmatic support
+         - UNKNOWN_DEPLOY_STATE_DET: MAX_INT
+      enum:
+      - NONE
+      - PKG_INVALID
+      - BLD_INVALID
+      - DPLY_SUPPORT_NEEDED
+      - UNKNOWN_DEPLOY_STATE_DET
+      title: |-
+        - PKG_INVALID: the package associated with the deployment failed validation checks and
+         - BLD_INVALID: cannot be deployed
+      type: string
+    DeploymentType:
+      default: NEW_PACKAGE
+      description: |-
+        the deployment was created in order to remove the project from
+         - SECURITY_UPDATE: the environment (customer initiated)
+
+        the deployment was created in order to perform a security update
+         - INF_UPDATE: on the backend infrastructure (service initiated)
+
+        the deployment was created in order to perform a non-security related
+         - UNKNOWN_DEPLOY_TYPE: MAX_INT
+      enum:
+      - NEW_PACKAGE
+      - ENV_TEARDOWN
+      - SECURITY_UPDATE
+      - INF_UPDATE
+      - UNKNOWN_DEPLOY_TYPE
+      title: |-
+        - NEW_PACKAGE: the deployment was created in order to deploy a new package to
+         - ENV_TEARDOWN: the environment (customer initiated)
+      type: string
+    DescribeDatabaseReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
         desc:
-          $ref: '#/components/schemas/PackageDescription'
+          tableNames:
+          - tableNames
+          - tableNames
+          databaseHeader:
+            projEnvHeader:
+              projId: projId
+              envId: envId
+            databaseName: databaseName
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/DatabaseDescription'
+      type: object
+    DescribeDatabaseRequest:
+      example:
+        databaseHeader:
+          projEnvHeader:
+            projId: projId
+            envId: envId
+          databaseName: databaseName
+      properties:
+        databaseHeader:
+          $ref: '#/components/schemas/DatabaseHeader'
+      type: object
+    DescribeDatastoreReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        desc:
+          datastoreHeader:
+            projEnvHeader:
+              projId: projId
+              envId: envId
+            datastoreName: datastoreName
+          capacityConsumedInBytes: capacityConsumedInBytes
+          numObjects: numObjects
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/DatastoreDescription'
+      type: object
+    DescribeDatastoreRequest:
+      example:
+        datastoreHeader:
+          projEnvHeader:
+            projId: projId
+            envId: envId
+          datastoreName: datastoreName
+      properties:
+        datastoreHeader:
+          $ref: '#/components/schemas/DatastoreHeader'
+      type: object
+    DescribeDeploymentReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        desc:
+          validationStartTime: validationStartTime
+          createTime: createTime
+          buildStartTime: buildStartTime
+          header:
+            projId: projId
+            initiator: CUSTOMER
+            pkgId: pkgId
+            envId: envId
+            type: NEW_PACKAGE
+          deployStartTime: deployStartTime
+          id: id
+          state: CREATED
+          endTime: endTime
+          stateDetail: NONE
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/DeploymentDescription'
+      type: object
+    DescribeDeploymentRequest:
+      example:
+        id: id
+      properties:
+        id:
+          title: a unique identifier associated with this deployment
+          type: string
+      type: object
+    DescribeEnvironmentReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        desc:
+          pendingDeployIds:
+          - pendingDeployIds
+          - pendingDeployIds
+          createTime: createTime
+          header:
+            name: name
+            dnsPrefix: dnsPrefix
+          id: id
+          activeDeployIds:
+          - activeDeployIds
+          - activeDeployIds
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/EnvironmentDescription'
+      type: object
+    DescribeEnvironmentRequest:
+      example:
+        id: id
+      properties:
+        id:
+          title: a unique identifier associated with this environment
+          type: string
       type: object
     DescribePackageReply:
       example:
-        rpcEndpoints:
-        - rpcEndpoints
-        - rpcEndpoints
-        packageState: UPLOADING
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
         desc:
-          packageTarballData: packageTarballData
-          packageXsum: packageXsum
-          packageTarballURL: packageTarballURL
+          projId: projId
           packageId: packageId
-          projectName: projectName
-        siteEndpoint: siteEndpoint
+          state: UPLOADING
+          packageSize: packageSize
+          uploadTime: uploadTime
       properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
         desc:
           $ref: '#/components/schemas/PackageDescription'
-        packageState:
-          $ref: '#/components/schemas/PackageState'
-        siteEndpoint:
-          title: the following fields are only valid when packageState==PRODUCTION
-          type: string
-        rpcEndpoints:
-          items:
-            type: string
-          type: array
       type: object
     DescribePackageRequest:
       example:
         packageId: packageId
       properties:
         packageId:
+          type: string
+      type: object
+    DescribeProjectReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        desc:
+          pendingDeployIds:
+          - pendingDeployIds
+          - pendingDeployIds
+          createTime: createTime
+          header:
+            name: name
+            dnsPrefix: dnsPrefix
+            dnsDomain: dnsDomain
+          id: id
+          state: INACTIVE
+          activeDeployIds:
+          - activeDeployIds
+          - activeDeployIds
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/ProjectDescription'
+      type: object
+    DescribeProjectRequest:
+      example:
+        id: id
+      properties:
+        id:
+          title: a unique identifier associated with this project
+          type: string
+      type: object
+    DescribeServiceReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        desc:
+          svcHeader:
+            projEnvHeader:
+              projId: projId
+              envId: envId
+            serviceName: serviceName
+          rpcEndpoints:
+          - rpcEndpoints
+          - rpcEndpoints
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/ServiceDescription'
+      type: object
+    DescribeServiceRequest:
+      example:
+        svcHeader:
+          projEnvHeader:
+            projId: projId
+            envId: envId
+          serviceName: serviceName
+      properties:
+        svcHeader:
+          $ref: '#/components/schemas/ServiceHeader'
+      type: object
+    DescribeSiteReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        projEnvHeader:
+          projId: projId
+          envId: envId
+        siteEndpoint: siteEndpoint
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        projEnvHeader:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        siteEndpoint:
+          title: site endpoint
+          type: string
+      type: object
+    DescribeSiteRequest:
+      example:
+        projEnvHeader:
+          projId: projId
+          envId: envId
+      properties:
+        projEnvHeader:
+          $ref: '#/components/schemas/ProjEnvHeader'
+      type: object
+    EnvironmentDescription:
+      example:
+        pendingDeployIds:
+        - pendingDeployIds
+        - pendingDeployIds
+        createTime: createTime
+        header:
+          name: name
+          dnsPrefix: dnsPrefix
+        id: id
+        activeDeployIds:
+        - activeDeployIds
+        - activeDeployIds
+      properties:
+        id:
+          title: a unique identifier associated with this environment
+          type: string
+        header:
+          $ref: '#/components/schemas/EnvironmentHeader'
+        createTime:
+          format: uint64
+          title: |-
+            time the environment was created expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        activeDeployIds:
+          items:
+            type: string
+          title: |-
+            a list of previously completed deployment ids which are presently active in the
+            environment
+          type: array
+        pendingDeployIds:
+          items:
+            type: string
+          title: a list of deployment ids which are presently running in the environment
+          type: array
+      type: object
+    EnvironmentHeader:
+      example:
+        name: name
+        dnsPrefix: dnsPrefix
+      properties:
+        name:
+          title: the name of the environment
+          type: string
+        dnsPrefix:
+          title: the dns prefix to use for endpoints in this environment (defaults
+            to name)
           type: string
       type: object
     GetLogsEntry:
@@ -241,12 +1308,17 @@ components:
       type: object
     GetLogsReply:
       example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
         entries:
         - message: message
           timestamp: timestamp
         - message: message
           timestamp: timestamp
       properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
         entries:
           items:
             $ref: '#/components/schemas/GetLogsEntry'
@@ -254,16 +1326,21 @@ components:
       type: object
     GetLogsRequest:
       example:
+        projId: projId
         startTime: startTime
+        envId: envId
         endTime: endTime
-        projectName: projectName
         serviceName: serviceName
       properties:
-        projectName:
-          title: name of the Bopmatic project
+        projId:
+          title: project id
+          type: string
+        envId:
+          title: environment id
           type: string
         serviceName:
-          title: name of a service defined within the Bopmatic project
+          title: optional; can leave empty for all services otherwise name of a service
+            defined within the Bopmatic project
           type: string
         startTime:
           format: uint64
@@ -275,10 +1352,72 @@ components:
           title: "of seconds since Jan 1, 1970 00:00:00 UTC"
           type: string
       type: object
+    GetMetricSamplesReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        metricBuf: metricBuf
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        metricBuf:
+          title: the requested metrics in the specified output format
+          type: string
+      type: object
+    GetMetricSamplesRequest:
+      example:
+        metricNames:
+        - metricNames
+        - metricNames
+        projId: projId
+        scope: METRIC_SCOPE_ALL
+        format: METRIC_FORMAT_OPENMETRICS
+        startTime: startTime
+        envId: envId
+        endTime: endTime
+        scopeQualifier: scopeQualifier
+      properties:
+        projId:
+          title: project id
+          type: string
+        envId:
+          title: environment id
+          type: string
+        scope:
+          $ref: '#/components/schemas/MetricsScope'
+        scopeQualifier:
+          title: |-
+            optional; can leave empty for all entities in a given scope class or set to a specific entity to retrieve metrics from only that entity. for example, to retrieve only the metrics
+            related to a database named 'foo', set scope=METRIC_SCOPE_DATABASE and
+            scopeQualifier='foo'
+          type: string
+        metricNames:
+          items:
+            type: string
+          title: optional; list of metric names to retrieve; can leave empty for all
+          type: array
+        startTime:
+          format: uint64
+          title: earliest metric to retrieve expressed as the number
+          type: string
+        endTime:
+          description: latest metric to retrieve expressed as the number of
+          format: uint64
+          title: "of seconds since Jan 1, 1970 00:00:00 UTC"
+          type: string
+        format:
+          $ref: '#/components/schemas/MetricsFormat'
+      type: object
     GetUploadURLReply:
       example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
         URL: URL
       properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
         URL:
           type: string
       type: object
@@ -289,14 +1428,163 @@ components:
         key:
           type: string
       type: object
+    ListDatabasesReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        header:
+          projId: projId
+          envId: envId
+        databaseNames:
+        - databaseNames
+        - databaseNames
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        header:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        databaseNames:
+          items:
+            type: string
+          title: a list of service names from the project deployed in the environment
+          type: array
+      type: object
+    ListDatabasesRequest:
+      example:
+        header:
+          projId: projId
+          envId: envId
+      properties:
+        header:
+          $ref: '#/components/schemas/ProjEnvHeader'
+      type: object
+    ListDatastoresReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        header:
+          projId: projId
+          envId: envId
+        datastoreNames:
+        - datastoreNames
+        - datastoreNames
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        header:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        datastoreNames:
+          items:
+            type: string
+          title: a list of service names from the project deployed in the environment
+          type: array
+      type: object
+    ListDatastoresRequest:
+      example:
+        header:
+          projId: projId
+          envId: envId
+      properties:
+        header:
+          $ref: '#/components/schemas/ProjEnvHeader'
+      type: object
+    ListDeploymentsReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        ids:
+        - ids
+        - ids
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        ids:
+          items:
+            type: string
+          title: list of unique identifiers associated with each deployment
+          type: array
+      type: object
+    ListDeploymentsRequest:
+      type: object
+    ListEnvironmentsReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        ids:
+        - ids
+        - ids
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        ids:
+          items:
+            type: string
+          title: a list of environment ids
+          type: array
+      type: object
+    ListEnvironmentsRequest:
+      type: object
+    ListMetricsEntry:
+      example:
+        name: name
+        description: description
+        samplePeriod: samplePeriod
+      properties:
+        name:
+          title: the name of the metric
+          type: string
+        description:
+          title: a description of the metric
+          type: string
+        samplePeriod:
+          format: uint64
+          title: the duration of each period the metric is sampled in seconds
+          type: string
+      type: object
+    ListMetricsReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        entries:
+        - name: name
+          description: description
+          samplePeriod: samplePeriod
+        - name: name
+          description: description
+          samplePeriod: samplePeriod
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        entries:
+          items:
+            $ref: '#/components/schemas/ListMetricsEntry'
+          type: array
+      type: object
+    ListMetricsRequest:
+      example:
+        scope: METRIC_SCOPE_ALL
+      properties:
+        scope:
+          $ref: '#/components/schemas/MetricsScope'
+      type: object
     ListPackagesReply:
       example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
         items:
-        - packageId: packageId
-          projectName: projectName
-        - packageId: packageId
-          projectName: projectName
+        - projId: projId
+          packageId: packageId
+        - projId: projId
+          packageId: packageId
       properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
         items:
           items:
             $ref: '#/components/schemas/ListPackagesReplyListPackagesItem'
@@ -304,35 +1592,302 @@ components:
       type: object
     ListPackagesReplyListPackagesItem:
       example:
+        projId: projId
         packageId: packageId
-        projectName: projectName
       properties:
-        projectName:
+        projId:
           type: string
         packageId:
           type: string
       type: object
     ListPackagesRequest:
       example:
-        projectName: projectName
+        projId: projId
       properties:
-        projectName:
+        projId:
           title: leave empty for all projects
           type: string
       type: object
+    ListProjectsReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        ids:
+        - ids
+        - ids
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        ids:
+          items:
+            type: string
+          title: a list of project ids
+          type: array
+      type: object
+    ListProjectsRequest:
+      type: object
+    ListServicesReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        header:
+          projId: projId
+          envId: envId
+        serviceNames:
+        - serviceNames
+        - serviceNames
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        header:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        serviceNames:
+          items:
+            type: string
+          title: a list of service names from the project deployed in the environment
+          type: array
+      type: object
+    ListServicesRequest:
+      example:
+        header:
+          projId: projId
+          envId: envId
+      properties:
+        header:
+          $ref: '#/components/schemas/ProjEnvHeader'
+      type: object
+    MetricsFormat:
+      default: METRIC_FORMAT_OPENMETRICS
+      enum:
+      - METRIC_FORMAT_OPENMETRICS
+      - UNKNOWN_METRIC_FORMAT
+      title: "- UNKNOWN_METRIC_FORMAT: MAX_INT"
+      type: string
+    MetricsScope:
+      default: METRIC_SCOPE_ALL
+      enum:
+      - METRIC_SCOPE_ALL
+      - METRIC_SCOPE_SERVICE
+      - METRIC_SCOPE_DATASTORE
+      - METRIC_SCOPE_DATABASE
+      - UNKNOWN_METRIC_SCOPE
+      title: "- UNKNOWN_METRIC_SCOPE: MAX_INT"
+      type: string
     PackageDescription:
       example:
+        projId: projId
+        packageId: packageId
+        state: UPLOADING
+        packageSize: packageSize
+        uploadTime: uploadTime
+      properties:
+        packageId:
+          title: pkg-<hex string of first 4 bytes of packageXsum>
+          type: string
+        projId:
+          title: project id associated with this package
+          type: string
+        state:
+          $ref: '#/components/schemas/PackageState'
+        uploadTime:
+          format: uint64
+          title: |-
+            time the package was first uploaded expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        packageSize:
+          format: uint64
+          title: size of the compressed package in bytes
+          type: string
+      type: object
+    PackageState:
+      default: UPLOADING
+      description: |-
+        the package passed validation and is in the process of being built
+         - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating
+         - DELETED: the package has been deleted
+         - BUILT: the package was successfully built and is eligible to be deployed
+         - UNKNOWN_PKG_STATE: MAX_INT
+      enum:
+      - UPLOADING
+      - UPLOADED
+      - PKG_VALIDATING
+      - INVALID
+      - PKG_BUILDING
+      - PKG_SUPPORT_NEEDED
+      - DELETED
+      - BUILT
+      - UNKNOWN_PKG_STATE
+      title: |-
+        - UPLOADING: package is currently in the process of being uploaded
+         - UPLOADED: upload has completed; the package has not yet started validataion
+         - PKG_VALIDATING: the package is in the process of being validated
+         - INVALID: the package failed validation checks or builds and cannot be
+         - PKG_BUILDING: deployed
+      type: string
+    ProjEnvHeader:
+      example:
+        projId: projId
+        envId: envId
+      properties:
+        projId:
+          title: a unique identifier associated with the project to query
+          type: string
+        envId:
+          title: a unique identifier associated with the environment to query
+          type: string
+      type: object
+    ProjectDescription:
+      example:
+        pendingDeployIds:
+        - pendingDeployIds
+        - pendingDeployIds
+        createTime: createTime
+        header:
+          name: name
+          dnsPrefix: dnsPrefix
+          dnsDomain: dnsDomain
+        id: id
+        state: INACTIVE
+        activeDeployIds:
+        - activeDeployIds
+        - activeDeployIds
+      properties:
+        id:
+          title: a unique identifier associated with this project
+          type: string
+        header:
+          $ref: '#/components/schemas/ProjectHeader'
+        state:
+          $ref: '#/components/schemas/ProjectState'
+        createTime:
+          format: uint64
+          title: |-
+            time the project was created expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC
+          type: string
+        activeDeployIds:
+          items:
+            type: string
+          title: |-
+            a list of previously completed deployment ids which are presently active across all
+            environments the project has been deployed into
+          type: array
+        pendingDeployIds:
+          items:
+            type: string
+          title: |-
+            a list of deployment ids which are presently running involving this project across all
+            environments
+          type: array
+      type: object
+    ProjectHeader:
+      example:
+        name: name
+        dnsPrefix: dnsPrefix
+        dnsDomain: dnsDomain
+      properties:
+        name:
+          title: the name of the project
+          type: string
+        dnsPrefix:
+          title: the dns prefix where this project's endpoints will be surfaced; defaults
+            to 'name'
+          type: string
+        dnsDomain:
+          title: the base domain where this project's endpoints will be surfaced;
+            defaults to bopmatic.com
+          type: string
+      type: object
+    ProjectState:
+      default: INACTIVE
+      enum:
+      - INACTIVE
+      - ACTIVE
+      title: |-
+        - INACTIVE: the project has been created but no packages are presently active in any environment
+        and there are no pending deployments
+         - ACTIVE: the project has at least one package presently active in at least one environment, or
+        has at least one pending deployment
+      type: string
+    ServiceDescription:
+      example:
+        svcHeader:
+          projEnvHeader:
+            projId: projId
+            envId: envId
+          serviceName: serviceName
+        rpcEndpoints:
+        - rpcEndpoints
+        - rpcEndpoints
+      properties:
+        svcHeader:
+          $ref: '#/components/schemas/ServiceHeader'
+        rpcEndpoints:
+          items:
+            type: string
+          title: endpoints for each RPC within the service
+          type: array
+      type: object
+    ServiceHeader:
+      example:
+        projEnvHeader:
+          projId: projId
+          envId: envId
+        serviceName: serviceName
+      properties:
+        projEnvHeader:
+          $ref: '#/components/schemas/ProjEnvHeader'
+        serviceName:
+          title: a unique service name within the project
+          type: string
+      type: object
+    ServiceRunnerResult:
+      example:
+        statusDetail: statusDetail
+        status: STATUS_OK
+      properties:
+        status:
+          $ref: '#/components/schemas/ServiceRunnerStatus'
+        statusDetail:
+          type: string
+      type: object
+    ServiceRunnerStatus:
+      default: STATUS_OK
+      enum:
+      - STATUS_OK
+      - STATUS_NOT_FOUND
+      - STATUS_DNS_CONFLICT
+      - STATUS_ACCT_LIMIT_REACHED
+      - STATUS_EXISTS
+      - STATUS_NOT_EXISTS
+      - STATUS_UNKNOWN
+      title: "- STATUS_UNKNOWN: MAX_INT"
+      type: string
+    UploadPackageReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_OK
+        pkgId: pkgId
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        pkgId:
+          title: package id associated with this package
+          type: string
+      type: object
+    UploadPackageRequest:
+      example:
+        projId: projId
         packageTarballData: packageTarballData
         packageXsum: packageXsum
         packageTarballURL: packageTarballURL
-        packageId: packageId
-        projectName: projectName
       properties:
-        projectName:
-          title: name of the Bopmatic project; must be unique
-          type: string
-        packageId:
-          title: hex string of first 4 bytes of packageXsum
+        projId:
+          title: project id associated with this package
           type: string
         packageXsum:
           format: byte
@@ -340,43 +1895,15 @@ components:
           title: sha256 checksum of packageTarballData
           type: string
         packageTarballData:
+          description: package tarball content in .tar.xz format (limited to 6MiB);
           format: byte
           pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
-          title: package tarball content in .tar.xz format (limited to 6MiB);
+          title: packageTarballData and packageTarballURL are mutually exclusive
           type: string
         packageTarballURL:
           title: URL to package tarball (when larger than 6MiB)
           type: string
       type: object
-    PackageState:
-      default: UPLOADING
-      enum:
-      - UPLOADING
-      - UPLOADED
-      - VALIDATING
-      - INVALID
-      - BUILDING
-      - DEPLOYING
-      - PRODUCTION
-      - DEACTIVATING
-      - DELETING
-      - SUPPORT_NEEDED
-      - DELETED
-      - UNKNOWN_PKG_STATE
-      title: |-
-        - UPLOADING: package is currently in the process of being uploaded
-         - UPLOADED: upload has completed; the package has not yet started validataion
-         - VALIDATING: the package is in the process of being validated
-         - INVALID: the package failed validation checks and cannot be deployed
-         - BUILDING: the package passed validation and is in the process of being built
-         - DEPLOYING: the package is built and in the process of being deployed to production
-         - PRODUCTION: the package is active in production
-         - DEACTIVATING: the package is in the process of being deactivated from production
-         - DELETING: the package is in the process of being deleted
-         - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate
-         - DELETED: the package has been deleted
-         - UNKNOWN_PKG_STATE: MAX_INT
-      type: string
     protobufAny:
       additionalProperties:
         type: object

@@ -21,14 +21,8 @@ type DescribePackageReply struct {
 	// desc
 	Desc *PackageDescription `json:"desc,omitempty"`
 
-	// package state
-	PackageState *PackageState `json:"packageState,omitempty"`
-
-	// rpc endpoints
-	RPCEndpoints []string `json:"rpcEndpoints"`
-
-	// the following fields are only valid when packageState==PRODUCTION
-	SiteEndpoint string `json:"siteEndpoint,omitempty"`
+	// result
+	Result *ServiceRunnerResult `json:"result,omitempty"`
 }
 
 // Validate validates this describe package reply
@@ -39,7 +33,7 @@ func (m *DescribePackageReply) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
-	if err := m.validatePackageState(formats); err != nil {
+	if err := m.validateResult(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -68,17 +62,17 @@ func (m *DescribePackageReply) validateDesc(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *DescribePackageReply) validatePackageState(formats strfmt.Registry) error {
-	if swag.IsZero(m.PackageState) { // not required
+func (m *DescribePackageReply) validateResult(formats strfmt.Registry) error {
+	if swag.IsZero(m.Result) { // not required
 		return nil
 	}
 
-	if m.PackageState != nil {
-		if err := m.PackageState.Validate(formats); err != nil {
+	if m.Result != nil {
+		if err := m.Result.Validate(formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("packageState")
+				return ve.ValidateName("result")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("packageState")
+				return ce.ValidateName("result")
 			}
 			return err
 		}
@@ -95,7 +89,7 @@ func (m *DescribePackageReply) ContextValidate(ctx context.Context, formats strf
 		res = append(res, err)
 	}
 
-	if err := m.contextValidatePackageState(ctx, formats); err != nil {
+	if err := m.contextValidateResult(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -126,19 +120,19 @@ func (m *DescribePackageReply) contextValidateDesc(ctx context.Context, formats 
 	return nil
 }
 
-func (m *DescribePackageReply) contextValidatePackageState(ctx context.Context, formats strfmt.Registry) error {
+func (m *DescribePackageReply) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
 
-	if m.PackageState != nil {
+	if m.Result != nil {
 
-		if swag.IsZero(m.PackageState) { // not required
+		if swag.IsZero(m.Result) { // not required
 			return nil
 		}
 
-		if err := m.PackageState.ContextValidate(ctx, formats); err != nil {
+		if err := m.Result.ContextValidate(ctx, formats); err != nil {
 			if ve, ok := err.(*errors.Validation); ok {
-				return ve.ValidateName("packageState")
+				return ve.ValidateName("result")
 			} else if ce, ok := err.(*errors.CompositeError); ok {
-				return ce.ValidateName("packageState")
+				return ce.ValidateName("result")
 			}
 			return err
 		}

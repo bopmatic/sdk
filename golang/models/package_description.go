@@ -8,6 +8,7 @@ package models
 import (
 	"context"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 )
@@ -17,31 +18,88 @@ import (
 // swagger:model PackageDescription
 type PackageDescription struct {
 
-	// hex string of first 4 bytes of packageXsum
+	// pkg-<hex string of first 4 bytes of packageXsum>
 	PackageID string `json:"packageId,omitempty"`
 
-	// package tarball content in .tar.xz format (limited to 6MiB);
-	// Format: byte
-	PackageTarballData strfmt.Base64 `json:"packageTarballData,omitempty"`
+	// size of the compressed package in bytes
+	PackageSize string `json:"packageSize,omitempty"`
 
-	// URL to package tarball (when larger than 6MiB)
-	PackageTarballURL string `json:"packageTarballURL,omitempty"`
+	// project id associated with this package
+	ProjID string `json:"projId,omitempty"`
 
-	// sha256 checksum of packageTarballData
-	// Format: byte
-	PackageXsum strfmt.Base64 `json:"packageXsum,omitempty"`
+	// package state
+	State *PackageState `json:"state,omitempty"`
 
-	// name of the Bopmatic project; must be unique
-	ProjectName string `json:"projectName,omitempty"`
+	// time the package was first uploaded expressed as the number of seconds since
+	// Jan 1, 1970 00:00:00 UTC
+	UploadTime string `json:"uploadTime,omitempty"`
 }
 
 // Validate validates this package description
 func (m *PackageDescription) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateState(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
 	return nil
 }
 
-// ContextValidate validates this package description based on context it is used
+func (m *PackageDescription) validateState(formats strfmt.Registry) error {
+	if swag.IsZero(m.State) { // not required
+		return nil
+	}
+
+	if m.State != nil {
+		if err := m.State.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("state")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
+// ContextValidate validate this package description based on the context it is used
 func (m *PackageDescription) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.contextValidateState(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *PackageDescription) contextValidateState(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.State != nil {
+
+		if swag.IsZero(m.State) { // not required
+			return nil
+		}
+
+		if err := m.State.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("state")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("state")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

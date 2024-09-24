@@ -20,8 +20,8 @@ type ListPackagesReplyListPackagesItem struct {
 	// package Id
 	PackageID string `json:"packageId,omitempty"`
 
-	// project name
-	ProjectName string `json:"projectName,omitempty"`
+	// proj Id
+	ProjID string `json:"projId,omitempty"`
 }
 
 // Validate validates this list packages reply list packages item

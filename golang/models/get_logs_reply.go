@@ -21,6 +21,9 @@ type GetLogsReply struct {
 
 	// entries
 	Entries []*GetLogsEntry `json:"entries"`
+
+	// result
+	Result *ServiceRunnerResult `json:"result,omitempty"`
 }
 
 // Validate validates this get logs reply
@@ -28,6 +31,10 @@ func (m *GetLogsReply) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateEntries(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateResult(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -63,11 +70,34 @@ func (m *GetLogsReply) validateEntries(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *GetLogsReply) validateResult(formats strfmt.Registry) error {
+	if swag.IsZero(m.Result) { // not required
+		return nil
+	}
+
+	if m.Result != nil {
+		if err := m.Result.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("result")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this get logs reply based on the context it is used
 func (m *GetLogsReply) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateEntries(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateResult(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -97,6 +127,27 @@ func (m *GetLogsReply) contextValidateEntries(ctx context.Context, formats strfm
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *GetLogsReply) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Result != nil {
+
+		if swag.IsZero(m.Result) { // not required
+			return nil
+		}
+
+		if err := m.Result.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("result")
+			}
+			return err
+		}
 	}
 
 	return nil

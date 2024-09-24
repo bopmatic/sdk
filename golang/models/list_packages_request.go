@@ -18,7 +18,7 @@ import (
 type ListPackagesRequest struct {
 
 	// leave empty for all projects
-	ProjectName string `json:"projectName,omitempty"`
+	ProjID string `json:"projId,omitempty"`
 }
 
 // Validate validates this list packages request

@@ -28,19 +28,207 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	CreateDeployment(params *CreateDeploymentParams, opts ...ClientOption) (*CreateDeploymentOK, error)
+
+	CreateEnvironment(params *CreateEnvironmentParams, opts ...ClientOption) (*CreateEnvironmentOK, error)
+
+	CreateProject(params *CreateProjectParams, opts ...ClientOption) (*CreateProjectOK, error)
+
+	DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error)
+
 	DeletePackage(params *DeletePackageParams, opts ...ClientOption) (*DeletePackageOK, error)
 
-	DeployPackage(params *DeployPackageParams, opts ...ClientOption) (*DeployPackageOK, error)
+	DeleteProject(params *DeleteProjectParams, opts ...ClientOption) (*DeleteProjectOK, error)
+
+	DescribeDatabase(params *DescribeDatabaseParams, opts ...ClientOption) (*DescribeDatabaseOK, error)
+
+	DescribeDatastore(params *DescribeDatastoreParams, opts ...ClientOption) (*DescribeDatastoreOK, error)
+
+	DescribeDeployment(params *DescribeDeploymentParams, opts ...ClientOption) (*DescribeDeploymentOK, error)
+
+	DescribeEnvironment(params *DescribeEnvironmentParams, opts ...ClientOption) (*DescribeEnvironmentOK, error)
 
 	DescribePackage(params *DescribePackageParams, opts ...ClientOption) (*DescribePackageOK, error)
 
+	DescribeProject(params *DescribeProjectParams, opts ...ClientOption) (*DescribeProjectOK, error)
+
+	DescribeService(params *DescribeServiceParams, opts ...ClientOption) (*DescribeServiceOK, error)
+
+	DescribeSite(params *DescribeSiteParams, opts ...ClientOption) (*DescribeSiteOK, error)
+
 	GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsOK, error)
+
+	GetMetricSamples(params *GetMetricSamplesParams, opts ...ClientOption) (*GetMetricSamplesOK, error)
 
 	GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error)
 
+	ListDatabases(params *ListDatabasesParams, opts ...ClientOption) (*ListDatabasesOK, error)
+
+	ListDatastores(params *ListDatastoresParams, opts ...ClientOption) (*ListDatastoresOK, error)
+
+	ListDeployments(params *ListDeploymentsParams, opts ...ClientOption) (*ListDeploymentsOK, error)
+
+	ListEnvironments(params *ListEnvironmentsParams, opts ...ClientOption) (*ListEnvironmentsOK, error)
+
+	ListMetrics(params *ListMetricsParams, opts ...ClientOption) (*ListMetricsOK, error)
+
 	ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error)
 
+	ListProjects(params *ListProjectsParams, opts ...ClientOption) (*ListProjectsOK, error)
+
+	ListServices(params *ListServicesParams, opts ...ClientOption) (*ListServicesOK, error)
+
+	UploadPackage(params *UploadPackageParams, opts ...ClientOption) (*UploadPackageOK, error)
+
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+CreateDeployment create deployment API
+*/
+func (a *Client) CreateDeployment(params *CreateDeploymentParams, opts ...ClientOption) (*CreateDeploymentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateDeploymentParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "CreateDeployment",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/CreateDeployment",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateDeploymentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateDeploymentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateDeploymentDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+CreateEnvironment create environment API
+*/
+func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, opts ...ClientOption) (*CreateEnvironmentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateEnvironmentParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "CreateEnvironment",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/CreateEnvironment",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateEnvironmentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateEnvironmentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateEnvironmentDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+CreateProject create project API
+*/
+func (a *Client) CreateProject(params *CreateProjectParams, opts ...ClientOption) (*CreateProjectOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateProjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "CreateProject",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/CreateProject",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateProjectReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateProjectOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateProjectDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DeleteEnvironment delete environment API
+*/
+func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteEnvironmentParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteEnvironment",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DeleteEnvironment",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteEnvironmentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteEnvironmentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteEnvironmentDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -81,22 +269,22 @@ func (a *Client) DeletePackage(params *DeletePackageParams, opts ...ClientOption
 }
 
 /*
-DeployPackage deploy package API
+DeleteProject delete project API
 */
-func (a *Client) DeployPackage(params *DeployPackageParams, opts ...ClientOption) (*DeployPackageOK, error) {
+func (a *Client) DeleteProject(params *DeleteProjectParams, opts ...ClientOption) (*DeleteProjectOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
-		params = NewDeployPackageParams()
+		params = NewDeleteProjectParams()
 	}
 	op := &runtime.ClientOperation{
-		ID:                 "DeployPackage",
+		ID:                 "DeleteProject",
 		Method:             "POST",
-		PathPattern:        "/ServiceRunner/DeployPackage",
+		PathPattern:        "/ServiceRunner/DeleteProject",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"https"},
 		Params:             params,
-		Reader:             &DeployPackageReader{formats: a.formats},
+		Reader:             &DeleteProjectReader{formats: a.formats},
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -108,12 +296,160 @@ func (a *Client) DeployPackage(params *DeployPackageParams, opts ...ClientOption
 	if err != nil {
 		return nil, err
 	}
-	success, ok := result.(*DeployPackageOK)
+	success, ok := result.(*DeleteProjectOK)
 	if ok {
 		return success, nil
 	}
 	// unexpected success response
-	unexpectedSuccess := result.(*DeployPackageDefault)
+	unexpectedSuccess := result.(*DeleteProjectDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeDatabase describe database API
+*/
+func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, opts ...ClientOption) (*DescribeDatabaseOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeDatabaseParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeDatabase",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeDatabase",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeDatabaseReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeDatabaseOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeDatabaseDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeDatastore describe datastore API
+*/
+func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, opts ...ClientOption) (*DescribeDatastoreOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeDatastoreParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeDatastore",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeDatastore",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeDatastoreReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeDatastoreOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeDatastoreDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeDeployment describe deployment API
+*/
+func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, opts ...ClientOption) (*DescribeDeploymentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeDeploymentParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeDeployment",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeDeployment",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeDeploymentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeDeploymentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeDeploymentDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeEnvironment describe environment API
+*/
+func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, opts ...ClientOption) (*DescribeEnvironmentOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeEnvironmentParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeEnvironment",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeEnvironment",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeEnvironmentReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeEnvironmentOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeEnvironmentDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -155,6 +491,117 @@ func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOp
 }
 
 /*
+DescribeProject describe project API
+*/
+func (a *Client) DescribeProject(params *DescribeProjectParams, opts ...ClientOption) (*DescribeProjectOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeProjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeProject",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeProject",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeProjectReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeProjectOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeProjectDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeService describe service API
+*/
+func (a *Client) DescribeService(params *DescribeServiceParams, opts ...ClientOption) (*DescribeServiceOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeServiceParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeService",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeService",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeServiceReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeServiceOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeServiceDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeSite describe site API
+*/
+func (a *Client) DescribeSite(params *DescribeSiteParams, opts ...ClientOption) (*DescribeSiteOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeSiteParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeSite",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeSite",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeSiteReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeSiteOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeSiteDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 GetLogs get logs API
 */
 func (a *Client) GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsOK, error) {
@@ -188,6 +635,43 @@ func (a *Client) GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsO
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetLogsDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+GetMetricSamples get metric samples API
+*/
+func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, opts ...ClientOption) (*GetMetricSamplesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetMetricSamplesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "GetMetricSamples",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/GetMetricSamples",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &GetMetricSamplesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetMetricSamplesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*GetMetricSamplesDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -229,6 +713,191 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) 
 }
 
 /*
+ListDatabases list databases API
+*/
+func (a *Client) ListDatabases(params *ListDatabasesParams, opts ...ClientOption) (*ListDatabasesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListDatabasesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListDatabases",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListDatabases",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListDatabasesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListDatabasesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListDatabasesDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListDatastores list datastores API
+*/
+func (a *Client) ListDatastores(params *ListDatastoresParams, opts ...ClientOption) (*ListDatastoresOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListDatastoresParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListDatastores",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListDatastores",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListDatastoresReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListDatastoresOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListDatastoresDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListDeployments list deployments API
+*/
+func (a *Client) ListDeployments(params *ListDeploymentsParams, opts ...ClientOption) (*ListDeploymentsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListDeploymentsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListDeployments",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListDeployments",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListDeploymentsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListDeploymentsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListDeploymentsDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListEnvironments list environments API
+*/
+func (a *Client) ListEnvironments(params *ListEnvironmentsParams, opts ...ClientOption) (*ListEnvironmentsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListEnvironmentsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListEnvironments",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListEnvironments",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListEnvironmentsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListEnvironmentsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListEnvironmentsDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListMetrics list metrics API
+*/
+func (a *Client) ListMetrics(params *ListMetricsParams, opts ...ClientOption) (*ListMetricsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListMetricsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListMetrics",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListMetrics",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListMetricsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListMetricsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListMetricsDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 ListPackages list packages API
 */
 func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error) {
@@ -262,6 +931,117 @@ func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) 
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*ListPackagesDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListProjects list projects API
+*/
+func (a *Client) ListProjects(params *ListProjectsParams, opts ...ClientOption) (*ListProjectsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListProjectsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListProjects",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListProjects",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListProjectsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListProjectsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListProjectsDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListServices list services API
+*/
+func (a *Client) ListServices(params *ListServicesParams, opts ...ClientOption) (*ListServicesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListServicesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListServices",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListServices",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListServicesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListServicesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListServicesDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+UploadPackage upload package API
+*/
+func (a *Client) UploadPackage(params *UploadPackageParams, opts ...ClientOption) (*UploadPackageOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewUploadPackageParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "UploadPackage",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/UploadPackage",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &UploadPackageReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*UploadPackageOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*UploadPackageDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

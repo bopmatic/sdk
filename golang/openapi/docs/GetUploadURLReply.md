@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Result** | Pointer to [**ServiceRunnerResult**](ServiceRunnerResult.md) |  | [optional] 
 **URL** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -24,6 +25,31 @@ will change when the set of required properties is changed
 NewGetUploadURLReplyWithDefaults instantiates a new GetUploadURLReply object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetResult
+
+`func (o *GetUploadURLReply) GetResult() ServiceRunnerResult`
+
+GetResult returns the Result field if non-nil, zero value otherwise.
+
+### GetResultOk
+
+`func (o *GetUploadURLReply) GetResultOk() (*ServiceRunnerResult, bool)`
+
+GetResultOk returns a tuple with the Result field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResult
+
+`func (o *GetUploadURLReply) SetResult(v ServiceRunnerResult)`
+
+SetResult sets Result field to given value.
+
+### HasResult
+
+`func (o *GetUploadURLReply) HasResult() bool`
+
+HasResult returns a boolean if a field has been set.
 
 ### GetURL
 

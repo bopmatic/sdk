@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProjectName** | Pointer to **string** |  | [optional] 
+**ProjId** | Pointer to **string** |  | [optional] 
+**EnvId** | Pointer to **string** |  | [optional] 
 **ServiceName** | Pointer to **string** |  | [optional] 
 **StartTime** | Pointer to **string** |  | [optional] 
 **EndTime** | Pointer to **string** | latest log message to retrieve expressed as the number of | [optional] 
@@ -28,30 +29,55 @@ NewGetLogsRequestWithDefaults instantiates a new GetLogsRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetProjectName
+### GetProjId
 
-`func (o *GetLogsRequest) GetProjectName() string`
+`func (o *GetLogsRequest) GetProjId() string`
 
-GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
+GetProjId returns the ProjId field if non-nil, zero value otherwise.
 
-### GetProjectNameOk
+### GetProjIdOk
 
-`func (o *GetLogsRequest) GetProjectNameOk() (*string, bool)`
+`func (o *GetLogsRequest) GetProjIdOk() (*string, bool)`
 
-GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
+GetProjIdOk returns a tuple with the ProjId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectName
+### SetProjId
 
-`func (o *GetLogsRequest) SetProjectName(v string)`
+`func (o *GetLogsRequest) SetProjId(v string)`
 
-SetProjectName sets ProjectName field to given value.
+SetProjId sets ProjId field to given value.
 
-### HasProjectName
+### HasProjId
 
-`func (o *GetLogsRequest) HasProjectName() bool`
+`func (o *GetLogsRequest) HasProjId() bool`
 
-HasProjectName returns a boolean if a field has been set.
+HasProjId returns a boolean if a field has been set.
+
+### GetEnvId
+
+`func (o *GetLogsRequest) GetEnvId() string`
+
+GetEnvId returns the EnvId field if non-nil, zero value otherwise.
+
+### GetEnvIdOk
+
+`func (o *GetLogsRequest) GetEnvIdOk() (*string, bool)`
+
+GetEnvIdOk returns a tuple with the EnvId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetEnvId
+
+`func (o *GetLogsRequest) SetEnvId(v string)`
+
+SetEnvId sets EnvId field to given value.
+
+### HasEnvId
+
+`func (o *GetLogsRequest) HasEnvId() bool`
+
+HasEnvId returns a boolean if a field has been set.
 
 ### GetServiceName
 

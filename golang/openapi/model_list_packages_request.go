@@ -19,7 +19,7 @@ var _ MappedNullable = &ListPackagesRequest{}
 
 // ListPackagesRequest struct for ListPackagesRequest
 type ListPackagesRequest struct {
-	ProjectName *string `json:"projectName,omitempty"`
+	ProjId *string `json:"projId,omitempty"`
 }
 
 // NewListPackagesRequest instantiates a new ListPackagesRequest object
@@ -39,36 +39,36 @@ func NewListPackagesRequestWithDefaults() *ListPackagesRequest {
 	return &this
 }
 
-// GetProjectName returns the ProjectName field value if set, zero value otherwise.
-func (o *ListPackagesRequest) GetProjectName() string {
-	if o == nil || IsNil(o.ProjectName) {
+// GetProjId returns the ProjId field value if set, zero value otherwise.
+func (o *ListPackagesRequest) GetProjId() string {
+	if o == nil || IsNil(o.ProjId) {
 		var ret string
 		return ret
 	}
-	return *o.ProjectName
+	return *o.ProjId
 }
 
-// GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
+// GetProjIdOk returns a tuple with the ProjId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListPackagesRequest) GetProjectNameOk() (*string, bool) {
-	if o == nil || IsNil(o.ProjectName) {
+func (o *ListPackagesRequest) GetProjIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ProjId) {
 		return nil, false
 	}
-	return o.ProjectName, true
+	return o.ProjId, true
 }
 
-// HasProjectName returns a boolean if a field has been set.
-func (o *ListPackagesRequest) HasProjectName() bool {
-	if o != nil && !IsNil(o.ProjectName) {
+// HasProjId returns a boolean if a field has been set.
+func (o *ListPackagesRequest) HasProjId() bool {
+	if o != nil && !IsNil(o.ProjId) {
 		return true
 	}
 
 	return false
 }
 
-// SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
-func (o *ListPackagesRequest) SetProjectName(v string) {
-	o.ProjectName = &v
+// SetProjId gets a reference to the given string and assigns it to the ProjId field.
+func (o *ListPackagesRequest) SetProjId(v string) {
+	o.ProjId = &v
 }
 
 func (o ListPackagesRequest) MarshalJSON() ([]byte, error) {
@@ -81,8 +81,8 @@ func (o ListPackagesRequest) MarshalJSON() ([]byte, error) {
 
 func (o ListPackagesRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ProjectName) {
-		toSerialize["projectName"] = o.ProjectName
+	if !IsNil(o.ProjId) {
+		toSerialize["projId"] = o.ProjId
 	}
 	return toSerialize, nil
 }

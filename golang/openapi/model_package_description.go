@@ -19,11 +19,11 @@ var _ MappedNullable = &PackageDescription{}
 
 // PackageDescription struct for PackageDescription
 type PackageDescription struct {
-	ProjectName *string `json:"projectName,omitempty"`
 	PackageId *string `json:"packageId,omitempty"`
-	PackageXsum *string `json:"packageXsum,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
-	PackageTarballData *string `json:"packageTarballData,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
-	PackageTarballURL *string `json:"packageTarballURL,omitempty"`
+	ProjId *string `json:"projId,omitempty"`
+	State *PackageState `json:"state,omitempty"`
+	UploadTime *string `json:"uploadTime,omitempty"`
+	PackageSize *string `json:"packageSize,omitempty"`
 }
 
 // NewPackageDescription instantiates a new PackageDescription object
@@ -32,6 +32,8 @@ type PackageDescription struct {
 // will change when the set of required properties is changed
 func NewPackageDescription() *PackageDescription {
 	this := PackageDescription{}
+	var state PackageState = UPLOADING
+	this.State = &state
 	return &this
 }
 
@@ -40,39 +42,9 @@ func NewPackageDescription() *PackageDescription {
 // but it doesn't guarantee that properties required by API are set
 func NewPackageDescriptionWithDefaults() *PackageDescription {
 	this := PackageDescription{}
+	var state PackageState = UPLOADING
+	this.State = &state
 	return &this
-}
-
-// GetProjectName returns the ProjectName field value if set, zero value otherwise.
-func (o *PackageDescription) GetProjectName() string {
-	if o == nil || IsNil(o.ProjectName) {
-		var ret string
-		return ret
-	}
-	return *o.ProjectName
-}
-
-// GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *PackageDescription) GetProjectNameOk() (*string, bool) {
-	if o == nil || IsNil(o.ProjectName) {
-		return nil, false
-	}
-	return o.ProjectName, true
-}
-
-// HasProjectName returns a boolean if a field has been set.
-func (o *PackageDescription) HasProjectName() bool {
-	if o != nil && !IsNil(o.ProjectName) {
-		return true
-	}
-
-	return false
-}
-
-// SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
-func (o *PackageDescription) SetProjectName(v string) {
-	o.ProjectName = &v
 }
 
 // GetPackageId returns the PackageId field value if set, zero value otherwise.
@@ -107,100 +79,132 @@ func (o *PackageDescription) SetPackageId(v string) {
 	o.PackageId = &v
 }
 
-// GetPackageXsum returns the PackageXsum field value if set, zero value otherwise.
-func (o *PackageDescription) GetPackageXsum() string {
-	if o == nil || IsNil(o.PackageXsum) {
+// GetProjId returns the ProjId field value if set, zero value otherwise.
+func (o *PackageDescription) GetProjId() string {
+	if o == nil || IsNil(o.ProjId) {
 		var ret string
 		return ret
 	}
-	return *o.PackageXsum
+	return *o.ProjId
 }
 
-// GetPackageXsumOk returns a tuple with the PackageXsum field value if set, nil otherwise
+// GetProjIdOk returns a tuple with the ProjId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PackageDescription) GetPackageXsumOk() (*string, bool) {
-	if o == nil || IsNil(o.PackageXsum) {
+func (o *PackageDescription) GetProjIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ProjId) {
 		return nil, false
 	}
-	return o.PackageXsum, true
+	return o.ProjId, true
 }
 
-// HasPackageXsum returns a boolean if a field has been set.
-func (o *PackageDescription) HasPackageXsum() bool {
-	if o != nil && !IsNil(o.PackageXsum) {
+// HasProjId returns a boolean if a field has been set.
+func (o *PackageDescription) HasProjId() bool {
+	if o != nil && !IsNil(o.ProjId) {
 		return true
 	}
 
 	return false
 }
 
-// SetPackageXsum gets a reference to the given string and assigns it to the PackageXsum field.
-func (o *PackageDescription) SetPackageXsum(v string) {
-	o.PackageXsum = &v
+// SetProjId gets a reference to the given string and assigns it to the ProjId field.
+func (o *PackageDescription) SetProjId(v string) {
+	o.ProjId = &v
 }
 
-// GetPackageTarballData returns the PackageTarballData field value if set, zero value otherwise.
-func (o *PackageDescription) GetPackageTarballData() string {
-	if o == nil || IsNil(o.PackageTarballData) {
-		var ret string
+// GetState returns the State field value if set, zero value otherwise.
+func (o *PackageDescription) GetState() PackageState {
+	if o == nil || IsNil(o.State) {
+		var ret PackageState
 		return ret
 	}
-	return *o.PackageTarballData
+	return *o.State
 }
 
-// GetPackageTarballDataOk returns a tuple with the PackageTarballData field value if set, nil otherwise
+// GetStateOk returns a tuple with the State field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PackageDescription) GetPackageTarballDataOk() (*string, bool) {
-	if o == nil || IsNil(o.PackageTarballData) {
+func (o *PackageDescription) GetStateOk() (*PackageState, bool) {
+	if o == nil || IsNil(o.State) {
 		return nil, false
 	}
-	return o.PackageTarballData, true
+	return o.State, true
 }
 
-// HasPackageTarballData returns a boolean if a field has been set.
-func (o *PackageDescription) HasPackageTarballData() bool {
-	if o != nil && !IsNil(o.PackageTarballData) {
+// HasState returns a boolean if a field has been set.
+func (o *PackageDescription) HasState() bool {
+	if o != nil && !IsNil(o.State) {
 		return true
 	}
 
 	return false
 }
 
-// SetPackageTarballData gets a reference to the given string and assigns it to the PackageTarballData field.
-func (o *PackageDescription) SetPackageTarballData(v string) {
-	o.PackageTarballData = &v
+// SetState gets a reference to the given PackageState and assigns it to the State field.
+func (o *PackageDescription) SetState(v PackageState) {
+	o.State = &v
 }
 
-// GetPackageTarballURL returns the PackageTarballURL field value if set, zero value otherwise.
-func (o *PackageDescription) GetPackageTarballURL() string {
-	if o == nil || IsNil(o.PackageTarballURL) {
+// GetUploadTime returns the UploadTime field value if set, zero value otherwise.
+func (o *PackageDescription) GetUploadTime() string {
+	if o == nil || IsNil(o.UploadTime) {
 		var ret string
 		return ret
 	}
-	return *o.PackageTarballURL
+	return *o.UploadTime
 }
 
-// GetPackageTarballURLOk returns a tuple with the PackageTarballURL field value if set, nil otherwise
+// GetUploadTimeOk returns a tuple with the UploadTime field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *PackageDescription) GetPackageTarballURLOk() (*string, bool) {
-	if o == nil || IsNil(o.PackageTarballURL) {
+func (o *PackageDescription) GetUploadTimeOk() (*string, bool) {
+	if o == nil || IsNil(o.UploadTime) {
 		return nil, false
 	}
-	return o.PackageTarballURL, true
+	return o.UploadTime, true
 }
 
-// HasPackageTarballURL returns a boolean if a field has been set.
-func (o *PackageDescription) HasPackageTarballURL() bool {
-	if o != nil && !IsNil(o.PackageTarballURL) {
+// HasUploadTime returns a boolean if a field has been set.
+func (o *PackageDescription) HasUploadTime() bool {
+	if o != nil && !IsNil(o.UploadTime) {
 		return true
 	}
 
 	return false
 }
 
-// SetPackageTarballURL gets a reference to the given string and assigns it to the PackageTarballURL field.
-func (o *PackageDescription) SetPackageTarballURL(v string) {
-	o.PackageTarballURL = &v
+// SetUploadTime gets a reference to the given string and assigns it to the UploadTime field.
+func (o *PackageDescription) SetUploadTime(v string) {
+	o.UploadTime = &v
+}
+
+// GetPackageSize returns the PackageSize field value if set, zero value otherwise.
+func (o *PackageDescription) GetPackageSize() string {
+	if o == nil || IsNil(o.PackageSize) {
+		var ret string
+		return ret
+	}
+	return *o.PackageSize
+}
+
+// GetPackageSizeOk returns a tuple with the PackageSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *PackageDescription) GetPackageSizeOk() (*string, bool) {
+	if o == nil || IsNil(o.PackageSize) {
+		return nil, false
+	}
+	return o.PackageSize, true
+}
+
+// HasPackageSize returns a boolean if a field has been set.
+func (o *PackageDescription) HasPackageSize() bool {
+	if o != nil && !IsNil(o.PackageSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetPackageSize gets a reference to the given string and assigns it to the PackageSize field.
+func (o *PackageDescription) SetPackageSize(v string) {
+	o.PackageSize = &v
 }
 
 func (o PackageDescription) MarshalJSON() ([]byte, error) {
@@ -213,20 +217,20 @@ func (o PackageDescription) MarshalJSON() ([]byte, error) {
 
 func (o PackageDescription) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ProjectName) {
-		toSerialize["projectName"] = o.ProjectName
-	}
 	if !IsNil(o.PackageId) {
 		toSerialize["packageId"] = o.PackageId
 	}
-	if !IsNil(o.PackageXsum) {
-		toSerialize["packageXsum"] = o.PackageXsum
+	if !IsNil(o.ProjId) {
+		toSerialize["projId"] = o.ProjId
 	}
-	if !IsNil(o.PackageTarballData) {
-		toSerialize["packageTarballData"] = o.PackageTarballData
+	if !IsNil(o.State) {
+		toSerialize["state"] = o.State
 	}
-	if !IsNil(o.PackageTarballURL) {
-		toSerialize["packageTarballURL"] = o.PackageTarballURL
+	if !IsNil(o.UploadTime) {
+		toSerialize["uploadTime"] = o.UploadTime
+	}
+	if !IsNil(o.PackageSize) {
+		toSerialize["packageSize"] = o.PackageSize
 	}
 	return toSerialize, nil
 }

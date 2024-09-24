@@ -15,22 +15,19 @@ import (
 	"fmt"
 )
 
-// PackageState the model 'PackageState'
+// PackageState the package passed validation and is in the process of being built  - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating  - DELETED: the package has been deleted  - BUILT: the package was successfully built and is eligible to be deployed  - UNKNOWN_PKG_STATE: MAX_INT
 type PackageState string
 
 // List of PackageState
 const (
 	UPLOADING PackageState = "UPLOADING"
 	UPLOADED PackageState = "UPLOADED"
-	VALIDATING PackageState = "VALIDATING"
+	PKG_VALIDATING PackageState = "PKG_VALIDATING"
 	INVALID PackageState = "INVALID"
-	BUILDING PackageState = "BUILDING"
-	DEPLOYING PackageState = "DEPLOYING"
-	PRODUCTION PackageState = "PRODUCTION"
-	DEACTIVATING PackageState = "DEACTIVATING"
-	DELETING PackageState = "DELETING"
-	SUPPORT_NEEDED PackageState = "SUPPORT_NEEDED"
+	PKG_BUILDING PackageState = "PKG_BUILDING"
+	PKG_SUPPORT_NEEDED PackageState = "PKG_SUPPORT_NEEDED"
 	DELETED PackageState = "DELETED"
+	BUILT PackageState = "BUILT"
 	UNKNOWN_PKG_STATE PackageState = "UNKNOWN_PKG_STATE"
 )
 
@@ -38,15 +35,12 @@ const (
 var AllowedPackageStateEnumValues = []PackageState{
 	"UPLOADING",
 	"UPLOADED",
-	"VALIDATING",
+	"PKG_VALIDATING",
 	"INVALID",
-	"BUILDING",
-	"DEPLOYING",
-	"PRODUCTION",
-	"DEACTIVATING",
-	"DELETING",
-	"SUPPORT_NEEDED",
+	"PKG_BUILDING",
+	"PKG_SUPPORT_NEEDED",
 	"DELETED",
+	"BUILT",
 	"UNKNOWN_PKG_STATE",
 }
 

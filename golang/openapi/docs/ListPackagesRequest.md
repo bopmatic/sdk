@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProjectName** | Pointer to **string** |  | [optional] 
+**ProjId** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -25,30 +25,30 @@ NewListPackagesRequestWithDefaults instantiates a new ListPackagesRequest object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetProjectName
+### GetProjId
 
-`func (o *ListPackagesRequest) GetProjectName() string`
+`func (o *ListPackagesRequest) GetProjId() string`
 
-GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
+GetProjId returns the ProjId field if non-nil, zero value otherwise.
 
-### GetProjectNameOk
+### GetProjIdOk
 
-`func (o *ListPackagesRequest) GetProjectNameOk() (*string, bool)`
+`func (o *ListPackagesRequest) GetProjIdOk() (*string, bool)`
 
-GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
+GetProjIdOk returns a tuple with the ProjId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectName
+### SetProjId
 
-`func (o *ListPackagesRequest) SetProjectName(v string)`
+`func (o *ListPackagesRequest) SetProjId(v string)`
 
-SetProjectName sets ProjectName field to given value.
+SetProjId sets ProjId field to given value.
 
-### HasProjectName
+### HasProjId
 
-`func (o *ListPackagesRequest) HasProjectName() bool`
+`func (o *ListPackagesRequest) HasProjId() bool`
 
-HasProjectName returns a boolean if a field has been set.
+HasProjId returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

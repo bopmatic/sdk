@@ -4,11 +4,11 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProjectName** | Pointer to **string** |  | [optional] 
 **PackageId** | Pointer to **string** |  | [optional] 
-**PackageXsum** | Pointer to **string** |  | [optional] 
-**PackageTarballData** | Pointer to **string** |  | [optional] 
-**PackageTarballURL** | Pointer to **string** |  | [optional] 
+**ProjId** | Pointer to **string** |  | [optional] 
+**State** | Pointer to [**PackageState**](PackageState.md) |  | [optional] [default to UPLOADING]
+**UploadTime** | Pointer to **string** |  | [optional] 
+**PackageSize** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -28,31 +28,6 @@ will change when the set of required properties is changed
 NewPackageDescriptionWithDefaults instantiates a new PackageDescription object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetProjectName
-
-`func (o *PackageDescription) GetProjectName() string`
-
-GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
-
-### GetProjectNameOk
-
-`func (o *PackageDescription) GetProjectNameOk() (*string, bool)`
-
-GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetProjectName
-
-`func (o *PackageDescription) SetProjectName(v string)`
-
-SetProjectName sets ProjectName field to given value.
-
-### HasProjectName
-
-`func (o *PackageDescription) HasProjectName() bool`
-
-HasProjectName returns a boolean if a field has been set.
 
 ### GetPackageId
 
@@ -79,80 +54,105 @@ SetPackageId sets PackageId field to given value.
 
 HasPackageId returns a boolean if a field has been set.
 
-### GetPackageXsum
+### GetProjId
 
-`func (o *PackageDescription) GetPackageXsum() string`
+`func (o *PackageDescription) GetProjId() string`
 
-GetPackageXsum returns the PackageXsum field if non-nil, zero value otherwise.
+GetProjId returns the ProjId field if non-nil, zero value otherwise.
 
-### GetPackageXsumOk
+### GetProjIdOk
 
-`func (o *PackageDescription) GetPackageXsumOk() (*string, bool)`
+`func (o *PackageDescription) GetProjIdOk() (*string, bool)`
 
-GetPackageXsumOk returns a tuple with the PackageXsum field if it's non-nil, zero value otherwise
+GetProjIdOk returns a tuple with the ProjId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPackageXsum
+### SetProjId
 
-`func (o *PackageDescription) SetPackageXsum(v string)`
+`func (o *PackageDescription) SetProjId(v string)`
 
-SetPackageXsum sets PackageXsum field to given value.
+SetProjId sets ProjId field to given value.
 
-### HasPackageXsum
+### HasProjId
 
-`func (o *PackageDescription) HasPackageXsum() bool`
+`func (o *PackageDescription) HasProjId() bool`
 
-HasPackageXsum returns a boolean if a field has been set.
+HasProjId returns a boolean if a field has been set.
 
-### GetPackageTarballData
+### GetState
 
-`func (o *PackageDescription) GetPackageTarballData() string`
+`func (o *PackageDescription) GetState() PackageState`
 
-GetPackageTarballData returns the PackageTarballData field if non-nil, zero value otherwise.
+GetState returns the State field if non-nil, zero value otherwise.
 
-### GetPackageTarballDataOk
+### GetStateOk
 
-`func (o *PackageDescription) GetPackageTarballDataOk() (*string, bool)`
+`func (o *PackageDescription) GetStateOk() (*PackageState, bool)`
 
-GetPackageTarballDataOk returns a tuple with the PackageTarballData field if it's non-nil, zero value otherwise
+GetStateOk returns a tuple with the State field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPackageTarballData
+### SetState
 
-`func (o *PackageDescription) SetPackageTarballData(v string)`
+`func (o *PackageDescription) SetState(v PackageState)`
 
-SetPackageTarballData sets PackageTarballData field to given value.
+SetState sets State field to given value.
 
-### HasPackageTarballData
+### HasState
 
-`func (o *PackageDescription) HasPackageTarballData() bool`
+`func (o *PackageDescription) HasState() bool`
 
-HasPackageTarballData returns a boolean if a field has been set.
+HasState returns a boolean if a field has been set.
 
-### GetPackageTarballURL
+### GetUploadTime
 
-`func (o *PackageDescription) GetPackageTarballURL() string`
+`func (o *PackageDescription) GetUploadTime() string`
 
-GetPackageTarballURL returns the PackageTarballURL field if non-nil, zero value otherwise.
+GetUploadTime returns the UploadTime field if non-nil, zero value otherwise.
 
-### GetPackageTarballURLOk
+### GetUploadTimeOk
 
-`func (o *PackageDescription) GetPackageTarballURLOk() (*string, bool)`
+`func (o *PackageDescription) GetUploadTimeOk() (*string, bool)`
 
-GetPackageTarballURLOk returns a tuple with the PackageTarballURL field if it's non-nil, zero value otherwise
+GetUploadTimeOk returns a tuple with the UploadTime field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetPackageTarballURL
+### SetUploadTime
 
-`func (o *PackageDescription) SetPackageTarballURL(v string)`
+`func (o *PackageDescription) SetUploadTime(v string)`
 
-SetPackageTarballURL sets PackageTarballURL field to given value.
+SetUploadTime sets UploadTime field to given value.
 
-### HasPackageTarballURL
+### HasUploadTime
 
-`func (o *PackageDescription) HasPackageTarballURL() bool`
+`func (o *PackageDescription) HasUploadTime() bool`
 
-HasPackageTarballURL returns a boolean if a field has been set.
+HasUploadTime returns a boolean if a field has been set.
+
+### GetPackageSize
+
+`func (o *PackageDescription) GetPackageSize() string`
+
+GetPackageSize returns the PackageSize field if non-nil, zero value otherwise.
+
+### GetPackageSizeOk
+
+`func (o *PackageDescription) GetPackageSizeOk() (*string, bool)`
+
+GetPackageSizeOk returns a tuple with the PackageSize field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetPackageSize
+
+`func (o *PackageDescription) SetPackageSize(v string)`
+
+SetPackageSize sets PackageSize field to given value.
+
+### HasPackageSize
+
+`func (o *PackageDescription) HasPackageSize() bool`
+
+HasPackageSize returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

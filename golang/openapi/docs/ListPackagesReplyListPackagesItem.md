@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**ProjectName** | Pointer to **string** |  | [optional] 
+**ProjId** | Pointer to **string** |  | [optional] 
 **PackageId** | Pointer to **string** |  | [optional] 
 
 ## Methods
@@ -26,30 +26,30 @@ NewListPackagesReplyListPackagesItemWithDefaults instantiates a new ListPackages
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
-### GetProjectName
+### GetProjId
 
-`func (o *ListPackagesReplyListPackagesItem) GetProjectName() string`
+`func (o *ListPackagesReplyListPackagesItem) GetProjId() string`
 
-GetProjectName returns the ProjectName field if non-nil, zero value otherwise.
+GetProjId returns the ProjId field if non-nil, zero value otherwise.
 
-### GetProjectNameOk
+### GetProjIdOk
 
-`func (o *ListPackagesReplyListPackagesItem) GetProjectNameOk() (*string, bool)`
+`func (o *ListPackagesReplyListPackagesItem) GetProjIdOk() (*string, bool)`
 
-GetProjectNameOk returns a tuple with the ProjectName field if it's non-nil, zero value otherwise
+GetProjIdOk returns a tuple with the ProjId field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetProjectName
+### SetProjId
 
-`func (o *ListPackagesReplyListPackagesItem) SetProjectName(v string)`
+`func (o *ListPackagesReplyListPackagesItem) SetProjId(v string)`
 
-SetProjectName sets ProjectName field to given value.
+SetProjId sets ProjId field to given value.
 
-### HasProjectName
+### HasProjId
 
-`func (o *ListPackagesReplyListPackagesItem) HasProjectName() bool`
+`func (o *ListPackagesReplyListPackagesItem) HasProjId() bool`
 
-HasProjectName returns a boolean if a field has been set.
+HasProjId returns a boolean if a field has been set.
 
 ### GetPackageId
 

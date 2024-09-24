@@ -22,10 +22,13 @@ type GetLogsRequest struct {
 	// latest log message to retrieve expressed as the number of
 	EndTime string `json:"endTime,omitempty"`
 
-	// name of the Bopmatic project
-	ProjectName string `json:"projectName,omitempty"`
+	// environment id
+	EnvID string `json:"envId,omitempty"`
 
-	// name of a service defined within the Bopmatic project
+	// project id
+	ProjID string `json:"projId,omitempty"`
+
+	// optional; can leave empty for all services otherwise name of a service defined within the Bopmatic project
 	ServiceName string `json:"serviceName,omitempty"`
 
 	// earliest log message to retrieve expressed as the number

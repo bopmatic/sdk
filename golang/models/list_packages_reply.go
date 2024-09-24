@@ -21,6 +21,9 @@ type ListPackagesReply struct {
 
 	// items
 	Items []*ListPackagesReplyListPackagesItem `json:"items"`
+
+	// result
+	Result *ServiceRunnerResult `json:"result,omitempty"`
 }
 
 // Validate validates this list packages reply
@@ -28,6 +31,10 @@ func (m *ListPackagesReply) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateItems(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateResult(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -63,11 +70,34 @@ func (m *ListPackagesReply) validateItems(formats strfmt.Registry) error {
 	return nil
 }
 
+func (m *ListPackagesReply) validateResult(formats strfmt.Registry) error {
+	if swag.IsZero(m.Result) { // not required
+		return nil
+	}
+
+	if m.Result != nil {
+		if err := m.Result.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("result")
+			}
+			return err
+		}
+	}
+
+	return nil
+}
+
 // ContextValidate validate this list packages reply based on the context it is used
 func (m *ListPackagesReply) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateItems(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateResult(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -97,6 +127,27 @@ func (m *ListPackagesReply) contextValidateItems(ctx context.Context, formats st
 			}
 		}
 
+	}
+
+	return nil
+}
+
+func (m *ListPackagesReply) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Result != nil {
+
+		if swag.IsZero(m.Result) { // not required
+			return nil
+		}
+
+		if err := m.Result.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("result")
+			}
+			return err
+		}
 	}
 
 	return nil

@@ -7,23 +7,17 @@
 
 * `UPLOADED` (value: `"UPLOADED"`)
 
-* `VALIDATING` (value: `"VALIDATING"`)
+* `PKG_VALIDATING` (value: `"PKG_VALIDATING"`)
 
 * `INVALID` (value: `"INVALID"`)
 
-* `BUILDING` (value: `"BUILDING"`)
+* `PKG_BUILDING` (value: `"PKG_BUILDING"`)
 
-* `DEPLOYING` (value: `"DEPLOYING"`)
-
-* `PRODUCTION` (value: `"PRODUCTION"`)
-
-* `DEACTIVATING` (value: `"DEACTIVATING"`)
-
-* `DELETING` (value: `"DELETING"`)
-
-* `SUPPORT_NEEDED` (value: `"SUPPORT_NEEDED"`)
+* `PKG_SUPPORT_NEEDED` (value: `"PKG_SUPPORT_NEEDED"`)
 
 * `DELETED` (value: `"DELETED"`)
+
+* `BUILT` (value: `"BUILT"`)
 
 * `UNKNOWN_PKG_STATE` (value: `"UNKNOWN_PKG_STATE"`)
 

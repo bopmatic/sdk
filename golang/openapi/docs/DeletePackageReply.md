@@ -4,6 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**Result** | Pointer to [**ServiceRunnerResult**](ServiceRunnerResult.md) |  | [optional] 
 **State** | Pointer to [**PackageState**](PackageState.md) |  | [optional] [default to UPLOADING]
 
 ## Methods
@@ -24,6 +25,31 @@ will change when the set of required properties is changed
 NewDeletePackageReplyWithDefaults instantiates a new DeletePackageReply object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
+
+### GetResult
+
+`func (o *DeletePackageReply) GetResult() ServiceRunnerResult`
+
+GetResult returns the Result field if non-nil, zero value otherwise.
+
+### GetResultOk
+
+`func (o *DeletePackageReply) GetResultOk() (*ServiceRunnerResult, bool)`
+
+GetResultOk returns a tuple with the Result field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetResult
+
+`func (o *DeletePackageReply) SetResult(v ServiceRunnerResult)`
+
+SetResult sets Result field to given value.
+
+### HasResult
+
+`func (o *DeletePackageReply) HasResult() bool`
+
+HasResult returns a boolean if a field has been set.
 
 ### GetState
 

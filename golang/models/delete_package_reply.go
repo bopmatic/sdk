@@ -18,6 +18,9 @@ import (
 // swagger:model DeletePackageReply
 type DeletePackageReply struct {
 
+	// result
+	Result *ServiceRunnerResult `json:"result,omitempty"`
+
 	// state
 	State *PackageState `json:"state,omitempty"`
 }
@@ -26,6 +29,10 @@ type DeletePackageReply struct {
 func (m *DeletePackageReply) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateResult(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateState(formats); err != nil {
 		res = append(res, err)
 	}
@@ -33,6 +40,25 @@ func (m *DeletePackageReply) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *DeletePackageReply) validateResult(formats strfmt.Registry) error {
+	if swag.IsZero(m.Result) { // not required
+		return nil
+	}
+
+	if m.Result != nil {
+		if err := m.Result.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("result")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 
@@ -59,6 +85,10 @@ func (m *DeletePackageReply) validateState(formats strfmt.Registry) error {
 func (m *DeletePackageReply) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.contextValidateResult(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.contextValidateState(ctx, formats); err != nil {
 		res = append(res, err)
 	}
@@ -66,6 +96,27 @@ func (m *DeletePackageReply) ContextValidate(ctx context.Context, formats strfmt
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *DeletePackageReply) contextValidateResult(ctx context.Context, formats strfmt.Registry) error {
+
+	if m.Result != nil {
+
+		if swag.IsZero(m.Result) { // not required
+			return nil
+		}
+
+		if err := m.Result.ContextValidate(ctx, formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("result")
+			} else if ce, ok := err.(*errors.CompositeError); ok {
+				return ce.ValidateName("result")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

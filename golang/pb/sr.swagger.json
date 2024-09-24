@@ -16,6 +16,134 @@
     "application/json"
   ],
   "paths": {
+    "/ServiceRunner/CreateDeployment": {
+      "post": {
+        "operationId": "CreateDeployment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateDeploymentReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateDeploymentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/CreateEnvironment": {
+      "post": {
+        "operationId": "CreateEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateEnvironmentReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateEnvironmentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/CreateProject": {
+      "post": {
+        "operationId": "CreateProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateProjectReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateProjectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DeleteEnvironment": {
+      "post": {
+        "operationId": "DeleteEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteEnvironmentReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteEnvironmentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/DeletePackage": {
       "post": {
         "operationId": "DeletePackage",
@@ -48,14 +176,14 @@
         ]
       }
     },
-    "/ServiceRunner/DeployPackage": {
+    "/ServiceRunner/DeleteProject": {
       "post": {
-        "operationId": "DeployPackage",
+        "operationId": "DeleteProject",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/DeployPackageReply"
+              "$ref": "#/definitions/DeleteProjectReply"
             }
           },
           "default": {
@@ -71,7 +199,135 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/DeployPackageRequest"
+              "$ref": "#/definitions/DeleteProjectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeDatabase": {
+      "post": {
+        "operationId": "DescribeDatabase",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeDatabaseReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeDatabaseRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeDatastore": {
+      "post": {
+        "operationId": "DescribeDatastore",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeDatastoreReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeDatastoreRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeDeployment": {
+      "post": {
+        "operationId": "DescribeDeployment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeDeploymentReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeDeploymentRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeEnvironment": {
+      "post": {
+        "operationId": "DescribeEnvironment",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeEnvironmentReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeEnvironmentRequest"
             }
           }
         ],
@@ -112,6 +368,102 @@
         ]
       }
     },
+    "/ServiceRunner/DescribeProject": {
+      "post": {
+        "operationId": "DescribeProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeProjectReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeProjectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeService": {
+      "post": {
+        "operationId": "DescribeService",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeServiceReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeServiceRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeSite": {
+      "post": {
+        "operationId": "DescribeSite",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeSiteReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeSiteRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/GetLogs": {
       "post": {
         "operationId": "GetLogs",
@@ -136,6 +488,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/GetLogsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/GetMetricSamples": {
+      "post": {
+        "operationId": "GetMetricSamples",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/GetMetricSamplesReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/GetMetricSamplesRequest"
             }
           }
         ],
@@ -176,6 +560,166 @@
         ]
       }
     },
+    "/ServiceRunner/ListDatabases": {
+      "post": {
+        "operationId": "ListDatabases",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListDatabasesReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListDatabasesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/ListDatastores": {
+      "post": {
+        "operationId": "ListDatastores",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListDatastoresReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListDatastoresRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/ListDeployments": {
+      "post": {
+        "operationId": "ListDeployments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListDeploymentsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListDeploymentsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/ListEnvironments": {
+      "post": {
+        "operationId": "ListEnvironments",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListEnvironmentsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListEnvironmentsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/ListMetrics": {
+      "post": {
+        "operationId": "ListMetrics",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListMetricsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListMetricsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/ListPackages": {
       "post": {
         "operationId": "ListPackages",
@@ -207,12 +751,252 @@
           "ServiceRunner"
         ]
       }
+    },
+    "/ServiceRunner/ListProjects": {
+      "post": {
+        "operationId": "ListProjects",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListProjectsReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListProjectsRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/ListServices": {
+      "post": {
+        "operationId": "ListServices",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListServicesReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListServicesRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/UploadPackage": {
+      "post": {
+        "operationId": "UploadPackage",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/UploadPackageReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/UploadPackageRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
     }
   },
   "definitions": {
+    "CreateDeploymentReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this deployment"
+        }
+      }
+    },
+    "CreateDeploymentRequest": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/DeploymentHeader",
+          "title": "deployment header"
+        }
+      }
+    },
+    "CreateEnvironmentReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this environment"
+        }
+      }
+    },
+    "CreateEnvironmentRequest": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/EnvironmentHeader",
+          "title": "the environment header"
+        }
+      }
+    },
+    "CreateProjectReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this project"
+        }
+      }
+    },
+    "CreateProjectRequest": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/ProjectHeader",
+          "title": "project header"
+        }
+      }
+    },
+    "DatabaseDescription": {
+      "type": "object",
+      "properties": {
+        "databaseHeader": {
+          "$ref": "#/definitions/DatabaseHeader",
+          "title": "service header"
+        },
+        "tableNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of service names from the project deployed in the environment"
+        }
+      }
+    },
+    "DatabaseHeader": {
+      "type": "object",
+      "properties": {
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "databaseName": {
+          "type": "string",
+          "title": "a unique service name within the project"
+        }
+      }
+    },
+    "DatastoreDescription": {
+      "type": "object",
+      "properties": {
+        "datastoreHeader": {
+          "$ref": "#/definitions/DatastoreHeader",
+          "title": "service header"
+        },
+        "numObjects": {
+          "type": "string",
+          "format": "uint64",
+          "title": "number of store objects"
+        },
+        "capacityConsumedInBytes": {
+          "type": "string",
+          "format": "uint64",
+          "title": "amount of utilized capacity"
+        }
+      }
+    },
+    "DatastoreHeader": {
+      "type": "object",
+      "properties": {
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "datastoreName": {
+          "type": "string",
+          "title": "a unique service name within the project"
+        }
+      }
+    },
+    "DeleteEnvironmentReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        }
+      }
+    },
+    "DeleteEnvironmentRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this environment"
+        }
+      }
+    },
     "DeletePackageReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "state": {
           "$ref": "#/definitions/PackageState"
         }
@@ -226,40 +1010,237 @@
         }
       }
     },
-    "DeployPackageReply": {
+    "DeleteProjectReply": {
       "type": "object",
       "properties": {
-        "state": {
-          "$ref": "#/definitions/PackageState"
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
         }
       }
     },
-    "DeployPackageRequest": {
+    "DeleteProjectRequest": {
       "type": "object",
       "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this project"
+        }
+      }
+    },
+    "DeploymentDescription": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this deployment"
+        },
+        "header": {
+          "$ref": "#/definitions/DeploymentHeader",
+          "title": "deployment header"
+        },
+        "state": {
+          "$ref": "#/definitions/DeploymentState",
+          "title": "the deployment's state"
+        },
+        "stateDetail": {
+          "$ref": "#/definitions/DeploymentStateDetail",
+          "title": "additional detail regarding the deployment's state"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the deployment was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "validationStartTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the package validation began expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "buildStartTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the package build began expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "deployStartTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the environment deployment began expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the deployment completed"
+        }
+      }
+    },
+    "DeploymentHeader": {
+      "type": "object",
+      "properties": {
+        "pkgId": {
+          "type": "string",
+          "title": "the package id associated with this deployment"
+        },
+        "projId": {
+          "type": "string",
+          "title": "the project id associated with this deployment"
+        },
+        "envId": {
+          "type": "string",
+          "title": "the environment id associated with this deployment"
+        },
+        "type": {
+          "$ref": "#/definitions/DeploymentType",
+          "title": "the type of the deployment"
+        },
+        "initiator": {
+          "$ref": "#/definitions/DeploymentInitiator",
+          "title": "the initiator of the deployment"
+        }
+      }
+    },
+    "DeploymentInitiator": {
+      "type": "string",
+      "enum": [
+        "CUSTOMER",
+        "SERVICE",
+        "UNKNOWN_DEPLOY_INIT"
+      ],
+      "default": "CUSTOMER",
+      "title": "- CUSTOMER: the customer initiated the deployment\n - SERVICE: Bopmatic initiated the deployment\n - UNKNOWN_DEPLOY_INIT: MAX_INT"
+    },
+    "DeploymentState": {
+      "type": "string",
+      "enum": [
+        "CREATED",
+        "DPLY_VALIDATING",
+        "DPLY_BUILDING",
+        "DEPLOYING",
+        "SUCCESS",
+        "FAILED",
+        "UNKNOWN_DEPLOY_STATE"
+      ],
+      "default": "CREATED",
+      "description": "the package associated with the deployment passed validation and is in\n - DEPLOYING: the process of being compiled\n\nthe package associated with the deployment compiled successfully and is\n - SUCCESS: in the process of being deployed to the environment specified\n\nthe deployment was successful and the package associated with the\n - FAILED: deployment is now active in the environment specified\n\nthe deployment failed; see DeploymentDescription.stateDetail for further\n - UNKNOWN_DEPLOY_STATE: MAX_INT",
+      "title": "- CREATED: the deployment has been created, but no action has yet been taken\n - DPLY_VALIDATING: the package associated with the deployment is in the process of being\n - DPLY_BUILDING: validated"
+    },
+    "DeploymentStateDetail": {
+      "type": "string",
+      "enum": [
+        "NONE",
+        "PKG_INVALID",
+        "BLD_INVALID",
+        "DPLY_SUPPORT_NEEDED",
+        "UNKNOWN_DEPLOY_STATE_DET"
+      ],
+      "default": "NONE",
+      "description": "the package associated with the deployment failed to compile\n - DPLY_SUPPORT_NEEDED: the deployment failed for an unknown reason; Bopmatic support\n - UNKNOWN_DEPLOY_STATE_DET: MAX_INT",
+      "title": "- PKG_INVALID: the package associated with the deployment failed validation checks and\n - BLD_INVALID: cannot be deployed"
+    },
+    "DeploymentType": {
+      "type": "string",
+      "enum": [
+        "NEW_PACKAGE",
+        "ENV_TEARDOWN",
+        "SECURITY_UPDATE",
+        "INF_UPDATE",
+        "UNKNOWN_DEPLOY_TYPE"
+      ],
+      "default": "NEW_PACKAGE",
+      "description": "the deployment was created in order to remove the project from\n - SECURITY_UPDATE: the environment (customer initiated)\n\nthe deployment was created in order to perform a security update\n - INF_UPDATE: on the backend infrastructure (service initiated)\n\nthe deployment was created in order to perform a non-security related\n - UNKNOWN_DEPLOY_TYPE: MAX_INT",
+      "title": "- NEW_PACKAGE: the deployment was created in order to deploy a new package to\n - ENV_TEARDOWN: the environment (customer initiated)"
+    },
+    "DescribeDatabaseReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
-          "$ref": "#/definitions/PackageDescription"
+          "$ref": "#/definitions/DatabaseDescription",
+          "title": "database description"
+        }
+      }
+    },
+    "DescribeDatabaseRequest": {
+      "type": "object",
+      "properties": {
+        "databaseHeader": {
+          "$ref": "#/definitions/DatabaseHeader",
+          "title": "database header"
+        }
+      }
+    },
+    "DescribeDatastoreReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "desc": {
+          "$ref": "#/definitions/DatastoreDescription",
+          "title": "datastore description"
+        }
+      }
+    },
+    "DescribeDatastoreRequest": {
+      "type": "object",
+      "properties": {
+        "datastoreHeader": {
+          "$ref": "#/definitions/DatastoreHeader",
+          "title": "datastore header"
+        }
+      }
+    },
+    "DescribeDeploymentReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "desc": {
+          "$ref": "#/definitions/DeploymentDescription",
+          "title": "deployment description"
+        }
+      }
+    },
+    "DescribeDeploymentRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this deployment"
+        }
+      }
+    },
+    "DescribeEnvironmentReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "desc": {
+          "$ref": "#/definitions/EnvironmentDescription",
+          "title": "environment destription"
+        }
+      }
+    },
+    "DescribeEnvironmentRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this environment"
         }
       }
     },
     "DescribePackageReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "desc": {
           "$ref": "#/definitions/PackageDescription"
-        },
-        "packageState": {
-          "$ref": "#/definitions/PackageState"
-        },
-        "siteEndpoint": {
-          "type": "string",
-          "title": "the following fields are only valid when packageState==PRODUCTION"
-        },
-        "rpcEndpoints": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
         }
       }
     },
@@ -268,6 +1249,118 @@
       "properties": {
         "packageId": {
           "type": "string"
+        }
+      }
+    },
+    "DescribeProjectReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "desc": {
+          "$ref": "#/definitions/ProjectDescription",
+          "title": "project description"
+        }
+      }
+    },
+    "DescribeProjectRequest": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this project"
+        }
+      }
+    },
+    "DescribeServiceReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "desc": {
+          "$ref": "#/definitions/ServiceDescription",
+          "title": "service description"
+        }
+      }
+    },
+    "DescribeServiceRequest": {
+      "type": "object",
+      "properties": {
+        "svcHeader": {
+          "$ref": "#/definitions/ServiceHeader",
+          "title": "service header"
+        }
+      }
+    },
+    "DescribeSiteReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "siteEndpoint": {
+          "type": "string",
+          "title": "site endpoint"
+        }
+      }
+    },
+    "DescribeSiteRequest": {
+      "type": "object",
+      "properties": {
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        }
+      }
+    },
+    "EnvironmentDescription": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this environment"
+        },
+        "header": {
+          "$ref": "#/definitions/EnvironmentHeader",
+          "title": "the environment header"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the environment was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "activeDeployIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of previously completed deployment ids which are presently active in the\nenvironment"
+        },
+        "pendingDeployIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of deployment ids which are presently running in the environment"
+        }
+      }
+    },
+    "EnvironmentHeader": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "the name of the environment"
+        },
+        "dnsPrefix": {
+          "type": "string",
+          "title": "the dns prefix to use for endpoints in this environment (defaults to name)"
         }
       }
     },
@@ -289,6 +1382,9 @@
     "GetLogsReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "entries": {
           "type": "array",
           "items": {
@@ -301,13 +1397,17 @@
     "GetLogsRequest": {
       "type": "object",
       "properties": {
-        "projectName": {
+        "projId": {
           "type": "string",
-          "title": "name of the Bopmatic project"
+          "title": "project id"
+        },
+        "envId": {
+          "type": "string",
+          "title": "environment id"
         },
         "serviceName": {
           "type": "string",
-          "title": "name of a service defined within the Bopmatic project"
+          "title": "optional; can leave empty for all services otherwise name of a service defined within the Bopmatic project"
         },
         "startTime": {
           "type": "string",
@@ -322,9 +1422,68 @@
         }
       }
     },
+    "GetMetricSamplesReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "metricBuf": {
+          "type": "string",
+          "title": "the requested metrics in the specified output format"
+        }
+      }
+    },
+    "GetMetricSamplesRequest": {
+      "type": "object",
+      "properties": {
+        "projId": {
+          "type": "string",
+          "title": "project id"
+        },
+        "envId": {
+          "type": "string",
+          "title": "environment id"
+        },
+        "scope": {
+          "$ref": "#/definitions/MetricsScope",
+          "title": "the scope of the metrics query; e.g. all or limited to 1 entity class"
+        },
+        "scopeQualifier": {
+          "type": "string",
+          "title": "optional; can leave empty for all entities in a given scope class or set to a specific entity to retrieve metrics from only that entity. for example, to retrieve only the metrics\nrelated to a database named 'foo', set scope=METRIC_SCOPE_DATABASE and\nscopeQualifier='foo'"
+        },
+        "metricNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "optional; list of metric names to retrieve; can leave empty for all"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "earliest metric to retrieve expressed as the number"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "uint64",
+          "description": "latest metric to retrieve expressed as the number of",
+          "title": "of seconds since Jan 1, 1970 00:00:00 UTC"
+        },
+        "format": {
+          "$ref": "#/definitions/MetricsFormat",
+          "description": "desired output format of the retrieved metrics",
+          "title": "seconds since Jan 1, 1970 00:00:00 UTC"
+        }
+      }
+    },
     "GetUploadURLReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "URL": {
           "type": "string"
         }
@@ -338,9 +1497,146 @@
         }
       }
     },
+    "ListDatabasesReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "header": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "databaseNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of service names from the project deployed in the environment"
+        }
+      }
+    },
+    "ListDatabasesRequest": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        }
+      }
+    },
+    "ListDatastoresReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "header": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "datastoreNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of service names from the project deployed in the environment"
+        }
+      }
+    },
+    "ListDatastoresRequest": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        }
+      }
+    },
+    "ListDeploymentsReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "list of unique identifiers associated with each deployment"
+        }
+      }
+    },
+    "ListDeploymentsRequest": {
+      "type": "object"
+    },
+    "ListEnvironmentsReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of environment ids"
+        }
+      }
+    },
+    "ListEnvironmentsRequest": {
+      "type": "object"
+    },
+    "ListMetricsEntry": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "the name of the metric"
+        },
+        "description": {
+          "type": "string",
+          "title": "a description of the metric"
+        },
+        "samplePeriod": {
+          "type": "string",
+          "format": "uint64",
+          "title": "the duration of each period the metric is sampled in seconds"
+        }
+      }
+    },
+    "ListMetricsReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/ListMetricsEntry"
+          }
+        }
+      }
+    },
+    "ListMetricsRequest": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "$ref": "#/definitions/MetricsScope",
+          "title": "the scope of the returned metrics names; e.g. all or limited to 1 entity class"
+        }
+      }
+    },
     "ListPackagesReply": {
       "type": "object",
       "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
         "items": {
           "type": "array",
           "items": {
@@ -353,7 +1649,7 @@
     "ListPackagesReplyListPackagesItem": {
       "type": "object",
       "properties": {
-        "projectName": {
+        "projId": {
           "type": "string"
         },
         "packageId": {
@@ -364,22 +1660,270 @@
     "ListPackagesRequest": {
       "type": "object",
       "properties": {
-        "projectName": {
+        "projId": {
           "type": "string",
           "title": "leave empty for all projects"
         }
       }
     },
+    "ListProjectsReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of project ids"
+        }
+      }
+    },
+    "ListProjectsRequest": {
+      "type": "object"
+    },
+    "ListServicesReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "header": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "serviceNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of service names from the project deployed in the environment"
+        }
+      }
+    },
+    "ListServicesRequest": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        }
+      }
+    },
+    "MetricsFormat": {
+      "type": "string",
+      "enum": [
+        "METRIC_FORMAT_OPENMETRICS",
+        "UNKNOWN_METRIC_FORMAT"
+      ],
+      "default": "METRIC_FORMAT_OPENMETRICS",
+      "title": "- UNKNOWN_METRIC_FORMAT: MAX_INT"
+    },
+    "MetricsScope": {
+      "type": "string",
+      "enum": [
+        "METRIC_SCOPE_ALL",
+        "METRIC_SCOPE_SERVICE",
+        "METRIC_SCOPE_DATASTORE",
+        "METRIC_SCOPE_DATABASE",
+        "UNKNOWN_METRIC_SCOPE"
+      ],
+      "default": "METRIC_SCOPE_ALL",
+      "title": "- UNKNOWN_METRIC_SCOPE: MAX_INT"
+    },
     "PackageDescription": {
       "type": "object",
       "properties": {
-        "projectName": {
-          "type": "string",
-          "title": "name of the Bopmatic project; must be unique"
-        },
         "packageId": {
           "type": "string",
-          "title": "hex string of first 4 bytes of packageXsum"
+          "title": "pkg-\u003chex string of first 4 bytes of packageXsum\u003e"
+        },
+        "projId": {
+          "type": "string",
+          "title": "project id associated with this package"
+        },
+        "state": {
+          "$ref": "#/definitions/PackageState",
+          "title": "package state"
+        },
+        "uploadTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the package was first uploaded expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "packageSize": {
+          "type": "string",
+          "format": "uint64",
+          "title": "size of the compressed package in bytes"
+        }
+      }
+    },
+    "PackageState": {
+      "type": "string",
+      "enum": [
+        "UPLOADING",
+        "UPLOADED",
+        "PKG_VALIDATING",
+        "INVALID",
+        "PKG_BUILDING",
+        "PKG_SUPPORT_NEEDED",
+        "DELETED",
+        "BUILT",
+        "UNKNOWN_PKG_STATE"
+      ],
+      "default": "UPLOADING",
+      "description": "the package passed validation and is in the process of being built\n - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating\n - DELETED: the package has been deleted\n - BUILT: the package was successfully built and is eligible to be deployed\n - UNKNOWN_PKG_STATE: MAX_INT",
+      "title": "- UPLOADING: package is currently in the process of being uploaded\n - UPLOADED: upload has completed; the package has not yet started validataion\n - PKG_VALIDATING: the package is in the process of being validated\n - INVALID: the package failed validation checks or builds and cannot be\n - PKG_BUILDING: deployed"
+    },
+    "ProjEnvHeader": {
+      "type": "object",
+      "properties": {
+        "projId": {
+          "type": "string",
+          "title": "a unique identifier associated with the project to query"
+        },
+        "envId": {
+          "type": "string",
+          "title": "a unique identifier associated with the environment to query"
+        }
+      }
+    },
+    "ProjectDescription": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "a unique identifier associated with this project"
+        },
+        "header": {
+          "$ref": "#/definitions/ProjectHeader",
+          "title": "project header"
+        },
+        "state": {
+          "$ref": "#/definitions/ProjectState",
+          "title": "the current state of the project"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64",
+          "title": "time the project was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+        },
+        "activeDeployIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of previously completed deployment ids which are presently active across all\nenvironments the project has been deployed into"
+        },
+        "pendingDeployIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "a list of deployment ids which are presently running involving this project across all\nenvironments"
+        }
+      }
+    },
+    "ProjectHeader": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "the name of the project"
+        },
+        "dnsPrefix": {
+          "type": "string",
+          "title": "the dns prefix where this project's endpoints will be surfaced; defaults to 'name'"
+        },
+        "dnsDomain": {
+          "type": "string",
+          "title": "the base domain where this project's endpoints will be surfaced; defaults to bopmatic.com"
+        }
+      }
+    },
+    "ProjectState": {
+      "type": "string",
+      "enum": [
+        "INACTIVE",
+        "ACTIVE"
+      ],
+      "default": "INACTIVE",
+      "title": "- INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment"
+    },
+    "ServiceDescription": {
+      "type": "object",
+      "properties": {
+        "svcHeader": {
+          "$ref": "#/definitions/ServiceHeader",
+          "title": "service header"
+        },
+        "rpcEndpoints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "endpoints for each RPC within the service"
+        }
+      }
+    },
+    "ServiceHeader": {
+      "type": "object",
+      "properties": {
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        },
+        "serviceName": {
+          "type": "string",
+          "title": "a unique service name within the project"
+        }
+      }
+    },
+    "ServiceRunnerResult": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "$ref": "#/definitions/ServiceRunnerStatus"
+        },
+        "statusDetail": {
+          "type": "string"
+        }
+      }
+    },
+    "ServiceRunnerStatus": {
+      "type": "string",
+      "enum": [
+        "STATUS_OK",
+        "STATUS_NOT_FOUND",
+        "STATUS_DNS_CONFLICT",
+        "STATUS_ACCT_LIMIT_REACHED",
+        "STATUS_EXISTS",
+        "STATUS_NOT_EXISTS",
+        "STATUS_UNKNOWN"
+      ],
+      "default": "STATUS_OK",
+      "title": "- STATUS_UNKNOWN: MAX_INT"
+    },
+    "UploadPackageReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "pkgId": {
+          "type": "string",
+          "title": "package id associated with this package"
+        }
+      }
+    },
+    "UploadPackageRequest": {
+      "type": "object",
+      "properties": {
+        "projId": {
+          "type": "string",
+          "title": "project id associated with this package"
         },
         "packageXsum": {
           "type": "string",
@@ -389,32 +1933,14 @@
         "packageTarballData": {
           "type": "string",
           "format": "byte",
-          "title": "package tarball content in .tar.xz format (limited to 6MiB);"
+          "description": "package tarball content in .tar.xz format (limited to 6MiB);",
+          "title": "packageTarballData and packageTarballURL are mutually exclusive"
         },
         "packageTarballURL": {
           "type": "string",
           "title": "URL to package tarball (when larger than 6MiB)"
         }
       }
-    },
-    "PackageState": {
-      "type": "string",
-      "enum": [
-        "UPLOADING",
-        "UPLOADED",
-        "VALIDATING",
-        "INVALID",
-        "BUILDING",
-        "DEPLOYING",
-        "PRODUCTION",
-        "DEACTIVATING",
-        "DELETING",
-        "SUPPORT_NEEDED",
-        "DELETED",
-        "UNKNOWN_PKG_STATE"
-      ],
-      "default": "UPLOADING",
-      "title": "- UPLOADING: package is currently in the process of being uploaded\n - UPLOADED: upload has completed; the package has not yet started validataion\n - VALIDATING: the package is in the process of being validated\n - INVALID: the package failed validation checks and cannot be deployed\n - BUILDING: the package passed validation and is in the process of being built\n - DEPLOYING: the package is built and in the process of being deployed to production\n - PRODUCTION: the package is active in production\n - DEACTIVATING: the package is in the process of being deactivated from production\n - DELETING: the package is in the process of being deleted\n - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate\n - DELETED: the package has been deleted\n - UNKNOWN_PKG_STATE: MAX_INT"
     },
     "protobufAny": {
       "type": "object",

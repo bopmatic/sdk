@@ -16,15 +16,14 @@ import (
 
 // PackageState - UPLOADING: package is currently in the process of being uploaded
 //   - UPLOADED: upload has completed; the package has not yet started validataion
-//   - VALIDATING: the package is in the process of being validated
-//   - INVALID: the package failed validation checks and cannot be deployed
-//   - BUILDING: the package passed validation and is in the process of being built
-//   - DEPLOYING: the package is built and in the process of being deployed to production
-//   - PRODUCTION: the package is active in production
-//   - DEACTIVATING: the package is in the process of being deactivated from production
-//   - DELETING: the package is in the process of being deleted
-//   - SUPPORT_NEEDED: something went wrong and Bopmatic support needs to investigate
+//   - PKG_VALIDATING: the package is in the process of being validated
+//   - INVALID: the package failed validation checks or builds and cannot be
+//   - PKG_BUILDING: deployed
+//
+// the package passed validation and is in the process of being built
+//   - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating
 //   - DELETED: the package has been deleted
+//   - BUILT: the package was successfully built and is eligible to be deployed
 //   - UNKNOWN_PKG_STATE: MAX_INT
 //
 // swagger:model PackageState
@@ -47,32 +46,23 @@ const (
 	// PackageStateUPLOADED captures enum value "UPLOADED"
 	PackageStateUPLOADED PackageState = "UPLOADED"
 
-	// PackageStateVALIDATING captures enum value "VALIDATING"
-	PackageStateVALIDATING PackageState = "VALIDATING"
+	// PackageStatePKGVALIDATING captures enum value "PKG_VALIDATING"
+	PackageStatePKGVALIDATING PackageState = "PKG_VALIDATING"
 
 	// PackageStateINVALID captures enum value "INVALID"
 	PackageStateINVALID PackageState = "INVALID"
 
-	// PackageStateBUILDING captures enum value "BUILDING"
-	PackageStateBUILDING PackageState = "BUILDING"
+	// PackageStatePKGBUILDING captures enum value "PKG_BUILDING"
+	PackageStatePKGBUILDING PackageState = "PKG_BUILDING"
 
-	// PackageStateDEPLOYING captures enum value "DEPLOYING"
-	PackageStateDEPLOYING PackageState = "DEPLOYING"
-
-	// PackageStatePRODUCTION captures enum value "PRODUCTION"
-	PackageStatePRODUCTION PackageState = "PRODUCTION"
-
-	// PackageStateDEACTIVATING captures enum value "DEACTIVATING"
-	PackageStateDEACTIVATING PackageState = "DEACTIVATING"
-
-	// PackageStateDELETING captures enum value "DELETING"
-	PackageStateDELETING PackageState = "DELETING"
-
-	// PackageStateSUPPORTNEEDED captures enum value "SUPPORT_NEEDED"
-	PackageStateSUPPORTNEEDED PackageState = "SUPPORT_NEEDED"
+	// PackageStatePKGSUPPORTNEEDED captures enum value "PKG_SUPPORT_NEEDED"
+	PackageStatePKGSUPPORTNEEDED PackageState = "PKG_SUPPORT_NEEDED"
 
 	// PackageStateDELETED captures enum value "DELETED"
 	PackageStateDELETED PackageState = "DELETED"
+
+	// PackageStateBUILT captures enum value "BUILT"
+	PackageStateBUILT PackageState = "BUILT"
 
 	// PackageStateUNKNOWNPKGSTATE captures enum value "UNKNOWN_PKG_STATE"
 	PackageStateUNKNOWNPKGSTATE PackageState = "UNKNOWN_PKG_STATE"
@@ -83,7 +73,7 @@ var packageStateEnum []interface{}
 
 func init() {
 	var res []PackageState
-	if err := json.Unmarshal([]byte(`["UPLOADING","UPLOADED","VALIDATING","INVALID","BUILDING","DEPLOYING","PRODUCTION","DEACTIVATING","DELETING","SUPPORT_NEEDED","DELETED","UNKNOWN_PKG_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["UPLOADING","UPLOADED","PKG_VALIDATING","INVALID","PKG_BUILDING","PKG_SUPPORT_NEEDED","DELETED","BUILT","UNKNOWN_PKG_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -78,34 +78,114 @@ All URIs are relative to *https://api.bopmatic.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ServiceRunnerAPI* | [**CreateDeployment**](docs/ServiceRunnerAPI.md#createdeployment) | **Post** /ServiceRunner/CreateDeployment | 
+*ServiceRunnerAPI* | [**CreateEnvironment**](docs/ServiceRunnerAPI.md#createenvironment) | **Post** /ServiceRunner/CreateEnvironment | 
+*ServiceRunnerAPI* | [**CreateProject**](docs/ServiceRunnerAPI.md#createproject) | **Post** /ServiceRunner/CreateProject | 
+*ServiceRunnerAPI* | [**DeleteEnvironment**](docs/ServiceRunnerAPI.md#deleteenvironment) | **Post** /ServiceRunner/DeleteEnvironment | 
 *ServiceRunnerAPI* | [**DeletePackage**](docs/ServiceRunnerAPI.md#deletepackage) | **Post** /ServiceRunner/DeletePackage | 
-*ServiceRunnerAPI* | [**DeployPackage**](docs/ServiceRunnerAPI.md#deploypackage) | **Post** /ServiceRunner/DeployPackage | 
+*ServiceRunnerAPI* | [**DeleteProject**](docs/ServiceRunnerAPI.md#deleteproject) | **Post** /ServiceRunner/DeleteProject | 
+*ServiceRunnerAPI* | [**DescribeDatabase**](docs/ServiceRunnerAPI.md#describedatabase) | **Post** /ServiceRunner/DescribeDatabase | 
+*ServiceRunnerAPI* | [**DescribeDatastore**](docs/ServiceRunnerAPI.md#describedatastore) | **Post** /ServiceRunner/DescribeDatastore | 
+*ServiceRunnerAPI* | [**DescribeDeployment**](docs/ServiceRunnerAPI.md#describedeployment) | **Post** /ServiceRunner/DescribeDeployment | 
+*ServiceRunnerAPI* | [**DescribeEnvironment**](docs/ServiceRunnerAPI.md#describeenvironment) | **Post** /ServiceRunner/DescribeEnvironment | 
 *ServiceRunnerAPI* | [**DescribePackage**](docs/ServiceRunnerAPI.md#describepackage) | **Post** /ServiceRunner/DescribePackage | 
+*ServiceRunnerAPI* | [**DescribeProject**](docs/ServiceRunnerAPI.md#describeproject) | **Post** /ServiceRunner/DescribeProject | 
+*ServiceRunnerAPI* | [**DescribeService**](docs/ServiceRunnerAPI.md#describeservice) | **Post** /ServiceRunner/DescribeService | 
+*ServiceRunnerAPI* | [**DescribeSite**](docs/ServiceRunnerAPI.md#describesite) | **Post** /ServiceRunner/DescribeSite | 
 *ServiceRunnerAPI* | [**GetLogs**](docs/ServiceRunnerAPI.md#getlogs) | **Post** /ServiceRunner/GetLogs | 
+*ServiceRunnerAPI* | [**GetMetricSamples**](docs/ServiceRunnerAPI.md#getmetricsamples) | **Post** /ServiceRunner/GetMetricSamples | 
 *ServiceRunnerAPI* | [**GetUploadURL**](docs/ServiceRunnerAPI.md#getuploadurl) | **Post** /ServiceRunner/GetUploadURL | 
+*ServiceRunnerAPI* | [**ListDatabases**](docs/ServiceRunnerAPI.md#listdatabases) | **Post** /ServiceRunner/ListDatabases | 
+*ServiceRunnerAPI* | [**ListDatastores**](docs/ServiceRunnerAPI.md#listdatastores) | **Post** /ServiceRunner/ListDatastores | 
+*ServiceRunnerAPI* | [**ListDeployments**](docs/ServiceRunnerAPI.md#listdeployments) | **Post** /ServiceRunner/ListDeployments | 
+*ServiceRunnerAPI* | [**ListEnvironments**](docs/ServiceRunnerAPI.md#listenvironments) | **Post** /ServiceRunner/ListEnvironments | 
+*ServiceRunnerAPI* | [**ListMetrics**](docs/ServiceRunnerAPI.md#listmetrics) | **Post** /ServiceRunner/ListMetrics | 
 *ServiceRunnerAPI* | [**ListPackages**](docs/ServiceRunnerAPI.md#listpackages) | **Post** /ServiceRunner/ListPackages | 
+*ServiceRunnerAPI* | [**ListProjects**](docs/ServiceRunnerAPI.md#listprojects) | **Post** /ServiceRunner/ListProjects | 
+*ServiceRunnerAPI* | [**ListServices**](docs/ServiceRunnerAPI.md#listservices) | **Post** /ServiceRunner/ListServices | 
+*ServiceRunnerAPI* | [**UploadPackage**](docs/ServiceRunnerAPI.md#uploadpackage) | **Post** /ServiceRunner/UploadPackage | 
 
 
 ## Documentation For Models
 
+ - [CreateDeploymentReply](docs/CreateDeploymentReply.md)
+ - [CreateDeploymentRequest](docs/CreateDeploymentRequest.md)
+ - [CreateEnvironmentReply](docs/CreateEnvironmentReply.md)
+ - [CreateEnvironmentRequest](docs/CreateEnvironmentRequest.md)
+ - [CreateProjectReply](docs/CreateProjectReply.md)
+ - [CreateProjectRequest](docs/CreateProjectRequest.md)
+ - [DatabaseDescription](docs/DatabaseDescription.md)
+ - [DatabaseHeader](docs/DatabaseHeader.md)
+ - [DatastoreDescription](docs/DatastoreDescription.md)
+ - [DatastoreHeader](docs/DatastoreHeader.md)
+ - [DeleteEnvironmentReply](docs/DeleteEnvironmentReply.md)
+ - [DeleteEnvironmentRequest](docs/DeleteEnvironmentRequest.md)
  - [DeletePackageReply](docs/DeletePackageReply.md)
  - [DeletePackageRequest](docs/DeletePackageRequest.md)
- - [DeployPackageReply](docs/DeployPackageReply.md)
- - [DeployPackageRequest](docs/DeployPackageRequest.md)
+ - [DeleteProjectReply](docs/DeleteProjectReply.md)
+ - [DeleteProjectRequest](docs/DeleteProjectRequest.md)
+ - [DeploymentDescription](docs/DeploymentDescription.md)
+ - [DeploymentHeader](docs/DeploymentHeader.md)
+ - [DeploymentInitiator](docs/DeploymentInitiator.md)
+ - [DeploymentState](docs/DeploymentState.md)
+ - [DeploymentStateDetail](docs/DeploymentStateDetail.md)
+ - [DeploymentType](docs/DeploymentType.md)
+ - [DescribeDatabaseReply](docs/DescribeDatabaseReply.md)
+ - [DescribeDatabaseRequest](docs/DescribeDatabaseRequest.md)
+ - [DescribeDatastoreReply](docs/DescribeDatastoreReply.md)
+ - [DescribeDatastoreRequest](docs/DescribeDatastoreRequest.md)
+ - [DescribeDeploymentReply](docs/DescribeDeploymentReply.md)
+ - [DescribeDeploymentRequest](docs/DescribeDeploymentRequest.md)
+ - [DescribeEnvironmentReply](docs/DescribeEnvironmentReply.md)
+ - [DescribeEnvironmentRequest](docs/DescribeEnvironmentRequest.md)
  - [DescribePackageReply](docs/DescribePackageReply.md)
  - [DescribePackageRequest](docs/DescribePackageRequest.md)
+ - [DescribeProjectReply](docs/DescribeProjectReply.md)
+ - [DescribeProjectRequest](docs/DescribeProjectRequest.md)
+ - [DescribeServiceReply](docs/DescribeServiceReply.md)
+ - [DescribeServiceRequest](docs/DescribeServiceRequest.md)
+ - [DescribeSiteReply](docs/DescribeSiteReply.md)
+ - [DescribeSiteRequest](docs/DescribeSiteRequest.md)
+ - [EnvironmentDescription](docs/EnvironmentDescription.md)
+ - [EnvironmentHeader](docs/EnvironmentHeader.md)
  - [GetLogsEntry](docs/GetLogsEntry.md)
  - [GetLogsReply](docs/GetLogsReply.md)
  - [GetLogsRequest](docs/GetLogsRequest.md)
+ - [GetMetricSamplesReply](docs/GetMetricSamplesReply.md)
+ - [GetMetricSamplesRequest](docs/GetMetricSamplesRequest.md)
  - [GetUploadURLReply](docs/GetUploadURLReply.md)
  - [GetUploadURLRequest](docs/GetUploadURLRequest.md)
+ - [ListDatabasesReply](docs/ListDatabasesReply.md)
+ - [ListDatabasesRequest](docs/ListDatabasesRequest.md)
+ - [ListDatastoresReply](docs/ListDatastoresReply.md)
+ - [ListDatastoresRequest](docs/ListDatastoresRequest.md)
+ - [ListDeploymentsReply](docs/ListDeploymentsReply.md)
+ - [ListEnvironmentsReply](docs/ListEnvironmentsReply.md)
+ - [ListMetricsEntry](docs/ListMetricsEntry.md)
+ - [ListMetricsReply](docs/ListMetricsReply.md)
+ - [ListMetricsRequest](docs/ListMetricsRequest.md)
  - [ListPackagesReply](docs/ListPackagesReply.md)
  - [ListPackagesReplyListPackagesItem](docs/ListPackagesReplyListPackagesItem.md)
  - [ListPackagesRequest](docs/ListPackagesRequest.md)
+ - [ListProjectsReply](docs/ListProjectsReply.md)
+ - [ListServicesReply](docs/ListServicesReply.md)
+ - [ListServicesRequest](docs/ListServicesRequest.md)
+ - [MetricsFormat](docs/MetricsFormat.md)
+ - [MetricsScope](docs/MetricsScope.md)
  - [PackageDescription](docs/PackageDescription.md)
  - [PackageState](docs/PackageState.md)
+ - [ProjEnvHeader](docs/ProjEnvHeader.md)
+ - [ProjectDescription](docs/ProjectDescription.md)
+ - [ProjectHeader](docs/ProjectHeader.md)
+ - [ProjectState](docs/ProjectState.md)
  - [ProtobufAny](docs/ProtobufAny.md)
  - [RpcStatus](docs/RpcStatus.md)
+ - [ServiceDescription](docs/ServiceDescription.md)
+ - [ServiceHeader](docs/ServiceHeader.md)
+ - [ServiceRunnerResult](docs/ServiceRunnerResult.md)
+ - [ServiceRunnerStatus](docs/ServiceRunnerStatus.md)
+ - [UploadPackageReply](docs/UploadPackageReply.md)
+ - [UploadPackageRequest](docs/UploadPackageRequest.md)
 
 
 ## Documentation For Authorization

@@ -22,12 +22,32 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ServiceRunnerClient interface {
+	CreateProject(ctx context.Context, in *CreateProjectRequest, opts ...grpc.CallOption) (*CreateProjectReply, error)
+	DeleteProject(ctx context.Context, in *DeleteProjectRequest, opts ...grpc.CallOption) (*DeleteProjectReply, error)
+	ListProjects(ctx context.Context, in *ListProjectsRequest, opts ...grpc.CallOption) (*ListProjectsReply, error)
+	DescribeProject(ctx context.Context, in *DescribeProjectRequest, opts ...grpc.CallOption) (*DescribeProjectReply, error)
+	CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*CreateEnvironmentReply, error)
+	DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*DeleteEnvironmentReply, error)
+	ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsReply, error)
+	DescribeEnvironment(ctx context.Context, in *DescribeEnvironmentRequest, opts ...grpc.CallOption) (*DescribeEnvironmentReply, error)
+	DescribeSite(ctx context.Context, in *DescribeSiteRequest, opts ...grpc.CallOption) (*DescribeSiteReply, error)
+	ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesReply, error)
+	DescribeService(ctx context.Context, in *DescribeServiceRequest, opts ...grpc.CallOption) (*DescribeServiceReply, error)
+	ListDatastores(ctx context.Context, in *ListDatastoresRequest, opts ...grpc.CallOption) (*ListDatastoresReply, error)
+	DescribeDatastore(ctx context.Context, in *DescribeDatastoreRequest, opts ...grpc.CallOption) (*DescribeDatastoreReply, error)
+	ListDatabases(ctx context.Context, in *ListDatabasesRequest, opts ...grpc.CallOption) (*ListDatabasesReply, error)
+	DescribeDatabase(ctx context.Context, in *DescribeDatabaseRequest, opts ...grpc.CallOption) (*DescribeDatabaseReply, error)
+	CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*CreateDeploymentReply, error)
+	ListDeployments(ctx context.Context, in *ListDeploymentsRequest, opts ...grpc.CallOption) (*ListDeploymentsReply, error)
+	DescribeDeployment(ctx context.Context, in *DescribeDeploymentRequest, opts ...grpc.CallOption) (*DescribeDeploymentReply, error)
 	DescribePackage(ctx context.Context, in *DescribePackageRequest, opts ...grpc.CallOption) (*DescribePackageReply, error)
 	DeletePackage(ctx context.Context, in *DeletePackageRequest, opts ...grpc.CallOption) (*DeletePackageReply, error)
 	ListPackages(ctx context.Context, in *ListPackagesRequest, opts ...grpc.CallOption) (*ListPackagesReply, error)
-	DeployPackage(ctx context.Context, in *DeployPackageRequest, opts ...grpc.CallOption) (*DeployPackageReply, error)
+	UploadPackage(ctx context.Context, in *UploadPackageRequest, opts ...grpc.CallOption) (*UploadPackageReply, error)
 	GetUploadURL(ctx context.Context, in *GetUploadURLRequest, opts ...grpc.CallOption) (*GetUploadURLReply, error)
 	GetLogs(ctx context.Context, in *GetLogsRequest, opts ...grpc.CallOption) (*GetLogsReply, error)
+	ListMetrics(ctx context.Context, in *ListMetricsRequest, opts ...grpc.CallOption) (*ListMetricsReply, error)
+	GetMetricSamples(ctx context.Context, in *GetMetricSamplesRequest, opts ...grpc.CallOption) (*GetMetricSamplesReply, error)
 }
 
 type serviceRunnerClient struct {
@@ -36,6 +56,168 @@ type serviceRunnerClient struct {
 
 func NewServiceRunnerClient(cc grpc.ClientConnInterface) ServiceRunnerClient {
 	return &serviceRunnerClient{cc}
+}
+
+func (c *serviceRunnerClient) CreateProject(ctx context.Context, in *CreateProjectRequest, opts ...grpc.CallOption) (*CreateProjectReply, error) {
+	out := new(CreateProjectReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/CreateProject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DeleteProject(ctx context.Context, in *DeleteProjectRequest, opts ...grpc.CallOption) (*DeleteProjectReply, error) {
+	out := new(DeleteProjectReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DeleteProject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListProjects(ctx context.Context, in *ListProjectsRequest, opts ...grpc.CallOption) (*ListProjectsReply, error) {
+	out := new(ListProjectsReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListProjects", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeProject(ctx context.Context, in *DescribeProjectRequest, opts ...grpc.CallOption) (*DescribeProjectReply, error) {
+	out := new(DescribeProjectReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeProject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*CreateEnvironmentReply, error) {
+	out := new(CreateEnvironmentReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/CreateEnvironment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*DeleteEnvironmentReply, error) {
+	out := new(DeleteEnvironmentReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DeleteEnvironment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsReply, error) {
+	out := new(ListEnvironmentsReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListEnvironments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeEnvironment(ctx context.Context, in *DescribeEnvironmentRequest, opts ...grpc.CallOption) (*DescribeEnvironmentReply, error) {
+	out := new(DescribeEnvironmentReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeEnvironment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeSite(ctx context.Context, in *DescribeSiteRequest, opts ...grpc.CallOption) (*DescribeSiteReply, error) {
+	out := new(DescribeSiteReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeSite", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListServices(ctx context.Context, in *ListServicesRequest, opts ...grpc.CallOption) (*ListServicesReply, error) {
+	out := new(ListServicesReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListServices", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeService(ctx context.Context, in *DescribeServiceRequest, opts ...grpc.CallOption) (*DescribeServiceReply, error) {
+	out := new(DescribeServiceReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeService", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListDatastores(ctx context.Context, in *ListDatastoresRequest, opts ...grpc.CallOption) (*ListDatastoresReply, error) {
+	out := new(ListDatastoresReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListDatastores", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeDatastore(ctx context.Context, in *DescribeDatastoreRequest, opts ...grpc.CallOption) (*DescribeDatastoreReply, error) {
+	out := new(DescribeDatastoreReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeDatastore", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListDatabases(ctx context.Context, in *ListDatabasesRequest, opts ...grpc.CallOption) (*ListDatabasesReply, error) {
+	out := new(ListDatabasesReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListDatabases", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeDatabase(ctx context.Context, in *DescribeDatabaseRequest, opts ...grpc.CallOption) (*DescribeDatabaseReply, error) {
+	out := new(DescribeDatabaseReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeDatabase", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) CreateDeployment(ctx context.Context, in *CreateDeploymentRequest, opts ...grpc.CallOption) (*CreateDeploymentReply, error) {
+	out := new(CreateDeploymentReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/CreateDeployment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListDeployments(ctx context.Context, in *ListDeploymentsRequest, opts ...grpc.CallOption) (*ListDeploymentsReply, error) {
+	out := new(ListDeploymentsReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListDeployments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeDeployment(ctx context.Context, in *DescribeDeploymentRequest, opts ...grpc.CallOption) (*DescribeDeploymentReply, error) {
+	out := new(DescribeDeploymentReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeDeployment", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *serviceRunnerClient) DescribePackage(ctx context.Context, in *DescribePackageRequest, opts ...grpc.CallOption) (*DescribePackageReply, error) {
@@ -65,9 +247,9 @@ func (c *serviceRunnerClient) ListPackages(ctx context.Context, in *ListPackages
 	return out, nil
 }
 
-func (c *serviceRunnerClient) DeployPackage(ctx context.Context, in *DeployPackageRequest, opts ...grpc.CallOption) (*DeployPackageReply, error) {
-	out := new(DeployPackageReply)
-	err := c.cc.Invoke(ctx, "/ServiceRunner/DeployPackage", in, out, opts...)
+func (c *serviceRunnerClient) UploadPackage(ctx context.Context, in *UploadPackageRequest, opts ...grpc.CallOption) (*UploadPackageReply, error) {
+	out := new(UploadPackageReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/UploadPackage", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -92,16 +274,54 @@ func (c *serviceRunnerClient) GetLogs(ctx context.Context, in *GetLogsRequest, o
 	return out, nil
 }
 
+func (c *serviceRunnerClient) ListMetrics(ctx context.Context, in *ListMetricsRequest, opts ...grpc.CallOption) (*ListMetricsReply, error) {
+	out := new(ListMetricsReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListMetrics", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) GetMetricSamples(ctx context.Context, in *GetMetricSamplesRequest, opts ...grpc.CallOption) (*GetMetricSamplesReply, error) {
+	out := new(GetMetricSamplesReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/GetMetricSamples", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceRunnerServer is the server API for ServiceRunner service.
 // All implementations must embed UnimplementedServiceRunnerServer
 // for forward compatibility
 type ServiceRunnerServer interface {
+	CreateProject(context.Context, *CreateProjectRequest) (*CreateProjectReply, error)
+	DeleteProject(context.Context, *DeleteProjectRequest) (*DeleteProjectReply, error)
+	ListProjects(context.Context, *ListProjectsRequest) (*ListProjectsReply, error)
+	DescribeProject(context.Context, *DescribeProjectRequest) (*DescribeProjectReply, error)
+	CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*CreateEnvironmentReply, error)
+	DeleteEnvironment(context.Context, *DeleteEnvironmentRequest) (*DeleteEnvironmentReply, error)
+	ListEnvironments(context.Context, *ListEnvironmentsRequest) (*ListEnvironmentsReply, error)
+	DescribeEnvironment(context.Context, *DescribeEnvironmentRequest) (*DescribeEnvironmentReply, error)
+	DescribeSite(context.Context, *DescribeSiteRequest) (*DescribeSiteReply, error)
+	ListServices(context.Context, *ListServicesRequest) (*ListServicesReply, error)
+	DescribeService(context.Context, *DescribeServiceRequest) (*DescribeServiceReply, error)
+	ListDatastores(context.Context, *ListDatastoresRequest) (*ListDatastoresReply, error)
+	DescribeDatastore(context.Context, *DescribeDatastoreRequest) (*DescribeDatastoreReply, error)
+	ListDatabases(context.Context, *ListDatabasesRequest) (*ListDatabasesReply, error)
+	DescribeDatabase(context.Context, *DescribeDatabaseRequest) (*DescribeDatabaseReply, error)
+	CreateDeployment(context.Context, *CreateDeploymentRequest) (*CreateDeploymentReply, error)
+	ListDeployments(context.Context, *ListDeploymentsRequest) (*ListDeploymentsReply, error)
+	DescribeDeployment(context.Context, *DescribeDeploymentRequest) (*DescribeDeploymentReply, error)
 	DescribePackage(context.Context, *DescribePackageRequest) (*DescribePackageReply, error)
 	DeletePackage(context.Context, *DeletePackageRequest) (*DeletePackageReply, error)
 	ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesReply, error)
-	DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error)
+	UploadPackage(context.Context, *UploadPackageRequest) (*UploadPackageReply, error)
 	GetUploadURL(context.Context, *GetUploadURLRequest) (*GetUploadURLReply, error)
 	GetLogs(context.Context, *GetLogsRequest) (*GetLogsReply, error)
+	ListMetrics(context.Context, *ListMetricsRequest) (*ListMetricsReply, error)
+	GetMetricSamples(context.Context, *GetMetricSamplesRequest) (*GetMetricSamplesReply, error)
 	mustEmbedUnimplementedServiceRunnerServer()
 }
 
@@ -109,6 +329,60 @@ type ServiceRunnerServer interface {
 type UnimplementedServiceRunnerServer struct {
 }
 
+func (UnimplementedServiceRunnerServer) CreateProject(context.Context, *CreateProjectRequest) (*CreateProjectReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateProject not implemented")
+}
+func (UnimplementedServiceRunnerServer) DeleteProject(context.Context, *DeleteProjectRequest) (*DeleteProjectReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteProject not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListProjects(context.Context, *ListProjectsRequest) (*ListProjectsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListProjects not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeProject(context.Context, *DescribeProjectRequest) (*DescribeProjectReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeProject not implemented")
+}
+func (UnimplementedServiceRunnerServer) CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*CreateEnvironmentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateEnvironment not implemented")
+}
+func (UnimplementedServiceRunnerServer) DeleteEnvironment(context.Context, *DeleteEnvironmentRequest) (*DeleteEnvironmentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteEnvironment not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListEnvironments(context.Context, *ListEnvironmentsRequest) (*ListEnvironmentsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListEnvironments not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeEnvironment(context.Context, *DescribeEnvironmentRequest) (*DescribeEnvironmentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeEnvironment not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeSite(context.Context, *DescribeSiteRequest) (*DescribeSiteReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeSite not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListServices(context.Context, *ListServicesRequest) (*ListServicesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListServices not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeService(context.Context, *DescribeServiceRequest) (*DescribeServiceReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeService not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListDatastores(context.Context, *ListDatastoresRequest) (*ListDatastoresReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDatastores not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeDatastore(context.Context, *DescribeDatastoreRequest) (*DescribeDatastoreReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeDatastore not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListDatabases(context.Context, *ListDatabasesRequest) (*ListDatabasesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDatabases not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeDatabase(context.Context, *DescribeDatabaseRequest) (*DescribeDatabaseReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeDatabase not implemented")
+}
+func (UnimplementedServiceRunnerServer) CreateDeployment(context.Context, *CreateDeploymentRequest) (*CreateDeploymentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateDeployment not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListDeployments(context.Context, *ListDeploymentsRequest) (*ListDeploymentsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListDeployments not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeDeployment(context.Context, *DescribeDeploymentRequest) (*DescribeDeploymentReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeDeployment not implemented")
+}
 func (UnimplementedServiceRunnerServer) DescribePackage(context.Context, *DescribePackageRequest) (*DescribePackageReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribePackage not implemented")
 }
@@ -118,14 +392,20 @@ func (UnimplementedServiceRunnerServer) DeletePackage(context.Context, *DeletePa
 func (UnimplementedServiceRunnerServer) ListPackages(context.Context, *ListPackagesRequest) (*ListPackagesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListPackages not implemented")
 }
-func (UnimplementedServiceRunnerServer) DeployPackage(context.Context, *DeployPackageRequest) (*DeployPackageReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method DeployPackage not implemented")
+func (UnimplementedServiceRunnerServer) UploadPackage(context.Context, *UploadPackageRequest) (*UploadPackageReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UploadPackage not implemented")
 }
 func (UnimplementedServiceRunnerServer) GetUploadURL(context.Context, *GetUploadURLRequest) (*GetUploadURLReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetUploadURL not implemented")
 }
 func (UnimplementedServiceRunnerServer) GetLogs(context.Context, *GetLogsRequest) (*GetLogsReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetLogs not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListMetrics(context.Context, *ListMetricsRequest) (*ListMetricsReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListMetrics not implemented")
+}
+func (UnimplementedServiceRunnerServer) GetMetricSamples(context.Context, *GetMetricSamplesRequest) (*GetMetricSamplesReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetMetricSamples not implemented")
 }
 func (UnimplementedServiceRunnerServer) mustEmbedUnimplementedServiceRunnerServer() {}
 
@@ -138,6 +418,330 @@ type UnsafeServiceRunnerServer interface {
 
 func RegisterServiceRunnerServer(s grpc.ServiceRegistrar, srv ServiceRunnerServer) {
 	s.RegisterService(&ServiceRunner_ServiceDesc, srv)
+}
+
+func _ServiceRunner_CreateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateProjectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).CreateProject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/CreateProject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).CreateProject(ctx, req.(*CreateProjectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DeleteProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteProjectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DeleteProject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DeleteProject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DeleteProject(ctx, req.(*DeleteProjectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListProjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListProjectsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListProjects(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListProjects",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListProjects(ctx, req.(*ListProjectsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeProjectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeProject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeProject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeProject(ctx, req.(*DescribeProjectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_CreateEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateEnvironmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).CreateEnvironment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/CreateEnvironment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).CreateEnvironment(ctx, req.(*CreateEnvironmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DeleteEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteEnvironmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DeleteEnvironment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DeleteEnvironment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DeleteEnvironment(ctx, req.(*DeleteEnvironmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListEnvironments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListEnvironmentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListEnvironments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListEnvironments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListEnvironments(ctx, req.(*ListEnvironmentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeEnvironment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeEnvironmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeEnvironment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeEnvironment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeEnvironment(ctx, req.(*DescribeEnvironmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeSite_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeSiteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeSite(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeSite",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeSite(ctx, req.(*DescribeSiteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListServices_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListServicesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListServices(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListServices",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListServices(ctx, req.(*ListServicesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeService_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeServiceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeService(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeService",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeService(ctx, req.(*DescribeServiceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListDatastores_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDatastoresRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListDatastores(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListDatastores",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListDatastores(ctx, req.(*ListDatastoresRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeDatastore_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeDatastoreRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeDatastore(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeDatastore",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeDatastore(ctx, req.(*DescribeDatastoreRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListDatabases_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDatabasesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListDatabases(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListDatabases",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListDatabases(ctx, req.(*ListDatabasesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeDatabase_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeDatabaseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeDatabase(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeDatabase",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeDatabase(ctx, req.(*DescribeDatabaseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_CreateDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateDeploymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).CreateDeployment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/CreateDeployment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).CreateDeployment(ctx, req.(*CreateDeploymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListDeployments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListDeploymentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListDeployments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListDeployments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListDeployments(ctx, req.(*ListDeploymentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeDeployment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeDeploymentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeDeployment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeDeployment",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeDeployment(ctx, req.(*DescribeDeploymentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _ServiceRunner_DescribePackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -194,20 +798,20 @@ func _ServiceRunner_ListPackages_Handler(srv interface{}, ctx context.Context, d
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ServiceRunner_DeployPackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeployPackageRequest)
+func _ServiceRunner_UploadPackage_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UploadPackageRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ServiceRunnerServer).DeployPackage(ctx, in)
+		return srv.(ServiceRunnerServer).UploadPackage(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/ServiceRunner/DeployPackage",
+		FullMethod: "/ServiceRunner/UploadPackage",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ServiceRunnerServer).DeployPackage(ctx, req.(*DeployPackageRequest))
+		return srv.(ServiceRunnerServer).UploadPackage(ctx, req.(*UploadPackageRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -248,6 +852,42 @@ func _ServiceRunner_GetLogs_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceRunner_ListMetrics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListMetricsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListMetrics(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListMetrics",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListMetrics(ctx, req.(*ListMetricsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_GetMetricSamples_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetMetricSamplesRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).GetMetricSamples(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/GetMetricSamples",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).GetMetricSamples(ctx, req.(*GetMetricSamplesRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceRunner_ServiceDesc is the grpc.ServiceDesc for ServiceRunner service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -255,6 +895,78 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "ServiceRunner",
 	HandlerType: (*ServiceRunnerServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateProject",
+			Handler:    _ServiceRunner_CreateProject_Handler,
+		},
+		{
+			MethodName: "DeleteProject",
+			Handler:    _ServiceRunner_DeleteProject_Handler,
+		},
+		{
+			MethodName: "ListProjects",
+			Handler:    _ServiceRunner_ListProjects_Handler,
+		},
+		{
+			MethodName: "DescribeProject",
+			Handler:    _ServiceRunner_DescribeProject_Handler,
+		},
+		{
+			MethodName: "CreateEnvironment",
+			Handler:    _ServiceRunner_CreateEnvironment_Handler,
+		},
+		{
+			MethodName: "DeleteEnvironment",
+			Handler:    _ServiceRunner_DeleteEnvironment_Handler,
+		},
+		{
+			MethodName: "ListEnvironments",
+			Handler:    _ServiceRunner_ListEnvironments_Handler,
+		},
+		{
+			MethodName: "DescribeEnvironment",
+			Handler:    _ServiceRunner_DescribeEnvironment_Handler,
+		},
+		{
+			MethodName: "DescribeSite",
+			Handler:    _ServiceRunner_DescribeSite_Handler,
+		},
+		{
+			MethodName: "ListServices",
+			Handler:    _ServiceRunner_ListServices_Handler,
+		},
+		{
+			MethodName: "DescribeService",
+			Handler:    _ServiceRunner_DescribeService_Handler,
+		},
+		{
+			MethodName: "ListDatastores",
+			Handler:    _ServiceRunner_ListDatastores_Handler,
+		},
+		{
+			MethodName: "DescribeDatastore",
+			Handler:    _ServiceRunner_DescribeDatastore_Handler,
+		},
+		{
+			MethodName: "ListDatabases",
+			Handler:    _ServiceRunner_ListDatabases_Handler,
+		},
+		{
+			MethodName: "DescribeDatabase",
+			Handler:    _ServiceRunner_DescribeDatabase_Handler,
+		},
+		{
+			MethodName: "CreateDeployment",
+			Handler:    _ServiceRunner_CreateDeployment_Handler,
+		},
+		{
+			MethodName: "ListDeployments",
+			Handler:    _ServiceRunner_ListDeployments_Handler,
+		},
+		{
+			MethodName: "DescribeDeployment",
+			Handler:    _ServiceRunner_DescribeDeployment_Handler,
+		},
 		{
 			MethodName: "DescribePackage",
 			Handler:    _ServiceRunner_DescribePackage_Handler,
@@ -268,8 +980,8 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _ServiceRunner_ListPackages_Handler,
 		},
 		{
-			MethodName: "DeployPackage",
-			Handler:    _ServiceRunner_DeployPackage_Handler,
+			MethodName: "UploadPackage",
+			Handler:    _ServiceRunner_UploadPackage_Handler,
 		},
 		{
 			MethodName: "GetUploadURL",
@@ -278,6 +990,14 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetLogs",
 			Handler:    _ServiceRunner_GetLogs_Handler,
+		},
+		{
+			MethodName: "ListMetrics",
+			Handler:    _ServiceRunner_ListMetrics_Handler,
+		},
+		{
+			MethodName: "GetMetricSamples",
+			Handler:    _ServiceRunner_GetMetricSamples_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -19,6 +19,7 @@ var _ MappedNullable = &DeletePackageReply{}
 
 // DeletePackageReply struct for DeletePackageReply
 type DeletePackageReply struct {
+	Result *ServiceRunnerResult `json:"result,omitempty"`
 	State *PackageState `json:"state,omitempty"`
 }
 
@@ -41,6 +42,38 @@ func NewDeletePackageReplyWithDefaults() *DeletePackageReply {
 	var state PackageState = UPLOADING
 	this.State = &state
 	return &this
+}
+
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *DeletePackageReply) GetResult() ServiceRunnerResult {
+	if o == nil || IsNil(o.Result) {
+		var ret ServiceRunnerResult
+		return ret
+	}
+	return *o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeletePackageReply) GetResultOk() (*ServiceRunnerResult, bool) {
+	if o == nil || IsNil(o.Result) {
+		return nil, false
+	}
+	return o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *DeletePackageReply) HasResult() bool {
+	if o != nil && !IsNil(o.Result) {
+		return true
+	}
+
+	return false
+}
+
+// SetResult gets a reference to the given ServiceRunnerResult and assigns it to the Result field.
+func (o *DeletePackageReply) SetResult(v ServiceRunnerResult) {
+	o.Result = &v
 }
 
 // GetState returns the State field value if set, zero value otherwise.
@@ -85,6 +118,9 @@ func (o DeletePackageReply) MarshalJSON() ([]byte, error) {
 
 func (o DeletePackageReply) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
 	if !IsNil(o.State) {
 		toSerialize["state"] = o.State
 	}

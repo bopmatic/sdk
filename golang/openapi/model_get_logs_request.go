@@ -19,7 +19,8 @@ var _ MappedNullable = &GetLogsRequest{}
 
 // GetLogsRequest struct for GetLogsRequest
 type GetLogsRequest struct {
-	ProjectName *string `json:"projectName,omitempty"`
+	ProjId *string `json:"projId,omitempty"`
+	EnvId *string `json:"envId,omitempty"`
 	ServiceName *string `json:"serviceName,omitempty"`
 	StartTime *string `json:"startTime,omitempty"`
 	// latest log message to retrieve expressed as the number of
@@ -43,36 +44,68 @@ func NewGetLogsRequestWithDefaults() *GetLogsRequest {
 	return &this
 }
 
-// GetProjectName returns the ProjectName field value if set, zero value otherwise.
-func (o *GetLogsRequest) GetProjectName() string {
-	if o == nil || IsNil(o.ProjectName) {
+// GetProjId returns the ProjId field value if set, zero value otherwise.
+func (o *GetLogsRequest) GetProjId() string {
+	if o == nil || IsNil(o.ProjId) {
 		var ret string
 		return ret
 	}
-	return *o.ProjectName
+	return *o.ProjId
 }
 
-// GetProjectNameOk returns a tuple with the ProjectName field value if set, nil otherwise
+// GetProjIdOk returns a tuple with the ProjId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetLogsRequest) GetProjectNameOk() (*string, bool) {
-	if o == nil || IsNil(o.ProjectName) {
+func (o *GetLogsRequest) GetProjIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ProjId) {
 		return nil, false
 	}
-	return o.ProjectName, true
+	return o.ProjId, true
 }
 
-// HasProjectName returns a boolean if a field has been set.
-func (o *GetLogsRequest) HasProjectName() bool {
-	if o != nil && !IsNil(o.ProjectName) {
+// HasProjId returns a boolean if a field has been set.
+func (o *GetLogsRequest) HasProjId() bool {
+	if o != nil && !IsNil(o.ProjId) {
 		return true
 	}
 
 	return false
 }
 
-// SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
-func (o *GetLogsRequest) SetProjectName(v string) {
-	o.ProjectName = &v
+// SetProjId gets a reference to the given string and assigns it to the ProjId field.
+func (o *GetLogsRequest) SetProjId(v string) {
+	o.ProjId = &v
+}
+
+// GetEnvId returns the EnvId field value if set, zero value otherwise.
+func (o *GetLogsRequest) GetEnvId() string {
+	if o == nil || IsNil(o.EnvId) {
+		var ret string
+		return ret
+	}
+	return *o.EnvId
+}
+
+// GetEnvIdOk returns a tuple with the EnvId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetLogsRequest) GetEnvIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EnvId) {
+		return nil, false
+	}
+	return o.EnvId, true
+}
+
+// HasEnvId returns a boolean if a field has been set.
+func (o *GetLogsRequest) HasEnvId() bool {
+	if o != nil && !IsNil(o.EnvId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEnvId gets a reference to the given string and assigns it to the EnvId field.
+func (o *GetLogsRequest) SetEnvId(v string) {
+	o.EnvId = &v
 }
 
 // GetServiceName returns the ServiceName field value if set, zero value otherwise.
@@ -181,8 +214,11 @@ func (o GetLogsRequest) MarshalJSON() ([]byte, error) {
 
 func (o GetLogsRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ProjectName) {
-		toSerialize["projectName"] = o.ProjectName
+	if !IsNil(o.ProjId) {
+		toSerialize["projId"] = o.ProjId
+	}
+	if !IsNil(o.EnvId) {
+		toSerialize["envId"] = o.EnvId
 	}
 	if !IsNil(o.ServiceName) {
 		toSerialize["serviceName"] = o.ServiceName

@@ -19,10 +19,8 @@ var _ MappedNullable = &DescribePackageReply{}
 
 // DescribePackageReply struct for DescribePackageReply
 type DescribePackageReply struct {
+	Result *ServiceRunnerResult `json:"result,omitempty"`
 	Desc *PackageDescription `json:"desc,omitempty"`
-	PackageState *PackageState `json:"packageState,omitempty"`
-	SiteEndpoint *string `json:"siteEndpoint,omitempty"`
-	RpcEndpoints []string `json:"rpcEndpoints,omitempty"`
 }
 
 // NewDescribePackageReply instantiates a new DescribePackageReply object
@@ -31,8 +29,6 @@ type DescribePackageReply struct {
 // will change when the set of required properties is changed
 func NewDescribePackageReply() *DescribePackageReply {
 	this := DescribePackageReply{}
-	var packageState PackageState = UPLOADING
-	this.PackageState = &packageState
 	return &this
 }
 
@@ -41,9 +37,39 @@ func NewDescribePackageReply() *DescribePackageReply {
 // but it doesn't guarantee that properties required by API are set
 func NewDescribePackageReplyWithDefaults() *DescribePackageReply {
 	this := DescribePackageReply{}
-	var packageState PackageState = UPLOADING
-	this.PackageState = &packageState
 	return &this
+}
+
+// GetResult returns the Result field value if set, zero value otherwise.
+func (o *DescribePackageReply) GetResult() ServiceRunnerResult {
+	if o == nil || IsNil(o.Result) {
+		var ret ServiceRunnerResult
+		return ret
+	}
+	return *o.Result
+}
+
+// GetResultOk returns a tuple with the Result field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DescribePackageReply) GetResultOk() (*ServiceRunnerResult, bool) {
+	if o == nil || IsNil(o.Result) {
+		return nil, false
+	}
+	return o.Result, true
+}
+
+// HasResult returns a boolean if a field has been set.
+func (o *DescribePackageReply) HasResult() bool {
+	if o != nil && !IsNil(o.Result) {
+		return true
+	}
+
+	return false
+}
+
+// SetResult gets a reference to the given ServiceRunnerResult and assigns it to the Result field.
+func (o *DescribePackageReply) SetResult(v ServiceRunnerResult) {
+	o.Result = &v
 }
 
 // GetDesc returns the Desc field value if set, zero value otherwise.
@@ -78,102 +104,6 @@ func (o *DescribePackageReply) SetDesc(v PackageDescription) {
 	o.Desc = &v
 }
 
-// GetPackageState returns the PackageState field value if set, zero value otherwise.
-func (o *DescribePackageReply) GetPackageState() PackageState {
-	if o == nil || IsNil(o.PackageState) {
-		var ret PackageState
-		return ret
-	}
-	return *o.PackageState
-}
-
-// GetPackageStateOk returns a tuple with the PackageState field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *DescribePackageReply) GetPackageStateOk() (*PackageState, bool) {
-	if o == nil || IsNil(o.PackageState) {
-		return nil, false
-	}
-	return o.PackageState, true
-}
-
-// HasPackageState returns a boolean if a field has been set.
-func (o *DescribePackageReply) HasPackageState() bool {
-	if o != nil && !IsNil(o.PackageState) {
-		return true
-	}
-
-	return false
-}
-
-// SetPackageState gets a reference to the given PackageState and assigns it to the PackageState field.
-func (o *DescribePackageReply) SetPackageState(v PackageState) {
-	o.PackageState = &v
-}
-
-// GetSiteEndpoint returns the SiteEndpoint field value if set, zero value otherwise.
-func (o *DescribePackageReply) GetSiteEndpoint() string {
-	if o == nil || IsNil(o.SiteEndpoint) {
-		var ret string
-		return ret
-	}
-	return *o.SiteEndpoint
-}
-
-// GetSiteEndpointOk returns a tuple with the SiteEndpoint field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *DescribePackageReply) GetSiteEndpointOk() (*string, bool) {
-	if o == nil || IsNil(o.SiteEndpoint) {
-		return nil, false
-	}
-	return o.SiteEndpoint, true
-}
-
-// HasSiteEndpoint returns a boolean if a field has been set.
-func (o *DescribePackageReply) HasSiteEndpoint() bool {
-	if o != nil && !IsNil(o.SiteEndpoint) {
-		return true
-	}
-
-	return false
-}
-
-// SetSiteEndpoint gets a reference to the given string and assigns it to the SiteEndpoint field.
-func (o *DescribePackageReply) SetSiteEndpoint(v string) {
-	o.SiteEndpoint = &v
-}
-
-// GetRpcEndpoints returns the RpcEndpoints field value if set, zero value otherwise.
-func (o *DescribePackageReply) GetRpcEndpoints() []string {
-	if o == nil || IsNil(o.RpcEndpoints) {
-		var ret []string
-		return ret
-	}
-	return o.RpcEndpoints
-}
-
-// GetRpcEndpointsOk returns a tuple with the RpcEndpoints field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *DescribePackageReply) GetRpcEndpointsOk() ([]string, bool) {
-	if o == nil || IsNil(o.RpcEndpoints) {
-		return nil, false
-	}
-	return o.RpcEndpoints, true
-}
-
-// HasRpcEndpoints returns a boolean if a field has been set.
-func (o *DescribePackageReply) HasRpcEndpoints() bool {
-	if o != nil && !IsNil(o.RpcEndpoints) {
-		return true
-	}
-
-	return false
-}
-
-// SetRpcEndpoints gets a reference to the given []string and assigns it to the RpcEndpoints field.
-func (o *DescribePackageReply) SetRpcEndpoints(v []string) {
-	o.RpcEndpoints = v
-}
-
 func (o DescribePackageReply) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -184,17 +114,11 @@ func (o DescribePackageReply) MarshalJSON() ([]byte, error) {
 
 func (o DescribePackageReply) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Result) {
+		toSerialize["result"] = o.Result
+	}
 	if !IsNil(o.Desc) {
 		toSerialize["desc"] = o.Desc
-	}
-	if !IsNil(o.PackageState) {
-		toSerialize["packageState"] = o.PackageState
-	}
-	if !IsNil(o.SiteEndpoint) {
-		toSerialize["siteEndpoint"] = o.SiteEndpoint
-	}
-	if !IsNil(o.RpcEndpoints) {
-		toSerialize["rpcEndpoints"] = o.RpcEndpoints
 	}
 	return toSerialize, nil
 }
