@@ -57,7 +57,9 @@ func fillGetLogsOptions(opts ...GetLogsOption) *getLogsOptions {
 // GetLogs() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func GetLogs(projName string, svcName string, startTime time.Time,
+//
+// svcName can be left blank to retrieve logs for all services
+func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 	endTime time.Time, opts ...GetLogsOption) error {
 
 	getLogsOpts := fillGetLogsOptions(opts...)
@@ -66,7 +68,8 @@ func GetLogs(projName string, svcName string, startTime time.Time,
 	client := goswag.NewHTTPClientWithConfig(nil, config)
 
 	getLogsReq := &models.GetLogsRequest{
-		ProjectName: projName,
+		ProjID:      projId,
+		EnvID:       envId,
 		ServiceName: svcName,
 		StartTime:   strconv.FormatInt(startTime.Unix(), 10),
 		EndTime:     strconv.FormatInt(endTime.Unix(), 10),
@@ -91,6 +94,10 @@ func GetLogs(projName string, svcName string, startTime time.Time,
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	getLogsReply := resp.GetPayload()
+	if *getLogsReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return fmt.Errorf("GetLogs failure(%v): %v",
+			*getLogsReply.Result.Status, getLogsReply.Result.StatusDetail)
+	}
 
 	for _, entry := range getLogsReply.Entries {
 		var timeStr = "<unknown_time>"

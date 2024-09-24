@@ -1,10 +1,13 @@
+/* Copyright © 2022-2024 Bopmatic, LLC. All Rights Reserved.
+ *
+ * See LICENSE file at the root of this package for license terms
+ */
 package golang
 
 import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"io"
@@ -17,12 +20,9 @@ import (
 	"syscall"
 	"time"
 
-	"google.golang.org/protobuf/encoding/protojson"
-
 	"github.com/bopmatic/sdk/golang/goswag"
 	"github.com/bopmatic/sdk/golang/goswag/service_runner"
 	"github.com/bopmatic/sdk/golang/models"
-	"github.com/bopmatic/sdk/golang/openapi"
 	"github.com/bopmatic/sdk/golang/pb"
 	"github.com/bopmatic/sdk/golang/util"
 )
@@ -297,12 +297,6 @@ func DeployOptHttpClient(httpClient *http.Client) DeployOption {
 	}
 }
 
-func (pkg *Package) Deploy(opts ...DeployOption) error {
-	// the go-swagger generated client seems to produce the cleanest most
-	// concise client code between the 3 approaches so make this the default
-	return pkg.DeployViaGoSwagger(opts...)
-}
-
 func fillDeployOptions(opts ...DeployOption) *deployOptions {
 	options := &deployOptions{
 		httpClient: http.DefaultClient,
@@ -314,104 +308,6 @@ func fillDeployOptions(opts ...DeployOption) *deployOptions {
 	}
 
 	return options
-}
-
-// Deploy() implemented using protojson & http.Post()
-func (pkg *Package) DeployViaProtoJson(opts ...DeployOption) error {
-	deployOpts := fillDeployOptions(opts...)
-
-	tarballAbsPath := filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
-	tarballData, err := ioutil.ReadFile(tarballAbsPath)
-	if err != nil {
-		return err
-	}
-
-	deployPackageReq := &pb.DeployPackageRequest{
-		Desc: &pb.PackageDescription{
-			ProjectName: pkg.Proj.Desc.Name,
-			PackageId:   pkg.Id,
-			// protojson.Marshal() will base64 encode byte fields so caller does
-			// not have to
-			PackageXsum:        pkg.Xsum,
-			PackageTarballData: tarballData,
-		},
-	}
-
-	marshalledReq, err := protojson.Marshal(deployPackageReq)
-	if err != nil {
-		return fmt.Errorf("Marshal failure: %v", err)
-	}
-
-	endpoint := "https://api.bopmatic.com/ServiceRunner/DeployPackage"
-	resp, err := deployOpts.httpClient.Post(endpoint, "application/json", bytes.NewReader(marshalledReq))
-	if err != nil {
-		return fmt.Errorf("Client failure: %v", err)
-	}
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		return fmt.Errorf("HTTP failure: %v", resp)
-	}
-
-	buf := &bytes.Buffer{}
-	buf.ReadFrom(resp.Body)
-
-	var deployReply pb.DeployPackageReply
-	err = protojson.Unmarshal(buf.Bytes(), &deployReply)
-	if err != nil {
-		return fmt.Errorf("Unmarshal failure: %v", err)
-	}
-	if deployReply.State != pb.PackageState_UPLOADED {
-		return fmt.Errorf("DeployPackage failure state: %v", deployReply.State)
-	}
-
-	return nil
-}
-
-// Deploy() implemented using a client generated with openapi-generator:
-//
-//	https://github.com/OpenAPITools/openapi-generator
-func (pkg *Package) DeployViaOpenApiGenerator(opts ...DeployOption) error {
-	deployOpts := fillDeployOptions(opts...)
-
-	tarballAbsPath := filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
-	tarballData, err := ioutil.ReadFile(tarballAbsPath)
-	if err != nil {
-		return err
-	}
-	// openapi-generator appears to not base64 encode byte fields so caller
-	// has to
-	encodedTarData := base64.StdEncoding.EncodeToString(tarballData)
-	encodedXsum := base64.StdEncoding.EncodeToString(pkg.Xsum)
-
-	deployPackageReq := openapi.DeployPackageRequest{
-		Desc: &openapi.PackageDescription{
-			ProjectName:        openapi.PtrString(pkg.Proj.Desc.Name),
-			PackageId:          openapi.PtrString(pkg.Id),
-			PackageXsum:        openapi.PtrString(encodedXsum),
-			PackageTarballData: openapi.PtrString(encodedTarData),
-		},
-	}
-
-	// default endpoint is inferred from host field in sr.bopmatic.json
-	config := openapi.NewConfiguration()
-	config.HTTPClient = deployOpts.httpClient
-	client := openapi.NewAPIClient(config)
-	ctx := context.Background()
-	deployReply, httpResp, err :=
-		client.ServiceRunnerAPI.DeployPackage(ctx).Body(deployPackageReq).Execute()
-	if err != nil {
-		return fmt.Errorf("Client failure: %v", err)
-	}
-	if httpResp.StatusCode != 200 {
-		return fmt.Errorf("HTTP failure: %v", httpResp)
-	}
-	if *deployReply.State != openapi.UPLOADED {
-		return fmt.Errorf("DeployPackage failure state: %v",
-			*deployReply.State)
-	}
-
-	return nil
 }
 
 func uploadToURL(url string, data []byte) error {
@@ -437,10 +333,10 @@ func uploadToURL(url string, data []byte) error {
 	return nil
 }
 
-// Deploy() implemented using a client generated with go-swagger:
+// Upload() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
+func (pkg *Package) Upload(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
 	tarballAbsPath := filepath.Join(pkg.Proj.Desc.root, pkg.TarballPath)
@@ -480,23 +376,18 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 		return err
 	}
 
-	deployPackageReq := &models.DeployPackageRequest{
-		Desc: &models.PackageDescription{
-			ProjectName: pkg.Proj.Desc.Name,
-			PackageID:   pkg.Id,
-			// go-swagger will base64 encode byte fields so caller does
-			// not have to
-			PackageXsum:       pkg.Xsum,
-			PackageTarballURL: uploadUrlReply.URL,
-		},
+	uploadPackageReq := &models.UploadPackageRequest{
+		ProjID:            pkg.Proj.Desc.Id,
+		PackageXsum:       pkg.Xsum,
+		PackageTarballURL: uploadUrlReply.URL,
 	}
 
-	deployPackageParams := service_runner.NewDeployPackageParams().
-		WithBody(deployPackageReq).WithHTTPClient(deployOpts.httpClient)
-	var resp *service_runner.DeployPackageOK
+	uploadPackageParams := service_runner.NewUploadPackageParams().
+		WithBody(uploadPackageReq).WithHTTPClient(deployOpts.httpClient)
+	var resp *service_runner.UploadPackageOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DeployPackage(deployPackageParams)
+		resp, err = client.ServiceRunner.UploadPackage(uploadPackageParams)
 		if err == nil {
 			break
 		}
@@ -508,13 +399,33 @@ func (pkg *Package) DeployViaGoSwagger(opts ...DeployOption) error {
 	if err != nil {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
-	deployReply := resp.GetPayload()
+	uploadReply := resp.GetPayload()
 
-	if *deployReply.State != models.PackageStateUPLOADED {
-		return fmt.Errorf("DeployPackage failure state: %v", deployReply.State)
+	if *uploadReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return fmt.Errorf("UploadPackage failure(%v): %v",
+			*uploadReply.Result.Status, uploadReply.Result.StatusDetail)
 	}
+	pkg.Id = uploadReply.PkgID
 
 	return nil
+}
+
+// Deploy() implemented using a client generated with go-swagger:
+//
+//	https://github.com/go-swagger/go-swagger
+func (pkg *Package) Deploy(envId string, opts ...DeployOption) (string, error) {
+	err := pkg.Upload(opts...)
+	if err != nil {
+		return "", err
+	}
+
+	deployment := NewDeployment(pkg.Id, pkg.Proj.Desc.Id, envId)
+	err = deployment.Deploy(opts...)
+	if err != nil {
+		return "", err
+	}
+
+	return deployment.DeployId, nil
 }
 
 // Delete() implemented using a client generated with go-swagger:
@@ -550,10 +461,9 @@ func Delete(packageId string, opts ...DeployOption) error {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	deleteReply := resp.GetPayload()
-
-	if *deleteReply.State != models.PackageStateDELETING &&
-		*deleteReply.State != models.PackageStateDEACTIVATING {
-		return fmt.Errorf("DeletePackage failure state: %v", deleteReply.State)
+	if *deleteReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return fmt.Errorf("DeletePackage failure(%v): %v",
+			*deleteReply.Result.Status, deleteReply.Result.StatusDetail)
 	}
 
 	return nil
@@ -562,7 +472,7 @@ func Delete(packageId string, opts ...DeployOption) error {
 // Describe() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply, error) {
+func Describe(packageId string, opts ...DeployOption) (*pb.PackageDescription, error) {
 
 	deployOpts := fillDeployOptions(opts...)
 
@@ -593,23 +503,24 @@ func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply,
 		return nil, fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	describeReply := resp.GetPayload()
+	if *describeReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return nil, fmt.Errorf("DescribePackage failure(%v): %v",
+			*describeReply.Result.Status, describeReply.Result.StatusDetail)
+	}
 
 	pkgStateInt, ok :=
-		pb.PackageState_value[string(*describeReply.PackageState)]
+		pb.PackageState_value[string(*describeReply.Desc.State)]
 	pkgState := pb.PackageState(pkgStateInt)
 	if !ok {
 		pkgState = pb.PackageState_UNKNOWN_PKG_STATE
 	}
-	ret := &pb.DescribePackageReply{
-		Desc: &pb.PackageDescription{
-			ProjectName: describeReply.Desc.ProjectName,
-			PackageId:   describeReply.Desc.PackageID,
-		},
-		PackageState: pkgState,
-	}
-	if *describeReply.PackageState == models.PackageStatePRODUCTION {
-		ret.SiteEndpoint = describeReply.SiteEndpoint
-		ret.RpcEndpoints = describeReply.RPCEndpoints
+
+	ret := &pb.PackageDescription{
+		PackageId:   describeReply.Desc.PackageID,
+		ProjId:      describeReply.Desc.ProjID,
+		State:       pkgState,
+		UploadTime:  convertRESTTimeToInt(describeReply.Desc.UploadTime),
+		PackageSize: convertRESTIntToInt(describeReply.Desc.PackageSize),
 	}
 
 	return ret, nil
@@ -618,13 +529,13 @@ func Describe(packageId string, opts ...DeployOption) (*pb.DescribePackageReply,
 // List() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func List(projName string,
+func List(projId string,
 	opts ...DeployOption) ([]pb.ListPackagesReply_ListPackagesItem, error) {
 
 	deployOpts := fillDeployOptions(opts...)
 
 	listPackagesReq := &models.ListPackagesRequest{
-		ProjectName: projName,
+		ProjID: projId,
 	}
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
@@ -651,12 +562,17 @@ func List(projName string,
 			fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	listReply := resp.GetPayload()
+	if *listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return []pb.ListPackagesReply_ListPackagesItem{},
+			fmt.Errorf("ListPackages failure(%v): %v",
+				*listReply.Result.Status, listReply.Result.StatusDetail)
+	}
 
 	var itemList []pb.ListPackagesReply_ListPackagesItem
 	for _, itemSwag := range listReply.Items {
 		itemList = append(itemList, pb.ListPackagesReply_ListPackagesItem{
-			ProjectName: itemSwag.ProjectName,
-			PackageId:   itemSwag.PackageID,
+			ProjId:    itemSwag.ProjID,
+			PackageId: itemSwag.PackageID,
 		})
 	}
 

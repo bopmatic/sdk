@@ -1,3 +1,7 @@
+/* Copyright © 2022-2024 Bopmatic, LLC. All Rights Reserved.
+ *
+ * See LICENSE file at the root of this package for license terms
+ */
 package golang
 
 import (
@@ -94,6 +98,7 @@ func (svc *Service) GetRpcs() []string {
 // ProjectDesc see Project for a complete description
 type ProjectDesc struct {
 	Name          string        `yaml:"name"`
+	Id            string        `yaml:"id"`
 	Description   string        `yaml:"desc,omitempty"`
 	Services      []Service     `yaml:"services,omitempty,flow"`
 	Databases     []Database    `yaml:"databases,omitempty,flow"`
@@ -647,6 +652,9 @@ func (proj *Project) ExportToFile(projFile string) error {
 // IsEqual compares project with cmpProj to determine whether they are equivalent
 func (proj *Project) IsEqual(cmpProj *Project) bool {
 	if proj.Desc.Name != cmpProj.Desc.Name {
+		return false
+	}
+	if proj.Desc.Id != cmpProj.Desc.Id {
 		return false
 	}
 	if proj.Desc.Description != cmpProj.Desc.Description {
