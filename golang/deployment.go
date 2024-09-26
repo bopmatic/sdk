@@ -32,6 +32,50 @@ func NewDeployment(pkgId string, projId string, envId string) *Deployment {
 	}
 }
 
+func ListDeployments(projId string, envId string,
+	opts ...DeployOption) ([]string, error) {
+
+	deployOpts := fillDeployOptions(opts...)
+
+	listDeploymentsReq := &models.ListDeploymentsRequest{
+		ProjEnvHeader: &models.ProjEnvHeader{
+			ProjID: projId,
+			EnvID:  envId,
+		},
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	listDeploymentsParams := service_runner.NewListDeploymentsParams().
+		WithBody(listDeploymentsReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+
+	var err error
+	var resp *service_runner.ListDeploymentsOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.ListDeployments(listDeploymentsParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
+	if err != nil {
+		return make([]string, 0), fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	listReply := resp.GetPayload()
+	if *listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return make([]string, 0),
+			fmt.Errorf("ListDeployments failure(%v): %v",
+				*listReply.Result.Status, listReply.Result.StatusDetail)
+	}
+
+	return listReply.Ids, nil
+}
+
 func (deployment *Deployment) Deploy(opts ...DeployOption) error {
 	if deployment.DeployId != "" {
 		return nil // already deployed
@@ -81,15 +125,22 @@ func (deployment *Deployment) Deploy(opts ...DeployOption) error {
 	return nil
 }
 
+func (deployment *Deployment) Describe(
+	opts ...DeployOption) (*pb.DeploymentDescription, error) {
+
+	return DescribeDeployment(deployment.DeployId, opts...)
+}
+
 // Describe() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func (deployment *Deployment) Describe(opts ...DeployOption) (*pb.DeploymentDescription, error) {
+func DescribeDeployment(deployId string,
+	opts ...DeployOption) (*pb.DeploymentDescription, error) {
 
 	deployOpts := fillDeployOptions(opts...)
 
 	describeDeploymentReq := &models.DescribeDeploymentRequest{
-		ID: deployment.DeployId,
+		ID: deployId,
 	}
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
@@ -145,11 +196,11 @@ func (deployment *Deployment) Describe(opts ...DeployOption) (*pb.DeploymentDesc
 		deployStateDetail = pb.DeploymentStateDetail_UNKNOWN_DEPLOY_STATE_DET
 	}
 	ret := &pb.DeploymentDescription{
-		Id: deployment.DeployId,
+		Id: deployId,
 		Header: &pb.DeploymentHeader{
-			PkgId:     deployment.PkgId,
-			ProjId:    deployment.ProjId,
-			EnvId:     deployment.EnvId,
+			PkgId:     describeReply.Desc.Header.PkgID,
+			ProjId:    describeReply.Desc.Header.ProjID,
+			EnvId:     describeReply.Desc.Header.EnvID,
 			Type:      deployType,
 			Initiator: deployInitiator,
 		},

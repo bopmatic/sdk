@@ -197,9 +197,11 @@ message DescribeEnvironmentReply {
 }
 
 message ProjEnvHeader {
-  // a unique identifier associated with the project to query
+  // a unique identifier associated with the project to query; leave blank
+  // for all
   string projId = 1;
-  // a unique identifier associated with the environment to query
+  // a unique identifier associated with the environment to query; leave blank
+  // for all
   string envId = 2;
 }
 
@@ -437,6 +439,8 @@ message CreateDeploymentReply {
 }
 
 message ListDeploymentsRequest {
+  // a project/environment tuple
+  ProjEnvHeader projEnvHeader = 1;
 }
 
 message ListDeploymentsReply {

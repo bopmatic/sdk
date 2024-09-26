@@ -526,10 +526,10 @@ func Describe(packageId string, opts ...DeployOption) (*pb.PackageDescription, e
 	return ret, nil
 }
 
-// List() implemented using a client generated with go-swagger:
+// ListPackages() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func List(projId string,
+func ListPackages(projId string,
 	opts ...DeployOption) ([]pb.ListPackagesReply_ListPackagesItem, error) {
 
 	deployOpts := fillDeployOptions(opts...)
