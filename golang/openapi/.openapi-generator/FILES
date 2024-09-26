@@ -57,6 +57,7 @@ docs/ListDatabasesRequest.md
 docs/ListDatastoresReply.md
 docs/ListDatastoresRequest.md
 docs/ListDeploymentsReply.md
+docs/ListDeploymentsRequest.md
 docs/ListEnvironmentsReply.md
 docs/ListMetricsEntry.md
 docs/ListMetricsReply.md
@@ -139,6 +140,7 @@ model_list_databases_request.go
 model_list_datastores_reply.go
 model_list_datastores_request.go
 model_list_deployments_reply.go
+model_list_deployments_request.go
 model_list_environments_reply.go
 model_list_metrics_entry.go
 model_list_metrics_reply.go

@@ -1573,7 +1573,13 @@
       }
     },
     "ListDeploymentsRequest": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "a project/environment tuple"
+        }
+      }
     },
     "ListEnvironmentsReply": {
       "type": "object",
@@ -1786,11 +1792,11 @@
       "properties": {
         "projId": {
           "type": "string",
-          "title": "a unique identifier associated with the project to query"
+          "title": "a unique identifier associated with the project to query; leave blank\nfor all"
         },
         "envId": {
           "type": "string",
-          "title": "a unique identifier associated with the environment to query"
+          "title": "a unique identifier associated with the environment to query; leave blank\nfor all"
         }
       }
     },

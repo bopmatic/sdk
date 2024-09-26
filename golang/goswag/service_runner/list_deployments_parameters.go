@@ -64,7 +64,7 @@ ListDeploymentsParams contains all the parameters to send to the API endpoint
 type ListDeploymentsParams struct {
 
 	// Body.
-	Body models.ListDeploymentsRequest
+	Body *models.ListDeploymentsRequest
 
 	timeout    time.Duration
 	Context    context.Context
@@ -120,13 +120,13 @@ func (o *ListDeploymentsParams) SetHTTPClient(client *http.Client) {
 }
 
 // WithBody adds the body to the list deployments params
-func (o *ListDeploymentsParams) WithBody(body models.ListDeploymentsRequest) *ListDeploymentsParams {
+func (o *ListDeploymentsParams) WithBody(body *models.ListDeploymentsRequest) *ListDeploymentsParams {
 	o.SetBody(body)
 	return o
 }
 
 // SetBody adds the body to the list deployments params
-func (o *ListDeploymentsParams) SetBody(body models.ListDeploymentsRequest) {
+func (o *ListDeploymentsParams) SetBody(body *models.ListDeploymentsRequest) {
 	o.Body = body
 }
 

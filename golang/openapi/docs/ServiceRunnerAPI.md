@@ -1268,7 +1268,7 @@ import (
 )
 
 func main() {
-	body := map[string]interface{}{ ... } // map[string]interface{} | 
+	body := *openapiclient.NewListDeploymentsRequest() // ListDeploymentsRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -1293,7 +1293,7 @@ Other parameters are passed through a pointer to a apiListDeploymentsRequest str
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **map[string]interface{}** |  | 
+ **body** | [**ListDeploymentsRequest**](ListDeploymentsRequest.md) |  | 
 
 ### Return type
 

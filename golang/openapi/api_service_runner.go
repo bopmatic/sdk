@@ -2229,10 +2229,10 @@ func (a *ServiceRunnerAPIService) ListDatastoresExecute(r ApiListDatastoresReque
 type ApiListDeploymentsRequest struct {
 	ctx context.Context
 	ApiService *ServiceRunnerAPIService
-	body *map[string]interface{}
+	body *ListDeploymentsRequest
 }
 
-func (r ApiListDeploymentsRequest) Body(body map[string]interface{}) ApiListDeploymentsRequest {
+func (r ApiListDeploymentsRequest) Body(body ListDeploymentsRequest) ApiListDeploymentsRequest {
 	r.body = &body
 	return r
 }

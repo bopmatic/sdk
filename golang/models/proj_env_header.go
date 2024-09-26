@@ -17,10 +17,12 @@ import (
 // swagger:model ProjEnvHeader
 type ProjEnvHeader struct {
 
-	// a unique identifier associated with the environment to query
+	// a unique identifier associated with the environment to query; leave blank
+	// for all
 	EnvID string `json:"envId,omitempty"`
 
-	// a unique identifier associated with the project to query
+	// a unique identifier associated with the project to query; leave blank
+	// for all
 	ProjID string `json:"projId,omitempty"`
 }
 

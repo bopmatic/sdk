@@ -160,6 +160,7 @@ Class | Method | HTTP request | Description
  - [ListDatastoresReply](docs/ListDatastoresReply.md)
  - [ListDatastoresRequest](docs/ListDatastoresRequest.md)
  - [ListDeploymentsReply](docs/ListDeploymentsReply.md)
+ - [ListDeploymentsRequest](docs/ListDeploymentsRequest.md)
  - [ListEnvironmentsReply](docs/ListEnvironmentsReply.md)
  - [ListMetricsEntry](docs/ListMetricsEntry.md)
  - [ListMetricsReply](docs/ListMetricsReply.md)
