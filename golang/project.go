@@ -17,7 +17,11 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+	"time"
 
+	"github.com/bopmatic/sdk/golang/goswag"
+	"github.com/bopmatic/sdk/golang/goswag/service_runner"
+	"github.com/bopmatic/sdk/golang/models"
 	"github.com/bopmatic/sdk/golang/util"
 
 	"github.com/yoheimuta/go-protoparser/v4"
@@ -873,6 +877,44 @@ func fillProjectOptions(opts ...ProjectOption) *projectOptions {
 	}
 
 	return options
+}
+
+func ListProjects(opts ...DeployOption) ([]string, error) {
+
+	deployOpts := fillDeployOptions(opts...)
+
+	var listProjectsReq *models.ListProjectsRequest
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	listProjectsParams := service_runner.NewListProjectsParams().
+		WithBody(listProjectsReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+
+	var err error
+	var resp *service_runner.ListProjectsOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.ListProjects(listProjectsParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
+	if err != nil {
+		return make([]string, 0), fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	listReply := resp.GetPayload()
+	if *listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return make([]string, 0),
+			fmt.Errorf("ListProjects failure(%v): %v",
+				*listReply.Result.Status, listReply.Result.StatusDetail)
+	}
+
+	return listReply.Ids, nil
 }
 
 // NewProject instantiates a new Project instance from the specified project
