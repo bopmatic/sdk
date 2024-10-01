@@ -94,7 +94,8 @@ func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	getLogsReply := resp.GetPayload()
-	if *getLogsReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if getLogsReply.Result.Status != nil &&
+		*getLogsReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return fmt.Errorf("GetLogs failure(%v): %v",
 			*getLogsReply.Result.Status, getLogsReply.Result.StatusDetail)
 	}

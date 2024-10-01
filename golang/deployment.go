@@ -67,7 +67,8 @@ func ListDeployments(projId string, envId string,
 		return make([]string, 0), fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	listReply := resp.GetPayload()
-	if *listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if listReply.Result.Status != nil &&
+		*listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return make([]string, 0),
 			fmt.Errorf("ListDeployments failure(%v): %v",
 				*listReply.Result.Status, listReply.Result.StatusDetail)
@@ -116,7 +117,8 @@ func (deployment *Deployment) Deploy(opts ...DeployOption) error {
 	}
 	deployReply := resp.GetPayload()
 
-	if *deployReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if deployReply.Result.Status != nil &&
+		*deployReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return fmt.Errorf("Deploy failure(%v): %v",
 			*deployReply.Result.Status, deployReply.Result.StatusDetail)
 	}
@@ -166,7 +168,8 @@ func DescribeDeployment(deployId string,
 		return nil, fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	describeReply := resp.GetPayload()
-	if *describeReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if describeReply.Result.Status != nil &&
+		*describeReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return nil, fmt.Errorf("DescribeDescribement failure(%v): %v",
 			*describeReply.Result.Status, describeReply.Result.StatusDetail)
 	}

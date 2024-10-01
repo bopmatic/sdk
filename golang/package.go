@@ -401,7 +401,8 @@ func (pkg *Package) Upload(opts ...DeployOption) error {
 	}
 	uploadReply := resp.GetPayload()
 
-	if *uploadReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if uploadReply.Result.Status != nil &&
+		*uploadReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return fmt.Errorf("UploadPackage failure(%v): %v",
 			*uploadReply.Result.Status, uploadReply.Result.StatusDetail)
 	}
@@ -461,7 +462,8 @@ func Delete(packageId string, opts ...DeployOption) error {
 		return fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	deleteReply := resp.GetPayload()
-	if *deleteReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if deleteReply.Result.Status != nil &&
+		*deleteReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return fmt.Errorf("DeletePackage failure(%v): %v",
 			*deleteReply.Result.Status, deleteReply.Result.StatusDetail)
 	}
@@ -503,7 +505,8 @@ func Describe(packageId string, opts ...DeployOption) (*pb.PackageDescription, e
 		return nil, fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	describeReply := resp.GetPayload()
-	if *describeReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if describeReply.Result.Status != nil &&
+		*describeReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return nil, fmt.Errorf("DescribePackage failure(%v): %v",
 			*describeReply.Result.Status, describeReply.Result.StatusDetail)
 	}
@@ -562,7 +565,8 @@ func ListPackages(projId string,
 			fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	listReply := resp.GetPayload()
-	if *listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if listReply.Result.Status != nil &&
+		*listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return []pb.ListPackagesReply_ListPackagesItem{},
 			fmt.Errorf("ListPackages failure(%v): %v",
 				*listReply.Result.Status, listReply.Result.StatusDetail)

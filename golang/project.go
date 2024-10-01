@@ -22,6 +22,7 @@ import (
 	"github.com/bopmatic/sdk/golang/goswag"
 	"github.com/bopmatic/sdk/golang/goswag/service_runner"
 	"github.com/bopmatic/sdk/golang/models"
+	"github.com/bopmatic/sdk/golang/pb"
 	"github.com/bopmatic/sdk/golang/util"
 
 	"github.com/yoheimuta/go-protoparser/v4"
@@ -112,7 +113,8 @@ type ProjectDesc struct {
 	RuntimeConfig string        `yaml:"runtime_config,omitempty"`
 	BuildCmd      string        `yaml:"buildcmd"`
 
-	root string
+	root     string
+	projFile string
 }
 
 func (desc *ProjectDesc) GetRoot() string {
@@ -207,6 +209,7 @@ func (proj *Project) String() string {
 	sb.WriteString("Project:\n")
 	sb.WriteString(fmt.Sprintf("\tFormat: %v\n", proj.FormatVersion))
 	sb.WriteString(fmt.Sprintf("\tName: %v\n", proj.Desc.Name))
+	sb.WriteString(fmt.Sprintf("\tId: %v\n", proj.Desc.Id))
 	sb.WriteString(fmt.Sprintf("\tSiteAssets: %v\n", proj.Desc.SiteAssets))
 	if proj.Desc.RuntimeConfig != "" {
 		sb.WriteString(fmt.Sprintf("\tRuntimeConfig: %v\n",
@@ -317,6 +320,7 @@ func parseProject(projFile string) (*Project, error) {
 	} else {
 		proj.Desc.root = path.Dir(projFile)
 	}
+	proj.Desc.projFile = projFile
 
 	return &proj, nil
 }
@@ -908,13 +912,123 @@ func ListProjects(opts ...DeployOption) ([]string, error) {
 		return make([]string, 0), fmt.Errorf("Client/HTTP failure: %v", err)
 	}
 	listReply := resp.GetPayload()
-	if *listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+	if listReply.Result.Status != nil &&
+		*listReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
 		return make([]string, 0),
 			fmt.Errorf("ListProjects failure(%v): %v",
 				*listReply.Result.Status, listReply.Result.StatusDetail)
 	}
 
 	return listReply.Ids, nil
+}
+
+func (proj *Project) Register(opts ...DeployOption) error {
+	deployOpts := fillDeployOptions(opts...)
+
+	createProjectReq := &models.CreateProjectRequest{
+		Header: &models.ProjectHeader{
+			DNSDomain: "",
+			DNSPrefix: "",
+			Name:      proj.Desc.Name,
+		},
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	createProjectParams := service_runner.NewCreateProjectParams().
+		WithBody(createProjectReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+
+	var err error
+	var resp *service_runner.CreateProjectOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.CreateProject(createProjectParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
+	if err != nil {
+		return fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	createReply := resp.GetPayload()
+	if createReply.Result.Status != nil &&
+		*createReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return fmt.Errorf("Createproject failure(%v): %v",
+			*createReply.Result.Status, createReply.Result.StatusDetail)
+	}
+
+	proj.Desc.Id = createReply.ID
+	return proj.ExportToFile(proj.Desc.projFile)
+}
+
+func DescribeProject(projId string, opts ...DeployOption) (*pb.ProjectDescription, error) {
+
+	deployOpts := fillDeployOptions(opts...)
+
+	describeProjectReq := &models.DescribeProjectRequest{
+		ID: projId,
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	describeProjectParams := service_runner.NewDescribeProjectParams().
+		WithBody(describeProjectReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+
+	var err error
+	var resp *service_runner.DescribeProjectOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.DescribeProject(describeProjectParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
+	if err != nil {
+		return nil, fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	describeReply := resp.GetPayload()
+	if describeReply.Result.Status != nil &&
+		*describeReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return nil,
+			fmt.Errorf("DescribeProject failure(%v): %v",
+				*describeReply.Result.Status, describeReply.Result.StatusDetail)
+	}
+
+	var ok bool
+	projStateInt := int32(0)
+	projState := pb.ProjectState(projStateInt)
+	if describeReply.Desc.State != nil {
+		projStateInt, ok = pb.ProjectState_value[string(*describeReply.Desc.State)]
+		projState = pb.ProjectState(projStateInt)
+		if !ok {
+			projState = pb.ProjectState_UNKNOWN_PROJ_STATE
+		}
+	}
+
+	ret := &pb.ProjectDescription{
+		Id: describeReply.Desc.ID,
+		Header: &pb.ProjectHeader{
+			Name:      describeReply.Desc.Header.Name,
+			DnsPrefix: describeReply.Desc.Header.DNSPrefix,
+			DnsDomain: describeReply.Desc.Header.DNSDomain,
+		},
+		State:            projState,
+		CreateTime:       convertRESTTimeToInt(describeReply.Desc.CreateTime),
+		ActiveDeployIds:  describeReply.Desc.ActiveDeployIds,
+		PendingDeployIds: describeReply.Desc.PendingDeployIds,
+	}
+
+	return ret, nil
 }
 
 // NewProject instantiates a new Project instance from the specified project

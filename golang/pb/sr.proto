@@ -59,6 +59,8 @@ enum ProjectState {
   // the project has at least one package presently active in at least one environment, or
   // has at least one pending deployment
   ACTIVE = 1;
+
+  UNKNOWN_PROJ_STATE = 2147483647; // MAX_INT
 }
 
 message ProjectHeader {
