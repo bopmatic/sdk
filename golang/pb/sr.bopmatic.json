@@ -1857,10 +1857,11 @@
       "type": "string",
       "enum": [
         "INACTIVE",
-        "ACTIVE"
+        "ACTIVE",
+        "UNKNOWN_PROJ_STATE"
       ],
       "default": "INACTIVE",
-      "title": "- INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment"
+      "title": "- INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment\n - UNKNOWN_PROJ_STATE: MAX_INT"
     },
     "ServiceDescription": {
       "type": "object",

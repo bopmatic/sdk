@@ -19,6 +19,7 @@ import (
 //   - ACTIVE: the project has at least one package presently active in at least one environment, or
 //
 // has at least one pending deployment
+//   - UNKNOWN_PROJ_STATE: MAX_INT
 //
 // swagger:model ProjectState
 type ProjectState string
@@ -39,6 +40,9 @@ const (
 
 	// ProjectStateACTIVE captures enum value "ACTIVE"
 	ProjectStateACTIVE ProjectState = "ACTIVE"
+
+	// ProjectStateUNKNOWNPROJSTATE captures enum value "UNKNOWN_PROJ_STATE"
+	ProjectStateUNKNOWNPROJSTATE ProjectState = "UNKNOWN_PROJ_STATE"
 )
 
 // for schema
@@ -46,7 +50,7 @@ var projectStateEnum []interface{}
 
 func init() {
 	var res []ProjectState
-	if err := json.Unmarshal([]byte(`["INACTIVE","ACTIVE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INACTIVE","ACTIVE","UNKNOWN_PROJ_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -22,12 +22,14 @@ type ProjectState string
 const (
 	INACTIVE ProjectState = "INACTIVE"
 	ACTIVE ProjectState = "ACTIVE"
+	UNKNOWN_PROJ_STATE ProjectState = "UNKNOWN_PROJ_STATE"
 )
 
 // All allowed values of ProjectState enum
 var AllowedProjectStateEnumValues = []ProjectState{
 	"INACTIVE",
 	"ACTIVE",
+	"UNKNOWN_PROJ_STATE",
 }
 
 func (v *ProjectState) UnmarshalJSON(src []byte) error {

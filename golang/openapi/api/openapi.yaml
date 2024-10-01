@@ -1817,11 +1817,13 @@ components:
       enum:
       - INACTIVE
       - ACTIVE
+      - UNKNOWN_PROJ_STATE
       title: |-
         - INACTIVE: the project has been created but no packages are presently active in any environment
         and there are no pending deployments
          - ACTIVE: the project has at least one package presently active in at least one environment, or
         has at least one pending deployment
+         - UNKNOWN_PROJ_STATE: MAX_INT
       type: string
     ServiceDescription:
       example:
