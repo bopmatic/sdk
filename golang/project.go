@@ -883,7 +883,7 @@ func ListProjects(opts ...DeployOption) ([]string, error) {
 
 	deployOpts := fillDeployOptions(opts...)
 
-	var listProjectsReq *models.ListProjectsRequest
+	listProjectsReq := &models.ListDeploymentsRequest{}
 
 	// default endpoint is inferred from host field in sr.bopmatic.json
 	listProjectsParams := service_runner.NewListProjectsParams().

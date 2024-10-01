@@ -110,6 +110,7 @@ message DeleteProjectReply {
 }
 
 message ListProjectsRequest {
+  reserved 1;
 }
 
 message ListProjectsReply {
@@ -175,6 +176,7 @@ message DeleteEnvironmentReply {
 }
 
 message ListEnvironmentsRequest {
+  reserved 1;
 }
 
 message ListEnvironmentsReply {
