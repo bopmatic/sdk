@@ -29,7 +29,7 @@ type ServiceRunnerResult struct {
 // will change when the set of required properties is changed
 func NewServiceRunnerResult() *ServiceRunnerResult {
 	this := ServiceRunnerResult{}
-	var status ServiceRunnerStatus = OK
+	var status ServiceRunnerStatus = INVALID
 	this.Status = &status
 	return &this
 }
@@ -39,7 +39,7 @@ func NewServiceRunnerResult() *ServiceRunnerResult {
 // but it doesn't guarantee that properties required by API are set
 func NewServiceRunnerResultWithDefaults() *ServiceRunnerResult {
 	this := ServiceRunnerResult{}
-	var status ServiceRunnerStatus = OK
+	var status ServiceRunnerStatus = INVALID
 	this.Status = &status
 	return &this
 }

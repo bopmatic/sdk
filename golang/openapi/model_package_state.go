@@ -20,6 +20,7 @@ type PackageState string
 
 // List of PackageState
 const (
+	INVALID_PKG_STATE PackageState = "INVALID_PKG_STATE"
 	UPLOADING PackageState = "UPLOADING"
 	UPLOADED PackageState = "UPLOADED"
 	PKG_VALIDATING PackageState = "PKG_VALIDATING"
@@ -33,6 +34,7 @@ const (
 
 // All allowed values of PackageState enum
 var AllowedPackageStateEnumValues = []PackageState{
+	"INVALID_PKG_STATE",
 	"UPLOADING",
 	"UPLOADED",
 	"PKG_VALIDATING",

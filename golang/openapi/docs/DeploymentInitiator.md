@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID_DEPLOY_INIT` (value: `"INVALID_DEPLOY_INIT"`)
+
 * `CUSTOMER` (value: `"CUSTOMER"`)
 
 * `SERVICE` (value: `"SERVICE"`)

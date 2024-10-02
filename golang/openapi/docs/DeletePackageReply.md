@@ -5,7 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Result** | Pointer to [**ServiceRunnerResult**](ServiceRunnerResult.md) |  | [optional] 
-**State** | Pointer to [**PackageState**](PackageState.md) |  | [optional] [default to UPLOADING]
+**State** | Pointer to [**PackageState**](PackageState.md) |  | [optional] [default to INVALID_PKG_STATE]
 
 ## Methods
 

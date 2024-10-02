@@ -14,7 +14,8 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeploymentType - NEW_PACKAGE: the deployment was created in order to deploy a new package to
+// DeploymentType - INVALID_DEPLOY_TYPE: unused
+//   - NEW_PACKAGE: the deployment was created in order to deploy a new package to
 //   - ENV_TEARDOWN: the environment (customer initiated)
 //
 // the deployment was created in order to remove the project from
@@ -40,6 +41,9 @@ func (m DeploymentType) Pointer() *DeploymentType {
 
 const (
 
+	// DeploymentTypeINVALIDDEPLOYTYPE captures enum value "INVALID_DEPLOY_TYPE"
+	DeploymentTypeINVALIDDEPLOYTYPE DeploymentType = "INVALID_DEPLOY_TYPE"
+
 	// DeploymentTypeNEWPACKAGE captures enum value "NEW_PACKAGE"
 	DeploymentTypeNEWPACKAGE DeploymentType = "NEW_PACKAGE"
 
@@ -61,7 +65,7 @@ var deploymentTypeEnum []interface{}
 
 func init() {
 	var res []DeploymentType
-	if err := json.Unmarshal([]byte(`["NEW_PACKAGE","ENV_TEARDOWN","SECURITY_UPDATE","INF_UPDATE","UNKNOWN_DEPLOY_TYPE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_DEPLOY_TYPE","NEW_PACKAGE","ENV_TEARDOWN","SECURITY_UPDATE","INF_UPDATE","UNKNOWN_DEPLOY_TYPE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID` (value: `"STATUS_INVALID"`)
+
 * `OK` (value: `"STATUS_OK"`)
 
 * `NOT_FOUND` (value: `"STATUS_NOT_FOUND"`)

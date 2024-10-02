@@ -35,6 +35,9 @@ func (m DeploymentStateDetail) Pointer() *DeploymentStateDetail {
 
 const (
 
+	// DeploymentStateDetailINVALIDDEPLOYSTATEDET captures enum value "INVALID_DEPLOY_STATE_DET"
+	DeploymentStateDetailINVALIDDEPLOYSTATEDET DeploymentStateDetail = "INVALID_DEPLOY_STATE_DET"
+
 	// DeploymentStateDetailNONE captures enum value "NONE"
 	DeploymentStateDetailNONE DeploymentStateDetail = "NONE"
 
@@ -56,7 +59,7 @@ var deploymentStateDetailEnum []interface{}
 
 func init() {
 	var res []DeploymentStateDetail
-	if err := json.Unmarshal([]byte(`["NONE","PKG_INVALID","BLD_INVALID","DPLY_SUPPORT_NEEDED","UNKNOWN_DEPLOY_STATE_DET"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_DEPLOY_STATE_DET","NONE","PKG_INVALID","BLD_INVALID","DPLY_SUPPORT_NEEDED","UNKNOWN_DEPLOY_STATE_DET"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

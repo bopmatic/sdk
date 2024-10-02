@@ -28,7 +28,7 @@ type ListMetricsRequest struct {
 // will change when the set of required properties is changed
 func NewListMetricsRequest() *ListMetricsRequest {
 	this := ListMetricsRequest{}
-	var scope MetricsScope = METRIC_SCOPE_ALL
+	var scope MetricsScope = INVALID_METRIC_SCOPE
 	this.Scope = &scope
 	return &this
 }
@@ -38,7 +38,7 @@ func NewListMetricsRequest() *ListMetricsRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewListMetricsRequestWithDefaults() *ListMetricsRequest {
 	this := ListMetricsRequest{}
-	var scope MetricsScope = METRIC_SCOPE_ALL
+	var scope MetricsScope = INVALID_METRIC_SCOPE
 	this.Scope = &scope
 	return &this
 }

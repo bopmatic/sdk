@@ -20,6 +20,7 @@ type ServiceRunnerStatus string
 
 // List of ServiceRunnerStatus
 const (
+	INVALID ServiceRunnerStatus = "STATUS_INVALID"
 	OK ServiceRunnerStatus = "STATUS_OK"
 	NOT_FOUND ServiceRunnerStatus = "STATUS_NOT_FOUND"
 	DNS_CONFLICT ServiceRunnerStatus = "STATUS_DNS_CONFLICT"
@@ -31,6 +32,7 @@ const (
 
 // All allowed values of ServiceRunnerStatus enum
 var AllowedServiceRunnerStatusEnumValues = []ServiceRunnerStatus{
+	"STATUS_INVALID",
 	"STATUS_OK",
 	"STATUS_NOT_FOUND",
 	"STATUS_DNS_CONFLICT",

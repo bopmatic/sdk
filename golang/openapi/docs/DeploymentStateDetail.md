@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID_DEPLOY_STATE_DET` (value: `"INVALID_DEPLOY_STATE_DET"`)
+
 * `NONE` (value: `"NONE"`)
 
 * `PKG_INVALID` (value: `"PKG_INVALID"`)

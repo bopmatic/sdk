@@ -20,6 +20,7 @@ type DeploymentInitiator string
 
 // List of DeploymentInitiator
 const (
+	INVALID_DEPLOY_INIT DeploymentInitiator = "INVALID_DEPLOY_INIT"
 	CUSTOMER DeploymentInitiator = "CUSTOMER"
 	SERVICE DeploymentInitiator = "SERVICE"
 	UNKNOWN_DEPLOY_INIT DeploymentInitiator = "UNKNOWN_DEPLOY_INIT"
@@ -27,6 +28,7 @@ const (
 
 // All allowed values of DeploymentInitiator enum
 var AllowedDeploymentInitiatorEnumValues = []DeploymentInitiator{
+	"INVALID_DEPLOY_INIT",
 	"CUSTOMER",
 	"SERVICE",
 	"UNKNOWN_DEPLOY_INIT",

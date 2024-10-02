@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **PackageId** | Pointer to **string** |  | [optional] 
 **ProjId** | Pointer to **string** |  | [optional] 
-**State** | Pointer to [**PackageState**](PackageState.md) |  | [optional] [default to UPLOADING]
+**State** | Pointer to [**PackageState**](PackageState.md) |  | [optional] [default to INVALID_PKG_STATE]
 **UploadTime** | Pointer to **string** |  | [optional] 
 **PackageSize** | Pointer to **string** |  | [optional] 
 

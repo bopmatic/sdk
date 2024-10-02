@@ -6,7 +6,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** |  | [optional] 
 **Header** | Pointer to [**ProjectHeader**](ProjectHeader.md) |  | [optional] 
-**State** | Pointer to [**ProjectState**](ProjectState.md) |  | [optional] [default to INACTIVE]
+**State** | Pointer to [**ProjectState**](ProjectState.md) |  | [optional] [default to INVALID_PROJ_STATE]
 **CreateTime** | Pointer to **string** |  | [optional] 
 **ActiveDeployIds** | Pointer to **[]string** |  | [optional] 
 **PendingDeployIds** | Pointer to **[]string** |  | [optional] 

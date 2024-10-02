@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID_DEPLOY_STATE` (value: `"INVALID_DEPLOY_STATE"`)
+
 * `CREATED` (value: `"CREATED"`)
 
 * `DPLY_VALIDATING` (value: `"DPLY_VALIDATING"`)

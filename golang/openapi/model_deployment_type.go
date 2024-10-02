@@ -20,6 +20,7 @@ type DeploymentType string
 
 // List of DeploymentType
 const (
+	INVALID_DEPLOY_TYPE DeploymentType = "INVALID_DEPLOY_TYPE"
 	NEW_PACKAGE DeploymentType = "NEW_PACKAGE"
 	ENV_TEARDOWN DeploymentType = "ENV_TEARDOWN"
 	SECURITY_UPDATE DeploymentType = "SECURITY_UPDATE"
@@ -29,6 +30,7 @@ const (
 
 // All allowed values of DeploymentType enum
 var AllowedDeploymentTypeEnumValues = []DeploymentType{
+	"INVALID_DEPLOY_TYPE",
 	"NEW_PACKAGE",
 	"ENV_TEARDOWN",
 	"SECURITY_UPDATE",

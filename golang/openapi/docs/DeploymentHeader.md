@@ -7,8 +7,8 @@ Name | Type | Description | Notes
 **PkgId** | Pointer to **string** |  | [optional] 
 **ProjId** | Pointer to **string** |  | [optional] 
 **EnvId** | Pointer to **string** |  | [optional] 
-**Type** | Pointer to [**DeploymentType**](DeploymentType.md) |  | [optional] [default to NEW_PACKAGE]
-**Initiator** | Pointer to [**DeploymentInitiator**](DeploymentInitiator.md) |  | [optional] [default to CUSTOMER]
+**Type** | Pointer to [**DeploymentType**](DeploymentType.md) |  | [optional] [default to INVALID_DEPLOY_TYPE]
+**Initiator** | Pointer to [**DeploymentInitiator**](DeploymentInitiator.md) |  | [optional] [default to INVALID_DEPLOY_INIT]
 
 ## Methods
 

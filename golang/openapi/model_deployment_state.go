@@ -20,6 +20,7 @@ type DeploymentState string
 
 // List of DeploymentState
 const (
+	INVALID_DEPLOY_STATE DeploymentState = "INVALID_DEPLOY_STATE"
 	CREATED DeploymentState = "CREATED"
 	DPLY_VALIDATING DeploymentState = "DPLY_VALIDATING"
 	DPLY_BUILDING DeploymentState = "DPLY_BUILDING"
@@ -31,6 +32,7 @@ const (
 
 // All allowed values of DeploymentState enum
 var AllowedDeploymentStateEnumValues = []DeploymentState{
+	"INVALID_DEPLOY_STATE",
 	"CREATED",
 	"DPLY_VALIDATING",
 	"DPLY_BUILDING",

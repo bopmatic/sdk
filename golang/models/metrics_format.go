@@ -30,6 +30,9 @@ func (m MetricsFormat) Pointer() *MetricsFormat {
 
 const (
 
+	// MetricsFormatINVALIDMETRICFORMAT captures enum value "INVALID_METRIC_FORMAT"
+	MetricsFormatINVALIDMETRICFORMAT MetricsFormat = "INVALID_METRIC_FORMAT"
+
 	// MetricsFormatMETRICFORMATOPENMETRICS captures enum value "METRIC_FORMAT_OPENMETRICS"
 	MetricsFormatMETRICFORMATOPENMETRICS MetricsFormat = "METRIC_FORMAT_OPENMETRICS"
 
@@ -42,7 +45,7 @@ var metricsFormatEnum []interface{}
 
 func init() {
 	var res []MetricsFormat
-	if err := json.Unmarshal([]byte(`["METRIC_FORMAT_OPENMETRICS","UNKNOWN_METRIC_FORMAT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_METRIC_FORMAT","METRIC_FORMAT_OPENMETRICS","UNKNOWN_METRIC_FORMAT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

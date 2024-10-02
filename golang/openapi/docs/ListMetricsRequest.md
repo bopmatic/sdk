@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Scope** | Pointer to [**MetricsScope**](MetricsScope.md) |  | [optional] [default to METRIC_SCOPE_ALL]
+**Scope** | Pointer to [**MetricsScope**](MetricsScope.md) |  | [optional] [default to INVALID_METRIC_SCOPE]
 
 ## Methods
 

@@ -36,9 +36,9 @@ type GetMetricSamplesRequest struct {
 // will change when the set of required properties is changed
 func NewGetMetricSamplesRequest() *GetMetricSamplesRequest {
 	this := GetMetricSamplesRequest{}
-	var scope MetricsScope = METRIC_SCOPE_ALL
+	var scope MetricsScope = INVALID_METRIC_SCOPE
 	this.Scope = &scope
-	var format MetricsFormat = METRIC_FORMAT_OPENMETRICS
+	var format MetricsFormat = INVALID_METRIC_FORMAT
 	this.Format = &format
 	return &this
 }
@@ -48,9 +48,9 @@ func NewGetMetricSamplesRequest() *GetMetricSamplesRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewGetMetricSamplesRequestWithDefaults() *GetMetricSamplesRequest {
 	this := GetMetricSamplesRequest{}
-	var scope MetricsScope = METRIC_SCOPE_ALL
+	var scope MetricsScope = INVALID_METRIC_SCOPE
 	this.Scope = &scope
-	var format MetricsFormat = METRIC_FORMAT_OPENMETRICS
+	var format MetricsFormat = INVALID_METRIC_FORMAT
 	this.Format = &format
 	return &this
 }

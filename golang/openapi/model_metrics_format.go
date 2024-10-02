@@ -20,12 +20,14 @@ type MetricsFormat string
 
 // List of MetricsFormat
 const (
+	INVALID_METRIC_FORMAT MetricsFormat = "INVALID_METRIC_FORMAT"
 	METRIC_FORMAT_OPENMETRICS MetricsFormat = "METRIC_FORMAT_OPENMETRICS"
 	UNKNOWN_METRIC_FORMAT MetricsFormat = "UNKNOWN_METRIC_FORMAT"
 )
 
 // All allowed values of MetricsFormat enum
 var AllowedMetricsFormatEnumValues = []MetricsFormat{
+	"INVALID_METRIC_FORMAT",
 	"METRIC_FORMAT_OPENMETRICS",
 	"UNKNOWN_METRIC_FORMAT",
 }

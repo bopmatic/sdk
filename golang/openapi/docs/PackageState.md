@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID_PKG_STATE` (value: `"INVALID_PKG_STATE"`)
+
 * `UPLOADING` (value: `"UPLOADING"`)
 
 * `UPLOADED` (value: `"UPLOADED"`)

@@ -1105,16 +1105,18 @@
     "DeploymentInitiator": {
       "type": "string",
       "enum": [
+        "INVALID_DEPLOY_INIT",
         "CUSTOMER",
         "SERVICE",
         "UNKNOWN_DEPLOY_INIT"
       ],
-      "default": "CUSTOMER",
-      "title": "- CUSTOMER: the customer initiated the deployment\n - SERVICE: Bopmatic initiated the deployment\n - UNKNOWN_DEPLOY_INIT: MAX_INT"
+      "default": "INVALID_DEPLOY_INIT",
+      "title": "- INVALID_DEPLOY_INIT: unused\n - CUSTOMER: the customer initiated the deployment\n - SERVICE: Bopmatic initiated the deployment\n - UNKNOWN_DEPLOY_INIT: MAX_INT"
     },
     "DeploymentState": {
       "type": "string",
       "enum": [
+        "INVALID_DEPLOY_STATE",
         "CREATED",
         "DPLY_VALIDATING",
         "DPLY_BUILDING",
@@ -1123,35 +1125,37 @@
         "FAILED",
         "UNKNOWN_DEPLOY_STATE"
       ],
-      "default": "CREATED",
+      "default": "INVALID_DEPLOY_STATE",
       "description": "the package associated with the deployment passed validation and is in\n - DEPLOYING: the process of being compiled\n\nthe package associated with the deployment compiled successfully and is\n - SUCCESS: in the process of being deployed to the environment specified\n\nthe deployment was successful and the package associated with the\n - FAILED: deployment is now active in the environment specified\n\nthe deployment failed; see DeploymentDescription.stateDetail for further\n - UNKNOWN_DEPLOY_STATE: MAX_INT",
-      "title": "- CREATED: the deployment has been created, but no action has yet been taken\n - DPLY_VALIDATING: the package associated with the deployment is in the process of being\n - DPLY_BUILDING: validated"
+      "title": "- INVALID_DEPLOY_STATE: unused\n - CREATED: the deployment has been created, but no action has yet been taken\n - DPLY_VALIDATING: the package associated with the deployment is in the process of being\n - DPLY_BUILDING: validated"
     },
     "DeploymentStateDetail": {
       "type": "string",
       "enum": [
+        "INVALID_DEPLOY_STATE_DET",
         "NONE",
         "PKG_INVALID",
         "BLD_INVALID",
         "DPLY_SUPPORT_NEEDED",
         "UNKNOWN_DEPLOY_STATE_DET"
       ],
-      "default": "NONE",
+      "default": "INVALID_DEPLOY_STATE_DET",
       "description": "the package associated with the deployment failed to compile\n - DPLY_SUPPORT_NEEDED: the deployment failed for an unknown reason; Bopmatic support\n - UNKNOWN_DEPLOY_STATE_DET: MAX_INT",
       "title": "- PKG_INVALID: the package associated with the deployment failed validation checks and\n - BLD_INVALID: cannot be deployed"
     },
     "DeploymentType": {
       "type": "string",
       "enum": [
+        "INVALID_DEPLOY_TYPE",
         "NEW_PACKAGE",
         "ENV_TEARDOWN",
         "SECURITY_UPDATE",
         "INF_UPDATE",
         "UNKNOWN_DEPLOY_TYPE"
       ],
-      "default": "NEW_PACKAGE",
+      "default": "INVALID_DEPLOY_TYPE",
       "description": "the deployment was created in order to remove the project from\n - SECURITY_UPDATE: the environment (customer initiated)\n\nthe deployment was created in order to perform a security update\n - INF_UPDATE: on the backend infrastructure (service initiated)\n\nthe deployment was created in order to perform a non-security related\n - UNKNOWN_DEPLOY_TYPE: MAX_INT",
-      "title": "- NEW_PACKAGE: the deployment was created in order to deploy a new package to\n - ENV_TEARDOWN: the environment (customer initiated)"
+      "title": "- INVALID_DEPLOY_TYPE: unused\n - NEW_PACKAGE: the deployment was created in order to deploy a new package to\n - ENV_TEARDOWN: the environment (customer initiated)"
     },
     "DescribeDatabaseReply": {
       "type": "object",
@@ -1725,22 +1729,24 @@
     "MetricsFormat": {
       "type": "string",
       "enum": [
+        "INVALID_METRIC_FORMAT",
         "METRIC_FORMAT_OPENMETRICS",
         "UNKNOWN_METRIC_FORMAT"
       ],
-      "default": "METRIC_FORMAT_OPENMETRICS",
+      "default": "INVALID_METRIC_FORMAT",
       "title": "- UNKNOWN_METRIC_FORMAT: MAX_INT"
     },
     "MetricsScope": {
       "type": "string",
       "enum": [
+        "INVALID_METRIC_SCOPE",
         "METRIC_SCOPE_ALL",
         "METRIC_SCOPE_SERVICE",
         "METRIC_SCOPE_DATASTORE",
         "METRIC_SCOPE_DATABASE",
         "UNKNOWN_METRIC_SCOPE"
       ],
-      "default": "METRIC_SCOPE_ALL",
+      "default": "INVALID_METRIC_SCOPE",
       "title": "- UNKNOWN_METRIC_SCOPE: MAX_INT"
     },
     "PackageDescription": {
@@ -1773,6 +1779,7 @@
     "PackageState": {
       "type": "string",
       "enum": [
+        "INVALID_PKG_STATE",
         "UPLOADING",
         "UPLOADED",
         "PKG_VALIDATING",
@@ -1783,9 +1790,9 @@
         "BUILT",
         "UNKNOWN_PKG_STATE"
       ],
-      "default": "UPLOADING",
+      "default": "INVALID_PKG_STATE",
       "description": "the package passed validation and is in the process of being built\n - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating\n - DELETED: the package has been deleted\n - BUILT: the package was successfully built and is eligible to be deployed\n - UNKNOWN_PKG_STATE: MAX_INT",
-      "title": "- UPLOADING: package is currently in the process of being uploaded\n - UPLOADED: upload has completed; the package has not yet started validataion\n - PKG_VALIDATING: the package is in the process of being validated\n - INVALID: the package failed validation checks or builds and cannot be\n - PKG_BUILDING: deployed"
+      "title": "- INVALID_PKG_STATE: unused\n - UPLOADING: package is currently in the process of being uploaded\n - UPLOADED: upload has completed; the package has not yet started validataion\n - PKG_VALIDATING: the package is in the process of being validated\n - INVALID: the package failed validation checks or builds and cannot be\n - PKG_BUILDING: deployed"
     },
     "ProjEnvHeader": {
       "type": "object",
@@ -1856,12 +1863,13 @@
     "ProjectState": {
       "type": "string",
       "enum": [
+        "INVALID_PROJ_STATE",
         "INACTIVE",
         "ACTIVE",
         "UNKNOWN_PROJ_STATE"
       ],
-      "default": "INACTIVE",
-      "title": "- INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment\n - UNKNOWN_PROJ_STATE: MAX_INT"
+      "default": "INVALID_PROJ_STATE",
+      "title": "- INVALID_PROJ_STATE: unused\n - INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment\n - UNKNOWN_PROJ_STATE: MAX_INT"
     },
     "ServiceDescription": {
       "type": "object",
@@ -1906,6 +1914,7 @@
     "ServiceRunnerStatus": {
       "type": "string",
       "enum": [
+        "STATUS_INVALID",
         "STATUS_OK",
         "STATUS_NOT_FOUND",
         "STATUS_DNS_CONFLICT",
@@ -1914,8 +1923,8 @@
         "STATUS_NOT_EXISTS",
         "STATUS_UNKNOWN"
       ],
-      "default": "STATUS_OK",
-      "title": "- STATUS_UNKNOWN: MAX_INT"
+      "default": "STATUS_INVALID",
+      "title": "- STATUS_INVALID: unused\n - STATUS_UNKNOWN: MAX_INT"
     },
     "UploadPackageReply": {
       "type": "object",

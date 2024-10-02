@@ -14,7 +14,8 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// PackageState - UPLOADING: package is currently in the process of being uploaded
+// PackageState - INVALID_PKG_STATE: unused
+//   - UPLOADING: package is currently in the process of being uploaded
 //   - UPLOADED: upload has completed; the package has not yet started validataion
 //   - PKG_VALIDATING: the package is in the process of being validated
 //   - INVALID: the package failed validation checks or builds and cannot be
@@ -39,6 +40,9 @@ func (m PackageState) Pointer() *PackageState {
 }
 
 const (
+
+	// PackageStateINVALIDPKGSTATE captures enum value "INVALID_PKG_STATE"
+	PackageStateINVALIDPKGSTATE PackageState = "INVALID_PKG_STATE"
 
 	// PackageStateUPLOADING captures enum value "UPLOADING"
 	PackageStateUPLOADING PackageState = "UPLOADING"
@@ -73,7 +77,7 @@ var packageStateEnum []interface{}
 
 func init() {
 	var res []PackageState
-	if err := json.Unmarshal([]byte(`["UPLOADING","UPLOADED","PKG_VALIDATING","INVALID","PKG_BUILDING","PKG_SUPPORT_NEEDED","DELETED","BUILT","UNKNOWN_PKG_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_PKG_STATE","UPLOADING","UPLOADED","PKG_VALIDATING","INVALID","PKG_BUILDING","PKG_SUPPORT_NEEDED","DELETED","BUILT","UNKNOWN_PKG_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

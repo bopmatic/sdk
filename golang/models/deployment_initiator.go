@@ -14,7 +14,8 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeploymentInitiator - CUSTOMER: the customer initiated the deployment
+// DeploymentInitiator - INVALID_DEPLOY_INIT: unused
+//   - CUSTOMER: the customer initiated the deployment
 //   - SERVICE: Bopmatic initiated the deployment
 //   - UNKNOWN_DEPLOY_INIT: MAX_INT
 //
@@ -32,6 +33,9 @@ func (m DeploymentInitiator) Pointer() *DeploymentInitiator {
 
 const (
 
+	// DeploymentInitiatorINVALIDDEPLOYINIT captures enum value "INVALID_DEPLOY_INIT"
+	DeploymentInitiatorINVALIDDEPLOYINIT DeploymentInitiator = "INVALID_DEPLOY_INIT"
+
 	// DeploymentInitiatorCUSTOMER captures enum value "CUSTOMER"
 	DeploymentInitiatorCUSTOMER DeploymentInitiator = "CUSTOMER"
 
@@ -47,7 +51,7 @@ var deploymentInitiatorEnum []interface{}
 
 func init() {
 	var res []DeploymentInitiator
-	if err := json.Unmarshal([]byte(`["CUSTOMER","SERVICE","UNKNOWN_DEPLOY_INIT"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_DEPLOY_INIT","CUSTOMER","SERVICE","UNKNOWN_DEPLOY_INIT"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

@@ -32,7 +32,7 @@ type PackageDescription struct {
 // will change when the set of required properties is changed
 func NewPackageDescription() *PackageDescription {
 	this := PackageDescription{}
-	var state PackageState = UPLOADING
+	var state PackageState = INVALID_PKG_STATE
 	this.State = &state
 	return &this
 }
@@ -42,7 +42,7 @@ func NewPackageDescription() *PackageDescription {
 // but it doesn't guarantee that properties required by API are set
 func NewPackageDescriptionWithDefaults() *PackageDescription {
 	this := PackageDescription{}
-	var state PackageState = UPLOADING
+	var state PackageState = INVALID_PKG_STATE
 	this.State = &state
 	return &this
 }

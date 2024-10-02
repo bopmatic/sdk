@@ -36,9 +36,9 @@ type DeploymentDescription struct {
 // will change when the set of required properties is changed
 func NewDeploymentDescription() *DeploymentDescription {
 	this := DeploymentDescription{}
-	var state DeploymentState = CREATED
+	var state DeploymentState = INVALID_DEPLOY_STATE
 	this.State = &state
-	var stateDetail DeploymentStateDetail = NONE
+	var stateDetail DeploymentStateDetail = INVALID_DEPLOY_STATE_DET
 	this.StateDetail = &stateDetail
 	return &this
 }
@@ -48,9 +48,9 @@ func NewDeploymentDescription() *DeploymentDescription {
 // but it doesn't guarantee that properties required by API are set
 func NewDeploymentDescriptionWithDefaults() *DeploymentDescription {
 	this := DeploymentDescription{}
-	var state DeploymentState = CREATED
+	var state DeploymentState = INVALID_DEPLOY_STATE
 	this.State = &state
-	var stateDetail DeploymentStateDetail = NONE
+	var stateDetail DeploymentStateDetail = INVALID_DEPLOY_STATE_DET
 	this.StateDetail = &stateDetail
 	return &this
 }

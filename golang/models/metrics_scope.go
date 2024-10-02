@@ -30,6 +30,9 @@ func (m MetricsScope) Pointer() *MetricsScope {
 
 const (
 
+	// MetricsScopeINVALIDMETRICSCOPE captures enum value "INVALID_METRIC_SCOPE"
+	MetricsScopeINVALIDMETRICSCOPE MetricsScope = "INVALID_METRIC_SCOPE"
+
 	// MetricsScopeMETRICSCOPEALL captures enum value "METRIC_SCOPE_ALL"
 	MetricsScopeMETRICSCOPEALL MetricsScope = "METRIC_SCOPE_ALL"
 
@@ -51,7 +54,7 @@ var metricsScopeEnum []interface{}
 
 func init() {
 	var res []MetricsScope
-	if err := json.Unmarshal([]byte(`["METRIC_SCOPE_ALL","METRIC_SCOPE_SERVICE","METRIC_SCOPE_DATASTORE","METRIC_SCOPE_DATABASE","UNKNOWN_METRIC_SCOPE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_METRIC_SCOPE","METRIC_SCOPE_ALL","METRIC_SCOPE_SERVICE","METRIC_SCOPE_DATASTORE","METRIC_SCOPE_DATABASE","UNKNOWN_METRIC_SCOPE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

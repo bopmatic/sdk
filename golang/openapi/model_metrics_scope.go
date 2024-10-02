@@ -20,6 +20,7 @@ type MetricsScope string
 
 // List of MetricsScope
 const (
+	INVALID_METRIC_SCOPE MetricsScope = "INVALID_METRIC_SCOPE"
 	METRIC_SCOPE_ALL MetricsScope = "METRIC_SCOPE_ALL"
 	METRIC_SCOPE_SERVICE MetricsScope = "METRIC_SCOPE_SERVICE"
 	METRIC_SCOPE_DATASTORE MetricsScope = "METRIC_SCOPE_DATASTORE"
@@ -29,6 +30,7 @@ const (
 
 // All allowed values of MetricsScope enum
 var AllowedMetricsScopeEnumValues = []MetricsScope{
+	"INVALID_METRIC_SCOPE",
 	"METRIC_SCOPE_ALL",
 	"METRIC_SCOPE_SERVICE",
 	"METRIC_SCOPE_DATASTORE",

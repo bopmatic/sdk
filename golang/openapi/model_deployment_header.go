@@ -32,9 +32,9 @@ type DeploymentHeader struct {
 // will change when the set of required properties is changed
 func NewDeploymentHeader() *DeploymentHeader {
 	this := DeploymentHeader{}
-	var type_ DeploymentType = NEW_PACKAGE
+	var type_ DeploymentType = INVALID_DEPLOY_TYPE
 	this.Type = &type_
-	var initiator DeploymentInitiator = CUSTOMER
+	var initiator DeploymentInitiator = INVALID_DEPLOY_INIT
 	this.Initiator = &initiator
 	return &this
 }
@@ -44,9 +44,9 @@ func NewDeploymentHeader() *DeploymentHeader {
 // but it doesn't guarantee that properties required by API are set
 func NewDeploymentHeaderWithDefaults() *DeploymentHeader {
 	this := DeploymentHeader{}
-	var type_ DeploymentType = NEW_PACKAGE
+	var type_ DeploymentType = INVALID_DEPLOY_TYPE
 	this.Type = &type_
-	var initiator DeploymentInitiator = CUSTOMER
+	var initiator DeploymentInitiator = INVALID_DEPLOY_INIT
 	this.Initiator = &initiator
 	return &this
 }

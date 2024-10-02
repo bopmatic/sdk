@@ -29,7 +29,7 @@ type DeletePackageReply struct {
 // will change when the set of required properties is changed
 func NewDeletePackageReply() *DeletePackageReply {
 	this := DeletePackageReply{}
-	var state PackageState = UPLOADING
+	var state PackageState = INVALID_PKG_STATE
 	this.State = &state
 	return &this
 }
@@ -39,7 +39,7 @@ func NewDeletePackageReply() *DeletePackageReply {
 // but it doesn't guarantee that properties required by API are set
 func NewDeletePackageReplyWithDefaults() *DeletePackageReply {
 	this := DeletePackageReply{}
-	var state PackageState = UPLOADING
+	var state PackageState = INVALID_PKG_STATE
 	this.State = &state
 	return &this
 }

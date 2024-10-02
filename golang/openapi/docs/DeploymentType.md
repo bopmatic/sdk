@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID_DEPLOY_TYPE` (value: `"INVALID_DEPLOY_TYPE"`)
+
 * `NEW_PACKAGE` (value: `"NEW_PACKAGE"`)
 
 * `ENV_TEARDOWN` (value: `"ENV_TEARDOWN"`)

@@ -20,6 +20,7 @@ type DeploymentStateDetail string
 
 // List of DeploymentStateDetail
 const (
+	INVALID_DEPLOY_STATE_DET DeploymentStateDetail = "INVALID_DEPLOY_STATE_DET"
 	NONE DeploymentStateDetail = "NONE"
 	PKG_INVALID DeploymentStateDetail = "PKG_INVALID"
 	BLD_INVALID DeploymentStateDetail = "BLD_INVALID"
@@ -29,6 +30,7 @@ const (
 
 // All allowed values of DeploymentStateDetail enum
 var AllowedDeploymentStateDetailEnumValues = []DeploymentStateDetail{
+	"INVALID_DEPLOY_STATE_DET",
 	"NONE",
 	"PKG_INVALID",
 	"BLD_INVALID",

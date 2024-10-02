@@ -6,8 +6,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | Pointer to **string** |  | [optional] 
 **Header** | Pointer to [**DeploymentHeader**](DeploymentHeader.md) |  | [optional] 
-**State** | Pointer to [**DeploymentState**](DeploymentState.md) |  | [optional] [default to CREATED]
-**StateDetail** | Pointer to [**DeploymentStateDetail**](DeploymentStateDetail.md) |  | [optional] [default to NONE]
+**State** | Pointer to [**DeploymentState**](DeploymentState.md) |  | [optional] [default to INVALID_DEPLOY_STATE]
+**StateDetail** | Pointer to [**DeploymentStateDetail**](DeploymentStateDetail.md) |  | [optional] [default to INVALID_DEPLOY_STATE_DET]
 **CreateTime** | Pointer to **string** |  | [optional] 
 **ValidationStartTime** | Pointer to **string** |  | [optional] 
 **BuildStartTime** | Pointer to **string** |  | [optional] 

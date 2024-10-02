@@ -33,7 +33,7 @@ type ProjectDescription struct {
 // will change when the set of required properties is changed
 func NewProjectDescription() *ProjectDescription {
 	this := ProjectDescription{}
-	var state ProjectState = INACTIVE
+	var state ProjectState = INVALID_PROJ_STATE
 	this.State = &state
 	return &this
 }
@@ -43,7 +43,7 @@ func NewProjectDescription() *ProjectDescription {
 // but it doesn't guarantee that properties required by API are set
 func NewProjectDescriptionWithDefaults() *ProjectDescription {
 	this := ProjectDescription{}
-	var state ProjectState = INACTIVE
+	var state ProjectState = INVALID_PROJ_STATE
 	this.State = &state
 	return &this
 }

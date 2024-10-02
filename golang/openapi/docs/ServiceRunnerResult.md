@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Status** | Pointer to [**ServiceRunnerStatus**](ServiceRunnerStatus.md) |  | [optional] [default to OK]
+**Status** | Pointer to [**ServiceRunnerStatus**](ServiceRunnerStatus.md) |  | [optional] [default to INVALID]
 **StatusDetail** | Pointer to **string** |  | [optional] 
 
 ## Methods

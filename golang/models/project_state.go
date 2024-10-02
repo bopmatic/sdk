@@ -14,7 +14,9 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// ProjectState - INACTIVE: the project has been created but no packages are presently active in any environment
+// ProjectState - INVALID_PROJ_STATE: unused
+//   - INACTIVE: the project has been created but no packages are presently active in any environment
+//
 // and there are no pending deployments
 //   - ACTIVE: the project has at least one package presently active in at least one environment, or
 //
@@ -35,6 +37,9 @@ func (m ProjectState) Pointer() *ProjectState {
 
 const (
 
+	// ProjectStateINVALIDPROJSTATE captures enum value "INVALID_PROJ_STATE"
+	ProjectStateINVALIDPROJSTATE ProjectState = "INVALID_PROJ_STATE"
+
 	// ProjectStateINACTIVE captures enum value "INACTIVE"
 	ProjectStateINACTIVE ProjectState = "INACTIVE"
 
@@ -50,7 +55,7 @@ var projectStateEnum []interface{}
 
 func init() {
 	var res []ProjectState
-	if err := json.Unmarshal([]byte(`["INACTIVE","ACTIVE","UNKNOWN_PROJ_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_PROJ_STATE","INACTIVE","ACTIVE","UNKNOWN_PROJ_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

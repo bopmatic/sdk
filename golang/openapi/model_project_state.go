@@ -20,6 +20,7 @@ type ProjectState string
 
 // List of ProjectState
 const (
+	INVALID_PROJ_STATE ProjectState = "INVALID_PROJ_STATE"
 	INACTIVE ProjectState = "INACTIVE"
 	ACTIVE ProjectState = "ACTIVE"
 	UNKNOWN_PROJ_STATE ProjectState = "UNKNOWN_PROJ_STATE"
@@ -27,6 +28,7 @@ const (
 
 // All allowed values of ProjectState enum
 var AllowedProjectStateEnumValues = []ProjectState{
+	"INVALID_PROJ_STATE",
 	"INACTIVE",
 	"ACTIVE",
 	"UNKNOWN_PROJ_STATE",

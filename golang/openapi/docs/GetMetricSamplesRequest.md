@@ -6,12 +6,12 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **ProjId** | Pointer to **string** |  | [optional] 
 **EnvId** | Pointer to **string** |  | [optional] 
-**Scope** | Pointer to [**MetricsScope**](MetricsScope.md) |  | [optional] [default to METRIC_SCOPE_ALL]
+**Scope** | Pointer to [**MetricsScope**](MetricsScope.md) |  | [optional] [default to INVALID_METRIC_SCOPE]
 **ScopeQualifier** | Pointer to **string** |  | [optional] 
 **MetricNames** | Pointer to **[]string** |  | [optional] 
 **StartTime** | Pointer to **string** |  | [optional] 
 **EndTime** | Pointer to **string** | latest metric to retrieve expressed as the number of | [optional] 
-**Format** | Pointer to [**MetricsFormat**](MetricsFormat.md) |  | [optional] [default to METRIC_FORMAT_OPENMETRICS]
+**Format** | Pointer to [**MetricsFormat**](MetricsFormat.md) |  | [optional] [default to INVALID_METRIC_FORMAT]
 
 ## Methods
 

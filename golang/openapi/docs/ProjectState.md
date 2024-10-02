@@ -3,6 +3,8 @@
 ## Enum
 
 
+* `INVALID_PROJ_STATE` (value: `"INVALID_PROJ_STATE"`)
+
 * `INACTIVE` (value: `"INACTIVE"`)
 
 * `ACTIVE` (value: `"ACTIVE"`)

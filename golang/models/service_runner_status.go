@@ -14,7 +14,8 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// ServiceRunnerStatus - STATUS_UNKNOWN: MAX_INT
+// ServiceRunnerStatus - STATUS_INVALID: unused
+//   - STATUS_UNKNOWN: MAX_INT
 //
 // swagger:model ServiceRunnerStatus
 type ServiceRunnerStatus string
@@ -29,6 +30,9 @@ func (m ServiceRunnerStatus) Pointer() *ServiceRunnerStatus {
 }
 
 const (
+
+	// ServiceRunnerStatusSTATUSINVALID captures enum value "STATUS_INVALID"
+	ServiceRunnerStatusSTATUSINVALID ServiceRunnerStatus = "STATUS_INVALID"
 
 	// ServiceRunnerStatusSTATUSOK captures enum value "STATUS_OK"
 	ServiceRunnerStatusSTATUSOK ServiceRunnerStatus = "STATUS_OK"
@@ -57,7 +61,7 @@ var serviceRunnerStatusEnum []interface{}
 
 func init() {
 	var res []ServiceRunnerStatus
-	if err := json.Unmarshal([]byte(`["STATUS_OK","STATUS_NOT_FOUND","STATUS_DNS_CONFLICT","STATUS_ACCT_LIMIT_REACHED","STATUS_EXISTS","STATUS_NOT_EXISTS","STATUS_UNKNOWN"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["STATUS_INVALID","STATUS_OK","STATUS_NOT_FOUND","STATUS_DNS_CONFLICT","STATUS_ACCT_LIMIT_REACHED","STATUS_EXISTS","STATUS_NOT_EXISTS","STATUS_UNKNOWN"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

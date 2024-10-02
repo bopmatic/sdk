@@ -14,7 +14,8 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-// DeploymentState - CREATED: the deployment has been created, but no action has yet been taken
+// DeploymentState - INVALID_DEPLOY_STATE: unused
+//   - CREATED: the deployment has been created, but no action has yet been taken
 //   - DPLY_VALIDATING: the package associated with the deployment is in the process of being
 //   - DPLY_BUILDING: validated
 //
@@ -44,6 +45,9 @@ func (m DeploymentState) Pointer() *DeploymentState {
 
 const (
 
+	// DeploymentStateINVALIDDEPLOYSTATE captures enum value "INVALID_DEPLOY_STATE"
+	DeploymentStateINVALIDDEPLOYSTATE DeploymentState = "INVALID_DEPLOY_STATE"
+
 	// DeploymentStateCREATED captures enum value "CREATED"
 	DeploymentStateCREATED DeploymentState = "CREATED"
 
@@ -71,7 +75,7 @@ var deploymentStateEnum []interface{}
 
 func init() {
 	var res []DeploymentState
-	if err := json.Unmarshal([]byte(`["CREATED","DPLY_VALIDATING","DPLY_BUILDING","DEPLOYING","SUCCESS","FAILED","UNKNOWN_DEPLOY_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_DEPLOY_STATE","CREATED","DPLY_VALIDATING","DPLY_BUILDING","DEPLOYING","SUCCESS","FAILED","UNKNOWN_DEPLOY_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
