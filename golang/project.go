@@ -924,6 +924,99 @@ func ListProjects(opts ...DeployOption) ([]string, error) {
 	return listReply.Ids, nil
 }
 
+func (proj *Project) Unregister(opts ...DeployOption) error {
+	return UnregisterProject(proj.Desc.Id, opts...)
+}
+
+func (proj *Project) Deactivate(envId string,
+	opts ...DeployOption) (string, error) {
+
+	return DeactivateProject(proj.Desc.Id, envId, opts...)
+}
+
+func UnregisterProject(projId string, opts ...DeployOption) error {
+	deployOpts := fillDeployOptions(opts...)
+
+	deleteProjectReq := &models.DeleteProjectRequest{
+		ID: projId,
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	deleteProjectParams := service_runner.NewDeleteProjectParams().
+		WithBody(deleteProjectReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+
+	var err error
+	var resp *service_runner.DeleteProjectOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.DeleteProject(deleteProjectParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
+	if err != nil {
+		return fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	deleteReply := resp.GetPayload()
+	if deleteReply.Result.Status != nil &&
+		*deleteReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return fmt.Errorf("DeleteProject failure(%v): %v",
+			*deleteReply.Result.Status, deleteReply.Result.StatusDetail)
+	}
+
+	return nil
+}
+
+func DeactivateProject(projId string, envId string,
+	opts ...DeployOption) (string, error) {
+
+	deployOpts := fillDeployOptions(opts...)
+
+	deactivateProjectReq := &models.DeactivateProjectRequest{
+		ProjEnvHeader: &models.ProjEnvHeader{
+			ProjID: projId,
+			EnvID:  envId,
+		},
+	}
+
+	// default endpoint is inferred from host field in sr.bopmatic.json
+	deactivateProjectParams := service_runner.NewDeactivateProjectParams().
+		WithBody(deactivateProjectReq).WithHTTPClient(deployOpts.httpClient)
+	config := goswag.DefaultTransportConfig()
+	client := goswag.NewHTTPClientWithConfig(nil, config)
+
+	var err error
+	var resp *service_runner.DeactivateProjectOK
+
+	for retries := defaultRetries; retries > 0; retries-- {
+		resp, err = client.ServiceRunner.DeactivateProject(deactivateProjectParams)
+		if err == nil {
+			break
+		}
+
+		client = nil
+		client = goswag.NewHTTPClientWithConfig(nil, config)
+		time.Sleep(5 * time.Second)
+	}
+	if err != nil {
+		return "", fmt.Errorf("Client/HTTP failure: %v", err)
+	}
+	deactivateReply := resp.GetPayload()
+	if deactivateReply.Result.Status != nil &&
+		*deactivateReply.Result.Status != models.ServiceRunnerStatusSTATUSOK {
+		return "", fmt.Errorf("DeactivateProject failure(%v): %v",
+			*deactivateReply.Result.Status, deactivateReply.Result.StatusDetail)
+	}
+
+	return deactivateReply.DeployID, nil
+}
+
 func (proj *Project) Register(opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 

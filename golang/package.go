@@ -429,10 +429,10 @@ func (pkg *Package) Deploy(envId string, opts ...DeployOption) (string, error) {
 	return deployment.DeployId, nil
 }
 
-// Delete() implemented using a client generated with go-swagger:
+// DeletePackage() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
-func Delete(packageId string, opts ...DeployOption) error {
+func DeletePackage(packageId string, opts ...DeployOption) error {
 	deployOpts := fillDeployOptions(opts...)
 
 	deletePackageReq := &models.DeletePackageRequest{

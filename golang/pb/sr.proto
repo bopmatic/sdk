@@ -6,6 +6,7 @@ service ServiceRunner {
   rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectReply) {}
   rpc ListProjects (ListProjectsRequest) returns (ListProjectsReply) {}
   rpc DescribeProject (DescribeProjectRequest) returns (DescribeProjectReply) {}
+  rpc DeactivateProject (DeactivateProjectRequest) returns (DeactivateProjectReply) {}
 
   rpc CreateEnvironment (CreateEnvironmentRequest) returns (CreateEnvironmentReply) {}
   rpc DeleteEnvironment (DeleteEnvironmentRequest) returns (DeleteEnvironmentReply) {}
@@ -61,6 +62,8 @@ enum ProjectState {
   // the project has at least one package presently active in at least one environment, or
   // has at least one pending deployment
   ACTIVE = 2;
+  // the project has been deleted
+  PROJ_STATE_DELETED = 3;
 
   UNKNOWN_PROJ_STATE = 2147483647; // MAX_INT
 }
@@ -111,6 +114,15 @@ message DeleteProjectRequest {
 
 message DeleteProjectReply {
   ServiceRunnerResult result = 1;
+}
+
+message DeactivateProjectRequest {
+  ProjEnvHeader projEnvHeader = 1; // the project & environment id to deactivate
+}
+
+message DeactivateProjectReply {
+  ServiceRunnerResult result = 1;
+  string deployId = 2; // the deployment id created in order to perform the deactivation
 }
 
 message ListProjectsRequest {
@@ -481,7 +493,7 @@ enum PackageState {
                         // deployed
   PKG_BUILDING = 5;     // the package passed validation and is in the process of being built
   PKG_SUPPORT_NEEDED = 6;   // something went wrong and Bopmatic support is investigating
-  DELETED = 7;         // the package has been deleted
+  PKG_DELETED = 7;         // the package has been deleted
   BUILT = 8;           // the package was successfully built and is eligible to be deployed
 
   UNKNOWN_PKG_STATE = 2147483647; // MAX_INT
