@@ -26,6 +26,7 @@ type ServiceRunnerClient interface {
 	DeleteProject(ctx context.Context, in *DeleteProjectRequest, opts ...grpc.CallOption) (*DeleteProjectReply, error)
 	ListProjects(ctx context.Context, in *ListProjectsRequest, opts ...grpc.CallOption) (*ListProjectsReply, error)
 	DescribeProject(ctx context.Context, in *DescribeProjectRequest, opts ...grpc.CallOption) (*DescribeProjectReply, error)
+	DeactivateProject(ctx context.Context, in *DeactivateProjectRequest, opts ...grpc.CallOption) (*DeactivateProjectReply, error)
 	CreateEnvironment(ctx context.Context, in *CreateEnvironmentRequest, opts ...grpc.CallOption) (*CreateEnvironmentReply, error)
 	DeleteEnvironment(ctx context.Context, in *DeleteEnvironmentRequest, opts ...grpc.CallOption) (*DeleteEnvironmentReply, error)
 	ListEnvironments(ctx context.Context, in *ListEnvironmentsRequest, opts ...grpc.CallOption) (*ListEnvironmentsReply, error)
@@ -88,6 +89,15 @@ func (c *serviceRunnerClient) ListProjects(ctx context.Context, in *ListProjects
 func (c *serviceRunnerClient) DescribeProject(ctx context.Context, in *DescribeProjectRequest, opts ...grpc.CallOption) (*DescribeProjectReply, error) {
 	out := new(DescribeProjectReply)
 	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeProject", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DeactivateProject(ctx context.Context, in *DeactivateProjectRequest, opts ...grpc.CallOption) (*DeactivateProjectReply, error) {
+	out := new(DeactivateProjectReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DeactivateProject", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -300,6 +310,7 @@ type ServiceRunnerServer interface {
 	DeleteProject(context.Context, *DeleteProjectRequest) (*DeleteProjectReply, error)
 	ListProjects(context.Context, *ListProjectsRequest) (*ListProjectsReply, error)
 	DescribeProject(context.Context, *DescribeProjectRequest) (*DescribeProjectReply, error)
+	DeactivateProject(context.Context, *DeactivateProjectRequest) (*DeactivateProjectReply, error)
 	CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*CreateEnvironmentReply, error)
 	DeleteEnvironment(context.Context, *DeleteEnvironmentRequest) (*DeleteEnvironmentReply, error)
 	ListEnvironments(context.Context, *ListEnvironmentsRequest) (*ListEnvironmentsReply, error)
@@ -340,6 +351,9 @@ func (UnimplementedServiceRunnerServer) ListProjects(context.Context, *ListProje
 }
 func (UnimplementedServiceRunnerServer) DescribeProject(context.Context, *DescribeProjectRequest) (*DescribeProjectReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DescribeProject not implemented")
+}
+func (UnimplementedServiceRunnerServer) DeactivateProject(context.Context, *DeactivateProjectRequest) (*DeactivateProjectReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeactivateProject not implemented")
 }
 func (UnimplementedServiceRunnerServer) CreateEnvironment(context.Context, *CreateEnvironmentRequest) (*CreateEnvironmentReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateEnvironment not implemented")
@@ -488,6 +502,24 @@ func _ServiceRunner_DescribeProject_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(ServiceRunnerServer).DescribeProject(ctx, req.(*DescribeProjectRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DeactivateProject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeactivateProjectRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DeactivateProject(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DeactivateProject",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DeactivateProject(ctx, req.(*DeactivateProjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -910,6 +942,10 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DescribeProject",
 			Handler:    _ServiceRunner_DescribeProject_Handler,
+		},
+		{
+			MethodName: "DeactivateProject",
+			Handler:    _ServiceRunner_DeactivateProject_Handler,
 		},
 		{
 			MethodName: "CreateEnvironment",

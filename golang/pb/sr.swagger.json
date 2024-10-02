@@ -112,6 +112,38 @@
         ]
       }
     },
+    "/ServiceRunner/DeactivateProject": {
+      "post": {
+        "operationId": "DeactivateProject",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeactivateProjectReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeactivateProjectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/DeleteEnvironment": {
       "post": {
         "operationId": "DeleteEnvironment",
@@ -974,6 +1006,27 @@
         }
       }
     },
+    "DeactivateProjectReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "deployId": {
+          "type": "string",
+          "title": "the deployment id created in order to perform the deactivation"
+        }
+      }
+    },
+    "DeactivateProjectRequest": {
+      "type": "object",
+      "properties": {
+        "projEnvHeader": {
+          "$ref": "#/definitions/ProjEnvHeader",
+          "title": "the project \u0026 environment id to deactivate"
+        }
+      }
+    },
     "DeleteEnvironmentReply": {
       "type": "object",
       "properties": {
@@ -1782,12 +1835,12 @@
         "INVALID",
         "PKG_BUILDING",
         "PKG_SUPPORT_NEEDED",
-        "DELETED",
+        "PKG_DELETED",
         "BUILT",
         "UNKNOWN_PKG_STATE"
       ],
       "default": "INVALID_PKG_STATE",
-      "description": "the package passed validation and is in the process of being built\n - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating\n - DELETED: the package has been deleted\n - BUILT: the package was successfully built and is eligible to be deployed\n - UNKNOWN_PKG_STATE: MAX_INT",
+      "description": "the package passed validation and is in the process of being built\n - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating\n - PKG_DELETED: the package has been deleted\n - BUILT: the package was successfully built and is eligible to be deployed\n - UNKNOWN_PKG_STATE: MAX_INT",
       "title": "- INVALID_PKG_STATE: unused\n - UPLOADING: package is currently in the process of being uploaded\n - UPLOADED: upload has completed; the package has not yet started validataion\n - PKG_VALIDATING: the package is in the process of being validated\n - INVALID: the package failed validation checks or builds and cannot be\n - PKG_BUILDING: deployed"
     },
     "ProjEnvHeader": {
@@ -1862,10 +1915,11 @@
         "INVALID_PROJ_STATE",
         "INACTIVE",
         "ACTIVE",
+        "PROJ_STATE_DELETED",
         "UNKNOWN_PROJ_STATE"
       ],
       "default": "INVALID_PROJ_STATE",
-      "title": "- INVALID_PROJ_STATE: unused\n - INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment\n - UNKNOWN_PROJ_STATE: MAX_INT"
+      "title": "- INVALID_PROJ_STATE: unused\n - INACTIVE: the project has been created but no packages are presently active in any environment\nand there are no pending deployments\n - ACTIVE: the project has at least one package presently active in at least one environment, or\nhas at least one pending deployment\n - PROJ_STATE_DELETED: the project has been deleted\n - UNKNOWN_PROJ_STATE: MAX_INT"
     },
     "ServiceDescription": {
       "type": "object",

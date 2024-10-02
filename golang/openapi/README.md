@@ -81,6 +81,7 @@ Class | Method | HTTP request | Description
 *ServiceRunnerAPI* | [**CreateDeployment**](docs/ServiceRunnerAPI.md#createdeployment) | **Post** /ServiceRunner/CreateDeployment | 
 *ServiceRunnerAPI* | [**CreateEnvironment**](docs/ServiceRunnerAPI.md#createenvironment) | **Post** /ServiceRunner/CreateEnvironment | 
 *ServiceRunnerAPI* | [**CreateProject**](docs/ServiceRunnerAPI.md#createproject) | **Post** /ServiceRunner/CreateProject | 
+*ServiceRunnerAPI* | [**DeactivateProject**](docs/ServiceRunnerAPI.md#deactivateproject) | **Post** /ServiceRunner/DeactivateProject | 
 *ServiceRunnerAPI* | [**DeleteEnvironment**](docs/ServiceRunnerAPI.md#deleteenvironment) | **Post** /ServiceRunner/DeleteEnvironment | 
 *ServiceRunnerAPI* | [**DeletePackage**](docs/ServiceRunnerAPI.md#deletepackage) | **Post** /ServiceRunner/DeletePackage | 
 *ServiceRunnerAPI* | [**DeleteProject**](docs/ServiceRunnerAPI.md#deleteproject) | **Post** /ServiceRunner/DeleteProject | 
@@ -118,6 +119,8 @@ Class | Method | HTTP request | Description
  - [DatabaseHeader](docs/DatabaseHeader.md)
  - [DatastoreDescription](docs/DatastoreDescription.md)
  - [DatastoreHeader](docs/DatastoreHeader.md)
+ - [DeactivateProjectReply](docs/DeactivateProjectReply.md)
+ - [DeactivateProjectRequest](docs/DeactivateProjectRequest.md)
  - [DeleteEnvironmentReply](docs/DeleteEnvironmentReply.md)
  - [DeleteEnvironmentRequest](docs/DeleteEnvironmentRequest.md)
  - [DeletePackageReply](docs/DeletePackageReply.md)

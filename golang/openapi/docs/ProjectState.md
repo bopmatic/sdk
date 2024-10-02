@@ -9,6 +9,8 @@
 
 * `ACTIVE` (value: `"ACTIVE"`)
 
+* `PROJ_STATE_DELETED` (value: `"PROJ_STATE_DELETED"`)
+
 * `UNKNOWN_PROJ_STATE` (value: `"UNKNOWN_PROJ_STATE"`)
 
 

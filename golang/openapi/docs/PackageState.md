@@ -17,7 +17,7 @@
 
 * `PKG_SUPPORT_NEEDED` (value: `"PKG_SUPPORT_NEEDED"`)
 
-* `DELETED` (value: `"DELETED"`)
+* `PKG_DELETED` (value: `"PKG_DELETED"`)
 
 * `BUILT` (value: `"BUILT"`)
 

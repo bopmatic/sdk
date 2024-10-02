@@ -15,6 +15,8 @@ docs/DatabaseDescription.md
 docs/DatabaseHeader.md
 docs/DatastoreDescription.md
 docs/DatastoreHeader.md
+docs/DeactivateProjectReply.md
+docs/DeactivateProjectRequest.md
 docs/DeleteEnvironmentReply.md
 docs/DeleteEnvironmentRequest.md
 docs/DeletePackageReply.md
@@ -98,6 +100,8 @@ model_database_description.go
 model_database_header.go
 model_datastore_description.go
 model_datastore_header.go
+model_deactivate_project_reply.go
+model_deactivate_project_request.go
 model_delete_environment_reply.go
 model_delete_environment_request.go
 model_delete_package_reply.go

@@ -23,7 +23,7 @@ import (
 //
 // the package passed validation and is in the process of being built
 //   - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating
-//   - DELETED: the package has been deleted
+//   - PKG_DELETED: the package has been deleted
 //   - BUILT: the package was successfully built and is eligible to be deployed
 //   - UNKNOWN_PKG_STATE: MAX_INT
 //
@@ -62,8 +62,8 @@ const (
 	// PackageStatePKGSUPPORTNEEDED captures enum value "PKG_SUPPORT_NEEDED"
 	PackageStatePKGSUPPORTNEEDED PackageState = "PKG_SUPPORT_NEEDED"
 
-	// PackageStateDELETED captures enum value "DELETED"
-	PackageStateDELETED PackageState = "DELETED"
+	// PackageStatePKGDELETED captures enum value "PKG_DELETED"
+	PackageStatePKGDELETED PackageState = "PKG_DELETED"
 
 	// PackageStateBUILT captures enum value "BUILT"
 	PackageStateBUILT PackageState = "BUILT"
@@ -77,7 +77,7 @@ var packageStateEnum []interface{}
 
 func init() {
 	var res []PackageState
-	if err := json.Unmarshal([]byte(`["INVALID_PKG_STATE","UPLOADING","UPLOADED","PKG_VALIDATING","INVALID","PKG_BUILDING","PKG_SUPPORT_NEEDED","DELETED","BUILT","UNKNOWN_PKG_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_PKG_STATE","UPLOADING","UPLOADED","PKG_VALIDATING","INVALID","PKG_BUILDING","PKG_SUPPORT_NEEDED","PKG_DELETED","BUILT","UNKNOWN_PKG_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

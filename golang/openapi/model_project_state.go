@@ -23,6 +23,7 @@ const (
 	INVALID_PROJ_STATE ProjectState = "INVALID_PROJ_STATE"
 	INACTIVE ProjectState = "INACTIVE"
 	ACTIVE ProjectState = "ACTIVE"
+	PROJ_STATE_DELETED ProjectState = "PROJ_STATE_DELETED"
 	UNKNOWN_PROJ_STATE ProjectState = "UNKNOWN_PROJ_STATE"
 )
 
@@ -31,6 +32,7 @@ var AllowedProjectStateEnumValues = []ProjectState{
 	"INVALID_PROJ_STATE",
 	"INACTIVE",
 	"ACTIVE",
+	"PROJ_STATE_DELETED",
 	"UNKNOWN_PROJ_STATE",
 }
 

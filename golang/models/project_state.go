@@ -21,6 +21,7 @@ import (
 //   - ACTIVE: the project has at least one package presently active in at least one environment, or
 //
 // has at least one pending deployment
+//   - PROJ_STATE_DELETED: the project has been deleted
 //   - UNKNOWN_PROJ_STATE: MAX_INT
 //
 // swagger:model ProjectState
@@ -46,6 +47,9 @@ const (
 	// ProjectStateACTIVE captures enum value "ACTIVE"
 	ProjectStateACTIVE ProjectState = "ACTIVE"
 
+	// ProjectStatePROJSTATEDELETED captures enum value "PROJ_STATE_DELETED"
+	ProjectStatePROJSTATEDELETED ProjectState = "PROJ_STATE_DELETED"
+
 	// ProjectStateUNKNOWNPROJSTATE captures enum value "UNKNOWN_PROJ_STATE"
 	ProjectStateUNKNOWNPROJSTATE ProjectState = "UNKNOWN_PROJ_STATE"
 )
@@ -55,7 +59,7 @@ var projectStateEnum []interface{}
 
 func init() {
 	var res []ProjectState
-	if err := json.Unmarshal([]byte(`["INVALID_PROJ_STATE","INACTIVE","ACTIVE","UNKNOWN_PROJ_STATE"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["INVALID_PROJ_STATE","INACTIVE","ACTIVE","PROJ_STATE_DELETED","UNKNOWN_PROJ_STATE"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {

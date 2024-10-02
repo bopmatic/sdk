@@ -82,6 +82,31 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/DeactivateProject:
+    post:
+      operationId: DeactivateProject
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeactivateProjectRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeactivateProjectReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/DeleteEnvironment:
     post:
       operationId: DeleteEnvironment
@@ -794,6 +819,28 @@ components:
         datastoreName:
           title: a unique service name within the project
           type: string
+      type: object
+    DeactivateProjectReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_INVALID
+        deployId: deployId
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        deployId:
+          title: the deployment id created in order to perform the deactivation
+          type: string
+      type: object
+    DeactivateProjectRequest:
+      example:
+        projEnvHeader:
+          projId: projId
+          envId: envId
+      properties:
+        projEnvHeader:
+          $ref: '#/components/schemas/ProjEnvHeader'
       type: object
     DeleteEnvironmentReply:
       example:
@@ -1723,7 +1770,7 @@ components:
       description: |-
         the package passed validation and is in the process of being built
          - PKG_SUPPORT_NEEDED: something went wrong and Bopmatic support is investigating
-         - DELETED: the package has been deleted
+         - PKG_DELETED: the package has been deleted
          - BUILT: the package was successfully built and is eligible to be deployed
          - UNKNOWN_PKG_STATE: MAX_INT
       enum:
@@ -1734,7 +1781,7 @@ components:
       - INVALID
       - PKG_BUILDING
       - PKG_SUPPORT_NEEDED
-      - DELETED
+      - PKG_DELETED
       - BUILT
       - UNKNOWN_PKG_STATE
       title: |-
@@ -1829,6 +1876,7 @@ components:
       - INVALID_PROJ_STATE
       - INACTIVE
       - ACTIVE
+      - PROJ_STATE_DELETED
       - UNKNOWN_PROJ_STATE
       title: |-
         - INVALID_PROJ_STATE: unused
@@ -1836,6 +1884,7 @@ components:
         and there are no pending deployments
          - ACTIVE: the project has at least one package presently active in at least one environment, or
         has at least one pending deployment
+         - PROJ_STATE_DELETED: the project has been deleted
          - UNKNOWN_PROJ_STATE: MAX_INT
       type: string
     ServiceDescription:

@@ -34,6 +34,8 @@ type ClientService interface {
 
 	CreateProject(params *CreateProjectParams, opts ...ClientOption) (*CreateProjectOK, error)
 
+	DeactivateProject(params *DeactivateProjectParams, opts ...ClientOption) (*DeactivateProjectOK, error)
+
 	DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error)
 
 	DeletePackage(params *DeletePackageParams, opts ...ClientOption) (*DeletePackageOK, error)
@@ -191,6 +193,43 @@ func (a *Client) CreateProject(params *CreateProjectParams, opts ...ClientOption
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*CreateProjectDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DeactivateProject deactivate project API
+*/
+func (a *Client) DeactivateProject(params *DeactivateProjectParams, opts ...ClientOption) (*DeactivateProjectOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeactivateProjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeactivateProject",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DeactivateProject",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeactivateProjectReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeactivateProjectOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeactivateProjectDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

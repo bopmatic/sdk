@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**CreateDeployment**](ServiceRunnerAPI.md#CreateDeployment) | **Post** /ServiceRunner/CreateDeployment | 
 [**CreateEnvironment**](ServiceRunnerAPI.md#CreateEnvironment) | **Post** /ServiceRunner/CreateEnvironment | 
 [**CreateProject**](ServiceRunnerAPI.md#CreateProject) | **Post** /ServiceRunner/CreateProject | 
+[**DeactivateProject**](ServiceRunnerAPI.md#DeactivateProject) | **Post** /ServiceRunner/DeactivateProject | 
 [**DeleteEnvironment**](ServiceRunnerAPI.md#DeleteEnvironment) | **Post** /ServiceRunner/DeleteEnvironment | 
 [**DeletePackage**](ServiceRunnerAPI.md#DeletePackage) | **Post** /ServiceRunner/DeletePackage | 
 [**DeleteProject**](ServiceRunnerAPI.md#DeleteProject) | **Post** /ServiceRunner/DeleteProject | 
@@ -210,6 +211,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**CreateProjectReply**](CreateProjectReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DeactivateProject
+
+> DeactivateProjectReply DeactivateProject(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
+)
+
+func main() {
+	body := *openapiclient.NewDeactivateProjectRequest() // DeactivateProjectRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.DeactivateProject(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.DeactivateProject``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeactivateProject`: DeactivateProjectReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.DeactivateProject`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeactivateProjectRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DeactivateProjectRequest**](DeactivateProjectRequest.md) |  | 
+
+### Return type
+
+[**DeactivateProjectReply**](DeactivateProjectReply.md)
 
 ### Authorization
 
