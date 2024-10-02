@@ -209,7 +209,9 @@ func (proj *Project) String() string {
 	sb.WriteString("Project:\n")
 	sb.WriteString(fmt.Sprintf("\tFormat: %v\n", proj.FormatVersion))
 	sb.WriteString(fmt.Sprintf("\tName: %v\n", proj.Desc.Name))
-	sb.WriteString(fmt.Sprintf("\tId: %v\n", proj.Desc.Id))
+	if proj.Desc.Id != "" {
+		sb.WriteString(fmt.Sprintf("\tId: %v\n", proj.Desc.Id))
+	}
 	sb.WriteString(fmt.Sprintf("\tSiteAssets: %v\n", proj.Desc.SiteAssets))
 	if proj.Desc.RuntimeConfig != "" {
 		sb.WriteString(fmt.Sprintf("\tRuntimeConfig: %v\n",
