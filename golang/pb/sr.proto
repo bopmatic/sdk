@@ -37,12 +37,13 @@ service ServiceRunner {
 }
 
 enum ServiceRunnerStatus {
-  STATUS_OK = 0;
-  STATUS_NOT_FOUND = 1;
-  STATUS_DNS_CONFLICT = 2;
-  STATUS_ACCT_LIMIT_REACHED = 3;
-  STATUS_EXISTS = 4;
-  STATUS_NOT_EXISTS = 5;
+  STATUS_INVALID = 0; // unused
+  STATUS_OK = 1;
+  STATUS_NOT_FOUND = 2;
+  STATUS_DNS_CONFLICT = 3;
+  STATUS_ACCT_LIMIT_REACHED = 4;
+  STATUS_EXISTS = 5;
+  STATUS_NOT_EXISTS = 6;
 
   STATUS_UNKNOWN = 2147483647; // MAX_INT
 }
@@ -53,12 +54,13 @@ message ServiceRunnerResult {
 }
 
 enum ProjectState {
+  INVALID_PROJ_STATE = 0; // unused
   // the project has been created but no packages are presently active in any environment
   // and there are no pending deployments
-  INACTIVE = 0;
+  INACTIVE = 1;
   // the project has at least one package presently active in at least one environment, or
   // has at least one pending deployment
-  ACTIVE = 1;
+  ACTIVE = 2;
 
   UNKNOWN_PROJ_STATE = 2147483647; // MAX_INT
 }
@@ -346,47 +348,51 @@ message DescribeDatabaseReply {
 }
 
 enum DeploymentType {
-  NEW_PACKAGE = 0;   // the deployment was created in order to deploy a new package to
+  INVALID_DEPLOY_TYPE = 0; // unused
+  NEW_PACKAGE = 1;   // the deployment was created in order to deploy a new package to
                      // the environment (customer initiated)
-  ENV_TEARDOWN = 1;  // the deployment was created in order to remove the project from
+  ENV_TEARDOWN = 2;  // the deployment was created in order to remove the project from
                      // the environment (customer initiated)
-  SECURITY_UPDATE = 2;// the deployment was created in order to perform a security update
+  SECURITY_UPDATE = 3;// the deployment was created in order to perform a security update
                      // on the backend infrastructure (service initiated)
-  INF_UPDATE = 3;    // the deployment was created in order to perform a non-security related
+  INF_UPDATE = 4;    // the deployment was created in order to perform a non-security related
                      // update on the backend infrastructure (service initiated)
 
   UNKNOWN_DEPLOY_TYPE = 2147483647; // MAX_INT
 }
 
 enum DeploymentInitiator {
-  CUSTOMER = 0; // the customer initiated the deployment
-  SERVICE = 1;  // Bopmatic initiated the deployment
+  INVALID_DEPLOY_INIT = 0; // unused
+  CUSTOMER = 1; // the customer initiated the deployment
+  SERVICE = 2;  // Bopmatic initiated the deployment
 
   UNKNOWN_DEPLOY_INIT = 2147483647; // MAX_INT
 }
 
 enum DeploymentState {
-  CREATED = 0;    // the deployment has been created, but no action has yet been taken
-  DPLY_VALIDATING = 1; // the package associated with the deployment is in the process of being
+  INVALID_DEPLOY_STATE = 0; // unused
+  CREATED = 1;    // the deployment has been created, but no action has yet been taken
+  DPLY_VALIDATING = 2; // the package associated with the deployment is in the process of being
                   // validated
-  DPLY_BUILDING = 2;   // the package associated with the deployment passed validation and is in
+  DPLY_BUILDING = 3;   // the package associated with the deployment passed validation and is in
                   // the process of being compiled
-  DEPLOYING = 3;  // the package associated with the deployment compiled successfully and is
+  DEPLOYING = 4;  // the package associated with the deployment compiled successfully and is
                   // in the process of being deployed to the environment specified
-  SUCCESS = 4;    // the deployment was successful and the package associated with the
+  SUCCESS = 5;    // the deployment was successful and the package associated with the
                   // deployment is now active in the environment specified
-  FAILED = 5;     // the deployment failed; see DeploymentDescription.stateDetail for further
+  FAILED = 6;     // the deployment failed; see DeploymentDescription.stateDetail for further
                   // information
 
   UNKNOWN_DEPLOY_STATE = 2147483647; // MAX_INT
 }
 
 enum DeploymentStateDetail {
-  NONE = 0;
-  PKG_INVALID = 1;// the package associated with the deployment failed validation checks and
+  INVALID_DEPLOY_STATE_DET = 0;
+  NONE = 1;
+  PKG_INVALID = 2;// the package associated with the deployment failed validation checks and
                   // cannot be deployed
-  BLD_INVALID = 2;// the package associated with the deployment failed to compile
-  DPLY_SUPPORT_NEEDED = 3;// the deployment failed for an unknown reason; Bopmatic support
+  BLD_INVALID = 3;// the package associated with the deployment failed to compile
+  DPLY_SUPPORT_NEEDED = 4;// the deployment failed for an unknown reason; Bopmatic support
                      // is investigating the problem
 
   UNKNOWN_DEPLOY_STATE_DET = 2147483647; // MAX_INT
@@ -467,19 +473,16 @@ message DescribeDeploymentReply {
 }
 
 enum PackageState {
-  UPLOADING = 0;        // package is currently in the process of being uploaded
-  UPLOADED = 1;         // upload has completed; the package has not yet started validataion
-  PKG_VALIDATING = 2;   // the package is in the process of being validated
-  INVALID = 3;          // the package failed validation checks or builds and cannot be
+  INVALID_PKG_STATE = 0; // unused
+  UPLOADING = 1;        // package is currently in the process of being uploaded
+  UPLOADED = 2;         // upload has completed; the package has not yet started validataion
+  PKG_VALIDATING = 3;   // the package is in the process of being validated
+  INVALID = 4;          // the package failed validation checks or builds and cannot be
                         // deployed
-  PKG_BUILDING = 4;     // the package passed validation and is in the process of being built
-  reserved 5;           // Deprecated DEPLOYING; see DeploymentState instead
-  reserved 6;           // Deprecated PRODUCTION; see DeploymentState instead
-  reserved 7;           // Deprecated DEACTIVATING; see DeploymentState instead
-  reserved 8;           // Deprecated DELETING; see DeploymentState instead
-  PKG_SUPPORT_NEEDED = 9;   // something went wrong and Bopmatic support is investigating
-  DELETED = 10;         // the package has been deleted
-  BUILT = 11;           // the package was successfully built and is eligible to be deployed
+  PKG_BUILDING = 5;     // the package passed validation and is in the process of being built
+  PKG_SUPPORT_NEEDED = 6;   // something went wrong and Bopmatic support is investigating
+  DELETED = 7;         // the package has been deleted
+  BUILT = 8;           // the package was successfully built and is eligible to be deployed
 
   UNKNOWN_PKG_STATE = 2147483647; // MAX_INT
 }
@@ -584,10 +587,11 @@ message GetLogsReply {
 }
 
 enum MetricsScope {
-  METRIC_SCOPE_ALL = 0;
-  METRIC_SCOPE_SERVICE = 1;
-  METRIC_SCOPE_DATASTORE = 2;
-  METRIC_SCOPE_DATABASE = 3;
+  INVALID_METRIC_SCOPE = 0;
+  METRIC_SCOPE_ALL = 1;
+  METRIC_SCOPE_SERVICE = 2;
+  METRIC_SCOPE_DATASTORE = 3;
+  METRIC_SCOPE_DATABASE = 4;
 
   UNKNOWN_METRIC_SCOPE = 2147483647; // MAX_INT
 }
@@ -608,7 +612,8 @@ message ListMetricsReply {
 }
 
 enum MetricsFormat {
-  METRIC_FORMAT_OPENMETRICS = 0;
+  INVALID_METRIC_FORMAT = 0;
+  METRIC_FORMAT_OPENMETRICS = 1;
 
   UNKNOWN_METRIC_FORMAT = 2147483647; // MAX_INT
 }
