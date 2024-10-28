@@ -22,11 +22,12 @@ type ServiceRunnerStatus string
 const (
 	INVALID ServiceRunnerStatus = "STATUS_INVALID"
 	OK ServiceRunnerStatus = "STATUS_OK"
-	NOT_FOUND ServiceRunnerStatus = "STATUS_NOT_FOUND"
+	INTERNAL_ERR ServiceRunnerStatus = "STATUS_INTERNAL_ERR"
 	DNS_CONFLICT ServiceRunnerStatus = "STATUS_DNS_CONFLICT"
 	ACCT_LIMIT_REACHED ServiceRunnerStatus = "STATUS_ACCT_LIMIT_REACHED"
 	EXISTS ServiceRunnerStatus = "STATUS_EXISTS"
 	NOT_EXISTS ServiceRunnerStatus = "STATUS_NOT_EXISTS"
+	INVALID_REQUEST ServiceRunnerStatus = "STATUS_INVALID_REQUEST"
 	UNKNOWN ServiceRunnerStatus = "STATUS_UNKNOWN"
 )
 
@@ -34,11 +35,12 @@ const (
 var AllowedServiceRunnerStatusEnumValues = []ServiceRunnerStatus{
 	"STATUS_INVALID",
 	"STATUS_OK",
-	"STATUS_NOT_FOUND",
+	"STATUS_INTERNAL_ERR",
 	"STATUS_DNS_CONFLICT",
 	"STATUS_ACCT_LIMIT_REACHED",
 	"STATUS_EXISTS",
 	"STATUS_NOT_EXISTS",
+	"STATUS_INVALID_REQUEST",
 	"STATUS_UNKNOWN",
 }
 

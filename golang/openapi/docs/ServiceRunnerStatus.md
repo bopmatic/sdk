@@ -7,7 +7,7 @@
 
 * `OK` (value: `"STATUS_OK"`)
 
-* `NOT_FOUND` (value: `"STATUS_NOT_FOUND"`)
+* `INTERNAL_ERR` (value: `"STATUS_INTERNAL_ERR"`)
 
 * `DNS_CONFLICT` (value: `"STATUS_DNS_CONFLICT"`)
 
@@ -16,6 +16,8 @@
 * `EXISTS` (value: `"STATUS_EXISTS"`)
 
 * `NOT_EXISTS` (value: `"STATUS_NOT_EXISTS"`)
+
+* `INVALID_REQUEST` (value: `"STATUS_INVALID_REQUEST"`)
 
 * `UNKNOWN` (value: `"STATUS_UNKNOWN"`)
 

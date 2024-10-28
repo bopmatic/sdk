@@ -28,6 +28,7 @@ type GetMetricSamplesRequest struct {
 	// latest metric to retrieve expressed as the number of
 	EndTime *string `json:"endTime,omitempty"`
 	Format *MetricsFormat `json:"format,omitempty"`
+	SamplePeriod *string `json:"samplePeriod,omitempty"`
 }
 
 // NewGetMetricSamplesRequest instantiates a new GetMetricSamplesRequest object
@@ -311,6 +312,38 @@ func (o *GetMetricSamplesRequest) SetFormat(v MetricsFormat) {
 	o.Format = &v
 }
 
+// GetSamplePeriod returns the SamplePeriod field value if set, zero value otherwise.
+func (o *GetMetricSamplesRequest) GetSamplePeriod() string {
+	if o == nil || IsNil(o.SamplePeriod) {
+		var ret string
+		return ret
+	}
+	return *o.SamplePeriod
+}
+
+// GetSamplePeriodOk returns a tuple with the SamplePeriod field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetMetricSamplesRequest) GetSamplePeriodOk() (*string, bool) {
+	if o == nil || IsNil(o.SamplePeriod) {
+		return nil, false
+	}
+	return o.SamplePeriod, true
+}
+
+// HasSamplePeriod returns a boolean if a field has been set.
+func (o *GetMetricSamplesRequest) HasSamplePeriod() bool {
+	if o != nil && !IsNil(o.SamplePeriod) {
+		return true
+	}
+
+	return false
+}
+
+// SetSamplePeriod gets a reference to the given string and assigns it to the SamplePeriod field.
+func (o *GetMetricSamplesRequest) SetSamplePeriod(v string) {
+	o.SamplePeriod = &v
+}
+
 func (o GetMetricSamplesRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -344,6 +377,9 @@ func (o GetMetricSamplesRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Format) {
 		toSerialize["format"] = o.Format
+	}
+	if !IsNil(o.SamplePeriod) {
+		toSerialize["samplePeriod"] = o.SamplePeriod
 	}
 	return toSerialize, nil
 }

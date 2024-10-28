@@ -1430,6 +1430,7 @@ components:
         startTime: startTime
         envId: envId
         endTime: endTime
+        samplePeriod: samplePeriod
         scopeQualifier: scopeQualifier
       properties:
         projId:
@@ -1462,6 +1463,10 @@ components:
           type: string
         format:
           $ref: '#/components/schemas/MetricsFormat'
+        samplePeriod:
+          format: uint64
+          title: desired metric sample period in seconds; default is 300s
+          type: string
       type: object
     GetUploadURLReply:
       example:
@@ -1934,11 +1939,12 @@ components:
       enum:
       - STATUS_INVALID
       - STATUS_OK
-      - STATUS_NOT_FOUND
+      - STATUS_INTERNAL_ERR
       - STATUS_DNS_CONFLICT
       - STATUS_ACCT_LIMIT_REACHED
       - STATUS_EXISTS
       - STATUS_NOT_EXISTS
+      - STATUS_INVALID_REQUEST
       - STATUS_UNKNOWN
       title: |-
         - STATUS_INVALID: unused

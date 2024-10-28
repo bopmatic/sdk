@@ -37,6 +37,9 @@ type GetMetricSamplesRequest struct {
 	// project id
 	ProjID string `json:"projId,omitempty"`
 
+	// desired metric sample period in seconds; default is 300s
+	SamplePeriod string `json:"samplePeriod,omitempty"`
+
 	// the scope of the metrics query; e.g. all or limited to 1 entity class
 	Scope *MetricsScope `json:"scope,omitempty"`
 

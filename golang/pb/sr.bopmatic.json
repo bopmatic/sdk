@@ -1536,6 +1536,11 @@
           "$ref": "#/definitions/MetricsFormat",
           "description": "desired output format of the retrieved metrics",
           "title": "seconds since Jan 1, 1970 00:00:00 UTC"
+        },
+        "samplePeriod": {
+          "type": "string",
+          "format": "uint64",
+          "title": "desired metric sample period in seconds; default is 300s"
         }
       }
     },
@@ -1970,11 +1975,12 @@
       "enum": [
         "STATUS_INVALID",
         "STATUS_OK",
-        "STATUS_NOT_FOUND",
+        "STATUS_INTERNAL_ERR",
         "STATUS_DNS_CONFLICT",
         "STATUS_ACCT_LIMIT_REACHED",
         "STATUS_EXISTS",
         "STATUS_NOT_EXISTS",
+        "STATUS_INVALID_REQUEST",
         "STATUS_UNKNOWN"
       ],
       "default": "STATUS_INVALID",

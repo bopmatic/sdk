@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **StartTime** | Pointer to **string** |  | [optional] 
 **EndTime** | Pointer to **string** | latest metric to retrieve expressed as the number of | [optional] 
 **Format** | Pointer to [**MetricsFormat**](MetricsFormat.md) |  | [optional] [default to INVALID_METRIC_FORMAT]
+**SamplePeriod** | Pointer to **string** |  | [optional] 
 
 ## Methods
 
@@ -231,6 +232,31 @@ SetFormat sets Format field to given value.
 `func (o *GetMetricSamplesRequest) HasFormat() bool`
 
 HasFormat returns a boolean if a field has been set.
+
+### GetSamplePeriod
+
+`func (o *GetMetricSamplesRequest) GetSamplePeriod() string`
+
+GetSamplePeriod returns the SamplePeriod field if non-nil, zero value otherwise.
+
+### GetSamplePeriodOk
+
+`func (o *GetMetricSamplesRequest) GetSamplePeriodOk() (*string, bool)`
+
+GetSamplePeriodOk returns a tuple with the SamplePeriod field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetSamplePeriod
+
+`func (o *GetMetricSamplesRequest) SetSamplePeriod(v string)`
+
+SetSamplePeriod sets SamplePeriod field to given value.
+
+### HasSamplePeriod
+
+`func (o *GetMetricSamplesRequest) HasSamplePeriod() bool`
+
+HasSamplePeriod returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

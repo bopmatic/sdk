@@ -37,8 +37,8 @@ const (
 	// ServiceRunnerStatusSTATUSOK captures enum value "STATUS_OK"
 	ServiceRunnerStatusSTATUSOK ServiceRunnerStatus = "STATUS_OK"
 
-	// ServiceRunnerStatusSTATUSNOTFOUND captures enum value "STATUS_NOT_FOUND"
-	ServiceRunnerStatusSTATUSNOTFOUND ServiceRunnerStatus = "STATUS_NOT_FOUND"
+	// ServiceRunnerStatusSTATUSINTERNALERR captures enum value "STATUS_INTERNAL_ERR"
+	ServiceRunnerStatusSTATUSINTERNALERR ServiceRunnerStatus = "STATUS_INTERNAL_ERR"
 
 	// ServiceRunnerStatusSTATUSDNSCONFLICT captures enum value "STATUS_DNS_CONFLICT"
 	ServiceRunnerStatusSTATUSDNSCONFLICT ServiceRunnerStatus = "STATUS_DNS_CONFLICT"
@@ -52,6 +52,9 @@ const (
 	// ServiceRunnerStatusSTATUSNOTEXISTS captures enum value "STATUS_NOT_EXISTS"
 	ServiceRunnerStatusSTATUSNOTEXISTS ServiceRunnerStatus = "STATUS_NOT_EXISTS"
 
+	// ServiceRunnerStatusSTATUSINVALIDREQUEST captures enum value "STATUS_INVALID_REQUEST"
+	ServiceRunnerStatusSTATUSINVALIDREQUEST ServiceRunnerStatus = "STATUS_INVALID_REQUEST"
+
 	// ServiceRunnerStatusSTATUSUNKNOWN captures enum value "STATUS_UNKNOWN"
 	ServiceRunnerStatusSTATUSUNKNOWN ServiceRunnerStatus = "STATUS_UNKNOWN"
 )
@@ -61,7 +64,7 @@ var serviceRunnerStatusEnum []interface{}
 
 func init() {
 	var res []ServiceRunnerStatus
-	if err := json.Unmarshal([]byte(`["STATUS_INVALID","STATUS_OK","STATUS_NOT_FOUND","STATUS_DNS_CONFLICT","STATUS_ACCT_LIMIT_REACHED","STATUS_EXISTS","STATUS_NOT_EXISTS","STATUS_UNKNOWN"]`), &res); err != nil {
+	if err := json.Unmarshal([]byte(`["STATUS_INVALID","STATUS_OK","STATUS_INTERNAL_ERR","STATUS_DNS_CONFLICT","STATUS_ACCT_LIMIT_REACHED","STATUS_EXISTS","STATUS_NOT_EXISTS","STATUS_INVALID_REQUEST","STATUS_UNKNOWN"]`), &res); err != nil {
 		panic(err)
 	}
 	for _, v := range res {
