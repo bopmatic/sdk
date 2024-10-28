@@ -40,11 +40,12 @@ service ServiceRunner {
 enum ServiceRunnerStatus {
   STATUS_INVALID = 0; // unused
   STATUS_OK = 1;
-  STATUS_NOT_FOUND = 2;
+  STATUS_INTERNAL_ERR = 2;
   STATUS_DNS_CONFLICT = 3;
   STATUS_ACCT_LIMIT_REACHED = 4;
   STATUS_EXISTS = 5;
   STATUS_NOT_EXISTS = 6;
+  STATUS_INVALID_REQUEST = 7;
 
   STATUS_UNKNOWN = 2147483647; // MAX_INT
 }
@@ -645,6 +646,7 @@ message GetMetricSamplesRequest {
   uint64 endTime = 7;            // latest metric to retrieve expressed as the number of
                                  // seconds since Jan 1, 1970 00:00:00 UTC
   MetricsFormat format = 8;      // desired output format of the retrieved metrics
+  uint64 samplePeriod = 9;       // desired metric sample period in seconds; default is 300s
 }
 
 message GetMetricSamplesReply {
