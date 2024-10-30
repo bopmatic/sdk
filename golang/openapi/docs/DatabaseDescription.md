@@ -5,7 +5,8 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **DatabaseHeader** | Pointer to [**DatabaseHeader**](DatabaseHeader.md) |  | [optional] 
-**TableNames** | Pointer to **[]string** |  | [optional] 
+**Tables** | Pointer to [**[]DatabaseTableDescription**](DatabaseTableDescription.md) |  | [optional] 
+**ServiceNames** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -51,30 +52,55 @@ SetDatabaseHeader sets DatabaseHeader field to given value.
 
 HasDatabaseHeader returns a boolean if a field has been set.
 
-### GetTableNames
+### GetTables
 
-`func (o *DatabaseDescription) GetTableNames() []string`
+`func (o *DatabaseDescription) GetTables() []DatabaseTableDescription`
 
-GetTableNames returns the TableNames field if non-nil, zero value otherwise.
+GetTables returns the Tables field if non-nil, zero value otherwise.
 
-### GetTableNamesOk
+### GetTablesOk
 
-`func (o *DatabaseDescription) GetTableNamesOk() (*[]string, bool)`
+`func (o *DatabaseDescription) GetTablesOk() (*[]DatabaseTableDescription, bool)`
 
-GetTableNamesOk returns a tuple with the TableNames field if it's non-nil, zero value otherwise
+GetTablesOk returns a tuple with the Tables field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetTableNames
+### SetTables
 
-`func (o *DatabaseDescription) SetTableNames(v []string)`
+`func (o *DatabaseDescription) SetTables(v []DatabaseTableDescription)`
 
-SetTableNames sets TableNames field to given value.
+SetTables sets Tables field to given value.
 
-### HasTableNames
+### HasTables
 
-`func (o *DatabaseDescription) HasTableNames() bool`
+`func (o *DatabaseDescription) HasTables() bool`
 
-HasTableNames returns a boolean if a field has been set.
+HasTables returns a boolean if a field has been set.
+
+### GetServiceNames
+
+`func (o *DatabaseDescription) GetServiceNames() []string`
+
+GetServiceNames returns the ServiceNames field if non-nil, zero value otherwise.
+
+### GetServiceNamesOk
+
+`func (o *DatabaseDescription) GetServiceNamesOk() (*[]string, bool)`
+
+GetServiceNamesOk returns a tuple with the ServiceNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceNames
+
+`func (o *DatabaseDescription) SetServiceNames(v []string)`
+
+SetServiceNames sets ServiceNames field to given value.
+
+### HasServiceNames
+
+`func (o *DatabaseDescription) HasServiceNames() bool`
+
+HasServiceNames returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

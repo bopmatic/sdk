@@ -756,21 +756,32 @@ components:
       type: object
     DatabaseDescription:
       example:
-        tableNames:
-        - tableNames
-        - tableNames
+        tables:
+        - Size: Size
+          NumRows: NumRows
+          Name: Name
+        - Size: Size
+          NumRows: NumRows
+          Name: Name
         databaseHeader:
           projEnvHeader:
             projId: projId
             envId: envId
           databaseName: databaseName
+        serviceNames:
+        - serviceNames
+        - serviceNames
       properties:
         databaseHeader:
           $ref: '#/components/schemas/DatabaseHeader'
-        tableNames:
+        tables:
+          items:
+            $ref: '#/components/schemas/DatabaseTableDescription'
+          type: array
+        serviceNames:
           items:
             type: string
-          title: a list of service names from the project deployed in the environment
+          title: a list of services allowed to access this database
           type: array
       type: object
     DatabaseHeader:
@@ -784,6 +795,24 @@ components:
           $ref: '#/components/schemas/ProjEnvHeader'
         databaseName:
           title: a unique service name within the project
+          type: string
+      type: object
+    DatabaseTableDescription:
+      example:
+        Size: Size
+        NumRows: NumRows
+        Name: Name
+      properties:
+        Name:
+          title: name of the database table
+          type: string
+        NumRows:
+          format: uint64
+          title: number of rows in the table
+          type: string
+        Size:
+          format: uint64
+          title: table size in bytes
           type: string
       type: object
     DatastoreDescription:
@@ -1060,14 +1089,21 @@ components:
           statusDetail: statusDetail
           status: STATUS_INVALID
         desc:
-          tableNames:
-          - tableNames
-          - tableNames
+          tables:
+          - Size: Size
+            NumRows: NumRows
+            Name: Name
+          - Size: Size
+            NumRows: NumRows
+            Name: Name
           databaseHeader:
             projEnvHeader:
               projId: projId
               envId: envId
             databaseName: databaseName
+          serviceNames:
+          - serviceNames
+          - serviceNames
       properties:
         result:
           $ref: '#/components/schemas/ServiceRunnerResult'
@@ -1243,6 +1279,7 @@ components:
           statusDetail: statusDetail
           status: STATUS_INVALID
         desc:
+          port: port
           svcHeader:
             projEnvHeader:
               projId: projId
@@ -1251,6 +1288,13 @@ components:
           rpcEndpoints:
           - rpcEndpoints
           - rpcEndpoints
+          apiDef: apiDef
+          databaseNames:
+          - databaseNames
+          - databaseNames
+          datastoreNames:
+          - datastoreNames
+          - datastoreNames
       properties:
         result:
           $ref: '#/components/schemas/ServiceRunnerResult'
@@ -1894,6 +1938,7 @@ components:
       type: string
     ServiceDescription:
       example:
+        port: port
         svcHeader:
           projEnvHeader:
             projId: projId
@@ -1902,6 +1947,13 @@ components:
         rpcEndpoints:
         - rpcEndpoints
         - rpcEndpoints
+        apiDef: apiDef
+        databaseNames:
+        - databaseNames
+        - databaseNames
+        datastoreNames:
+        - datastoreNames
+        - datastoreNames
       properties:
         svcHeader:
           $ref: '#/components/schemas/ServiceHeader'
@@ -1910,6 +1962,23 @@ components:
             type: string
           title: endpoints for each RPC within the service
           type: array
+        databaseNames:
+          items:
+            type: string
+          title: set of databases this service is configured to access
+          type: array
+        datastoreNames:
+          items:
+            type: string
+          title: set of datastores this service is configured to access
+          type: array
+        apiDef:
+          title: file within your project defining its APIs
+          type: string
+        port:
+          format: uint64
+          title: TCP port your service is configured to listen on
+          type: string
       type: object
     ServiceHeader:
       example:

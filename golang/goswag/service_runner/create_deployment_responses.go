@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *CreateDeploymentOK) Code() int {
 }
 
 func (o *CreateDeploymentOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] createDeploymentOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] createDeploymentOK %s", 200, payload)
 }
 
 func (o *CreateDeploymentOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] createDeploymentOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] createDeploymentOK %s", 200, payload)
 }
 
 func (o *CreateDeploymentOK) GetPayload() *models.CreateDeploymentReply {
@@ -158,11 +161,13 @@ func (o *CreateDeploymentDefault) Code() int {
 }
 
 func (o *CreateDeploymentDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] CreateDeployment default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] CreateDeployment default %s", o._statusCode, payload)
 }
 
 func (o *CreateDeploymentDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] CreateDeployment default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateDeployment][%d] CreateDeployment default %s", o._statusCode, payload)
 }
 
 func (o *CreateDeploymentDefault) GetPayload() *models.RPCStatus {

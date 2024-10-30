@@ -21,6 +21,10 @@ var _ MappedNullable = &ServiceDescription{}
 type ServiceDescription struct {
 	SvcHeader *ServiceHeader `json:"svcHeader,omitempty"`
 	RpcEndpoints []string `json:"rpcEndpoints,omitempty"`
+	DatabaseNames []string `json:"databaseNames,omitempty"`
+	DatastoreNames []string `json:"datastoreNames,omitempty"`
+	ApiDef *string `json:"apiDef,omitempty"`
+	Port *string `json:"port,omitempty"`
 }
 
 // NewServiceDescription instantiates a new ServiceDescription object
@@ -104,6 +108,134 @@ func (o *ServiceDescription) SetRpcEndpoints(v []string) {
 	o.RpcEndpoints = v
 }
 
+// GetDatabaseNames returns the DatabaseNames field value if set, zero value otherwise.
+func (o *ServiceDescription) GetDatabaseNames() []string {
+	if o == nil || IsNil(o.DatabaseNames) {
+		var ret []string
+		return ret
+	}
+	return o.DatabaseNames
+}
+
+// GetDatabaseNamesOk returns a tuple with the DatabaseNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceDescription) GetDatabaseNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.DatabaseNames) {
+		return nil, false
+	}
+	return o.DatabaseNames, true
+}
+
+// HasDatabaseNames returns a boolean if a field has been set.
+func (o *ServiceDescription) HasDatabaseNames() bool {
+	if o != nil && !IsNil(o.DatabaseNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatabaseNames gets a reference to the given []string and assigns it to the DatabaseNames field.
+func (o *ServiceDescription) SetDatabaseNames(v []string) {
+	o.DatabaseNames = v
+}
+
+// GetDatastoreNames returns the DatastoreNames field value if set, zero value otherwise.
+func (o *ServiceDescription) GetDatastoreNames() []string {
+	if o == nil || IsNil(o.DatastoreNames) {
+		var ret []string
+		return ret
+	}
+	return o.DatastoreNames
+}
+
+// GetDatastoreNamesOk returns a tuple with the DatastoreNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceDescription) GetDatastoreNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.DatastoreNames) {
+		return nil, false
+	}
+	return o.DatastoreNames, true
+}
+
+// HasDatastoreNames returns a boolean if a field has been set.
+func (o *ServiceDescription) HasDatastoreNames() bool {
+	if o != nil && !IsNil(o.DatastoreNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetDatastoreNames gets a reference to the given []string and assigns it to the DatastoreNames field.
+func (o *ServiceDescription) SetDatastoreNames(v []string) {
+	o.DatastoreNames = v
+}
+
+// GetApiDef returns the ApiDef field value if set, zero value otherwise.
+func (o *ServiceDescription) GetApiDef() string {
+	if o == nil || IsNil(o.ApiDef) {
+		var ret string
+		return ret
+	}
+	return *o.ApiDef
+}
+
+// GetApiDefOk returns a tuple with the ApiDef field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceDescription) GetApiDefOk() (*string, bool) {
+	if o == nil || IsNil(o.ApiDef) {
+		return nil, false
+	}
+	return o.ApiDef, true
+}
+
+// HasApiDef returns a boolean if a field has been set.
+func (o *ServiceDescription) HasApiDef() bool {
+	if o != nil && !IsNil(o.ApiDef) {
+		return true
+	}
+
+	return false
+}
+
+// SetApiDef gets a reference to the given string and assigns it to the ApiDef field.
+func (o *ServiceDescription) SetApiDef(v string) {
+	o.ApiDef = &v
+}
+
+// GetPort returns the Port field value if set, zero value otherwise.
+func (o *ServiceDescription) GetPort() string {
+	if o == nil || IsNil(o.Port) {
+		var ret string
+		return ret
+	}
+	return *o.Port
+}
+
+// GetPortOk returns a tuple with the Port field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ServiceDescription) GetPortOk() (*string, bool) {
+	if o == nil || IsNil(o.Port) {
+		return nil, false
+	}
+	return o.Port, true
+}
+
+// HasPort returns a boolean if a field has been set.
+func (o *ServiceDescription) HasPort() bool {
+	if o != nil && !IsNil(o.Port) {
+		return true
+	}
+
+	return false
+}
+
+// SetPort gets a reference to the given string and assigns it to the Port field.
+func (o *ServiceDescription) SetPort(v string) {
+	o.Port = &v
+}
+
 func (o ServiceDescription) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -119,6 +251,18 @@ func (o ServiceDescription) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RpcEndpoints) {
 		toSerialize["rpcEndpoints"] = o.RpcEndpoints
+	}
+	if !IsNil(o.DatabaseNames) {
+		toSerialize["databaseNames"] = o.DatabaseNames
+	}
+	if !IsNil(o.DatastoreNames) {
+		toSerialize["datastoreNames"] = o.DatastoreNames
+	}
+	if !IsNil(o.ApiDef) {
+		toSerialize["apiDef"] = o.ApiDef
+	}
+	if !IsNil(o.Port) {
+		toSerialize["port"] = o.Port
 	}
 	return toSerialize, nil
 }

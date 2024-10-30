@@ -20,7 +20,8 @@ var _ MappedNullable = &DatabaseDescription{}
 // DatabaseDescription struct for DatabaseDescription
 type DatabaseDescription struct {
 	DatabaseHeader *DatabaseHeader `json:"databaseHeader,omitempty"`
-	TableNames []string `json:"tableNames,omitempty"`
+	Tables []DatabaseTableDescription `json:"tables,omitempty"`
+	ServiceNames []string `json:"serviceNames,omitempty"`
 }
 
 // NewDatabaseDescription instantiates a new DatabaseDescription object
@@ -72,36 +73,68 @@ func (o *DatabaseDescription) SetDatabaseHeader(v DatabaseHeader) {
 	o.DatabaseHeader = &v
 }
 
-// GetTableNames returns the TableNames field value if set, zero value otherwise.
-func (o *DatabaseDescription) GetTableNames() []string {
-	if o == nil || IsNil(o.TableNames) {
-		var ret []string
+// GetTables returns the Tables field value if set, zero value otherwise.
+func (o *DatabaseDescription) GetTables() []DatabaseTableDescription {
+	if o == nil || IsNil(o.Tables) {
+		var ret []DatabaseTableDescription
 		return ret
 	}
-	return o.TableNames
+	return o.Tables
 }
 
-// GetTableNamesOk returns a tuple with the TableNames field value if set, nil otherwise
+// GetTablesOk returns a tuple with the Tables field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DatabaseDescription) GetTableNamesOk() ([]string, bool) {
-	if o == nil || IsNil(o.TableNames) {
+func (o *DatabaseDescription) GetTablesOk() ([]DatabaseTableDescription, bool) {
+	if o == nil || IsNil(o.Tables) {
 		return nil, false
 	}
-	return o.TableNames, true
+	return o.Tables, true
 }
 
-// HasTableNames returns a boolean if a field has been set.
-func (o *DatabaseDescription) HasTableNames() bool {
-	if o != nil && !IsNil(o.TableNames) {
+// HasTables returns a boolean if a field has been set.
+func (o *DatabaseDescription) HasTables() bool {
+	if o != nil && !IsNil(o.Tables) {
 		return true
 	}
 
 	return false
 }
 
-// SetTableNames gets a reference to the given []string and assigns it to the TableNames field.
-func (o *DatabaseDescription) SetTableNames(v []string) {
-	o.TableNames = v
+// SetTables gets a reference to the given []DatabaseTableDescription and assigns it to the Tables field.
+func (o *DatabaseDescription) SetTables(v []DatabaseTableDescription) {
+	o.Tables = v
+}
+
+// GetServiceNames returns the ServiceNames field value if set, zero value otherwise.
+func (o *DatabaseDescription) GetServiceNames() []string {
+	if o == nil || IsNil(o.ServiceNames) {
+		var ret []string
+		return ret
+	}
+	return o.ServiceNames
+}
+
+// GetServiceNamesOk returns a tuple with the ServiceNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseDescription) GetServiceNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.ServiceNames) {
+		return nil, false
+	}
+	return o.ServiceNames, true
+}
+
+// HasServiceNames returns a boolean if a field has been set.
+func (o *DatabaseDescription) HasServiceNames() bool {
+	if o != nil && !IsNil(o.ServiceNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceNames gets a reference to the given []string and assigns it to the ServiceNames field.
+func (o *DatabaseDescription) SetServiceNames(v []string) {
+	o.ServiceNames = v
 }
 
 func (o DatabaseDescription) MarshalJSON() ([]byte, error) {
@@ -117,8 +150,11 @@ func (o DatabaseDescription) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.DatabaseHeader) {
 		toSerialize["databaseHeader"] = o.DatabaseHeader
 	}
-	if !IsNil(o.TableNames) {
-		toSerialize["tableNames"] = o.TableNames
+	if !IsNil(o.Tables) {
+		toSerialize["tables"] = o.Tables
+	}
+	if !IsNil(o.ServiceNames) {
+		toSerialize["serviceNames"] = o.ServiceNames
 	}
 	return toSerialize, nil
 }

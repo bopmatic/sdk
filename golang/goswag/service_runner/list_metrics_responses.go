@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *ListMetricsOK) Code() int {
 }
 
 func (o *ListMetricsOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] listMetricsOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] listMetricsOK %s", 200, payload)
 }
 
 func (o *ListMetricsOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] listMetricsOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] listMetricsOK %s", 200, payload)
 }
 
 func (o *ListMetricsOK) GetPayload() *models.ListMetricsReply {
@@ -158,11 +161,13 @@ func (o *ListMetricsDefault) Code() int {
 }
 
 func (o *ListMetricsDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] ListMetrics default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] ListMetrics default %s", o._statusCode, payload)
 }
 
 func (o *ListMetricsDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] ListMetrics default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListMetrics][%d] ListMetrics default %s", o._statusCode, payload)
 }
 
 func (o *ListMetricsDefault) GetPayload() *models.RPCStatus {

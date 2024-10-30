@@ -952,12 +952,19 @@
           "$ref": "#/definitions/DatabaseHeader",
           "title": "service header"
         },
-        "tableNames": {
+        "tables": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/DatabaseTableDescription"
+          }
+        },
+        "serviceNames": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "title": "a list of service names from the project deployed in the environment"
+          "title": "a list of services allowed to access this database"
         }
       }
     },
@@ -971,6 +978,25 @@
         "databaseName": {
           "type": "string",
           "title": "a unique service name within the project"
+        }
+      }
+    },
+    "DatabaseTableDescription": {
+      "type": "object",
+      "properties": {
+        "Name": {
+          "type": "string",
+          "title": "name of the database table"
+        },
+        "NumRows": {
+          "type": "string",
+          "format": "uint64",
+          "title": "number of rows in the table"
+        },
+        "Size": {
+          "type": "string",
+          "format": "uint64",
+          "title": "table size in bytes"
         }
       }
     },
@@ -1939,6 +1965,29 @@
             "type": "string"
           },
           "title": "endpoints for each RPC within the service"
+        },
+        "databaseNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "set of databases this service is configured to access"
+        },
+        "datastoreNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "set of datastores this service is configured to access"
+        },
+        "apiDef": {
+          "type": "string",
+          "title": "file within your project defining its APIs"
+        },
+        "port": {
+          "type": "string",
+          "format": "uint64",
+          "title": "TCP port your service is configured to listen on"
         }
       }
     },

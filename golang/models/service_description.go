@@ -18,6 +18,18 @@ import (
 // swagger:model ServiceDescription
 type ServiceDescription struct {
 
+	// file within your project defining its APIs
+	APIDef string `json:"apiDef,omitempty"`
+
+	// set of databases this service is configured to access
+	DatabaseNames []string `json:"databaseNames"`
+
+	// set of datastores this service is configured to access
+	DatastoreNames []string `json:"datastoreNames"`
+
+	// TCP port your service is configured to listen on
+	Port string `json:"port,omitempty"`
+
 	// endpoints for each RPC within the service
 	RPCEndpoints []string `json:"rpcEndpoints"`
 

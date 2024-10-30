@@ -13,6 +13,7 @@ docs/CreateProjectReply.md
 docs/CreateProjectRequest.md
 docs/DatabaseDescription.md
 docs/DatabaseHeader.md
+docs/DatabaseTableDescription.md
 docs/DatastoreDescription.md
 docs/DatastoreHeader.md
 docs/DeactivateProjectReply.md
@@ -98,6 +99,7 @@ model_create_project_reply.go
 model_create_project_request.go
 model_database_description.go
 model_database_header.go
+model_database_table_description.go
 model_datastore_description.go
 model_datastore_header.go
 model_deactivate_project_reply.go

@@ -117,6 +117,7 @@ Class | Method | HTTP request | Description
  - [CreateProjectRequest](docs/CreateProjectRequest.md)
  - [DatabaseDescription](docs/DatabaseDescription.md)
  - [DatabaseHeader](docs/DatabaseHeader.md)
+ - [DatabaseTableDescription](docs/DatabaseTableDescription.md)
  - [DatastoreDescription](docs/DatastoreDescription.md)
  - [DatastoreHeader](docs/DatastoreHeader.md)
  - [DeactivateProjectReply](docs/DeactivateProjectReply.md)

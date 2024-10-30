@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	"strconv"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -21,8 +22,11 @@ type DatabaseDescription struct {
 	// service header
 	DatabaseHeader *DatabaseHeader `json:"databaseHeader,omitempty"`
 
-	// a list of service names from the project deployed in the environment
-	TableNames []string `json:"tableNames"`
+	// a list of services allowed to access this database
+	ServiceNames []string `json:"serviceNames"`
+
+	// tables
+	Tables []*DatabaseTableDescription `json:"tables"`
 }
 
 // Validate validates this database description
@@ -30,6 +34,10 @@ func (m *DatabaseDescription) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.validateDatabaseHeader(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateTables(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -58,11 +66,41 @@ func (m *DatabaseDescription) validateDatabaseHeader(formats strfmt.Registry) er
 	return nil
 }
 
+func (m *DatabaseDescription) validateTables(formats strfmt.Registry) error {
+	if swag.IsZero(m.Tables) { // not required
+		return nil
+	}
+
+	for i := 0; i < len(m.Tables); i++ {
+		if swag.IsZero(m.Tables[i]) { // not required
+			continue
+		}
+
+		if m.Tables[i] != nil {
+			if err := m.Tables[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("tables" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("tables" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
+	return nil
+}
+
 // ContextValidate validate this database description based on the context it is used
 func (m *DatabaseDescription) ContextValidate(ctx context.Context, formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.contextValidateDatabaseHeader(ctx, formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.contextValidateTables(ctx, formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -88,6 +126,31 @@ func (m *DatabaseDescription) contextValidateDatabaseHeader(ctx context.Context,
 			}
 			return err
 		}
+	}
+
+	return nil
+}
+
+func (m *DatabaseDescription) contextValidateTables(ctx context.Context, formats strfmt.Registry) error {
+
+	for i := 0; i < len(m.Tables); i++ {
+
+		if m.Tables[i] != nil {
+
+			if swag.IsZero(m.Tables[i]) { // not required
+				return nil
+			}
+
+			if err := m.Tables[i].ContextValidate(ctx, formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("tables" + "." + strconv.Itoa(i))
+				} else if ce, ok := err.(*errors.CompositeError); ok {
+					return ce.ValidateName("tables" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
