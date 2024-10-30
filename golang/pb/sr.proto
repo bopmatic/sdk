@@ -269,6 +269,14 @@ message ServiceDescription {
   ServiceHeader svcHeader = 1;
   // endpoints for each RPC within the service
   repeated string rpcEndpoints = 2;
+  // set of databases this service is configured to access
+  repeated string databaseNames = 3;
+  // set of datastores this service is configured to access
+  repeated string datastoreNames = 4;
+  // file within your project defining its APIs
+  string apiDef = 5;
+  // TCP port your service is configured to listen on
+  uint64 port = 6;
 }
 
 message DescribeServiceReply {
@@ -346,11 +354,23 @@ message DescribeDatabaseRequest {
   DatabaseHeader databaseHeader = 1;
 }
 
+message DatabaseTableDescription {
+  // name of the database table
+  string Name = 1;
+  // number of rows in the table
+  uint64 NumRows = 2;
+  // table size in bytes
+  uint64 Size = 3;
+}
+
 message DatabaseDescription {
   // service header
   DatabaseHeader databaseHeader = 1;
-  // a list of service names from the project deployed in the environment
-  repeated string tableNames = 2;
+  // a list of table names from the project deployed in the environment
+  reserved 2; // Deprecated tableNames
+  repeated DatabaseTableDescription tables = 3;
+  // a list of services allowed to access this database
+  repeated string serviceNames = 4;
 }
 
 message DescribeDatabaseReply {
