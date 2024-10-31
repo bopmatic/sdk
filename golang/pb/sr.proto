@@ -319,6 +319,8 @@ message DatastoreDescription {
   uint64 numObjects = 2;
   // amount of utilized capacity
   uint64 capacityConsumedInBytes = 3;
+  // list of services within the project which can access this database
+  repeated string serviceNames = 4;
 }
 
 message DescribeDatastoreReply {
@@ -361,6 +363,8 @@ message DatabaseTableDescription {
   uint64 NumRows = 2;
   // table size in bytes
   uint64 Size = 3;
+  // list of services within the project which can access this database
+  repeated string serviceNames = 4;
 }
 
 message DatabaseDescription {
