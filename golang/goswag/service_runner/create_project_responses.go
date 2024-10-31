@@ -6,7 +6,6 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 
@@ -87,13 +86,11 @@ func (o *CreateProjectOK) Code() int {
 }
 
 func (o *CreateProjectOK) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] createProjectOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] createProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateProjectOK) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] createProjectOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] createProjectOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateProjectOK) GetPayload() *models.CreateProjectReply {
@@ -161,13 +158,11 @@ func (o *CreateProjectDefault) Code() int {
 }
 
 func (o *CreateProjectDefault) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] CreateProject default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] CreateProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CreateProjectDefault) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] CreateProject default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateProject][%d] CreateProject default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CreateProjectDefault) GetPayload() *models.RPCStatus {

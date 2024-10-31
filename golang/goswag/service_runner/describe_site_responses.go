@@ -6,7 +6,6 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 
@@ -87,13 +86,11 @@ func (o *DescribeSiteOK) Code() int {
 }
 
 func (o *DescribeSiteOK) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] describeSiteOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] describeSiteOK  %+v", 200, o.Payload)
 }
 
 func (o *DescribeSiteOK) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] describeSiteOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] describeSiteOK  %+v", 200, o.Payload)
 }
 
 func (o *DescribeSiteOK) GetPayload() *models.DescribeSiteReply {
@@ -161,13 +158,11 @@ func (o *DescribeSiteDefault) Code() int {
 }
 
 func (o *DescribeSiteDefault) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] DescribeSite default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] DescribeSite default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DescribeSiteDefault) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] DescribeSite default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DescribeSite][%d] DescribeSite default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DescribeSiteDefault) GetPayload() *models.RPCStatus {

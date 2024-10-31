@@ -6,7 +6,6 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 
@@ -87,13 +86,11 @@ func (o *ListPackagesOK) Code() int {
 }
 
 func (o *ListPackagesOK) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] listPackagesOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] listPackagesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListPackagesOK) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] listPackagesOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] listPackagesOK  %+v", 200, o.Payload)
 }
 
 func (o *ListPackagesOK) GetPayload() *models.ListPackagesReply {
@@ -161,13 +158,11 @@ func (o *ListPackagesDefault) Code() int {
 }
 
 func (o *ListPackagesDefault) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] ListPackages default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] ListPackages default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListPackagesDefault) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] ListPackages default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/ListPackages][%d] ListPackages default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *ListPackagesDefault) GetPayload() *models.RPCStatus {

@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **NumRows** | Pointer to **string** |  | [optional] 
 **Size** | Pointer to **string** |  | [optional] 
+**ServiceNames** | Pointer to **[]string** |  | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetSize sets Size field to given value.
 `func (o *DatabaseTableDescription) HasSize() bool`
 
 HasSize returns a boolean if a field has been set.
+
+### GetServiceNames
+
+`func (o *DatabaseTableDescription) GetServiceNames() []string`
+
+GetServiceNames returns the ServiceNames field if non-nil, zero value otherwise.
+
+### GetServiceNamesOk
+
+`func (o *DatabaseTableDescription) GetServiceNamesOk() (*[]string, bool)`
+
+GetServiceNamesOk returns a tuple with the ServiceNames field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetServiceNames
+
+`func (o *DatabaseTableDescription) SetServiceNames(v []string)`
+
+SetServiceNames sets ServiceNames field to given value.
+
+### HasServiceNames
+
+`func (o *DatabaseTableDescription) HasServiceNames() bool`
+
+HasServiceNames returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

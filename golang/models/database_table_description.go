@@ -25,6 +25,9 @@ type DatabaseTableDescription struct {
 
 	// table size in bytes
 	Size string `json:"Size,omitempty"`
+
+	// list of services within the project which can access this database
+	ServiceNames []string `json:"serviceNames"`
 }
 
 // Validate validates this database table description

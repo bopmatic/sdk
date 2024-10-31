@@ -26,6 +26,9 @@ type DatastoreDescription struct {
 
 	// number of store objects
 	NumObjects string `json:"numObjects,omitempty"`
+
+	// list of services within the project which can access this database
+	ServiceNames []string `json:"serviceNames"`
 }
 
 // Validate validates this datastore description

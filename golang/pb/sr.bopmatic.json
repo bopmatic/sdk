@@ -1001,6 +1001,13 @@
           "type": "string",
           "format": "uint64",
           "title": "table size in bytes"
+        },
+        "serviceNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "list of services within the project which can access this database"
         }
       }
     },
@@ -1020,6 +1027,13 @@
           "type": "string",
           "format": "uint64",
           "title": "amount of utilized capacity"
+        },
+        "serviceNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "list of services within the project which can access this database"
         }
       }
     },

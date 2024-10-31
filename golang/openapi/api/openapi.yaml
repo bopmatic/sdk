@@ -759,9 +759,15 @@ components:
         tables:
         - Size: Size
           NumRows: NumRows
+          serviceNames:
+          - serviceNames
+          - serviceNames
           Name: Name
         - Size: Size
           NumRows: NumRows
+          serviceNames:
+          - serviceNames
+          - serviceNames
           Name: Name
         databaseHeader:
           projEnvHeader:
@@ -801,6 +807,9 @@ components:
       example:
         Size: Size
         NumRows: NumRows
+        serviceNames:
+        - serviceNames
+        - serviceNames
         Name: Name
       properties:
         Name:
@@ -814,6 +823,11 @@ components:
           format: uint64
           title: table size in bytes
           type: string
+        serviceNames:
+          items:
+            type: string
+          title: list of services within the project which can access this database
+          type: array
       type: object
     DatastoreDescription:
       example:
@@ -823,6 +837,9 @@ components:
             envId: envId
           datastoreName: datastoreName
         capacityConsumedInBytes: capacityConsumedInBytes
+        serviceNames:
+        - serviceNames
+        - serviceNames
         numObjects: numObjects
       properties:
         datastoreHeader:
@@ -835,6 +852,11 @@ components:
           format: uint64
           title: amount of utilized capacity
           type: string
+        serviceNames:
+          items:
+            type: string
+          title: list of services within the project which can access this database
+          type: array
       type: object
     DatastoreHeader:
       example:
@@ -1092,9 +1114,15 @@ components:
           tables:
           - Size: Size
             NumRows: NumRows
+            serviceNames:
+            - serviceNames
+            - serviceNames
             Name: Name
           - Size: Size
             NumRows: NumRows
+            serviceNames:
+            - serviceNames
+            - serviceNames
             Name: Name
           databaseHeader:
             projEnvHeader:
@@ -1133,6 +1161,9 @@ components:
               envId: envId
             datastoreName: datastoreName
           capacityConsumedInBytes: capacityConsumedInBytes
+          serviceNames:
+          - serviceNames
+          - serviceNames
           numObjects: numObjects
       properties:
         result:

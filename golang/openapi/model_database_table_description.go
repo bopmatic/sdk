@@ -22,6 +22,7 @@ type DatabaseTableDescription struct {
 	Name *string `json:"Name,omitempty"`
 	NumRows *string `json:"NumRows,omitempty"`
 	Size *string `json:"Size,omitempty"`
+	ServiceNames []string `json:"serviceNames,omitempty"`
 }
 
 // NewDatabaseTableDescription instantiates a new DatabaseTableDescription object
@@ -137,6 +138,38 @@ func (o *DatabaseTableDescription) SetSize(v string) {
 	o.Size = &v
 }
 
+// GetServiceNames returns the ServiceNames field value if set, zero value otherwise.
+func (o *DatabaseTableDescription) GetServiceNames() []string {
+	if o == nil || IsNil(o.ServiceNames) {
+		var ret []string
+		return ret
+	}
+	return o.ServiceNames
+}
+
+// GetServiceNamesOk returns a tuple with the ServiceNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatabaseTableDescription) GetServiceNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.ServiceNames) {
+		return nil, false
+	}
+	return o.ServiceNames, true
+}
+
+// HasServiceNames returns a boolean if a field has been set.
+func (o *DatabaseTableDescription) HasServiceNames() bool {
+	if o != nil && !IsNil(o.ServiceNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceNames gets a reference to the given []string and assigns it to the ServiceNames field.
+func (o *DatabaseTableDescription) SetServiceNames(v []string) {
+	o.ServiceNames = v
+}
+
 func (o DatabaseTableDescription) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -155,6 +188,9 @@ func (o DatabaseTableDescription) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Size) {
 		toSerialize["Size"] = o.Size
+	}
+	if !IsNil(o.ServiceNames) {
+		toSerialize["serviceNames"] = o.ServiceNames
 	}
 	return toSerialize, nil
 }

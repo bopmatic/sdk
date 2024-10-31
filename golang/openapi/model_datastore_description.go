@@ -22,6 +22,7 @@ type DatastoreDescription struct {
 	DatastoreHeader *DatastoreHeader `json:"datastoreHeader,omitempty"`
 	NumObjects *string `json:"numObjects,omitempty"`
 	CapacityConsumedInBytes *string `json:"capacityConsumedInBytes,omitempty"`
+	ServiceNames []string `json:"serviceNames,omitempty"`
 }
 
 // NewDatastoreDescription instantiates a new DatastoreDescription object
@@ -137,6 +138,38 @@ func (o *DatastoreDescription) SetCapacityConsumedInBytes(v string) {
 	o.CapacityConsumedInBytes = &v
 }
 
+// GetServiceNames returns the ServiceNames field value if set, zero value otherwise.
+func (o *DatastoreDescription) GetServiceNames() []string {
+	if o == nil || IsNil(o.ServiceNames) {
+		var ret []string
+		return ret
+	}
+	return o.ServiceNames
+}
+
+// GetServiceNamesOk returns a tuple with the ServiceNames field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DatastoreDescription) GetServiceNamesOk() ([]string, bool) {
+	if o == nil || IsNil(o.ServiceNames) {
+		return nil, false
+	}
+	return o.ServiceNames, true
+}
+
+// HasServiceNames returns a boolean if a field has been set.
+func (o *DatastoreDescription) HasServiceNames() bool {
+	if o != nil && !IsNil(o.ServiceNames) {
+		return true
+	}
+
+	return false
+}
+
+// SetServiceNames gets a reference to the given []string and assigns it to the ServiceNames field.
+func (o *DatastoreDescription) SetServiceNames(v []string) {
+	o.ServiceNames = v
+}
+
 func (o DatastoreDescription) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -155,6 +188,9 @@ func (o DatastoreDescription) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CapacityConsumedInBytes) {
 		toSerialize["capacityConsumedInBytes"] = o.CapacityConsumedInBytes
+	}
+	if !IsNil(o.ServiceNames) {
+		toSerialize["serviceNames"] = o.ServiceNames
 	}
 	return toSerialize, nil
 }

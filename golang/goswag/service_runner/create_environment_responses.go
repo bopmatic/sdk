@@ -6,7 +6,6 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"encoding/json"
 	"fmt"
 	"io"
 
@@ -87,13 +86,11 @@ func (o *CreateEnvironmentOK) Code() int {
 }
 
 func (o *CreateEnvironmentOK) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] createEnvironmentOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] createEnvironmentOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateEnvironmentOK) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] createEnvironmentOK %s", 200, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] createEnvironmentOK  %+v", 200, o.Payload)
 }
 
 func (o *CreateEnvironmentOK) GetPayload() *models.CreateEnvironmentReply {
@@ -161,13 +158,11 @@ func (o *CreateEnvironmentDefault) Code() int {
 }
 
 func (o *CreateEnvironmentDefault) Error() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] CreateEnvironment default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] CreateEnvironment default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CreateEnvironmentDefault) String() string {
-	payload, _ := json.Marshal(o.Payload)
-	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] CreateEnvironment default %s", o._statusCode, payload)
+	return fmt.Sprintf("[POST /ServiceRunner/CreateEnvironment][%d] CreateEnvironment default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *CreateEnvironmentDefault) GetPayload() *models.RPCStatus {
