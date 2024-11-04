@@ -35,6 +35,11 @@ service ServiceRunner {
   rpc GetLogs (GetLogsRequest) returns (GetLogsReply) {}
   rpc ListMetrics (ListMetricsRequest) returns (ListMetricsReply) {}
   rpc GetMetricSamples (GetMetricSamplesRequest) returns (GetMetricSamplesReply) {}
+
+  rpc CreateApiKey (CreateApiKeyRequest) returns (CreateApiKeyReply) {}
+  rpc DeleteApiKey (DeleteApiKeyRequest) returns (DeleteApiKeyReply) {}
+  rpc ListApiKeys (ListApiKeysRequest) returns (ListApiKeysReply) {}
+  rpc DescribeApiKey (DescribeApiKeyRequest) returns (DescribeApiKeyReply) {}
 }
 
 enum ServiceRunnerStatus {
@@ -676,4 +681,67 @@ message GetMetricSamplesRequest {
 message GetMetricSamplesReply {
   ServiceRunnerResult result = 1;
   string metricBuf = 2; // the requested metrics in the specified output format
+}
+
+message CreateApiKeyRequest {
+  // the name of the API key
+  string name = 1;
+  // a description of the API key
+  string description = 2;
+  // time the key should expire expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+  uint64 expireTime = 3;
+}
+
+message CreateApiKeyReply {
+  ServiceRunnerResult result = 1;
+  string keyId = 2; // the id of the created key
+  bytes keyData = 3; // the content of the created key to be saved locally
+}
+
+message DeleteApiKeyRequest {
+  // the id of the api key to delete
+  string keyId = 1;
+}
+
+message DeleteApiKeyReply {
+  ServiceRunnerResult result = 1;
+}
+
+message ListApiKeysRequest {
+  reserved 1;
+}
+
+message ListApiKeysReply {
+  ServiceRunnerResult result = 1;
+  repeated string keyIds = 2;
+}
+
+message DescribeApiKeyRequest {
+  // the id of the API key to describe
+  string keyId = 1;
+}
+
+message ApiKeyDescription {
+  // the id of the API key
+  string keyId = 1;
+  // the name of the API key
+  string name = 2;
+  // a description of the API key
+  string description = 3;
+  // time the key was created expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC.
+  uint64 createTime = 4;
+  // time the key should expire expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+  uint64 expireTime = 5;
+  // time the key was last uzed expressed as the number of seconds since
+  // Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
+  uint64 lastUsed = 6;
+}
+
+message DescribeApiKeyReply {
+  ServiceRunnerResult result = 1;
+  // api key description
+  ApiKeyDescription desc = 2;
 }
