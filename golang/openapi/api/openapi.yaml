@@ -7,6 +7,31 @@ servers:
 tags:
 - name: ServiceRunner
 paths:
+  /ServiceRunner/CreateApiKey:
+    post:
+      operationId: CreateApiKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateApiKeyReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/CreateDeployment:
     post:
       operationId: CreateDeployment
@@ -107,6 +132,31 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/DeleteApiKey:
+    post:
+      operationId: DeleteApiKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteApiKeyReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/DeleteEnvironment:
     post:
       operationId: DeleteEnvironment
@@ -172,6 +222,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/DeleteProjectReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
+  /ServiceRunner/DescribeApiKey:
+    post:
+      operationId: DescribeApiKey
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DescribeApiKeyRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeApiKeyReply'
           description: A successful response.
         default:
           content:
@@ -457,6 +532,31 @@ paths:
       tags:
       - ServiceRunner
       x-codegen-request-body-name: body
+  /ServiceRunner/ListApiKeys:
+    post:
+      operationId: ListApiKeys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListApiKeysRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListApiKeysReply'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      tags:
+      - ServiceRunner
+      x-codegen-request-body-name: body
   /ServiceRunner/ListDatabases:
     post:
       operationId: ListDatabases
@@ -684,6 +784,81 @@ paths:
       x-codegen-request-body-name: body
 components:
   schemas:
+    ApiKeyDescription:
+      example:
+        lastUsed: lastUsed
+        expireTime: expireTime
+        createTime: createTime
+        name: name
+        keyId: keyId
+        description: description
+      properties:
+        keyId:
+          title: the id of the API key
+          type: string
+        name:
+          title: the name of the API key
+          type: string
+        description:
+          title: a description of the API key
+          type: string
+        createTime:
+          description: |-
+            time the key was created expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC.
+          format: uint64
+          type: string
+        expireTime:
+          description: |-
+            time the key should expire expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+          format: uint64
+          type: string
+        lastUsed:
+          description: |-
+            time the key was last uzed expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
+          format: uint64
+          type: string
+      type: object
+    CreateApiKeyReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_INVALID
+        keyData: keyData
+        keyId: keyId
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        keyId:
+          title: the id of the created key
+          type: string
+        keyData:
+          format: byte
+          pattern: "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$"
+          title: the content of the created key to be saved locally
+          type: string
+      type: object
+    CreateApiKeyRequest:
+      example:
+        expireTime: expireTime
+        name: name
+        description: description
+      properties:
+        name:
+          title: the name of the API key
+          type: string
+        description:
+          title: a description of the API key
+          type: string
+        expireTime:
+          description: |-
+            time the key should expire expressed as the number of seconds since
+            Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+          format: uint64
+          type: string
+      type: object
     CreateDeploymentReply:
       example:
         result:
@@ -892,6 +1067,23 @@ components:
       properties:
         projEnvHeader:
           $ref: '#/components/schemas/ProjEnvHeader'
+      type: object
+    DeleteApiKeyReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_INVALID
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+      type: object
+    DeleteApiKeyRequest:
+      example:
+        keyId: keyId
+      properties:
+        keyId:
+          title: the id of the api key to delete
+          type: string
       type: object
     DeleteEnvironmentReply:
       example:
@@ -1105,6 +1297,32 @@ components:
          - NEW_PACKAGE: the deployment was created in order to deploy a new package to
          - ENV_TEARDOWN: the environment (customer initiated)
       type: string
+    DescribeApiKeyReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_INVALID
+        desc:
+          lastUsed: lastUsed
+          expireTime: expireTime
+          createTime: createTime
+          name: name
+          keyId: keyId
+          description: description
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        desc:
+          $ref: '#/components/schemas/ApiKeyDescription'
+      type: object
+    DescribeApiKeyRequest:
+      example:
+        keyId: keyId
+      properties:
+        keyId:
+          title: the id of the API key to describe
+          type: string
+      type: object
     DescribeDatabaseReply:
       example:
         result:
@@ -1561,6 +1779,24 @@ components:
       properties:
         key:
           type: string
+      type: object
+    ListApiKeysReply:
+      example:
+        result:
+          statusDetail: statusDetail
+          status: STATUS_INVALID
+        keyIds:
+        - keyIds
+        - keyIds
+      properties:
+        result:
+          $ref: '#/components/schemas/ServiceRunnerResult'
+        keyIds:
+          items:
+            type: string
+          type: array
+      type: object
+    ListApiKeysRequest:
       type: object
     ListDatabasesReply:
       example:

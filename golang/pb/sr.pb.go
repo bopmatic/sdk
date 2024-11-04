@@ -4789,6 +4789,524 @@ func (x *GetMetricSamplesReply) GetMetricBuf() string {
 	return ""
 }
 
+type CreateApiKeyRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the name of the API key
+	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	// a description of the API key
+	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
+	// time the key should expire expressed as the number of seconds since
+	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+	ExpireTime uint64 `protobuf:"varint,3,opt,name=expireTime,proto3" json:"expireTime,omitempty"`
+}
+
+func (x *CreateApiKeyRequest) Reset() {
+	*x = CreateApiKeyRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[72]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateApiKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateApiKeyRequest) ProtoMessage() {}
+
+func (x *CreateApiKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[72]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateApiKeyRequest.ProtoReflect.Descriptor instead.
+func (*CreateApiKeyRequest) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{72}
+}
+
+func (x *CreateApiKeyRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateApiKeyRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *CreateApiKeyRequest) GetExpireTime() uint64 {
+	if x != nil {
+		return x.ExpireTime
+	}
+	return 0
+}
+
+type CreateApiKeyReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result  *ServiceRunnerResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	KeyId   string               `protobuf:"bytes,2,opt,name=keyId,proto3" json:"keyId,omitempty"`     // the id of the created key
+	KeyData []byte               `protobuf:"bytes,3,opt,name=keyData,proto3" json:"keyData,omitempty"` // the content of the created key to be saved locally
+}
+
+func (x *CreateApiKeyReply) Reset() {
+	*x = CreateApiKeyReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[73]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *CreateApiKeyReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateApiKeyReply) ProtoMessage() {}
+
+func (x *CreateApiKeyReply) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[73]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateApiKeyReply.ProtoReflect.Descriptor instead.
+func (*CreateApiKeyReply) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{73}
+}
+
+func (x *CreateApiKeyReply) GetResult() *ServiceRunnerResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+func (x *CreateApiKeyReply) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+func (x *CreateApiKeyReply) GetKeyData() []byte {
+	if x != nil {
+		return x.KeyData
+	}
+	return nil
+}
+
+type DeleteApiKeyRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the id of the api key to delete
+	KeyId string `protobuf:"bytes,1,opt,name=keyId,proto3" json:"keyId,omitempty"`
+}
+
+func (x *DeleteApiKeyRequest) Reset() {
+	*x = DeleteApiKeyRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[74]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteApiKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteApiKeyRequest) ProtoMessage() {}
+
+func (x *DeleteApiKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[74]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteApiKeyRequest.ProtoReflect.Descriptor instead.
+func (*DeleteApiKeyRequest) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{74}
+}
+
+func (x *DeleteApiKeyRequest) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+type DeleteApiKeyReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result *ServiceRunnerResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *DeleteApiKeyReply) Reset() {
+	*x = DeleteApiKeyReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[75]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteApiKeyReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteApiKeyReply) ProtoMessage() {}
+
+func (x *DeleteApiKeyReply) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[75]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteApiKeyReply.ProtoReflect.Descriptor instead.
+func (*DeleteApiKeyReply) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{75}
+}
+
+func (x *DeleteApiKeyReply) GetResult() *ServiceRunnerResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+type ListApiKeysRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ListApiKeysRequest) Reset() {
+	*x = ListApiKeysRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[76]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListApiKeysRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListApiKeysRequest) ProtoMessage() {}
+
+func (x *ListApiKeysRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[76]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListApiKeysRequest.ProtoReflect.Descriptor instead.
+func (*ListApiKeysRequest) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{76}
+}
+
+type ListApiKeysReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result *ServiceRunnerResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	KeyIds []string             `protobuf:"bytes,2,rep,name=keyIds,proto3" json:"keyIds,omitempty"`
+}
+
+func (x *ListApiKeysReply) Reset() {
+	*x = ListApiKeysReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[77]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ListApiKeysReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListApiKeysReply) ProtoMessage() {}
+
+func (x *ListApiKeysReply) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[77]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListApiKeysReply.ProtoReflect.Descriptor instead.
+func (*ListApiKeysReply) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{77}
+}
+
+func (x *ListApiKeysReply) GetResult() *ServiceRunnerResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+func (x *ListApiKeysReply) GetKeyIds() []string {
+	if x != nil {
+		return x.KeyIds
+	}
+	return nil
+}
+
+type DescribeApiKeyRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the id of the API key to describe
+	KeyId string `protobuf:"bytes,1,opt,name=keyId,proto3" json:"keyId,omitempty"`
+}
+
+func (x *DescribeApiKeyRequest) Reset() {
+	*x = DescribeApiKeyRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[78]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DescribeApiKeyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeApiKeyRequest) ProtoMessage() {}
+
+func (x *DescribeApiKeyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[78]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeApiKeyRequest.ProtoReflect.Descriptor instead.
+func (*DescribeApiKeyRequest) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{78}
+}
+
+func (x *DescribeApiKeyRequest) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+type ApiKeyDescription struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	// the id of the API key
+	KeyId string `protobuf:"bytes,1,opt,name=keyId,proto3" json:"keyId,omitempty"`
+	// the name of the API key
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	// a description of the API key
+	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	// time the key was created expressed as the number of seconds since
+	// Jan 1, 1970 00:00:00 UTC.
+	CreateTime uint64 `protobuf:"varint,4,opt,name=createTime,proto3" json:"createTime,omitempty"`
+	// time the key should expire expressed as the number of seconds since
+	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+	ExpireTime uint64 `protobuf:"varint,5,opt,name=expireTime,proto3" json:"expireTime,omitempty"`
+	// time the key was last uzed expressed as the number of seconds since
+	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
+	LastUsed uint64 `protobuf:"varint,6,opt,name=lastUsed,proto3" json:"lastUsed,omitempty"`
+}
+
+func (x *ApiKeyDescription) Reset() {
+	*x = ApiKeyDescription{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[79]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ApiKeyDescription) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ApiKeyDescription) ProtoMessage() {}
+
+func (x *ApiKeyDescription) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[79]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ApiKeyDescription.ProtoReflect.Descriptor instead.
+func (*ApiKeyDescription) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{79}
+}
+
+func (x *ApiKeyDescription) GetKeyId() string {
+	if x != nil {
+		return x.KeyId
+	}
+	return ""
+}
+
+func (x *ApiKeyDescription) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *ApiKeyDescription) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *ApiKeyDescription) GetCreateTime() uint64 {
+	if x != nil {
+		return x.CreateTime
+	}
+	return 0
+}
+
+func (x *ApiKeyDescription) GetExpireTime() uint64 {
+	if x != nil {
+		return x.ExpireTime
+	}
+	return 0
+}
+
+func (x *ApiKeyDescription) GetLastUsed() uint64 {
+	if x != nil {
+		return x.LastUsed
+	}
+	return 0
+}
+
+type DescribeApiKeyReply struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result *ServiceRunnerResult `protobuf:"bytes,1,opt,name=result,proto3" json:"result,omitempty"`
+	// api key description
+	Desc *ApiKeyDescription `protobuf:"bytes,2,opt,name=desc,proto3" json:"desc,omitempty"`
+}
+
+func (x *DescribeApiKeyReply) Reset() {
+	*x = DescribeApiKeyReply{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_pb_sr_proto_msgTypes[80]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DescribeApiKeyReply) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DescribeApiKeyReply) ProtoMessage() {}
+
+func (x *DescribeApiKeyReply) ProtoReflect() protoreflect.Message {
+	mi := &file_pb_sr_proto_msgTypes[80]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DescribeApiKeyReply.ProtoReflect.Descriptor instead.
+func (*DescribeApiKeyReply) Descriptor() ([]byte, []int) {
+	return file_pb_sr_proto_rawDescGZIP(), []int{80}
+}
+
+func (x *DescribeApiKeyReply) GetResult() *ServiceRunnerResult {
+	if x != nil {
+		return x.Result
+	}
+	return nil
+}
+
+func (x *DescribeApiKeyReply) GetDesc() *ApiKeyDescription {
+	if x != nil {
+		return x.Desc
+	}
+	return nil
+}
+
 type ListPackagesReply_ListPackagesItem struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -4801,7 +5319,7 @@ type ListPackagesReply_ListPackagesItem struct {
 func (x *ListPackagesReply_ListPackagesItem) Reset() {
 	*x = ListPackagesReply_ListPackagesItem{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_pb_sr_proto_msgTypes[72]
+		mi := &file_pb_sr_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4814,7 +5332,7 @@ func (x *ListPackagesReply_ListPackagesItem) String() string {
 func (*ListPackagesReply_ListPackagesItem) ProtoMessage() {}
 
 func (x *ListPackagesReply_ListPackagesItem) ProtoReflect() protoreflect.Message {
-	mi := &file_pb_sr_proto_msgTypes[72]
+	mi := &file_pb_sr_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5338,7 +5856,57 @@ var file_pb_sr_proto_rawDesc = []byte{
 	0x65, 0x52, 0x75, 0x6e, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72,
 	0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x1c, 0x0a, 0x09, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x42,
 	0x75, 0x66, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x6d, 0x65, 0x74, 0x72, 0x69, 0x63,
-	0x42, 0x75, 0x66, 0x2a, 0xe7, 0x01, 0x0a, 0x13, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52,
+	0x42, 0x75, 0x66, 0x22, 0x6b, 0x0a, 0x13, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x70, 0x69,
+	0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61,
+	0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20,
+	0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x02, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x0b, 0x64, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e,
+	0x12, 0x1e, 0x0a, 0x0a, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x03,
+	0x20, 0x01, 0x28, 0x04, 0x52, 0x0a, 0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65,
+	0x22, 0x71, 0x0a, 0x11, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79,
+	0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x2c, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52,
+	0x75, 0x6e, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x12, 0x18, 0x0a, 0x07, 0x6b, 0x65, 0x79,
+	0x44, 0x61, 0x74, 0x61, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0c, 0x52, 0x07, 0x6b, 0x65, 0x79, 0x44,
+	0x61, 0x74, 0x61, 0x22, 0x2b, 0x0a, 0x13, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x70, 0x69,
+	0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x6b, 0x65,
+	0x79, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64,
+	0x22, 0x41, 0x0a, 0x11, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79,
+	0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x2c, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52,
+	0x75, 0x6e, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x22, 0x1a, 0x0a, 0x12, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x70, 0x69, 0x4b, 0x65,
+	0x79, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x4a, 0x04, 0x08, 0x01, 0x10, 0x02, 0x22,
+	0x58, 0x0a, 0x10, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65,
+	0x70, 0x6c, 0x79, 0x12, 0x2c, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52, 0x75, 0x6e,
+	0x6e, 0x65, 0x72, 0x52, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
+	0x74, 0x12, 0x16, 0x0a, 0x06, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x73, 0x18, 0x02, 0x20, 0x03, 0x28,
+	0x09, 0x52, 0x06, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x73, 0x22, 0x2d, 0x0a, 0x15, 0x44, 0x65, 0x73,
+	0x63, 0x72, 0x69, 0x62, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x14, 0x0a, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x22, 0xbb, 0x01, 0x0a, 0x11, 0x41, 0x70, 0x69,
+	0x4b, 0x65, 0x79, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x14,
+	0x0a, 0x05, 0x6b, 0x65, 0x79, 0x49, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x05, 0x6b,
+	0x65, 0x79, 0x49, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x20, 0x0a, 0x0b, 0x64, 0x65, 0x73, 0x63,
+	0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0b, 0x64,
+	0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1e, 0x0a, 0x0a, 0x63, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0a,
+	0x63, 0x72, 0x65, 0x61, 0x74, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1e, 0x0a, 0x0a, 0x65, 0x78,
+	0x70, 0x69, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x04, 0x52, 0x0a,
+	0x65, 0x78, 0x70, 0x69, 0x72, 0x65, 0x54, 0x69, 0x6d, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x6c, 0x61,
+	0x73, 0x74, 0x55, 0x73, 0x65, 0x64, 0x18, 0x06, 0x20, 0x01, 0x28, 0x04, 0x52, 0x08, 0x6c, 0x61,
+	0x73, 0x74, 0x55, 0x73, 0x65, 0x64, 0x22, 0x6b, 0x0a, 0x13, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x12, 0x2c, 0x0a,
+	0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x14, 0x2e,
+	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52, 0x75, 0x6e, 0x6e, 0x65, 0x72, 0x52, 0x65, 0x73,
+	0x75, 0x6c, 0x74, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x12, 0x26, 0x0a, 0x04, 0x64,
+	0x65, 0x73, 0x63, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x12, 0x2e, 0x41, 0x70, 0x69, 0x4b,
+	0x65, 0x79, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x70, 0x74, 0x69, 0x6f, 0x6e, 0x52, 0x04, 0x64,
+	0x65, 0x73, 0x63, 0x2a, 0xe7, 0x01, 0x0a, 0x13, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x52,
 	0x75, 0x6e, 0x6e, 0x65, 0x72, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x12, 0x0a, 0x0e, 0x53,
 	0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x49, 0x4e, 0x56, 0x41, 0x4c, 0x49, 0x44, 0x10, 0x00, 0x12,
 	0x0d, 0x0a, 0x09, 0x53, 0x54, 0x41, 0x54, 0x55, 0x53, 0x5f, 0x4f, 0x4b, 0x10, 0x01, 0x12, 0x17,
@@ -5426,7 +5994,7 @@ var file_pb_sr_proto_rawDesc = []byte{
 	0x43, 0x5f, 0x46, 0x4f, 0x52, 0x4d, 0x41, 0x54, 0x5f, 0x4f, 0x50, 0x45, 0x4e, 0x4d, 0x45, 0x54,
 	0x52, 0x49, 0x43, 0x53, 0x10, 0x01, 0x12, 0x1d, 0x0a, 0x15, 0x55, 0x4e, 0x4b, 0x4e, 0x4f, 0x57,
 	0x4e, 0x5f, 0x4d, 0x45, 0x54, 0x52, 0x49, 0x43, 0x5f, 0x46, 0x4f, 0x52, 0x4d, 0x41, 0x54, 0x10,
-	0xff, 0xff, 0xff, 0xff, 0x07, 0x32, 0x9d, 0x0e, 0x0a, 0x0d, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
+	0xff, 0xff, 0xff, 0xff, 0x07, 0x32, 0x90, 0x10, 0x0a, 0x0d, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63,
 	0x65, 0x52, 0x75, 0x6e, 0x6e, 0x65, 0x72, 0x12, 0x3d, 0x0a, 0x0d, 0x43, 0x72, 0x65, 0x61, 0x74,
 	0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x12, 0x15, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74,
 	0x65, 0x50, 0x72, 0x6f, 0x6a, 0x65, 0x63, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
@@ -5540,9 +6108,25 @@ var file_pb_sr_proto_rawDesc = []byte{
 	0x73, 0x12, 0x18, 0x2e, 0x47, 0x65, 0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x53, 0x61, 0x6d,
 	0x70, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x16, 0x2e, 0x47, 0x65,
 	0x74, 0x4d, 0x65, 0x74, 0x72, 0x69, 0x63, 0x53, 0x61, 0x6d, 0x70, 0x6c, 0x65, 0x73, 0x52, 0x65,
-	0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x1f, 0x5a, 0x1d, 0x62, 0x6f, 0x70, 0x6d, 0x61, 0x74, 0x69,
-	0x63, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x72, 0x75, 0x6e,
-	0x6e, 0x65, 0x72, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x3a, 0x0a, 0x0c, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41,
+	0x70, 0x69, 0x4b, 0x65, 0x79, 0x12, 0x14, 0x2e, 0x43, 0x72, 0x65, 0x61, 0x74, 0x65, 0x41, 0x70,
+	0x69, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x43, 0x72,
+	0x65, 0x61, 0x74, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22,
+	0x00, 0x12, 0x3a, 0x0a, 0x0c, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65,
+	0x79, 0x12, 0x14, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x12, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65,
+	0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x37, 0x0a,
+	0x0b, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x73, 0x12, 0x13, 0x2e, 0x4c,
+	0x69, 0x73, 0x74, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x11, 0x2e, 0x4c, 0x69, 0x73, 0x74, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x73, 0x52,
+	0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x12, 0x40, 0x0a, 0x0e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69,
+	0x62, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x12, 0x16, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72,
+	0x69, 0x62, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65, 0x79, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x14, 0x2e, 0x44, 0x65, 0x73, 0x63, 0x72, 0x69, 0x62, 0x65, 0x41, 0x70, 0x69, 0x4b, 0x65,
+	0x79, 0x52, 0x65, 0x70, 0x6c, 0x79, 0x22, 0x00, 0x42, 0x1f, 0x5a, 0x1d, 0x62, 0x6f, 0x70, 0x6d,
+	0x61, 0x74, 0x69, 0x63, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x73, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65,
+	0x72, 0x75, 0x6e, 0x6e, 0x65, 0x72, 0x2f, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -5558,7 +6142,7 @@ func file_pb_sr_proto_rawDescGZIP() []byte {
 }
 
 var file_pb_sr_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
-var file_pb_sr_proto_msgTypes = make([]protoimpl.MessageInfo, 73)
+var file_pb_sr_proto_msgTypes = make([]protoimpl.MessageInfo, 82)
 var file_pb_sr_proto_goTypes = []any{
 	(ServiceRunnerStatus)(0),                   // 0: ServiceRunnerStatus
 	(ProjectState)(0),                          // 1: ProjectState
@@ -5641,7 +6225,16 @@ var file_pb_sr_proto_goTypes = []any{
 	(*ListMetricsReply)(nil),                   // 78: ListMetricsReply
 	(*GetMetricSamplesRequest)(nil),            // 79: GetMetricSamplesRequest
 	(*GetMetricSamplesReply)(nil),              // 80: GetMetricSamplesReply
-	(*ListPackagesReply_ListPackagesItem)(nil), // 81: ListPackagesReply.ListPackagesItem
+	(*CreateApiKeyRequest)(nil),                // 81: CreateApiKeyRequest
+	(*CreateApiKeyReply)(nil),                  // 82: CreateApiKeyReply
+	(*DeleteApiKeyRequest)(nil),                // 83: DeleteApiKeyRequest
+	(*DeleteApiKeyReply)(nil),                  // 84: DeleteApiKeyReply
+	(*ListApiKeysRequest)(nil),                 // 85: ListApiKeysRequest
+	(*ListApiKeysReply)(nil),                   // 86: ListApiKeysReply
+	(*DescribeApiKeyRequest)(nil),              // 87: DescribeApiKeyRequest
+	(*ApiKeyDescription)(nil),                  // 88: ApiKeyDescription
+	(*DescribeApiKeyReply)(nil),                // 89: DescribeApiKeyReply
+	(*ListPackagesReply_ListPackagesItem)(nil), // 90: ListPackagesReply.ListPackagesItem
 }
 var file_pb_sr_proto_depIdxs = []int32{
 	0,   // 0: ServiceRunnerResult.status:type_name -> ServiceRunnerStatus
@@ -5706,7 +6299,7 @@ var file_pb_sr_proto_depIdxs = []int32{
 	9,   // 59: DescribePackageReply.result:type_name -> ServiceRunnerResult
 	62,  // 60: DescribePackageReply.desc:type_name -> PackageDescription
 	9,   // 61: ListPackagesReply.result:type_name -> ServiceRunnerResult
-	81,  // 62: ListPackagesReply.items:type_name -> ListPackagesReply.ListPackagesItem
+	90,  // 62: ListPackagesReply.items:type_name -> ListPackagesReply.ListPackagesItem
 	9,   // 63: DeletePackageReply.result:type_name -> ServiceRunnerResult
 	6,   // 64: DeletePackageReply.state:type_name -> PackageState
 	9,   // 65: GetUploadURLReply.result:type_name -> ServiceRunnerResult
@@ -5718,65 +6311,78 @@ var file_pb_sr_proto_depIdxs = []int32{
 	7,   // 71: GetMetricSamplesRequest.scope:type_name -> MetricsScope
 	8,   // 72: GetMetricSamplesRequest.format:type_name -> MetricsFormat
 	9,   // 73: GetMetricSamplesReply.result:type_name -> ServiceRunnerResult
-	12,  // 74: ServiceRunner.CreateProject:input_type -> CreateProjectRequest
-	14,  // 75: ServiceRunner.DeleteProject:input_type -> DeleteProjectRequest
-	18,  // 76: ServiceRunner.ListProjects:input_type -> ListProjectsRequest
-	20,  // 77: ServiceRunner.DescribeProject:input_type -> DescribeProjectRequest
-	16,  // 78: ServiceRunner.DeactivateProject:input_type -> DeactivateProjectRequest
-	24,  // 79: ServiceRunner.CreateEnvironment:input_type -> CreateEnvironmentRequest
-	26,  // 80: ServiceRunner.DeleteEnvironment:input_type -> DeleteEnvironmentRequest
-	28,  // 81: ServiceRunner.ListEnvironments:input_type -> ListEnvironmentsRequest
-	30,  // 82: ServiceRunner.DescribeEnvironment:input_type -> DescribeEnvironmentRequest
-	33,  // 83: ServiceRunner.DescribeSite:input_type -> DescribeSiteRequest
-	35,  // 84: ServiceRunner.ListServices:input_type -> ListServicesRequest
-	38,  // 85: ServiceRunner.DescribeService:input_type -> DescribeServiceRequest
-	41,  // 86: ServiceRunner.ListDatastores:input_type -> ListDatastoresRequest
-	44,  // 87: ServiceRunner.DescribeDatastore:input_type -> DescribeDatastoreRequest
-	47,  // 88: ServiceRunner.ListDatabases:input_type -> ListDatabasesRequest
-	50,  // 89: ServiceRunner.DescribeDatabase:input_type -> DescribeDatabaseRequest
-	56,  // 90: ServiceRunner.CreateDeployment:input_type -> CreateDeploymentRequest
-	58,  // 91: ServiceRunner.ListDeployments:input_type -> ListDeploymentsRequest
-	60,  // 92: ServiceRunner.DescribeDeployment:input_type -> DescribeDeploymentRequest
-	65,  // 93: ServiceRunner.DescribePackage:input_type -> DescribePackageRequest
-	69,  // 94: ServiceRunner.DeletePackage:input_type -> DeletePackageRequest
-	67,  // 95: ServiceRunner.ListPackages:input_type -> ListPackagesRequest
-	63,  // 96: ServiceRunner.UploadPackage:input_type -> UploadPackageRequest
-	71,  // 97: ServiceRunner.GetUploadURL:input_type -> GetUploadURLRequest
-	73,  // 98: ServiceRunner.GetLogs:input_type -> GetLogsRequest
-	76,  // 99: ServiceRunner.ListMetrics:input_type -> ListMetricsRequest
-	79,  // 100: ServiceRunner.GetMetricSamples:input_type -> GetMetricSamplesRequest
-	13,  // 101: ServiceRunner.CreateProject:output_type -> CreateProjectReply
-	15,  // 102: ServiceRunner.DeleteProject:output_type -> DeleteProjectReply
-	19,  // 103: ServiceRunner.ListProjects:output_type -> ListProjectsReply
-	21,  // 104: ServiceRunner.DescribeProject:output_type -> DescribeProjectReply
-	17,  // 105: ServiceRunner.DeactivateProject:output_type -> DeactivateProjectReply
-	25,  // 106: ServiceRunner.CreateEnvironment:output_type -> CreateEnvironmentReply
-	27,  // 107: ServiceRunner.DeleteEnvironment:output_type -> DeleteEnvironmentReply
-	29,  // 108: ServiceRunner.ListEnvironments:output_type -> ListEnvironmentsReply
-	31,  // 109: ServiceRunner.DescribeEnvironment:output_type -> DescribeEnvironmentReply
-	34,  // 110: ServiceRunner.DescribeSite:output_type -> DescribeSiteReply
-	36,  // 111: ServiceRunner.ListServices:output_type -> ListServicesReply
-	40,  // 112: ServiceRunner.DescribeService:output_type -> DescribeServiceReply
-	42,  // 113: ServiceRunner.ListDatastores:output_type -> ListDatastoresReply
-	46,  // 114: ServiceRunner.DescribeDatastore:output_type -> DescribeDatastoreReply
-	48,  // 115: ServiceRunner.ListDatabases:output_type -> ListDatabasesReply
-	53,  // 116: ServiceRunner.DescribeDatabase:output_type -> DescribeDatabaseReply
-	57,  // 117: ServiceRunner.CreateDeployment:output_type -> CreateDeploymentReply
-	59,  // 118: ServiceRunner.ListDeployments:output_type -> ListDeploymentsReply
-	61,  // 119: ServiceRunner.DescribeDeployment:output_type -> DescribeDeploymentReply
-	66,  // 120: ServiceRunner.DescribePackage:output_type -> DescribePackageReply
-	70,  // 121: ServiceRunner.DeletePackage:output_type -> DeletePackageReply
-	68,  // 122: ServiceRunner.ListPackages:output_type -> ListPackagesReply
-	64,  // 123: ServiceRunner.UploadPackage:output_type -> UploadPackageReply
-	72,  // 124: ServiceRunner.GetUploadURL:output_type -> GetUploadURLReply
-	75,  // 125: ServiceRunner.GetLogs:output_type -> GetLogsReply
-	78,  // 126: ServiceRunner.ListMetrics:output_type -> ListMetricsReply
-	80,  // 127: ServiceRunner.GetMetricSamples:output_type -> GetMetricSamplesReply
-	101, // [101:128] is the sub-list for method output_type
-	74,  // [74:101] is the sub-list for method input_type
-	74,  // [74:74] is the sub-list for extension type_name
-	74,  // [74:74] is the sub-list for extension extendee
-	0,   // [0:74] is the sub-list for field type_name
+	9,   // 74: CreateApiKeyReply.result:type_name -> ServiceRunnerResult
+	9,   // 75: DeleteApiKeyReply.result:type_name -> ServiceRunnerResult
+	9,   // 76: ListApiKeysReply.result:type_name -> ServiceRunnerResult
+	9,   // 77: DescribeApiKeyReply.result:type_name -> ServiceRunnerResult
+	88,  // 78: DescribeApiKeyReply.desc:type_name -> ApiKeyDescription
+	12,  // 79: ServiceRunner.CreateProject:input_type -> CreateProjectRequest
+	14,  // 80: ServiceRunner.DeleteProject:input_type -> DeleteProjectRequest
+	18,  // 81: ServiceRunner.ListProjects:input_type -> ListProjectsRequest
+	20,  // 82: ServiceRunner.DescribeProject:input_type -> DescribeProjectRequest
+	16,  // 83: ServiceRunner.DeactivateProject:input_type -> DeactivateProjectRequest
+	24,  // 84: ServiceRunner.CreateEnvironment:input_type -> CreateEnvironmentRequest
+	26,  // 85: ServiceRunner.DeleteEnvironment:input_type -> DeleteEnvironmentRequest
+	28,  // 86: ServiceRunner.ListEnvironments:input_type -> ListEnvironmentsRequest
+	30,  // 87: ServiceRunner.DescribeEnvironment:input_type -> DescribeEnvironmentRequest
+	33,  // 88: ServiceRunner.DescribeSite:input_type -> DescribeSiteRequest
+	35,  // 89: ServiceRunner.ListServices:input_type -> ListServicesRequest
+	38,  // 90: ServiceRunner.DescribeService:input_type -> DescribeServiceRequest
+	41,  // 91: ServiceRunner.ListDatastores:input_type -> ListDatastoresRequest
+	44,  // 92: ServiceRunner.DescribeDatastore:input_type -> DescribeDatastoreRequest
+	47,  // 93: ServiceRunner.ListDatabases:input_type -> ListDatabasesRequest
+	50,  // 94: ServiceRunner.DescribeDatabase:input_type -> DescribeDatabaseRequest
+	56,  // 95: ServiceRunner.CreateDeployment:input_type -> CreateDeploymentRequest
+	58,  // 96: ServiceRunner.ListDeployments:input_type -> ListDeploymentsRequest
+	60,  // 97: ServiceRunner.DescribeDeployment:input_type -> DescribeDeploymentRequest
+	65,  // 98: ServiceRunner.DescribePackage:input_type -> DescribePackageRequest
+	69,  // 99: ServiceRunner.DeletePackage:input_type -> DeletePackageRequest
+	67,  // 100: ServiceRunner.ListPackages:input_type -> ListPackagesRequest
+	63,  // 101: ServiceRunner.UploadPackage:input_type -> UploadPackageRequest
+	71,  // 102: ServiceRunner.GetUploadURL:input_type -> GetUploadURLRequest
+	73,  // 103: ServiceRunner.GetLogs:input_type -> GetLogsRequest
+	76,  // 104: ServiceRunner.ListMetrics:input_type -> ListMetricsRequest
+	79,  // 105: ServiceRunner.GetMetricSamples:input_type -> GetMetricSamplesRequest
+	81,  // 106: ServiceRunner.CreateApiKey:input_type -> CreateApiKeyRequest
+	83,  // 107: ServiceRunner.DeleteApiKey:input_type -> DeleteApiKeyRequest
+	85,  // 108: ServiceRunner.ListApiKeys:input_type -> ListApiKeysRequest
+	87,  // 109: ServiceRunner.DescribeApiKey:input_type -> DescribeApiKeyRequest
+	13,  // 110: ServiceRunner.CreateProject:output_type -> CreateProjectReply
+	15,  // 111: ServiceRunner.DeleteProject:output_type -> DeleteProjectReply
+	19,  // 112: ServiceRunner.ListProjects:output_type -> ListProjectsReply
+	21,  // 113: ServiceRunner.DescribeProject:output_type -> DescribeProjectReply
+	17,  // 114: ServiceRunner.DeactivateProject:output_type -> DeactivateProjectReply
+	25,  // 115: ServiceRunner.CreateEnvironment:output_type -> CreateEnvironmentReply
+	27,  // 116: ServiceRunner.DeleteEnvironment:output_type -> DeleteEnvironmentReply
+	29,  // 117: ServiceRunner.ListEnvironments:output_type -> ListEnvironmentsReply
+	31,  // 118: ServiceRunner.DescribeEnvironment:output_type -> DescribeEnvironmentReply
+	34,  // 119: ServiceRunner.DescribeSite:output_type -> DescribeSiteReply
+	36,  // 120: ServiceRunner.ListServices:output_type -> ListServicesReply
+	40,  // 121: ServiceRunner.DescribeService:output_type -> DescribeServiceReply
+	42,  // 122: ServiceRunner.ListDatastores:output_type -> ListDatastoresReply
+	46,  // 123: ServiceRunner.DescribeDatastore:output_type -> DescribeDatastoreReply
+	48,  // 124: ServiceRunner.ListDatabases:output_type -> ListDatabasesReply
+	53,  // 125: ServiceRunner.DescribeDatabase:output_type -> DescribeDatabaseReply
+	57,  // 126: ServiceRunner.CreateDeployment:output_type -> CreateDeploymentReply
+	59,  // 127: ServiceRunner.ListDeployments:output_type -> ListDeploymentsReply
+	61,  // 128: ServiceRunner.DescribeDeployment:output_type -> DescribeDeploymentReply
+	66,  // 129: ServiceRunner.DescribePackage:output_type -> DescribePackageReply
+	70,  // 130: ServiceRunner.DeletePackage:output_type -> DeletePackageReply
+	68,  // 131: ServiceRunner.ListPackages:output_type -> ListPackagesReply
+	64,  // 132: ServiceRunner.UploadPackage:output_type -> UploadPackageReply
+	72,  // 133: ServiceRunner.GetUploadURL:output_type -> GetUploadURLReply
+	75,  // 134: ServiceRunner.GetLogs:output_type -> GetLogsReply
+	78,  // 135: ServiceRunner.ListMetrics:output_type -> ListMetricsReply
+	80,  // 136: ServiceRunner.GetMetricSamples:output_type -> GetMetricSamplesReply
+	82,  // 137: ServiceRunner.CreateApiKey:output_type -> CreateApiKeyReply
+	84,  // 138: ServiceRunner.DeleteApiKey:output_type -> DeleteApiKeyReply
+	86,  // 139: ServiceRunner.ListApiKeys:output_type -> ListApiKeysReply
+	89,  // 140: ServiceRunner.DescribeApiKey:output_type -> DescribeApiKeyReply
+	110, // [110:141] is the sub-list for method output_type
+	79,  // [79:110] is the sub-list for method input_type
+	79,  // [79:79] is the sub-list for extension type_name
+	79,  // [79:79] is the sub-list for extension extendee
+	0,   // [0:79] is the sub-list for field type_name
 }
 
 func init() { file_pb_sr_proto_init() }
@@ -6650,6 +7256,114 @@ func file_pb_sr_proto_init() {
 			}
 		}
 		file_pb_sr_proto_msgTypes[72].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateApiKeyRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[73].Exporter = func(v any, i int) any {
+			switch v := v.(*CreateApiKeyReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[74].Exporter = func(v any, i int) any {
+			switch v := v.(*DeleteApiKeyRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[75].Exporter = func(v any, i int) any {
+			switch v := v.(*DeleteApiKeyReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[76].Exporter = func(v any, i int) any {
+			switch v := v.(*ListApiKeysRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[77].Exporter = func(v any, i int) any {
+			switch v := v.(*ListApiKeysReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[78].Exporter = func(v any, i int) any {
+			switch v := v.(*DescribeApiKeyRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[79].Exporter = func(v any, i int) any {
+			switch v := v.(*ApiKeyDescription); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[80].Exporter = func(v any, i int) any {
+			switch v := v.(*DescribeApiKeyReply); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_pb_sr_proto_msgTypes[81].Exporter = func(v any, i int) any {
 			switch v := v.(*ListPackagesReply_ListPackagesItem); i {
 			case 0:
 				return &v.state
@@ -6668,7 +7382,7 @@ func file_pb_sr_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_pb_sr_proto_rawDesc,
 			NumEnums:      9,
-			NumMessages:   73,
+			NumMessages:   82,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

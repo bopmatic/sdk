@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *DeleteEnvironmentOK) Code() int {
 }
 
 func (o *DeleteEnvironmentOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] deleteEnvironmentOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] deleteEnvironmentOK %s", 200, payload)
 }
 
 func (o *DeleteEnvironmentOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] deleteEnvironmentOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] deleteEnvironmentOK %s", 200, payload)
 }
 
 func (o *DeleteEnvironmentOK) GetPayload() *models.DeleteEnvironmentReply {
@@ -158,11 +161,13 @@ func (o *DeleteEnvironmentDefault) Code() int {
 }
 
 func (o *DeleteEnvironmentDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] DeleteEnvironment default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] DeleteEnvironment default %s", o._statusCode, payload)
 }
 
 func (o *DeleteEnvironmentDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] DeleteEnvironment default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteEnvironment][%d] DeleteEnvironment default %s", o._statusCode, payload)
 }
 
 func (o *DeleteEnvironmentDefault) GetPayload() *models.RPCStatus {

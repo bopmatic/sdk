@@ -7,12 +7,38 @@ package service_runner
 
 import (
 	"github.com/go-openapi/runtime"
+	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 )
 
 // New creates a new service runner API client.
 func New(transport runtime.ClientTransport, formats strfmt.Registry) ClientService {
 	return &Client{transport: transport, formats: formats}
+}
+
+// New creates a new service runner API client with basic auth credentials.
+// It takes the following parameters:
+// - host: http host (github.com).
+// - basePath: any base path for the API client ("/v1", "/v3").
+// - scheme: http scheme ("http", "https").
+// - user: user for basic authentication header.
+// - password: password for basic authentication header.
+func NewClientWithBasicAuth(host, basePath, scheme, user, password string) ClientService {
+	transport := httptransport.New(host, basePath, []string{scheme})
+	transport.DefaultAuthentication = httptransport.BasicAuth(user, password)
+	return &Client{transport: transport, formats: strfmt.Default}
+}
+
+// New creates a new service runner API client with a bearer token for authentication.
+// It takes the following parameters:
+// - host: http host (github.com).
+// - basePath: any base path for the API client ("/v1", "/v3").
+// - scheme: http scheme ("http", "https").
+// - bearerToken: bearer token for Bearer authentication header.
+func NewClientWithBearerToken(host, basePath, scheme, bearerToken string) ClientService {
+	transport := httptransport.New(host, basePath, []string{scheme})
+	transport.DefaultAuthentication = httptransport.BearerToken(bearerToken)
+	return &Client{transport: transport, formats: strfmt.Default}
 }
 
 /*
@@ -23,11 +49,13 @@ type Client struct {
 	formats   strfmt.Registry
 }
 
-// ClientOption is the option for Client methods
+// ClientOption may be used to customize the behavior of Client methods.
 type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
+	CreateAPIKey(params *CreateAPIKeyParams, opts ...ClientOption) (*CreateAPIKeyOK, error)
+
 	CreateDeployment(params *CreateDeploymentParams, opts ...ClientOption) (*CreateDeploymentOK, error)
 
 	CreateEnvironment(params *CreateEnvironmentParams, opts ...ClientOption) (*CreateEnvironmentOK, error)
@@ -36,11 +64,15 @@ type ClientService interface {
 
 	DeactivateProject(params *DeactivateProjectParams, opts ...ClientOption) (*DeactivateProjectOK, error)
 
+	DeleteAPIKey(params *DeleteAPIKeyParams, opts ...ClientOption) (*DeleteAPIKeyOK, error)
+
 	DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error)
 
 	DeletePackage(params *DeletePackageParams, opts ...ClientOption) (*DeletePackageOK, error)
 
 	DeleteProject(params *DeleteProjectParams, opts ...ClientOption) (*DeleteProjectOK, error)
+
+	DescribeAPIKey(params *DescribeAPIKeyParams, opts ...ClientOption) (*DescribeAPIKeyOK, error)
 
 	DescribeDatabase(params *DescribeDatabaseParams, opts ...ClientOption) (*DescribeDatabaseOK, error)
 
@@ -64,6 +96,8 @@ type ClientService interface {
 
 	GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error)
 
+	ListAPIKeys(params *ListAPIKeysParams, opts ...ClientOption) (*ListAPIKeysOK, error)
+
 	ListDatabases(params *ListDatabasesParams, opts ...ClientOption) (*ListDatabasesOK, error)
 
 	ListDatastores(params *ListDatastoresParams, opts ...ClientOption) (*ListDatastoresOK, error)
@@ -83,6 +117,43 @@ type ClientService interface {
 	UploadPackage(params *UploadPackageParams, opts ...ClientOption) (*UploadPackageOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
+}
+
+/*
+CreateAPIKey create Api key API
+*/
+func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, opts ...ClientOption) (*CreateAPIKeyOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewCreateAPIKeyParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "CreateApiKey",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/CreateApiKey",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &CreateAPIKeyReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*CreateAPIKeyOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*CreateAPIKeyDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
 /*
@@ -234,6 +305,43 @@ func (a *Client) DeactivateProject(params *DeactivateProjectParams, opts ...Clie
 }
 
 /*
+DeleteAPIKey delete Api key API
+*/
+func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, opts ...ClientOption) (*DeleteAPIKeyOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDeleteAPIKeyParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DeleteApiKey",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DeleteApiKey",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DeleteAPIKeyReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DeleteAPIKeyOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DeleteAPIKeyDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
 DeleteEnvironment delete environment API
 */
 func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error) {
@@ -341,6 +449,43 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, opts ...ClientOption
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*DeleteProjectDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+DescribeAPIKey describe Api key API
+*/
+func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, opts ...ClientOption) (*DescribeAPIKeyOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewDescribeAPIKeyParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "DescribeApiKey",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/DescribeApiKey",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &DescribeAPIKeyReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*DescribeAPIKeyOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*DescribeAPIKeyDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -748,6 +893,43 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) 
 	}
 	// unexpected success response
 	unexpectedSuccess := result.(*GetUploadURLDefault)
+	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
+}
+
+/*
+ListAPIKeys list Api keys API
+*/
+func (a *Client) ListAPIKeys(params *ListAPIKeysParams, opts ...ClientOption) (*ListAPIKeysOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewListAPIKeysParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "ListApiKeys",
+		Method:             "POST",
+		PathPattern:        "/ServiceRunner/ListApiKeys",
+		ProducesMediaTypes: []string{"application/json"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"https"},
+		Params:             params,
+		Reader:             &ListAPIKeysReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*ListAPIKeysOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	unexpectedSuccess := result.(*ListAPIKeysDefault)
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

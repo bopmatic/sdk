@@ -20,6 +20,38 @@
     "application/json"
   ],
   "paths": {
+    "/ServiceRunner/CreateApiKey": {
+      "post": {
+        "operationId": "CreateApiKey",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/CreateApiKeyReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateApiKeyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/CreateDeployment": {
       "post": {
         "operationId": "CreateDeployment",
@@ -148,6 +180,38 @@
         ]
       }
     },
+    "/ServiceRunner/DeleteApiKey": {
+      "post": {
+        "operationId": "DeleteApiKey",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DeleteApiKeyReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DeleteApiKeyRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/DeleteEnvironment": {
       "post": {
         "operationId": "DeleteEnvironment",
@@ -236,6 +300,38 @@
             "required": true,
             "schema": {
               "$ref": "#/definitions/DeleteProjectRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
+    "/ServiceRunner/DescribeApiKey": {
+      "post": {
+        "operationId": "DescribeApiKey",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/DescribeApiKeyReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DescribeApiKeyRequest"
             }
           }
         ],
@@ -596,6 +692,38 @@
         ]
       }
     },
+    "/ServiceRunner/ListApiKeys": {
+      "post": {
+        "operationId": "ListApiKeys",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/ListApiKeysReply"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ListApiKeysRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ServiceRunner"
+        ]
+      }
+    },
     "/ServiceRunner/ListDatabases": {
       "post": {
         "operationId": "ListDatabases",
@@ -886,6 +1014,73 @@
     }
   },
   "definitions": {
+    "ApiKeyDescription": {
+      "type": "object",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "title": "the id of the API key"
+        },
+        "name": {
+          "type": "string",
+          "title": "the name of the API key"
+        },
+        "description": {
+          "type": "string",
+          "title": "a description of the API key"
+        },
+        "createTime": {
+          "type": "string",
+          "format": "uint64",
+          "description": "time the key was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC."
+        },
+        "expireTime": {
+          "type": "string",
+          "format": "uint64",
+          "description": "time the key should expire expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire."
+        },
+        "lastUsed": {
+          "type": "string",
+          "format": "uint64",
+          "description": "time the key was last uzed expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used."
+        }
+      }
+    },
+    "CreateApiKeyReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "keyId": {
+          "type": "string",
+          "title": "the id of the created key"
+        },
+        "keyData": {
+          "type": "string",
+          "format": "byte",
+          "title": "the content of the created key to be saved locally"
+        }
+      }
+    },
+    "CreateApiKeyRequest": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "title": "the name of the API key"
+        },
+        "description": {
+          "type": "string",
+          "title": "a description of the API key"
+        },
+        "expireTime": {
+          "type": "string",
+          "format": "uint64",
+          "description": "time the key should expire expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire."
+        }
+      }
+    },
     "CreateDeploymentReply": {
       "type": "object",
       "properties": {
@@ -1071,6 +1266,23 @@
         }
       }
     },
+    "DeleteApiKeyReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        }
+      }
+    },
+    "DeleteApiKeyRequest": {
+      "type": "object",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "title": "the id of the api key to delete"
+        }
+      }
+    },
     "DeleteEnvironmentReply": {
       "type": "object",
       "properties": {
@@ -1249,6 +1461,27 @@
       "default": "INVALID_DEPLOY_TYPE",
       "description": "the deployment was created in order to remove the project from\n - SECURITY_UPDATE: the environment (customer initiated)\n\nthe deployment was created in order to perform a security update\n - INF_UPDATE: on the backend infrastructure (service initiated)\n\nthe deployment was created in order to perform a non-security related\n - UNKNOWN_DEPLOY_TYPE: MAX_INT",
       "title": "- INVALID_DEPLOY_TYPE: unused\n - NEW_PACKAGE: the deployment was created in order to deploy a new package to\n - ENV_TEARDOWN: the environment (customer initiated)"
+    },
+    "DescribeApiKeyReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "desc": {
+          "$ref": "#/definitions/ApiKeyDescription",
+          "title": "api key description"
+        }
+      }
+    },
+    "DescribeApiKeyRequest": {
+      "type": "object",
+      "properties": {
+        "keyId": {
+          "type": "string",
+          "title": "the id of the API key to describe"
+        }
+      }
     },
     "DescribeDatabaseReply": {
       "type": "object",
@@ -1602,6 +1835,23 @@
           "type": "string"
         }
       }
+    },
+    "ListApiKeysReply": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "$ref": "#/definitions/ServiceRunnerResult"
+        },
+        "keyIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "ListApiKeysRequest": {
+      "type": "object"
     },
     "ListDatabasesReply": {
       "type": "object",

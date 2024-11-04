@@ -4,13 +4,16 @@ All URIs are relative to *https://api.bopmatic.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**CreateApiKey**](ServiceRunnerAPI.md#CreateApiKey) | **Post** /ServiceRunner/CreateApiKey | 
 [**CreateDeployment**](ServiceRunnerAPI.md#CreateDeployment) | **Post** /ServiceRunner/CreateDeployment | 
 [**CreateEnvironment**](ServiceRunnerAPI.md#CreateEnvironment) | **Post** /ServiceRunner/CreateEnvironment | 
 [**CreateProject**](ServiceRunnerAPI.md#CreateProject) | **Post** /ServiceRunner/CreateProject | 
 [**DeactivateProject**](ServiceRunnerAPI.md#DeactivateProject) | **Post** /ServiceRunner/DeactivateProject | 
+[**DeleteApiKey**](ServiceRunnerAPI.md#DeleteApiKey) | **Post** /ServiceRunner/DeleteApiKey | 
 [**DeleteEnvironment**](ServiceRunnerAPI.md#DeleteEnvironment) | **Post** /ServiceRunner/DeleteEnvironment | 
 [**DeletePackage**](ServiceRunnerAPI.md#DeletePackage) | **Post** /ServiceRunner/DeletePackage | 
 [**DeleteProject**](ServiceRunnerAPI.md#DeleteProject) | **Post** /ServiceRunner/DeleteProject | 
+[**DescribeApiKey**](ServiceRunnerAPI.md#DescribeApiKey) | **Post** /ServiceRunner/DescribeApiKey | 
 [**DescribeDatabase**](ServiceRunnerAPI.md#DescribeDatabase) | **Post** /ServiceRunner/DescribeDatabase | 
 [**DescribeDatastore**](ServiceRunnerAPI.md#DescribeDatastore) | **Post** /ServiceRunner/DescribeDatastore | 
 [**DescribeDeployment**](ServiceRunnerAPI.md#DescribeDeployment) | **Post** /ServiceRunner/DescribeDeployment | 
@@ -22,6 +25,7 @@ Method | HTTP request | Description
 [**GetLogs**](ServiceRunnerAPI.md#GetLogs) | **Post** /ServiceRunner/GetLogs | 
 [**GetMetricSamples**](ServiceRunnerAPI.md#GetMetricSamples) | **Post** /ServiceRunner/GetMetricSamples | 
 [**GetUploadURL**](ServiceRunnerAPI.md#GetUploadURL) | **Post** /ServiceRunner/GetUploadURL | 
+[**ListApiKeys**](ServiceRunnerAPI.md#ListApiKeys) | **Post** /ServiceRunner/ListApiKeys | 
 [**ListDatabases**](ServiceRunnerAPI.md#ListDatabases) | **Post** /ServiceRunner/ListDatabases | 
 [**ListDatastores**](ServiceRunnerAPI.md#ListDatastores) | **Post** /ServiceRunner/ListDatastores | 
 [**ListDeployments**](ServiceRunnerAPI.md#ListDeployments) | **Post** /ServiceRunner/ListDeployments | 
@@ -32,6 +36,70 @@ Method | HTTP request | Description
 [**ListServices**](ServiceRunnerAPI.md#ListServices) | **Post** /ServiceRunner/ListServices | 
 [**UploadPackage**](ServiceRunnerAPI.md#UploadPackage) | **Post** /ServiceRunner/UploadPackage | 
 
+
+
+## CreateApiKey
+
+> CreateApiKeyReply CreateApiKey(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
+)
+
+func main() {
+	body := *openapiclient.NewCreateApiKeyRequest() // CreateApiKeyRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.CreateApiKey(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.CreateApiKey``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `CreateApiKey`: CreateApiKeyReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.CreateApiKey`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiCreateApiKeyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**CreateApiKeyRequest**](CreateApiKeyRequest.md) |  | 
+
+### Return type
+
+[**CreateApiKeyReply**](CreateApiKeyReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
 
 
 ## CreateDeployment
@@ -290,6 +358,70 @@ No authorization required
 [[Back to README]](../README.md)
 
 
+## DeleteApiKey
+
+> DeleteApiKeyReply DeleteApiKey(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
+)
+
+func main() {
+	body := *openapiclient.NewDeleteApiKeyRequest() // DeleteApiKeyRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.DeleteApiKey(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.DeleteApiKey``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DeleteApiKey`: DeleteApiKeyReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.DeleteApiKey`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDeleteApiKeyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DeleteApiKeyRequest**](DeleteApiKeyRequest.md) |  | 
+
+### Return type
+
+[**DeleteApiKeyReply**](DeleteApiKeyReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
 ## DeleteEnvironment
 
 > DeleteEnvironmentReply DeleteEnvironment(ctx).Body(body).Execute()
@@ -467,6 +599,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**DeleteProjectReply**](DeleteProjectReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## DescribeApiKey
+
+> DescribeApiKeyReply DescribeApiKey(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
+)
+
+func main() {
+	body := *openapiclient.NewDescribeApiKeyRequest() // DescribeApiKeyRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.DescribeApiKey(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.DescribeApiKey``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `DescribeApiKey`: DescribeApiKeyReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.DescribeApiKey`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiDescribeApiKeyRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DescribeApiKeyRequest**](DescribeApiKeyRequest.md) |  | 
+
+### Return type
+
+[**DescribeApiKeyReply**](DescribeApiKeyReply.md)
 
 ### Authorization
 
@@ -1171,6 +1367,70 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**GetUploadURLReply**](GetUploadURLReply.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## ListApiKeys
+
+> ListApiKeysReply ListApiKeys(ctx).Body(body).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/bopmatic/sdk/golang/openapi"
+)
+
+func main() {
+	body := map[string]interface{}{ ... } // map[string]interface{} | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.ServiceRunnerAPI.ListApiKeys(context.Background()).Body(body).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `ServiceRunnerAPI.ListApiKeys``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `ListApiKeys`: ListApiKeysReply
+	fmt.Fprintf(os.Stdout, "Response from `ServiceRunnerAPI.ListApiKeys`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiListApiKeysRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **map[string]interface{}** |  | 
+
+### Return type
+
+[**ListApiKeysReply**](ListApiKeysReply.md)
 
 ### Authorization
 

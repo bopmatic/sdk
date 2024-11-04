@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *DeleteProjectOK) Code() int {
 }
 
 func (o *DeleteProjectOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] deleteProjectOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] deleteProjectOK %s", 200, payload)
 }
 
 func (o *DeleteProjectOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] deleteProjectOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] deleteProjectOK %s", 200, payload)
 }
 
 func (o *DeleteProjectOK) GetPayload() *models.DeleteProjectReply {
@@ -158,11 +161,13 @@ func (o *DeleteProjectDefault) Code() int {
 }
 
 func (o *DeleteProjectDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] DeleteProject default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] DeleteProject default %s", o._statusCode, payload)
 }
 
 func (o *DeleteProjectDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] DeleteProject default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeleteProject][%d] DeleteProject default %s", o._statusCode, payload)
 }
 
 func (o *DeleteProjectDefault) GetPayload() *models.RPCStatus {

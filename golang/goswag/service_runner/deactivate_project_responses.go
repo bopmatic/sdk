@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *DeactivateProjectOK) Code() int {
 }
 
 func (o *DeactivateProjectOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] deactivateProjectOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] deactivateProjectOK %s", 200, payload)
 }
 
 func (o *DeactivateProjectOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] deactivateProjectOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] deactivateProjectOK %s", 200, payload)
 }
 
 func (o *DeactivateProjectOK) GetPayload() *models.DeactivateProjectReply {
@@ -158,11 +161,13 @@ func (o *DeactivateProjectDefault) Code() int {
 }
 
 func (o *DeactivateProjectDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] DeactivateProject default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] DeactivateProject default %s", o._statusCode, payload)
 }
 
 func (o *DeactivateProjectDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] DeactivateProject default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/DeactivateProject][%d] DeactivateProject default %s", o._statusCode, payload)
 }
 
 func (o *DeactivateProjectDefault) GetPayload() *models.RPCStatus {

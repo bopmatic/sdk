@@ -22,6 +22,18 @@ func Test_openapi_ServiceRunnerAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test ServiceRunnerAPIService CreateApiKey", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServiceRunnerAPI.CreateApiKey(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ServiceRunnerAPIService CreateDeployment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -70,6 +82,18 @@ func Test_openapi_ServiceRunnerAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ServiceRunnerAPIService DeleteApiKey", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServiceRunnerAPI.DeleteApiKey(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ServiceRunnerAPIService DeleteEnvironment", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -99,6 +123,18 @@ func Test_openapi_ServiceRunnerAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ServiceRunnerAPI.DeleteProject(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ServiceRunnerAPIService DescribeApiKey", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServiceRunnerAPI.DescribeApiKey(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)
@@ -231,6 +267,18 @@ func Test_openapi_ServiceRunnerAPIService(t *testing.T) {
 		t.Skip("skip test")  // remove to run test
 
 		resp, httpRes, err := apiClient.ServiceRunnerAPI.GetUploadURL(context.Background()).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ServiceRunnerAPIService ListApiKeys", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		resp, httpRes, err := apiClient.ServiceRunnerAPI.ListApiKeys(context.Background()).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

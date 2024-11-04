@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *GetMetricSamplesOK) Code() int {
 }
 
 func (o *GetMetricSamplesOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] getMetricSamplesOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] getMetricSamplesOK %s", 200, payload)
 }
 
 func (o *GetMetricSamplesOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] getMetricSamplesOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] getMetricSamplesOK %s", 200, payload)
 }
 
 func (o *GetMetricSamplesOK) GetPayload() *models.GetMetricSamplesReply {
@@ -158,11 +161,13 @@ func (o *GetMetricSamplesDefault) Code() int {
 }
 
 func (o *GetMetricSamplesDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] GetMetricSamples default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] GetMetricSamples default %s", o._statusCode, payload)
 }
 
 func (o *GetMetricSamplesDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] GetMetricSamples default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetMetricSamples][%d] GetMetricSamples default %s", o._statusCode, payload)
 }
 
 func (o *GetMetricSamplesDefault) GetPayload() *models.RPCStatus {

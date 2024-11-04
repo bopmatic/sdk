@@ -6,6 +6,7 @@ package service_runner
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 
@@ -86,11 +87,13 @@ func (o *GetUploadURLOK) Code() int {
 }
 
 func (o *GetUploadURLOK) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] getUploadUrlOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] getUploadUrlOK %s", 200, payload)
 }
 
 func (o *GetUploadURLOK) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] getUploadUrlOK  %+v", 200, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] getUploadUrlOK %s", 200, payload)
 }
 
 func (o *GetUploadURLOK) GetPayload() *models.GetUploadURLReply {
@@ -158,11 +161,13 @@ func (o *GetUploadURLDefault) Code() int {
 }
 
 func (o *GetUploadURLDefault) Error() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] GetUploadURL default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] GetUploadURL default %s", o._statusCode, payload)
 }
 
 func (o *GetUploadURLDefault) String() string {
-	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] GetUploadURL default  %+v", o._statusCode, o.Payload)
+	payload, _ := json.Marshal(o.Payload)
+	return fmt.Sprintf("[POST /ServiceRunner/GetUploadURL][%d] GetUploadURL default %s", o._statusCode, payload)
 }
 
 func (o *GetUploadURLDefault) GetPayload() *models.RPCStatus {

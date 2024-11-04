@@ -78,13 +78,16 @@ All URIs are relative to *https://api.bopmatic.com*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ServiceRunnerAPI* | [**CreateApiKey**](docs/ServiceRunnerAPI.md#createapikey) | **Post** /ServiceRunner/CreateApiKey | 
 *ServiceRunnerAPI* | [**CreateDeployment**](docs/ServiceRunnerAPI.md#createdeployment) | **Post** /ServiceRunner/CreateDeployment | 
 *ServiceRunnerAPI* | [**CreateEnvironment**](docs/ServiceRunnerAPI.md#createenvironment) | **Post** /ServiceRunner/CreateEnvironment | 
 *ServiceRunnerAPI* | [**CreateProject**](docs/ServiceRunnerAPI.md#createproject) | **Post** /ServiceRunner/CreateProject | 
 *ServiceRunnerAPI* | [**DeactivateProject**](docs/ServiceRunnerAPI.md#deactivateproject) | **Post** /ServiceRunner/DeactivateProject | 
+*ServiceRunnerAPI* | [**DeleteApiKey**](docs/ServiceRunnerAPI.md#deleteapikey) | **Post** /ServiceRunner/DeleteApiKey | 
 *ServiceRunnerAPI* | [**DeleteEnvironment**](docs/ServiceRunnerAPI.md#deleteenvironment) | **Post** /ServiceRunner/DeleteEnvironment | 
 *ServiceRunnerAPI* | [**DeletePackage**](docs/ServiceRunnerAPI.md#deletepackage) | **Post** /ServiceRunner/DeletePackage | 
 *ServiceRunnerAPI* | [**DeleteProject**](docs/ServiceRunnerAPI.md#deleteproject) | **Post** /ServiceRunner/DeleteProject | 
+*ServiceRunnerAPI* | [**DescribeApiKey**](docs/ServiceRunnerAPI.md#describeapikey) | **Post** /ServiceRunner/DescribeApiKey | 
 *ServiceRunnerAPI* | [**DescribeDatabase**](docs/ServiceRunnerAPI.md#describedatabase) | **Post** /ServiceRunner/DescribeDatabase | 
 *ServiceRunnerAPI* | [**DescribeDatastore**](docs/ServiceRunnerAPI.md#describedatastore) | **Post** /ServiceRunner/DescribeDatastore | 
 *ServiceRunnerAPI* | [**DescribeDeployment**](docs/ServiceRunnerAPI.md#describedeployment) | **Post** /ServiceRunner/DescribeDeployment | 
@@ -96,6 +99,7 @@ Class | Method | HTTP request | Description
 *ServiceRunnerAPI* | [**GetLogs**](docs/ServiceRunnerAPI.md#getlogs) | **Post** /ServiceRunner/GetLogs | 
 *ServiceRunnerAPI* | [**GetMetricSamples**](docs/ServiceRunnerAPI.md#getmetricsamples) | **Post** /ServiceRunner/GetMetricSamples | 
 *ServiceRunnerAPI* | [**GetUploadURL**](docs/ServiceRunnerAPI.md#getuploadurl) | **Post** /ServiceRunner/GetUploadURL | 
+*ServiceRunnerAPI* | [**ListApiKeys**](docs/ServiceRunnerAPI.md#listapikeys) | **Post** /ServiceRunner/ListApiKeys | 
 *ServiceRunnerAPI* | [**ListDatabases**](docs/ServiceRunnerAPI.md#listdatabases) | **Post** /ServiceRunner/ListDatabases | 
 *ServiceRunnerAPI* | [**ListDatastores**](docs/ServiceRunnerAPI.md#listdatastores) | **Post** /ServiceRunner/ListDatastores | 
 *ServiceRunnerAPI* | [**ListDeployments**](docs/ServiceRunnerAPI.md#listdeployments) | **Post** /ServiceRunner/ListDeployments | 
@@ -109,6 +113,9 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [ApiKeyDescription](docs/ApiKeyDescription.md)
+ - [CreateApiKeyReply](docs/CreateApiKeyReply.md)
+ - [CreateApiKeyRequest](docs/CreateApiKeyRequest.md)
  - [CreateDeploymentReply](docs/CreateDeploymentReply.md)
  - [CreateDeploymentRequest](docs/CreateDeploymentRequest.md)
  - [CreateEnvironmentReply](docs/CreateEnvironmentReply.md)
@@ -122,6 +129,8 @@ Class | Method | HTTP request | Description
  - [DatastoreHeader](docs/DatastoreHeader.md)
  - [DeactivateProjectReply](docs/DeactivateProjectReply.md)
  - [DeactivateProjectRequest](docs/DeactivateProjectRequest.md)
+ - [DeleteApiKeyReply](docs/DeleteApiKeyReply.md)
+ - [DeleteApiKeyRequest](docs/DeleteApiKeyRequest.md)
  - [DeleteEnvironmentReply](docs/DeleteEnvironmentReply.md)
  - [DeleteEnvironmentRequest](docs/DeleteEnvironmentRequest.md)
  - [DeletePackageReply](docs/DeletePackageReply.md)
@@ -134,6 +143,8 @@ Class | Method | HTTP request | Description
  - [DeploymentState](docs/DeploymentState.md)
  - [DeploymentStateDetail](docs/DeploymentStateDetail.md)
  - [DeploymentType](docs/DeploymentType.md)
+ - [DescribeApiKeyReply](docs/DescribeApiKeyReply.md)
+ - [DescribeApiKeyRequest](docs/DescribeApiKeyRequest.md)
  - [DescribeDatabaseReply](docs/DescribeDatabaseReply.md)
  - [DescribeDatabaseRequest](docs/DescribeDatabaseRequest.md)
  - [DescribeDatastoreReply](docs/DescribeDatastoreReply.md)
@@ -159,6 +170,7 @@ Class | Method | HTTP request | Description
  - [GetMetricSamplesRequest](docs/GetMetricSamplesRequest.md)
  - [GetUploadURLReply](docs/GetUploadURLReply.md)
  - [GetUploadURLRequest](docs/GetUploadURLRequest.md)
+ - [ListApiKeysReply](docs/ListApiKeysReply.md)
  - [ListDatabasesReply](docs/ListDatabasesReply.md)
  - [ListDatabasesRequest](docs/ListDatabasesRequest.md)
  - [ListDatastoresReply](docs/ListDatastoresReply.md)

@@ -49,6 +49,10 @@ type ServiceRunnerClient interface {
 	GetLogs(ctx context.Context, in *GetLogsRequest, opts ...grpc.CallOption) (*GetLogsReply, error)
 	ListMetrics(ctx context.Context, in *ListMetricsRequest, opts ...grpc.CallOption) (*ListMetricsReply, error)
 	GetMetricSamples(ctx context.Context, in *GetMetricSamplesRequest, opts ...grpc.CallOption) (*GetMetricSamplesReply, error)
+	CreateApiKey(ctx context.Context, in *CreateApiKeyRequest, opts ...grpc.CallOption) (*CreateApiKeyReply, error)
+	DeleteApiKey(ctx context.Context, in *DeleteApiKeyRequest, opts ...grpc.CallOption) (*DeleteApiKeyReply, error)
+	ListApiKeys(ctx context.Context, in *ListApiKeysRequest, opts ...grpc.CallOption) (*ListApiKeysReply, error)
+	DescribeApiKey(ctx context.Context, in *DescribeApiKeyRequest, opts ...grpc.CallOption) (*DescribeApiKeyReply, error)
 }
 
 type serviceRunnerClient struct {
@@ -302,6 +306,42 @@ func (c *serviceRunnerClient) GetMetricSamples(ctx context.Context, in *GetMetri
 	return out, nil
 }
 
+func (c *serviceRunnerClient) CreateApiKey(ctx context.Context, in *CreateApiKeyRequest, opts ...grpc.CallOption) (*CreateApiKeyReply, error) {
+	out := new(CreateApiKeyReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/CreateApiKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DeleteApiKey(ctx context.Context, in *DeleteApiKeyRequest, opts ...grpc.CallOption) (*DeleteApiKeyReply, error) {
+	out := new(DeleteApiKeyReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DeleteApiKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) ListApiKeys(ctx context.Context, in *ListApiKeysRequest, opts ...grpc.CallOption) (*ListApiKeysReply, error) {
+	out := new(ListApiKeysReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/ListApiKeys", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *serviceRunnerClient) DescribeApiKey(ctx context.Context, in *DescribeApiKeyRequest, opts ...grpc.CallOption) (*DescribeApiKeyReply, error) {
+	out := new(DescribeApiKeyReply)
+	err := c.cc.Invoke(ctx, "/ServiceRunner/DescribeApiKey", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ServiceRunnerServer is the server API for ServiceRunner service.
 // All implementations must embed UnimplementedServiceRunnerServer
 // for forward compatibility
@@ -333,6 +373,10 @@ type ServiceRunnerServer interface {
 	GetLogs(context.Context, *GetLogsRequest) (*GetLogsReply, error)
 	ListMetrics(context.Context, *ListMetricsRequest) (*ListMetricsReply, error)
 	GetMetricSamples(context.Context, *GetMetricSamplesRequest) (*GetMetricSamplesReply, error)
+	CreateApiKey(context.Context, *CreateApiKeyRequest) (*CreateApiKeyReply, error)
+	DeleteApiKey(context.Context, *DeleteApiKeyRequest) (*DeleteApiKeyReply, error)
+	ListApiKeys(context.Context, *ListApiKeysRequest) (*ListApiKeysReply, error)
+	DescribeApiKey(context.Context, *DescribeApiKeyRequest) (*DescribeApiKeyReply, error)
 	mustEmbedUnimplementedServiceRunnerServer()
 }
 
@@ -420,6 +464,18 @@ func (UnimplementedServiceRunnerServer) ListMetrics(context.Context, *ListMetric
 }
 func (UnimplementedServiceRunnerServer) GetMetricSamples(context.Context, *GetMetricSamplesRequest) (*GetMetricSamplesReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetMetricSamples not implemented")
+}
+func (UnimplementedServiceRunnerServer) CreateApiKey(context.Context, *CreateApiKeyRequest) (*CreateApiKeyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateApiKey not implemented")
+}
+func (UnimplementedServiceRunnerServer) DeleteApiKey(context.Context, *DeleteApiKeyRequest) (*DeleteApiKeyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteApiKey not implemented")
+}
+func (UnimplementedServiceRunnerServer) ListApiKeys(context.Context, *ListApiKeysRequest) (*ListApiKeysReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListApiKeys not implemented")
+}
+func (UnimplementedServiceRunnerServer) DescribeApiKey(context.Context, *DescribeApiKeyRequest) (*DescribeApiKeyReply, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DescribeApiKey not implemented")
 }
 func (UnimplementedServiceRunnerServer) mustEmbedUnimplementedServiceRunnerServer() {}
 
@@ -920,6 +976,78 @@ func _ServiceRunner_GetMetricSamples_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _ServiceRunner_CreateApiKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateApiKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).CreateApiKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/CreateApiKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).CreateApiKey(ctx, req.(*CreateApiKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DeleteApiKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteApiKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DeleteApiKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DeleteApiKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DeleteApiKey(ctx, req.(*DeleteApiKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_ListApiKeys_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListApiKeysRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).ListApiKeys(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/ListApiKeys",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).ListApiKeys(ctx, req.(*ListApiKeysRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _ServiceRunner_DescribeApiKey_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DescribeApiKeyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ServiceRunnerServer).DescribeApiKey(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/ServiceRunner/DescribeApiKey",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ServiceRunnerServer).DescribeApiKey(ctx, req.(*DescribeApiKeyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ServiceRunner_ServiceDesc is the grpc.ServiceDesc for ServiceRunner service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -1034,6 +1162,22 @@ var ServiceRunner_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetMetricSamples",
 			Handler:    _ServiceRunner_GetMetricSamples_Handler,
+		},
+		{
+			MethodName: "CreateApiKey",
+			Handler:    _ServiceRunner_CreateApiKey_Handler,
+		},
+		{
+			MethodName: "DeleteApiKey",
+			Handler:    _ServiceRunner_DeleteApiKey_Handler,
+		},
+		{
+			MethodName: "ListApiKeys",
+			Handler:    _ServiceRunner_ListApiKeys_Handler,
+		},
+		{
+			MethodName: "DescribeApiKey",
+			Handler:    _ServiceRunner_DescribeApiKey_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
