@@ -1907,6 +1907,7 @@ components:
       type: object
     ListMetricsEntry:
       example:
+        scope: INVALID_METRIC_SCOPE
         name: name
         description: description
         samplePeriod: samplePeriod
@@ -1921,6 +1922,8 @@ components:
           format: uint64
           title: the duration of each period the metric is sampled in seconds
           type: string
+        scope:
+          $ref: '#/components/schemas/MetricsScope'
       type: object
     ListMetricsReply:
       example:
@@ -1928,10 +1931,12 @@ components:
           statusDetail: statusDetail
           status: STATUS_INVALID
         entries:
-        - name: name
+        - scope: INVALID_METRIC_SCOPE
+          name: name
           description: description
           samplePeriod: samplePeriod
-        - name: name
+        - scope: INVALID_METRIC_SCOPE
+          name: name
           description: description
           samplePeriod: samplePeriod
       properties:

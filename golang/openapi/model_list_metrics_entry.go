@@ -22,6 +22,7 @@ type ListMetricsEntry struct {
 	Name *string `json:"name,omitempty"`
 	Description *string `json:"description,omitempty"`
 	SamplePeriod *string `json:"samplePeriod,omitempty"`
+	Scope *MetricsScope `json:"scope,omitempty"`
 }
 
 // NewListMetricsEntry instantiates a new ListMetricsEntry object
@@ -30,6 +31,8 @@ type ListMetricsEntry struct {
 // will change when the set of required properties is changed
 func NewListMetricsEntry() *ListMetricsEntry {
 	this := ListMetricsEntry{}
+	var scope MetricsScope = INVALID_METRIC_SCOPE
+	this.Scope = &scope
 	return &this
 }
 
@@ -38,6 +41,8 @@ func NewListMetricsEntry() *ListMetricsEntry {
 // but it doesn't guarantee that properties required by API are set
 func NewListMetricsEntryWithDefaults() *ListMetricsEntry {
 	this := ListMetricsEntry{}
+	var scope MetricsScope = INVALID_METRIC_SCOPE
+	this.Scope = &scope
 	return &this
 }
 
@@ -137,6 +142,38 @@ func (o *ListMetricsEntry) SetSamplePeriod(v string) {
 	o.SamplePeriod = &v
 }
 
+// GetScope returns the Scope field value if set, zero value otherwise.
+func (o *ListMetricsEntry) GetScope() MetricsScope {
+	if o == nil || IsNil(o.Scope) {
+		var ret MetricsScope
+		return ret
+	}
+	return *o.Scope
+}
+
+// GetScopeOk returns a tuple with the Scope field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListMetricsEntry) GetScopeOk() (*MetricsScope, bool) {
+	if o == nil || IsNil(o.Scope) {
+		return nil, false
+	}
+	return o.Scope, true
+}
+
+// HasScope returns a boolean if a field has been set.
+func (o *ListMetricsEntry) HasScope() bool {
+	if o != nil && !IsNil(o.Scope) {
+		return true
+	}
+
+	return false
+}
+
+// SetScope gets a reference to the given MetricsScope and assigns it to the Scope field.
+func (o *ListMetricsEntry) SetScope(v MetricsScope) {
+	o.Scope = &v
+}
+
 func (o ListMetricsEntry) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -155,6 +192,9 @@ func (o ListMetricsEntry) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SamplePeriod) {
 		toSerialize["samplePeriod"] = o.SamplePeriod
+	}
+	if !IsNil(o.Scope) {
+		toSerialize["scope"] = o.Scope
 	}
 	return toSerialize, nil
 }

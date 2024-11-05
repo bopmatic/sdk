@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Name** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
 **SamplePeriod** | Pointer to **string** |  | [optional] 
+**Scope** | Pointer to [**MetricsScope**](MetricsScope.md) |  | [optional] [default to INVALID_METRIC_SCOPE]
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetSamplePeriod sets SamplePeriod field to given value.
 `func (o *ListMetricsEntry) HasSamplePeriod() bool`
 
 HasSamplePeriod returns a boolean if a field has been set.
+
+### GetScope
+
+`func (o *ListMetricsEntry) GetScope() MetricsScope`
+
+GetScope returns the Scope field if non-nil, zero value otherwise.
+
+### GetScopeOk
+
+`func (o *ListMetricsEntry) GetScopeOk() (*MetricsScope, bool)`
+
+GetScopeOk returns a tuple with the Scope field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetScope
+
+`func (o *ListMetricsEntry) SetScope(v MetricsScope)`
+
+SetScope sets Scope field to given value.
+
+### HasScope
+
+`func (o *ListMetricsEntry) HasScope() bool`
+
+HasScope returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

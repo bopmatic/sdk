@@ -1962,6 +1962,10 @@
           "type": "string",
           "format": "uint64",
           "title": "the duration of each period the metric is sampled in seconds"
+        },
+        "scope": {
+          "$ref": "#/definitions/MetricsScope",
+          "title": "which scope the metric belongs to"
         }
       }
     },
