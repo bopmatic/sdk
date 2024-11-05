@@ -646,6 +646,7 @@ message ListMetricsEntry {
   string name = 1;               // the name of the metric
   string description = 2;        // a description of the metric
   uint64 samplePeriod = 3;       // the duration of each period the metric is sampled in seconds
+  MetricsScope scope = 4;        // which scope the metric belongs to
 }
 
 message ListMetricsReply {
