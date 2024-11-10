@@ -286,9 +286,10 @@ func (pkg *Package) AbsTarballPath() string {
 }
 
 type deployOptions struct {
-	httpClient *http.Client
-	apiKey     string
-	output     io.Writer
+	httpClient  *http.Client
+	apiKey      string
+	bearerToken string
+	output      io.Writer
 }
 
 type DeployOption func(*deployOptions) *deployOptions
@@ -309,6 +310,14 @@ func DeployOptApiKey(apiKey string) DeployOption {
 	}
 }
 
+func DeployOptBearerToken(token string) DeployOption {
+	return func(do *deployOptions) *deployOptions {
+		do.bearerToken = token
+
+		return do
+	}
+}
+
 func DeployOptOutput(output io.Writer) DeployOption {
 	return func(opts *deployOptions) *deployOptions {
 		opts.output = output
@@ -319,14 +328,22 @@ func DeployOptOutput(output io.Writer) DeployOption {
 
 func (do *deployOptions) AuthenticateRequest(req runtime.ClientRequest,
 	_ strfmt.Registry) error {
-	return req.SetHeaderParam("Authorization", fmt.Sprintf("ApiKey %v", do.apiKey))
+	if do.apiKey != "" {
+		return req.SetHeaderParam("Authorization", fmt.Sprintf("ApiKey %v", do.apiKey))
+	} else if do.bearerToken != "" {
+		return req.SetHeaderParam("Authorization", fmt.Sprintf("Bearer %v",
+			do.bearerToken))
+	} // else
+
+	return fmt.Errorf("Neither ApiKey nor Bearer are configured; unable to authenticate")
 }
 
 func fillDeployOptions(opts ...DeployOption) *deployOptions {
 	options := &deployOptions{
-		httpClient: http.DefaultClient,
-		apiKey:     "",
-		output:     os.Stdout,
+		httpClient:  http.DefaultClient,
+		apiKey:      "",
+		bearerToken: "",
+		output:      os.Stdout,
 	}
 	for _, optApplyFunc := range opts {
 		if optApplyFunc != nil {
