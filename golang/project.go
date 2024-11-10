@@ -901,7 +901,8 @@ func ListProjects(opts ...DeployOption) ([]string, error) {
 	var resp *service_runner.ListProjectsOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.ListProjects(listProjectsParams)
+		resp, err = client.ServiceRunner.ListProjects(listProjectsParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -951,7 +952,8 @@ func UnregisterProject(projId string, opts ...DeployOption) error {
 	var resp *service_runner.DeleteProjectOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DeleteProject(deleteProjectParams)
+		resp, err = client.ServiceRunner.DeleteProject(deleteProjectParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -995,7 +997,9 @@ func DeactivateProject(projId string, envId string,
 	var resp *service_runner.DeactivateProjectOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DeactivateProject(deactivateProjectParams)
+		resp, err =
+			client.ServiceRunner.DeactivateProject(deactivateProjectParams,
+				deployOpts)
 		if err == nil {
 			break
 		}
@@ -1038,7 +1042,8 @@ func (proj *Project) Register(opts ...DeployOption) error {
 	var resp *service_runner.CreateProjectOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.CreateProject(createProjectParams)
+		resp, err = client.ServiceRunner.CreateProject(createProjectParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -1079,7 +1084,8 @@ func DescribeProject(projId string, opts ...DeployOption) (*pb.ProjectDescriptio
 	var resp *service_runner.DescribeProjectOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DescribeProject(describeProjectParams)
+		resp, err = client.ServiceRunner.DescribeProject(describeProjectParams,
+			deployOpts)
 		if err == nil {
 			break
 		}

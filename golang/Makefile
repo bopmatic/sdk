@@ -25,10 +25,17 @@ vendor: go.mod
 	go mod vendor
 
 .PHONY: deps
-deps: goswag.generated openapi
-	rm -rf go.mod go.sum vendor openapi-generator-cli.jar
+deps: grpc-gateway goswag.generated openapi
+	rm -rf go.mod go.sum vendor openapi-generator-cli.jar pb/protoc-gen-openapiv2 grpc-gateway
 	go mod init github.com/bopmatic/sdk/golang
 	GOPROXY=direct go mod tidy
+
+pb/protoc-gen-openapiv2/options/annotations.proto: grpc-gateway
+	mkdir -p pb/protoc-gen-openapiv2/options
+	cp grpc-gateway/protoc-gen-openapiv2/options/*.proto pb/protoc-gen-openapiv2/options
+
+grpc-gateway:
+	git clone https://github.com/grpc-ecosystem/grpc-gateway.git
 
 # swagger install via:
 # dir=$(mktemp -d) 
@@ -41,9 +48,9 @@ deps: goswag.generated openapi
 # GOFLAGS='' go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 # protoc install via:
-# wget https://github.com/protocolbuffers/protobuf/releases/download/v27.3/protobuf-27.3.zip
-# unzip protobuf-27.3.zip
-# sudo mv protoc /usr/local/bin
+# wget https://github.com/protocolbuffers/protobuf/releases/download/v28.3/protoc-28.3-linux-x86_64.zip
+# unzip protoc-28.3-linux-x86_64.zip
+# sudo mv bin/protoc /usr/local/bin
 # sudo mv include/google /usr/local/include
 
 # protoc-gen-go install via:
@@ -59,11 +66,12 @@ goswag.generated: pb/sr.bopmatic.json
 	swagger generate client -f pb/sr.bopmatic.json -c goswag --default-scheme='https' -A goswag
 	touch goswag.generated
 
-pb/sr.pb.go pb/sr_grpc.pb.go pb/sr.swagger.json: pb/sr.proto
-	protoc -I ./ --go_out ./ --go_opt paths=source_relative --go-grpc_out ./ --go-grpc_opt paths=source_relative --openapiv2_out=./ --openapiv2_opt=simple_operation_ids=true,generate_unbound_methods=true ./pb/sr.proto
+pb/sr.pb.go pb/sr_grpc.pb.go pb/sr.swagger.json: pb/sr.proto pb/protoc-gen-openapiv2/options/annotations.proto
+	protoc -I ./ -I ./pb -I /usr/local/include --go_out ./ --go_opt paths=source_relative --go-grpc_out ./ --go-grpc_opt paths=source_relative --openapiv2_out=./ --openapiv2_opt=simple_operation_ids=true,generate_unbound_methods=true ./pb/sr.proto
 
 pb/sr.bopmatic.json: pb/sr.swagger.json
-	jq '{"host":"api.bopmatic.com"} + .' pb/sr.swagger.json | jq '{"schemes":["https"]} + .' > pb/sr.bopmatic.json
+	jq '{"host":"api.bopmatic.com"} + .' pb/sr.swagger.json | jq '{"schemes":["https"]} + .' > pb/sr.swagger.json2
+	jq '.security |= [{"BearerAuth": [], "ApiKeyAuth": []}]' pb/sr.swagger.json2 > pb/sr.bopmatic.json
 
 openapi-generator-cli.jar:
 	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.7.0/openapi-generator-cli-7.7.0.jar --output openapi-generator-cli.jar
@@ -75,6 +83,6 @@ openapi: openapi-generator-cli.jar pb/sr.bopmatic.json
 
 .PHONY: clean
 clean:
-	rm -rf pb/sr.pb.go pb/sr_grpc.pb.go ./test_assets/package/stub/.bopmatic pb/sr.swagger.json pb/sr.bopmatic.json openapi goswag models goswag.generated
+	rm -rf pb/sr.pb.go pb/sr_grpc.pb.go ./test_assets/package/stub/.bopmatic pb/sr.swagger.json pb/sr.swagger.json2 pb/sr.bopmatic.json openapi goswag models goswag.generated
 
 FORCE:

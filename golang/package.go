@@ -25,6 +25,8 @@ import (
 	"github.com/bopmatic/sdk/golang/models"
 	"github.com/bopmatic/sdk/golang/pb"
 	"github.com/bopmatic/sdk/golang/util"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 )
 
 const tarRootPath = "pkg"
@@ -285,6 +287,8 @@ func (pkg *Package) AbsTarballPath() string {
 
 type deployOptions struct {
 	httpClient *http.Client
+	apiKey     string
+	output     io.Writer
 }
 
 type DeployOption func(*deployOptions) *deployOptions
@@ -297,9 +301,32 @@ func DeployOptHttpClient(httpClient *http.Client) DeployOption {
 	}
 }
 
+func DeployOptApiKey(apiKey string) DeployOption {
+	return func(do *deployOptions) *deployOptions {
+		do.apiKey = apiKey
+
+		return do
+	}
+}
+
+func DeployOptOutput(output io.Writer) DeployOption {
+	return func(opts *deployOptions) *deployOptions {
+		opts.output = output
+
+		return opts
+	}
+}
+
+func (do *deployOptions) AuthenticateRequest(req runtime.ClientRequest,
+	_ strfmt.Registry) error {
+	return req.SetHeaderParam("Authorization", fmt.Sprintf("ApiKey %v", do.apiKey))
+}
+
 func fillDeployOptions(opts ...DeployOption) *deployOptions {
 	options := &deployOptions{
 		httpClient: http.DefaultClient,
+		apiKey:     "",
+		output:     os.Stdout,
 	}
 	for _, optApplyFunc := range opts {
 		if optApplyFunc != nil {
@@ -358,7 +385,8 @@ func (pkg *Package) Upload(opts ...DeployOption) error {
 	var uploadUrlResp *service_runner.GetUploadURLOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		uploadUrlResp, err = client.ServiceRunner.GetUploadURL(uploadUrlParams)
+		uploadUrlResp, err = client.ServiceRunner.GetUploadURL(uploadUrlParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -387,7 +415,8 @@ func (pkg *Package) Upload(opts ...DeployOption) error {
 	var resp *service_runner.UploadPackageOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.UploadPackage(uploadPackageParams)
+		resp, err = client.ServiceRunner.UploadPackage(uploadPackageParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -449,7 +478,8 @@ func DeletePackage(packageId string, opts ...DeployOption) error {
 	var resp *service_runner.DeletePackageOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DeletePackage(deletePackageParams)
+		resp, err = client.ServiceRunner.DeletePackage(deletePackageParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -492,7 +522,8 @@ func Describe(packageId string, opts ...DeployOption) (*pb.PackageDescription, e
 	var resp *service_runner.DescribePackageOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DescribePackage(describePackageParams)
+		resp, err = client.ServiceRunner.DescribePackage(describePackageParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -551,7 +582,8 @@ func ListPackages(projId string,
 	var resp *service_runner.ListPackagesOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.ListPackages(listPackagesParams)
+		resp, err = client.ServiceRunner.ListPackages(listPackagesParams,
+			deployOpts)
 		if err == nil {
 			break
 		}

@@ -6,3 +6,4 @@
 /golang/user.cert.pem
 /golang/user.key.pem
 /golang/goswag.generated
+/golang/grpc-gateway

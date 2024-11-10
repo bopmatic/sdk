@@ -6,9 +6,6 @@ package golang
 
 import (
 	"fmt"
-	"io"
-	"net/http"
-	"os"
 	"strconv"
 	"time"
 
@@ -17,52 +14,15 @@ import (
 	"github.com/bopmatic/sdk/golang/models"
 )
 
-type getLogsOptions struct {
-	httpClient *http.Client
-	output     io.Writer
-}
-
-type GetLogsOption func(*getLogsOptions) *getLogsOptions
-
-func GetLogsOptHttpClient(httpClient *http.Client) GetLogsOption {
-	return func(opts *getLogsOptions) *getLogsOptions {
-		opts.httpClient = httpClient
-
-		return opts
-	}
-}
-
-func GetLogsOptOutput(output io.Writer) GetLogsOption {
-	return func(opts *getLogsOptions) *getLogsOptions {
-		opts.output = output
-
-		return opts
-	}
-}
-
-func fillGetLogsOptions(opts ...GetLogsOption) *getLogsOptions {
-	options := &getLogsOptions{
-		httpClient: http.DefaultClient,
-		output:     os.Stdout,
-	}
-	for _, optApplyFunc := range opts {
-		if optApplyFunc != nil {
-			options = optApplyFunc(options)
-		}
-	}
-
-	return options
-}
-
 // GetLogs() implemented using a client generated with go-swagger:
 //
 //	https://github.com/go-swagger/go-swagger
 //
 // svcName can be left blank to retrieve logs for all services
 func GetLogs(projId string, envId string, svcName string, startTime time.Time,
-	endTime time.Time, opts ...GetLogsOption) error {
+	endTime time.Time, opts ...DeployOption) error {
 
-	getLogsOpts := fillGetLogsOptions(opts...)
+	deployOpts := fillDeployOptions(opts...)
 
 	config := goswag.DefaultTransportConfig()
 	client := goswag.NewHTTPClientWithConfig(nil, config)
@@ -76,12 +36,12 @@ func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 	}
 
 	getLogsParams := service_runner.NewGetLogsParams().
-		WithBody(getLogsReq).WithHTTPClient(getLogsOpts.httpClient)
+		WithBody(getLogsReq).WithHTTPClient(deployOpts.httpClient)
 	var resp *service_runner.GetLogsOK
 	var err error
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.GetLogs(getLogsParams)
+		resp, err = client.ServiceRunner.GetLogs(getLogsParams, deployOpts)
 		if err == nil {
 			break
 		}
@@ -108,7 +68,7 @@ func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 			timeStr = fmt.Sprintf("%v", time.Unix(secs, 0).UTC())
 		}
 
-		fmt.Fprintf(getLogsOpts.output, "%v: %v", timeStr, entry.Message)
+		fmt.Fprintf(deployOpts.output, "%v: %v", timeStr, entry.Message)
 	}
 
 	return nil

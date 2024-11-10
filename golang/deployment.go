@@ -54,7 +54,8 @@ func ListDeployments(projId string, envId string,
 	var resp *service_runner.ListDeploymentsOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.ListDeployments(listDeploymentsParams)
+		resp, err = client.ServiceRunner.ListDeployments(listDeploymentsParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -103,7 +104,8 @@ func (deployment *Deployment) Deploy(opts ...DeployOption) error {
 
 	var err error
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.CreateDeployment(deployPackageParams)
+		resp, err = client.ServiceRunner.CreateDeployment(deployPackageParams,
+			deployOpts)
 		if err == nil {
 			break
 		}
@@ -155,7 +157,9 @@ func DescribeDeployment(deployId string,
 	var resp *service_runner.DescribeDeploymentOK
 
 	for retries := defaultRetries; retries > 0; retries-- {
-		resp, err = client.ServiceRunner.DescribeDeployment(describeDeploymentParams)
+		resp, err =
+			client.ServiceRunner.DescribeDeployment(describeDeploymentParams,
+				deployOpts)
 		if err == nil {
 			break
 		}
