@@ -2367,5 +2367,25 @@
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "ApiKeyAuth": {
+      "type": "apiKey",
+      "description": "Authorization: ApiKey {key}",
+      "name": "Authorization",
+      "in": "header"
+    },
+    "BearerAuth": {
+      "type": "apiKey",
+      "description": "Authorization: Bearer {token}",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "BearerAuth": [],
+      "ApiKeyAuth": []
+    }
+  ]
 }

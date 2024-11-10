@@ -54,67 +54,67 @@ type ClientOption func(*runtime.ClientOperation)
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	CreateAPIKey(params *CreateAPIKeyParams, opts ...ClientOption) (*CreateAPIKeyOK, error)
+	CreateAPIKey(params *CreateAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAPIKeyOK, error)
 
-	CreateDeployment(params *CreateDeploymentParams, opts ...ClientOption) (*CreateDeploymentOK, error)
+	CreateDeployment(params *CreateDeploymentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeploymentOK, error)
 
-	CreateEnvironment(params *CreateEnvironmentParams, opts ...ClientOption) (*CreateEnvironmentOK, error)
+	CreateEnvironment(params *CreateEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateEnvironmentOK, error)
 
-	CreateProject(params *CreateProjectParams, opts ...ClientOption) (*CreateProjectOK, error)
+	CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectOK, error)
 
-	DeactivateProject(params *DeactivateProjectParams, opts ...ClientOption) (*DeactivateProjectOK, error)
+	DeactivateProject(params *DeactivateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeactivateProjectOK, error)
 
-	DeleteAPIKey(params *DeleteAPIKeyParams, opts ...ClientOption) (*DeleteAPIKeyOK, error)
+	DeleteAPIKey(params *DeleteAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAPIKeyOK, error)
 
-	DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error)
+	DeleteEnvironment(params *DeleteEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteEnvironmentOK, error)
 
-	DeletePackage(params *DeletePackageParams, opts ...ClientOption) (*DeletePackageOK, error)
+	DeletePackage(params *DeletePackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeletePackageOK, error)
 
-	DeleteProject(params *DeleteProjectParams, opts ...ClientOption) (*DeleteProjectOK, error)
+	DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectOK, error)
 
-	DescribeAPIKey(params *DescribeAPIKeyParams, opts ...ClientOption) (*DescribeAPIKeyOK, error)
+	DescribeAPIKey(params *DescribeAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeAPIKeyOK, error)
 
-	DescribeDatabase(params *DescribeDatabaseParams, opts ...ClientOption) (*DescribeDatabaseOK, error)
+	DescribeDatabase(params *DescribeDatabaseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDatabaseOK, error)
 
-	DescribeDatastore(params *DescribeDatastoreParams, opts ...ClientOption) (*DescribeDatastoreOK, error)
+	DescribeDatastore(params *DescribeDatastoreParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDatastoreOK, error)
 
-	DescribeDeployment(params *DescribeDeploymentParams, opts ...ClientOption) (*DescribeDeploymentOK, error)
+	DescribeDeployment(params *DescribeDeploymentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDeploymentOK, error)
 
-	DescribeEnvironment(params *DescribeEnvironmentParams, opts ...ClientOption) (*DescribeEnvironmentOK, error)
+	DescribeEnvironment(params *DescribeEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeEnvironmentOK, error)
 
-	DescribePackage(params *DescribePackageParams, opts ...ClientOption) (*DescribePackageOK, error)
+	DescribePackage(params *DescribePackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribePackageOK, error)
 
-	DescribeProject(params *DescribeProjectParams, opts ...ClientOption) (*DescribeProjectOK, error)
+	DescribeProject(params *DescribeProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeProjectOK, error)
 
-	DescribeService(params *DescribeServiceParams, opts ...ClientOption) (*DescribeServiceOK, error)
+	DescribeService(params *DescribeServiceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeServiceOK, error)
 
-	DescribeSite(params *DescribeSiteParams, opts ...ClientOption) (*DescribeSiteOK, error)
+	DescribeSite(params *DescribeSiteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeSiteOK, error)
 
-	GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsOK, error)
+	GetLogs(params *GetLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLogsOK, error)
 
-	GetMetricSamples(params *GetMetricSamplesParams, opts ...ClientOption) (*GetMetricSamplesOK, error)
+	GetMetricSamples(params *GetMetricSamplesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMetricSamplesOK, error)
 
-	GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error)
+	GetUploadURL(params *GetUploadURLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUploadURLOK, error)
 
-	ListAPIKeys(params *ListAPIKeysParams, opts ...ClientOption) (*ListAPIKeysOK, error)
+	ListAPIKeys(params *ListAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAPIKeysOK, error)
 
-	ListDatabases(params *ListDatabasesParams, opts ...ClientOption) (*ListDatabasesOK, error)
+	ListDatabases(params *ListDatabasesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDatabasesOK, error)
 
-	ListDatastores(params *ListDatastoresParams, opts ...ClientOption) (*ListDatastoresOK, error)
+	ListDatastores(params *ListDatastoresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDatastoresOK, error)
 
-	ListDeployments(params *ListDeploymentsParams, opts ...ClientOption) (*ListDeploymentsOK, error)
+	ListDeployments(params *ListDeploymentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDeploymentsOK, error)
 
-	ListEnvironments(params *ListEnvironmentsParams, opts ...ClientOption) (*ListEnvironmentsOK, error)
+	ListEnvironments(params *ListEnvironmentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListEnvironmentsOK, error)
 
-	ListMetrics(params *ListMetricsParams, opts ...ClientOption) (*ListMetricsOK, error)
+	ListMetrics(params *ListMetricsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListMetricsOK, error)
 
-	ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error)
+	ListPackages(params *ListPackagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPackagesOK, error)
 
-	ListProjects(params *ListProjectsParams, opts ...ClientOption) (*ListProjectsOK, error)
+	ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectsOK, error)
 
-	ListServices(params *ListServicesParams, opts ...ClientOption) (*ListServicesOK, error)
+	ListServices(params *ListServicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListServicesOK, error)
 
-	UploadPackage(params *UploadPackageParams, opts ...ClientOption) (*UploadPackageOK, error)
+	UploadPackage(params *UploadPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -122,7 +122,7 @@ type ClientService interface {
 /*
 CreateAPIKey create Api key API
 */
-func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, opts ...ClientOption) (*CreateAPIKeyOK, error) {
+func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAPIKeyOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateAPIKeyParams()
@@ -136,6 +136,7 @@ func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateAPIKeyReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -159,7 +160,7 @@ func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, opts ...ClientOption) 
 /*
 CreateDeployment create deployment API
 */
-func (a *Client) CreateDeployment(params *CreateDeploymentParams, opts ...ClientOption) (*CreateDeploymentOK, error) {
+func (a *Client) CreateDeployment(params *CreateDeploymentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeploymentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateDeploymentParams()
@@ -173,6 +174,7 @@ func (a *Client) CreateDeployment(params *CreateDeploymentParams, opts ...Client
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateDeploymentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -196,7 +198,7 @@ func (a *Client) CreateDeployment(params *CreateDeploymentParams, opts ...Client
 /*
 CreateEnvironment create environment API
 */
-func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, opts ...ClientOption) (*CreateEnvironmentOK, error) {
+func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateEnvironmentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateEnvironmentParams()
@@ -210,6 +212,7 @@ func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, opts ...Clie
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateEnvironmentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -233,7 +236,7 @@ func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, opts ...Clie
 /*
 CreateProject create project API
 */
-func (a *Client) CreateProject(params *CreateProjectParams, opts ...ClientOption) (*CreateProjectOK, error) {
+func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewCreateProjectParams()
@@ -247,6 +250,7 @@ func (a *Client) CreateProject(params *CreateProjectParams, opts ...ClientOption
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateProjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -270,7 +274,7 @@ func (a *Client) CreateProject(params *CreateProjectParams, opts ...ClientOption
 /*
 DeactivateProject deactivate project API
 */
-func (a *Client) DeactivateProject(params *DeactivateProjectParams, opts ...ClientOption) (*DeactivateProjectOK, error) {
+func (a *Client) DeactivateProject(params *DeactivateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeactivateProjectOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeactivateProjectParams()
@@ -284,6 +288,7 @@ func (a *Client) DeactivateProject(params *DeactivateProjectParams, opts ...Clie
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeactivateProjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -307,7 +312,7 @@ func (a *Client) DeactivateProject(params *DeactivateProjectParams, opts ...Clie
 /*
 DeleteAPIKey delete Api key API
 */
-func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, opts ...ClientOption) (*DeleteAPIKeyOK, error) {
+func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAPIKeyOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteAPIKeyParams()
@@ -321,6 +326,7 @@ func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteAPIKeyReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -344,7 +350,7 @@ func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, opts ...ClientOption) 
 /*
 DeleteEnvironment delete environment API
 */
-func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, opts ...ClientOption) (*DeleteEnvironmentOK, error) {
+func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteEnvironmentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteEnvironmentParams()
@@ -358,6 +364,7 @@ func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, opts ...Clie
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteEnvironmentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -381,7 +388,7 @@ func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, opts ...Clie
 /*
 DeletePackage delete package API
 */
-func (a *Client) DeletePackage(params *DeletePackageParams, opts ...ClientOption) (*DeletePackageOK, error) {
+func (a *Client) DeletePackage(params *DeletePackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeletePackageOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeletePackageParams()
@@ -395,6 +402,7 @@ func (a *Client) DeletePackage(params *DeletePackageParams, opts ...ClientOption
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeletePackageReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -418,7 +426,7 @@ func (a *Client) DeletePackage(params *DeletePackageParams, opts ...ClientOption
 /*
 DeleteProject delete project API
 */
-func (a *Client) DeleteProject(params *DeleteProjectParams, opts ...ClientOption) (*DeleteProjectOK, error) {
+func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteProjectParams()
@@ -432,6 +440,7 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, opts ...ClientOption
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteProjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -455,7 +464,7 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, opts ...ClientOption
 /*
 DescribeAPIKey describe Api key API
 */
-func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, opts ...ClientOption) (*DescribeAPIKeyOK, error) {
+func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeAPIKeyOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeAPIKeyParams()
@@ -469,6 +478,7 @@ func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, opts ...ClientOpti
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeAPIKeyReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -492,7 +502,7 @@ func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, opts ...ClientOpti
 /*
 DescribeDatabase describe database API
 */
-func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, opts ...ClientOption) (*DescribeDatabaseOK, error) {
+func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDatabaseOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeDatabaseParams()
@@ -506,6 +516,7 @@ func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, opts ...Client
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeDatabaseReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -529,7 +540,7 @@ func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, opts ...Client
 /*
 DescribeDatastore describe datastore API
 */
-func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, opts ...ClientOption) (*DescribeDatastoreOK, error) {
+func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDatastoreOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeDatastoreParams()
@@ -543,6 +554,7 @@ func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, opts ...Clie
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeDatastoreReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -566,7 +578,7 @@ func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, opts ...Clie
 /*
 DescribeDeployment describe deployment API
 */
-func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, opts ...ClientOption) (*DescribeDeploymentOK, error) {
+func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDeploymentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeDeploymentParams()
@@ -580,6 +592,7 @@ func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, opts ...Cl
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeDeploymentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -603,7 +616,7 @@ func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, opts ...Cl
 /*
 DescribeEnvironment describe environment API
 */
-func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, opts ...ClientOption) (*DescribeEnvironmentOK, error) {
+func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeEnvironmentOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeEnvironmentParams()
@@ -617,6 +630,7 @@ func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, opts ...
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeEnvironmentReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -640,7 +654,7 @@ func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, opts ...
 /*
 DescribePackage describe package API
 */
-func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOption) (*DescribePackageOK, error) {
+func (a *Client) DescribePackage(params *DescribePackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribePackageOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribePackageParams()
@@ -654,6 +668,7 @@ func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOp
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribePackageReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -677,7 +692,7 @@ func (a *Client) DescribePackage(params *DescribePackageParams, opts ...ClientOp
 /*
 DescribeProject describe project API
 */
-func (a *Client) DescribeProject(params *DescribeProjectParams, opts ...ClientOption) (*DescribeProjectOK, error) {
+func (a *Client) DescribeProject(params *DescribeProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeProjectOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeProjectParams()
@@ -691,6 +706,7 @@ func (a *Client) DescribeProject(params *DescribeProjectParams, opts ...ClientOp
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeProjectReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -714,7 +730,7 @@ func (a *Client) DescribeProject(params *DescribeProjectParams, opts ...ClientOp
 /*
 DescribeService describe service API
 */
-func (a *Client) DescribeService(params *DescribeServiceParams, opts ...ClientOption) (*DescribeServiceOK, error) {
+func (a *Client) DescribeService(params *DescribeServiceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeServiceOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeServiceParams()
@@ -728,6 +744,7 @@ func (a *Client) DescribeService(params *DescribeServiceParams, opts ...ClientOp
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeServiceReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -751,7 +768,7 @@ func (a *Client) DescribeService(params *DescribeServiceParams, opts ...ClientOp
 /*
 DescribeSite describe site API
 */
-func (a *Client) DescribeSite(params *DescribeSiteParams, opts ...ClientOption) (*DescribeSiteOK, error) {
+func (a *Client) DescribeSite(params *DescribeSiteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeSiteOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDescribeSiteParams()
@@ -765,6 +782,7 @@ func (a *Client) DescribeSite(params *DescribeSiteParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DescribeSiteReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -788,7 +806,7 @@ func (a *Client) DescribeSite(params *DescribeSiteParams, opts ...ClientOption) 
 /*
 GetLogs get logs API
 */
-func (a *Client) GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsOK, error) {
+func (a *Client) GetLogs(params *GetLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLogsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetLogsParams()
@@ -802,6 +820,7 @@ func (a *Client) GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsO
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetLogsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -825,7 +844,7 @@ func (a *Client) GetLogs(params *GetLogsParams, opts ...ClientOption) (*GetLogsO
 /*
 GetMetricSamples get metric samples API
 */
-func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, opts ...ClientOption) (*GetMetricSamplesOK, error) {
+func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMetricSamplesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetMetricSamplesParams()
@@ -839,6 +858,7 @@ func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, opts ...Client
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetMetricSamplesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -862,7 +882,7 @@ func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, opts ...Client
 /*
 GetUploadURL get upload URL API
 */
-func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) (*GetUploadURLOK, error) {
+func (a *Client) GetUploadURL(params *GetUploadURLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUploadURLOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewGetUploadURLParams()
@@ -876,6 +896,7 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetUploadURLReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -899,7 +920,7 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, opts ...ClientOption) 
 /*
 ListAPIKeys list Api keys API
 */
-func (a *Client) ListAPIKeys(params *ListAPIKeysParams, opts ...ClientOption) (*ListAPIKeysOK, error) {
+func (a *Client) ListAPIKeys(params *ListAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAPIKeysOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListAPIKeysParams()
@@ -913,6 +934,7 @@ func (a *Client) ListAPIKeys(params *ListAPIKeysParams, opts ...ClientOption) (*
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListAPIKeysReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -936,7 +958,7 @@ func (a *Client) ListAPIKeys(params *ListAPIKeysParams, opts ...ClientOption) (*
 /*
 ListDatabases list databases API
 */
-func (a *Client) ListDatabases(params *ListDatabasesParams, opts ...ClientOption) (*ListDatabasesOK, error) {
+func (a *Client) ListDatabases(params *ListDatabasesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDatabasesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListDatabasesParams()
@@ -950,6 +972,7 @@ func (a *Client) ListDatabases(params *ListDatabasesParams, opts ...ClientOption
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListDatabasesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -973,7 +996,7 @@ func (a *Client) ListDatabases(params *ListDatabasesParams, opts ...ClientOption
 /*
 ListDatastores list datastores API
 */
-func (a *Client) ListDatastores(params *ListDatastoresParams, opts ...ClientOption) (*ListDatastoresOK, error) {
+func (a *Client) ListDatastores(params *ListDatastoresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDatastoresOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListDatastoresParams()
@@ -987,6 +1010,7 @@ func (a *Client) ListDatastores(params *ListDatastoresParams, opts ...ClientOpti
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListDatastoresReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1010,7 +1034,7 @@ func (a *Client) ListDatastores(params *ListDatastoresParams, opts ...ClientOpti
 /*
 ListDeployments list deployments API
 */
-func (a *Client) ListDeployments(params *ListDeploymentsParams, opts ...ClientOption) (*ListDeploymentsOK, error) {
+func (a *Client) ListDeployments(params *ListDeploymentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDeploymentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListDeploymentsParams()
@@ -1024,6 +1048,7 @@ func (a *Client) ListDeployments(params *ListDeploymentsParams, opts ...ClientOp
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListDeploymentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1047,7 +1072,7 @@ func (a *Client) ListDeployments(params *ListDeploymentsParams, opts ...ClientOp
 /*
 ListEnvironments list environments API
 */
-func (a *Client) ListEnvironments(params *ListEnvironmentsParams, opts ...ClientOption) (*ListEnvironmentsOK, error) {
+func (a *Client) ListEnvironments(params *ListEnvironmentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListEnvironmentsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListEnvironmentsParams()
@@ -1061,6 +1086,7 @@ func (a *Client) ListEnvironments(params *ListEnvironmentsParams, opts ...Client
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListEnvironmentsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1084,7 +1110,7 @@ func (a *Client) ListEnvironments(params *ListEnvironmentsParams, opts ...Client
 /*
 ListMetrics list metrics API
 */
-func (a *Client) ListMetrics(params *ListMetricsParams, opts ...ClientOption) (*ListMetricsOK, error) {
+func (a *Client) ListMetrics(params *ListMetricsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListMetricsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListMetricsParams()
@@ -1098,6 +1124,7 @@ func (a *Client) ListMetrics(params *ListMetricsParams, opts ...ClientOption) (*
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListMetricsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1121,7 +1148,7 @@ func (a *Client) ListMetrics(params *ListMetricsParams, opts ...ClientOption) (*
 /*
 ListPackages list packages API
 */
-func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) (*ListPackagesOK, error) {
+func (a *Client) ListPackages(params *ListPackagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPackagesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListPackagesParams()
@@ -1135,6 +1162,7 @@ func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListPackagesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1158,7 +1186,7 @@ func (a *Client) ListPackages(params *ListPackagesParams, opts ...ClientOption) 
 /*
 ListProjects list projects API
 */
-func (a *Client) ListProjects(params *ListProjectsParams, opts ...ClientOption) (*ListProjectsOK, error) {
+func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectsOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListProjectsParams()
@@ -1172,6 +1200,7 @@ func (a *Client) ListProjects(params *ListProjectsParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListProjectsReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1195,7 +1224,7 @@ func (a *Client) ListProjects(params *ListProjectsParams, opts ...ClientOption) 
 /*
 ListServices list services API
 */
-func (a *Client) ListServices(params *ListServicesParams, opts ...ClientOption) (*ListServicesOK, error) {
+func (a *Client) ListServices(params *ListServicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListServicesOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewListServicesParams()
@@ -1209,6 +1238,7 @@ func (a *Client) ListServices(params *ListServicesParams, opts ...ClientOption) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ListServicesReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
@@ -1232,7 +1262,7 @@ func (a *Client) ListServices(params *ListServicesParams, opts ...ClientOption) 
 /*
 UploadPackage upload package API
 */
-func (a *Client) UploadPackage(params *UploadPackageParams, opts ...ClientOption) (*UploadPackageOK, error) {
+func (a *Client) UploadPackage(params *UploadPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUploadPackageParams()
@@ -1246,6 +1276,7 @@ func (a *Client) UploadPackage(params *UploadPackageParams, opts ...ClientOption
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UploadPackageReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	}
