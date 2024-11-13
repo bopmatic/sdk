@@ -6,12 +6,14 @@ package golang
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	"github.com/bopmatic/sdk/golang/goswag"
 	"github.com/bopmatic/sdk/golang/goswag/service_runner"
 	"github.com/bopmatic/sdk/golang/models"
 	"github.com/bopmatic/sdk/golang/pb"
+	"golang.org/x/sync/errgroup"
 )
 
 func ListServices(projId string, envId string,
@@ -123,6 +125,43 @@ func DescribeService(projId string, envId string, svcName string,
 		},
 	}
 
+	return ret, nil
+}
+
+func DescribeAllServices(projId string, envId string,
+	opts ...DeployOption) ([]*pb.DescribeServiceReply, error) {
+
+	var mutex sync.Mutex
+	ret := make([]*pb.DescribeServiceReply, 0)
+	emptyRet := make([]*pb.DescribeServiceReply, 0)
+
+	svcList, err := ListServices(projId, envId, opts...)
+	if err != nil {
+		return emptyRet, err
+	}
+
+	var wg errgroup.Group
+
+	for _, svc := range svcList {
+		svc := svc // https://golang.org/doc/faq#closures_and_goroutines
+		wg.Go(func() error {
+			svcDesc, err := DescribeService(projId, envId, svc, opts...)
+			if err != nil {
+				return err
+			}
+
+			mutex.Lock()
+			ret = append(ret, svcDesc)
+			mutex.Unlock()
+
+			return nil
+		})
+	}
+
+	err = wg.Wait()
+	if err != nil {
+		return emptyRet, err
+	}
 	return ret, nil
 }
 
@@ -245,6 +284,43 @@ func DescribeDatabase(projId string, envId string, dbName string,
 	return ret, nil
 }
 
+func DescribeAllDatabases(projId string, envId string,
+	opts ...DeployOption) ([]*pb.DescribeDatabaseReply, error) {
+
+	var mutex sync.Mutex
+	ret := make([]*pb.DescribeDatabaseReply, 0)
+	emptyRet := make([]*pb.DescribeDatabaseReply, 0)
+
+	dbList, err := ListDatabases(projId, envId, opts...)
+	if err != nil {
+		return emptyRet, err
+	}
+
+	var wg errgroup.Group
+
+	for _, db := range dbList {
+		db := db // https://golang.org/doc/faq#closures_and_goroutines
+		wg.Go(func() error {
+			dbDesc, err := DescribeDatabase(projId, envId, db, opts...)
+			if err != nil {
+				return err
+			}
+
+			mutex.Lock()
+			ret = append(ret, dbDesc)
+			mutex.Unlock()
+
+			return nil
+		})
+	}
+
+	err = wg.Wait()
+	if err != nil {
+		return emptyRet, err
+	}
+	return ret, nil
+}
+
 func ListDatastores(projId string, envId string,
 	opts ...DeployOption) ([]string, error) {
 
@@ -352,6 +428,43 @@ func DescribeDatastore(projId string, envId string, dstoreName string,
 		},
 	}
 
+	return ret, nil
+}
+
+func DescribeAllDatastores(projId string, envId string,
+	opts ...DeployOption) ([]*pb.DescribeDatastoreReply, error) {
+
+	var mutex sync.Mutex
+	ret := make([]*pb.DescribeDatastoreReply, 0)
+	emptyRet := make([]*pb.DescribeDatastoreReply, 0)
+
+	dstoreList, err := ListDatastores(projId, envId, opts...)
+	if err != nil {
+		return emptyRet, err
+	}
+
+	var wg errgroup.Group
+
+	for _, dstore := range dstoreList {
+		dstore := dstore // https://golang.org/doc/faq#closures_and_goroutines
+		wg.Go(func() error {
+			dstoreDesc, err := DescribeDatastore(projId, envId, dstore, opts...)
+			if err != nil {
+				return err
+			}
+
+			mutex.Lock()
+			ret = append(ret, dstoreDesc)
+			mutex.Unlock()
+
+			return nil
+		})
+	}
+
+	err = wg.Wait()
+	if err != nil {
+		return emptyRet, err
+	}
 	return ret, nil
 }
 
