@@ -345,7 +345,7 @@ message DescribeDatastoreRequest {
 }
 
 message DatastoreDescription {
-  // service header
+  // datastore header
   DatastoreHeader datastoreHeader = 1;
   // number of store objects
   uint64 numObjects = 2;
@@ -400,7 +400,7 @@ message DatabaseTableDescription {
 }
 
 message DatabaseDescription {
-  // service header
+  // database header
   DatabaseHeader databaseHeader = 1;
   // a list of table names from the project deployed in the environment
   reserved 2; // Deprecated tableNames
