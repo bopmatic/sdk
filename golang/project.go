@@ -16,6 +16,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"time"
 
@@ -293,6 +294,103 @@ func (proj *Project) String() string {
 	}
 
 	return sb.String()
+}
+
+func isPrimitiveType(kind reflect.Kind) bool {
+	ret := false
+
+	switch kind {
+	case reflect.Bool, reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32,
+		reflect.Int64, reflect.Uint, reflect.Uint8, reflect.Uint16,
+		reflect.Uint32, reflect.Uint64, reflect.Uintptr, reflect.Float32,
+		reflect.Float64, reflect.Complex64, reflect.Complex128, reflect.String:
+		ret = true
+	}
+
+	return ret
+}
+
+func yamlEncodeToString(input interface{}, indent uint, skipFirstIndent bool) string {
+	v := reflect.ValueOf(input)
+
+	if v.Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
+
+	var sb strings.Builder
+
+	if isPrimitiveType(v.Kind()) {
+		if v.Kind() == reflect.String {
+			sb.WriteString(fmt.Sprintf("\"%v\"\n", v.Interface()))
+		} else {
+			sb.WriteString(fmt.Sprintf("%v\n", v.Interface()))
+		}
+
+		return sb.String()
+	}
+
+	if v.Kind() == reflect.Slice {
+		len := v.Len()
+		for ii := 0; ii < len; ii++ {
+			for ii := uint(0); ii < indent-2; ii++ {
+				sb.WriteString(" ")
+			}
+
+			sb.WriteString("- ")
+			element := v.Index(ii)
+			sb.WriteString(yamlEncodeToString(element.Interface(), indent, true))
+		}
+
+		return sb.String()
+	} else if v.Kind() != reflect.Struct {
+		panic(fmt.Sprintf("yamlEncodeToString() unsupported type: %v",
+			v.Kind().String()))
+	}
+
+	t := v.Type()
+
+	for ii := 0; ii < v.NumField(); ii++ {
+		field := t.Field(ii)
+		if !field.IsExported() {
+			continue
+		}
+		tag := field.Tag.Get("yaml")
+		value := v.Field(ii)
+		omitEmpty := false
+		if tag == "" {
+			tag = field.Name
+		} else {
+			omitEmpty = strings.Contains(tag, "omitempty")
+			tag = strings.Split(tag, ",")[0]
+		}
+
+		if value.IsZero() && omitEmpty {
+			continue
+		}
+
+		if !skipFirstIndent || ii > 0 {
+			for jj := uint(0); jj < indent; jj++ {
+				sb.WriteString(" ")
+			}
+		}
+
+		if isPrimitiveType(value.Kind()) {
+			sb.WriteString(fmt.Sprintf("%v: %v", tag,
+				yamlEncodeToString(value.Interface(), 0, false)))
+		} else {
+			sb.WriteString(fmt.Sprintf("%v:\n%v", tag,
+				yamlEncodeToString(value.Interface(), indent+2, false)))
+		}
+	}
+
+	return sb.String()
+}
+
+// YAMLString converts a Project into a human-friendly printable YAML string
+// This is a replacement for yaml.Encoder.Encode which produces a much more
+// compact strict that isn't as	easy to read
+func (proj *Project) YAMLString() string {
+	return yamlEncodeToString(proj, 0, false)
 }
 
 // String converts a Project into shorthand string suitable as a GUID
@@ -644,16 +742,9 @@ func (proj *Project) ExportToFile(projFile string) error {
 	proj.FormatVersion = FormatVersionCurrent
 	defer func() { proj.FormatVersion = tmpVer }()
 
-	file, err := os.Create(projFile)
+	err := os.WriteFile(projFile, []byte(proj.YAMLString()), 0644)
 	if err != nil {
-		return fmt.Errorf("Failed to open %v: %w", projFile, err)
-	}
-	defer file.Close()
-
-	encoder := yaml.NewEncoder(file)
-	err = encoder.Encode(&proj)
-	if err != nil {
-		return fmt.Errorf("Failed to encode %v: %w", projFile, err)
+		return fmt.Errorf("Failed to write %v: %w", projFile, err)
 	}
 
 	return nil
