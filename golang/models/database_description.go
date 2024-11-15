@@ -19,7 +19,7 @@ import (
 // swagger:model DatabaseDescription
 type DatabaseDescription struct {
 
-	// service header
+	// database header
 	DatabaseHeader *DatabaseHeader `json:"databaseHeader,omitempty"`
 
 	// a list of services allowed to access this database

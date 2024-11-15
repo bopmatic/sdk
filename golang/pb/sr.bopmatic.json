@@ -1149,7 +1149,7 @@
       "properties": {
         "databaseHeader": {
           "$ref": "#/definitions/DatabaseHeader",
-          "title": "service header"
+          "title": "database header"
         },
         "tables": {
           "type": "array",
@@ -1211,7 +1211,7 @@
       "properties": {
         "datastoreHeader": {
           "$ref": "#/definitions/DatastoreHeader",
-          "title": "service header"
+          "title": "datastore header"
         },
         "numObjects": {
           "type": "string",

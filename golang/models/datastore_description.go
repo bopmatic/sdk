@@ -21,7 +21,7 @@ type DatastoreDescription struct {
 	// amount of utilized capacity
 	CapacityConsumedInBytes string `json:"capacityConsumedInBytes,omitempty"`
 
-	// service header
+	// datastore header
 	DatastoreHeader *DatastoreHeader `json:"datastoreHeader,omitempty"`
 
 	// number of store objects

@@ -2584,7 +2584,7 @@ type DatastoreDescription struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// service header
+	// datastore header
 	DatastoreHeader *DatastoreHeader `protobuf:"bytes,1,opt,name=datastoreHeader,proto3" json:"datastoreHeader,omitempty"`
 	// number of store objects
 	NumObjects uint64 `protobuf:"varint,2,opt,name=numObjects,proto3" json:"numObjects,omitempty"`
@@ -3008,7 +3008,7 @@ type DatabaseDescription struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	// service header
+	// database header
 	DatabaseHeader *DatabaseHeader             `protobuf:"bytes,1,opt,name=databaseHeader,proto3" json:"databaseHeader,omitempty"`
 	Tables         []*DatabaseTableDescription `protobuf:"bytes,3,rep,name=tables,proto3" json:"tables,omitempty"`
 	// a list of services allowed to access this database
