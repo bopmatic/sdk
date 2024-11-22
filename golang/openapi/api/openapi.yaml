@@ -879,6 +879,7 @@ components:
       example:
         header:
           projId: projId
+          reason: reason
           initiator: INVALID_DEPLOY_INIT
           pkgId: pkgId
           envId: envId
@@ -1148,6 +1149,7 @@ components:
         buildStartTime: buildStartTime
         header:
           projId: projId
+          reason: reason
           initiator: INVALID_DEPLOY_INIT
           pkgId: pkgId
           envId: envId
@@ -1199,6 +1201,7 @@ components:
     DeploymentHeader:
       example:
         projId: projId
+        reason: reason
         initiator: INVALID_DEPLOY_INIT
         pkgId: pkgId
         envId: envId
@@ -1217,6 +1220,9 @@ components:
           $ref: '#/components/schemas/DeploymentType'
         initiator:
           $ref: '#/components/schemas/DeploymentInitiator'
+        reason:
+          title: optional additional information regarding the reason for the deployment
+          type: string
       type: object
     DeploymentInitiator:
       default: INVALID_DEPLOY_INIT
@@ -1414,6 +1420,7 @@ components:
           buildStartTime: buildStartTime
           header:
             projId: projId
+            reason: reason
             initiator: INVALID_DEPLOY_INIT
             pkgId: pkgId
             envId: envId

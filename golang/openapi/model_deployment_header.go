@@ -24,6 +24,7 @@ type DeploymentHeader struct {
 	EnvId *string `json:"envId,omitempty"`
 	Type *DeploymentType `json:"type,omitempty"`
 	Initiator *DeploymentInitiator `json:"initiator,omitempty"`
+	Reason *string `json:"reason,omitempty"`
 }
 
 // NewDeploymentHeader instantiates a new DeploymentHeader object
@@ -211,6 +212,38 @@ func (o *DeploymentHeader) SetInitiator(v DeploymentInitiator) {
 	o.Initiator = &v
 }
 
+// GetReason returns the Reason field value if set, zero value otherwise.
+func (o *DeploymentHeader) GetReason() string {
+	if o == nil || IsNil(o.Reason) {
+		var ret string
+		return ret
+	}
+	return *o.Reason
+}
+
+// GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeploymentHeader) GetReasonOk() (*string, bool) {
+	if o == nil || IsNil(o.Reason) {
+		return nil, false
+	}
+	return o.Reason, true
+}
+
+// HasReason returns a boolean if a field has been set.
+func (o *DeploymentHeader) HasReason() bool {
+	if o != nil && !IsNil(o.Reason) {
+		return true
+	}
+
+	return false
+}
+
+// SetReason gets a reference to the given string and assigns it to the Reason field.
+func (o *DeploymentHeader) SetReason(v string) {
+	o.Reason = &v
+}
+
 func (o DeploymentHeader) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -235,6 +268,9 @@ func (o DeploymentHeader) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Initiator) {
 		toSerialize["initiator"] = o.Initiator
+	}
+	if !IsNil(o.Reason) {
+		toSerialize["reason"] = o.Reason
 	}
 	return toSerialize, nil
 }

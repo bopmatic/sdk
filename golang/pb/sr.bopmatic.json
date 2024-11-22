@@ -1404,6 +1404,10 @@
         "initiator": {
           "$ref": "#/definitions/DeploymentInitiator",
           "title": "the initiator of the deployment"
+        },
+        "reason": {
+          "type": "string",
+          "title": "optional additional information regarding the reason for the deployment"
         }
       }
     },

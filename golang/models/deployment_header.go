@@ -30,6 +30,9 @@ type DeploymentHeader struct {
 	// the project id associated with this deployment
 	ProjID string `json:"projId,omitempty"`
 
+	// optional additional information regarding the reason for the deployment
+	Reason string `json:"reason,omitempty"`
+
 	// the type of the deployment
 	Type *DeploymentType `json:"type,omitempty"`
 }
