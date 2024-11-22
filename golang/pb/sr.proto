@@ -478,6 +478,8 @@ message DeploymentHeader {
   DeploymentType type = 5;
   // the initiator of the deployment
   DeploymentInitiator initiator = 6;
+  // optional additional information regarding the reason for the deployment
+  string reason = 7;
 }
 
 message DeploymentDescription {
