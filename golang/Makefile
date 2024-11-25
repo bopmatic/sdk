@@ -70,7 +70,7 @@ goswag.generated: pb/sr.bopmatic.json pb/signup.bopmatic.json
 pb/sr.pb.go pb/sr_grpc.pb.go pb/sr.swagger.json: pb/sr.proto pb/protoc-gen-openapiv2/options/annotations.proto
 	protoc -I ./ -I ./pb -I /usr/local/include --go_out ./ --go_opt paths=source_relative --go-grpc_out ./ --go-grpc_opt paths=source_relative --openapiv2_out=./ --openapiv2_opt=simple_operation_ids=true,generate_unbound_methods=true ./pb/sr.proto
 
-pb/signup.pb.go pb/sr_grpc.pb.go pb/signup.swagger.json: pb/signup.proto pb/protoc-gen-openapiv2/options/annotations.proto
+pb/signup.pb.go pb/signup_grpc.pb.go pb/signup.swagger.json: pb/signup.proto pb/protoc-gen-openapiv2/options/annotations.proto
 	protoc -I ./ -I ./pb -I /usr/local/include --go_out ./ --go_opt paths=source_relative --go-grpc_out ./ --go-grpc_opt paths=source_relative --openapiv2_out=./ --openapiv2_opt=simple_operation_ids=true,generate_unbound_methods=true ./pb/signup.proto
 
 pb/sr.bopmatic.json: pb/sr.swagger.json

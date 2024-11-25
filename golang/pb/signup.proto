@@ -12,6 +12,7 @@ message RequestAccessRequest {
   string email = 3;
   string programmingLang = 4;
   string projectDesc = 5;
+  string userName = 6;
 }
 
 message RequestAccessReply {

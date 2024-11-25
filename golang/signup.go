@@ -13,8 +13,8 @@ import (
 	"github.com/bopmatic/sdk/golang/models"
 )
 
-func RequestAccess(firstName string, lastName string, email string,
-	programmingLang string, projectDesc string,
+func RequestAccess(userName string, firstName string, lastName string,
+	email string, programmingLang string, projectDesc string,
 	opts ...DeployOption) error {
 
 	deployOpts := fillDeployOptions(opts...)
@@ -25,6 +25,7 @@ func RequestAccess(firstName string, lastName string, email string,
 		Email:           email,
 		ProgrammingLang: programmingLang,
 		ProjectDesc:     projectDesc,
+		UserName:        userName,
 	}
 
 	reqAccessParams := sign_up.NewRequestAccessParams().
