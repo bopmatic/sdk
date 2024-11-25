@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option go_package = "bopmatic.com/servicerunner/pb";
+
+service SignUp {
+  rpc RequestAccess (RequestAccessRequest) returns (RequestAccessReply) {}
+}
+
+message RequestAccessRequest {
+  string firstName = 1;
+  string lastName = 2;
+  string email = 3;
+  string programmingLang = 4;
+  string projectDesc = 5;
+}
+
+message RequestAccessReply {
+  reserved 1;
+}
