@@ -74,6 +74,9 @@
         },
         "projectDesc": {
           "type": "string"
+        },
+        "userName": {
+          "type": "string"
         }
       }
     },

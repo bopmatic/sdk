@@ -31,6 +31,9 @@ type RequestAccessRequest struct {
 
 	// project desc
 	ProjectDesc string `json:"projectDesc,omitempty"`
+
+	// user name
+	UserName string `json:"userName,omitempty"`
 }
 
 // Validate validates this request access request
