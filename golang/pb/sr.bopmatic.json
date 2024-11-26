@@ -1058,7 +1058,6 @@
         },
         "keyData": {
           "type": "string",
-          "format": "byte",
           "title": "the content of the created key to be saved locally"
         }
       }

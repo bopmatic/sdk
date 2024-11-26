@@ -19,8 +19,7 @@ import (
 type CreateAPIKeyReply struct {
 
 	// the content of the created key to be saved locally
-	// Format: byte
-	KeyData strfmt.Base64 `json:"keyData,omitempty"`
+	KeyData string `json:"keyData,omitempty"`
 
 	// the id of the created key
 	KeyID string `json:"keyId,omitempty"`

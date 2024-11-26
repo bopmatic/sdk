@@ -21,7 +21,7 @@ var _ MappedNullable = &CreateApiKeyReply{}
 type CreateApiKeyReply struct {
 	Result *ServiceRunnerResult `json:"result,omitempty"`
 	KeyId *string `json:"keyId,omitempty"`
-	KeyData *string `json:"keyData,omitempty" validate:"regexp=^(?:[A-Za-z0-9+\\/]{4})*(?:[A-Za-z0-9+\\/]{2}==|[A-Za-z0-9+\\/]{3}=)?$"`
+	KeyData *string `json:"keyData,omitempty"`
 }
 
 // NewCreateApiKeyReply instantiates a new CreateApiKeyReply object
