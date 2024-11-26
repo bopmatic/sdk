@@ -726,7 +726,7 @@ message CreateApiKeyRequest {
 message CreateApiKeyReply {
   ServiceRunnerResult result = 1;
   string keyId = 2; // the id of the created key
-  bytes keyData = 3; // the content of the created key to be saved locally
+  string keyData = 3; // the content of the created key to be saved locally
 }
 
 message DeleteApiKeyRequest {
