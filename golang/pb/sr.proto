@@ -117,7 +117,7 @@ message ProjectDescription {
   ProjectHeader header = 2;
   // the current state of the project
   ProjectState state = 3;
-  // time the project was created expressed as the number of seconds since
+  // time the project was created expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 createTime = 4;
   // a list of previously completed deployment ids which are presently active across all
@@ -193,7 +193,7 @@ message EnvironmentDescription {
   string id = 1;
   // the environment header
   EnvironmentHeader header = 2;
-  // time the environment was created expressed as the number of seconds since
+  // time the environment was created expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 createTime = 3;
   // a list of previously completed deployment ids which are presently active in the
@@ -491,16 +491,16 @@ message DeploymentDescription {
   DeploymentState state = 3;
   // additional detail regarding the deployment's state
   DeploymentStateDetail stateDetail = 4;
-  // time the deployment was created expressed as the number of seconds since
+  // time the deployment was created expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 createTime = 5;
-  // time the package validation began expressed as the number of seconds since
+  // time the package validation began expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 validationStartTime = 6;
-  // time the package build began expressed as the number of seconds since
+  // time the package build began expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 buildStartTime = 7;
-  // time the environment deployment began expressed as the number of seconds since
+  // time the environment deployment began expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 deployStartTime = 8;
   // time the deployment completed
@@ -568,7 +568,7 @@ message PackageDescription {
   reserved 6;              // Deprectaed packageTarballURL; see UploadPackageRequest instead
   // package state
   PackageState state = 8;
-  // time the package was first uploaded expressed as the number of seconds since
+  // time the package was first uploaded expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC
   uint64 uploadTime = 9;
   uint64 packageSize = 10; // size of the compressed package in bytes
@@ -641,14 +641,14 @@ message GetLogsRequest {
   string serviceName = 2;
   reserved 3;                    // Deprecated rpcName
   uint64 startTime = 4;          // earliest log message to retrieve expressed as the number
-                                 // of seconds since Jan 1, 1970 00:00:00 UTC
+                                 // of milliseconds since Jan 1, 1970 00:00:00 UTC
   uint64 endTime = 5;            // latest log message to retrieve expressed as the number of
-                                 // seconds since Jan 1, 1970 00:00:00 UTC
+                                 // milliseconds since Jan 1, 1970 00:00:00 UTC
 }
 
 message GetLogsEntry {
   uint64 timestamp = 1;          // timestamp of the log message expressed as the number of
-                                 // seconds since Jan 1, 1970 00:00:00 UTC
+                                 // milliseconds since Jan 1, 1970 00:00:00 UTC
   string message = 2;            // log message
 }
 
@@ -701,9 +701,9 @@ message GetMetricSamplesRequest {
   // optional; list of metric names to retrieve; can leave empty for all
   repeated string metricNames = 5;
   uint64 startTime = 6;          // earliest metric to retrieve expressed as the number
-                                 // of seconds since Jan 1, 1970 00:00:00 UTC
+                                 // of milliseconds since Jan 1, 1970 00:00:00 UTC
   uint64 endTime = 7;            // latest metric to retrieve expressed as the number of
-                                 // seconds since Jan 1, 1970 00:00:00 UTC
+                                 // milliseconds since Jan 1, 1970 00:00:00 UTC
   MetricsFormat format = 8;      // desired output format of the retrieved metrics
   uint64 samplePeriod = 9;       // desired metric sample period in seconds; default is 300s
 }
@@ -718,7 +718,7 @@ message CreateApiKeyRequest {
   string name = 1;
   // a description of the API key
   string description = 2;
-  // time the key should expire expressed as the number of seconds since
+  // time the key should expire expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
   uint64 expireTime = 3;
 }
@@ -759,13 +759,13 @@ message ApiKeyDescription {
   string name = 2;
   // a description of the API key
   string description = 3;
-  // time the key was created expressed as the number of seconds since
+  // time the key was created expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC.
   uint64 createTime = 4;
-  // time the key should expire expressed as the number of seconds since
+  // time the key should expire expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
   uint64 expireTime = 5;
-  // time the key was last uzed expressed as the number of seconds since
+  // time the key was last uzed expressed as the number of milliseconds since
   // Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
   uint64 lastUsed = 6;
 }
