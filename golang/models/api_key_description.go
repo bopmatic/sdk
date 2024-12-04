@@ -17,21 +17,21 @@ import (
 // swagger:model ApiKeyDescription
 type APIKeyDescription struct {
 
-	// time the key was created expressed as the number of seconds since
+	// time the key was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// a description of the API key
 	Description string `json:"description,omitempty"`
 
-	// time the key should expire expressed as the number of seconds since
+	// time the key should expire expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// the id of the API key
 	KeyID string `json:"keyId,omitempty"`
 
-	// time the key was last uzed expressed as the number of seconds since
+	// time the key was last uzed expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
 	LastUsed string `json:"lastUsed,omitempty"`
 

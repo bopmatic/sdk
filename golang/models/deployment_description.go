@@ -18,15 +18,15 @@ import (
 // swagger:model DeploymentDescription
 type DeploymentDescription struct {
 
-	// time the package build began expressed as the number of seconds since
+	// time the package build began expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	BuildStartTime string `json:"buildStartTime,omitempty"`
 
-	// time the deployment was created expressed as the number of seconds since
+	// time the deployment was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	CreateTime string `json:"createTime,omitempty"`
 
-	// time the environment deployment began expressed as the number of seconds since
+	// time the environment deployment began expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	DeployStartTime string `json:"deployStartTime,omitempty"`
 
@@ -45,7 +45,7 @@ type DeploymentDescription struct {
 	// additional detail regarding the deployment's state
 	StateDetail *DeploymentStateDetail `json:"stateDetail,omitempty"`
 
-	// time the package validation began expressed as the number of seconds since
+	// time the package validation began expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	ValidationStartTime string `json:"validationStartTime,omitempty"`
 }

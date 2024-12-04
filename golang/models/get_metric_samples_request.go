@@ -18,7 +18,7 @@ import (
 // swagger:model GetMetricSamplesRequest
 type GetMetricSamplesRequest struct {
 
-	// of seconds since Jan 1, 1970 00:00:00 UTC
+	// of milliseconds since Jan 1, 1970 00:00:00 UTC
 	//
 	// latest metric to retrieve expressed as the number of
 	EndTime string `json:"endTime,omitempty"`
@@ -26,7 +26,7 @@ type GetMetricSamplesRequest struct {
 	// environment id
 	EnvID string `json:"envId,omitempty"`
 
-	// seconds since Jan 1, 1970 00:00:00 UTC
+	// milliseconds since Jan 1, 1970 00:00:00 UTC
 	//
 	// desired output format of the retrieved metrics
 	Format *MetricsFormat `json:"format,omitempty"`

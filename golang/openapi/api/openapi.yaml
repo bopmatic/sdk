@@ -807,19 +807,19 @@ components:
           type: string
         createTime:
           description: |-
-            time the key was created expressed as the number of seconds since
+            time the key was created expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC.
           format: uint64
           type: string
         expireTime:
           description: |-
-            time the key should expire expressed as the number of seconds since
+            time the key should expire expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
           format: uint64
           type: string
         lastUsed:
           description: |-
-            time the key was last uzed expressed as the number of seconds since
+            time the key was last uzed expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
           format: uint64
           type: string
@@ -855,7 +855,7 @@ components:
           type: string
         expireTime:
           description: |-
-            time the key should expire expressed as the number of seconds since
+            time the key should expire expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
           format: uint64
           type: string
@@ -1170,25 +1170,25 @@ components:
         createTime:
           format: uint64
           title: |-
-            time the deployment was created expressed as the number of seconds since
+            time the deployment was created expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         validationStartTime:
           format: uint64
           title: |-
-            time the package validation began expressed as the number of seconds since
+            time the package validation began expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         buildStartTime:
           format: uint64
           title: |-
-            time the package build began expressed as the number of seconds since
+            time the package build began expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         deployStartTime:
           format: uint64
           title: |-
-            time the environment deployment began expressed as the number of seconds since
+            time the environment deployment began expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         endTime:
@@ -1618,7 +1618,7 @@ components:
         createTime:
           format: uint64
           title: |-
-            time the environment was created expressed as the number of seconds since
+            time the environment was created expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         activeDeployIds:
@@ -1658,7 +1658,7 @@ components:
           type: string
         message:
           description: log message
-          title: "seconds since Jan 1, 1970 00:00:00 UTC"
+          title: "milliseconds since Jan 1, 1970 00:00:00 UTC"
           type: string
       type: object
     GetLogsReply:
@@ -1704,7 +1704,7 @@ components:
         endTime:
           description: latest log message to retrieve expressed as the number of
           format: uint64
-          title: "of seconds since Jan 1, 1970 00:00:00 UTC"
+          title: "of milliseconds since Jan 1, 1970 00:00:00 UTC"
           type: string
       type: object
     GetMetricSamplesReply:
@@ -1760,7 +1760,7 @@ components:
         endTime:
           description: latest metric to retrieve expressed as the number of
           format: uint64
-          title: "of seconds since Jan 1, 1970 00:00:00 UTC"
+          title: "of milliseconds since Jan 1, 1970 00:00:00 UTC"
           type: string
         format:
           $ref: '#/components/schemas/MetricsFormat'
@@ -2086,7 +2086,7 @@ components:
         uploadTime:
           format: uint64
           title: |-
-            time the package was first uploaded expressed as the number of seconds since
+            time the package was first uploaded expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         packageSize:
@@ -2163,7 +2163,7 @@ components:
         createTime:
           format: uint64
           title: |-
-            time the project was created expressed as the number of seconds since
+            time the project was created expressed as the number of milliseconds since
             Jan 1, 1970 00:00:00 UTC
           type: string
         activeDeployIds:

@@ -7,9 +7,9 @@ Name | Type | Description | Notes
 **KeyId** | Pointer to **string** |  | [optional] 
 **Name** | Pointer to **string** |  | [optional] 
 **Description** | Pointer to **string** |  | [optional] 
-**CreateTime** | Pointer to **string** | time the key was created expressed as the number of seconds since Jan 1, 1970 00:00:00 UTC. | [optional] 
-**ExpireTime** | Pointer to **string** | time the key should expire expressed as the number of seconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire. | [optional] 
-**LastUsed** | Pointer to **string** | time the key was last uzed expressed as the number of seconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used. | [optional] 
+**CreateTime** | Pointer to **string** | time the key was created expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. | [optional] 
+**ExpireTime** | Pointer to **string** | time the key should expire expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire. | [optional] 
+**LastUsed** | Pointer to **string** | time the key was last uzed expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used. | [optional] 
 
 ## Methods
 

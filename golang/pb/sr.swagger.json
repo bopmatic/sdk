@@ -1028,17 +1028,17 @@
         "createTime": {
           "type": "string",
           "format": "uint64",
-          "description": "time the key was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC."
+          "description": "time the key was created expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC."
         },
         "expireTime": {
           "type": "string",
           "format": "uint64",
-          "description": "time the key should expire expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire."
+          "description": "time the key should expire expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire."
         },
         "lastUsed": {
           "type": "string",
           "format": "uint64",
-          "description": "time the key was last uzed expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used."
+          "description": "time the key was last uzed expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used."
         }
       }
     },
@@ -1072,7 +1072,7 @@
         "expireTime": {
           "type": "string",
           "format": "uint64",
-          "description": "time the key should expire expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire."
+          "description": "time the key should expire expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire."
         }
       }
     },
@@ -1353,22 +1353,22 @@
         "createTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the deployment was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the deployment was created expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "validationStartTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the package validation began expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the package validation began expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "buildStartTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the package build began expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the package build began expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "deployStartTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the environment deployment began expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the environment deployment began expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "endTime": {
           "type": "string",
@@ -1666,7 +1666,7 @@
         "createTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the environment was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the environment was created expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "activeDeployIds": {
           "type": "array",
@@ -1708,7 +1708,7 @@
         "message": {
           "type": "string",
           "description": "log message",
-          "title": "seconds since Jan 1, 1970 00:00:00 UTC"
+          "title": "milliseconds since Jan 1, 1970 00:00:00 UTC"
         }
       }
     },
@@ -1751,7 +1751,7 @@
           "type": "string",
           "format": "uint64",
           "description": "latest log message to retrieve expressed as the number of",
-          "title": "of seconds since Jan 1, 1970 00:00:00 UTC"
+          "title": "of milliseconds since Jan 1, 1970 00:00:00 UTC"
         }
       }
     },
@@ -1802,12 +1802,12 @@
           "type": "string",
           "format": "uint64",
           "description": "latest metric to retrieve expressed as the number of",
-          "title": "of seconds since Jan 1, 1970 00:00:00 UTC"
+          "title": "of milliseconds since Jan 1, 1970 00:00:00 UTC"
         },
         "format": {
           "$ref": "#/definitions/MetricsFormat",
           "description": "desired output format of the retrieved metrics",
-          "title": "seconds since Jan 1, 1970 00:00:00 UTC"
+          "title": "milliseconds since Jan 1, 1970 00:00:00 UTC"
         },
         "samplePeriod": {
           "type": "string",
@@ -2118,7 +2118,7 @@
         "uploadTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the package was first uploaded expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the package was first uploaded expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "packageSize": {
           "type": "string",
@@ -2176,7 +2176,7 @@
         "createTime": {
           "type": "string",
           "format": "uint64",
-          "title": "time the project was created expressed as the number of seconds since\nJan 1, 1970 00:00:00 UTC"
+          "title": "time the project was created expressed as the number of milliseconds since\nJan 1, 1970 00:00:00 UTC"
         },
         "activeDeployIds": {
           "type": "array",

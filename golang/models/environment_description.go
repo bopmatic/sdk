@@ -22,7 +22,7 @@ type EnvironmentDescription struct {
 	// environment
 	ActiveDeployIds []string `json:"activeDeployIds"`
 
-	// time the environment was created expressed as the number of seconds since
+	// time the environment was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	CreateTime string `json:"createTime,omitempty"`
 

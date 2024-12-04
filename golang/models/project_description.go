@@ -22,7 +22,7 @@ type ProjectDescription struct {
 	// environments the project has been deployed into
 	ActiveDeployIds []string `json:"activeDeployIds"`
 
-	// time the project was created expressed as the number of seconds since
+	// time the project was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	CreateTime string `json:"createTime,omitempty"`
 

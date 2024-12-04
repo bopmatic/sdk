@@ -17,7 +17,7 @@ import (
 // swagger:model GetLogsEntry
 type GetLogsEntry struct {
 
-	// seconds since Jan 1, 1970 00:00:00 UTC
+	// milliseconds since Jan 1, 1970 00:00:00 UTC
 	//
 	// log message
 	Message string `json:"message,omitempty"`

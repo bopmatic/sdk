@@ -30,7 +30,7 @@ type PackageDescription struct {
 	// package state
 	State *PackageState `json:"state,omitempty"`
 
-	// time the package was first uploaded expressed as the number of seconds since
+	// time the package was first uploaded expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	UploadTime string `json:"uploadTime,omitempty"`
 }

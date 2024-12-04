@@ -17,7 +17,7 @@ import (
 // swagger:model GetLogsRequest
 type GetLogsRequest struct {
 
-	// of seconds since Jan 1, 1970 00:00:00 UTC
+	// of milliseconds since Jan 1, 1970 00:00:00 UTC
 	//
 	// latest log message to retrieve expressed as the number of
 	EndTime string `json:"endTime,omitempty"`

@@ -22,11 +22,11 @@ type ApiKeyDescription struct {
 	KeyId *string `json:"keyId,omitempty"`
 	Name *string `json:"name,omitempty"`
 	Description *string `json:"description,omitempty"`
-	// time the key was created expressed as the number of seconds since Jan 1, 1970 00:00:00 UTC.
+	// time the key was created expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC.
 	CreateTime *string `json:"createTime,omitempty"`
-	// time the key should expire expressed as the number of seconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
+	// time the key should expire expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
 	ExpireTime *string `json:"expireTime,omitempty"`
-	// time the key was last uzed expressed as the number of seconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
+	// time the key was last uzed expressed as the number of milliseconds since Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
 	LastUsed *string `json:"lastUsed,omitempty"`
 }
 

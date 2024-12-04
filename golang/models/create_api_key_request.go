@@ -20,7 +20,7 @@ type CreateAPIKeyRequest struct {
 	// a description of the API key
 	Description string `json:"description,omitempty"`
 
-	// time the key should expire expressed as the number of seconds since
+	// time the key should expire expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
 	ExpireTime string `json:"expireTime,omitempty"`
 

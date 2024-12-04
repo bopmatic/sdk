@@ -698,7 +698,7 @@ type ProjectDescription struct {
 	Header *ProjectHeader `protobuf:"bytes,2,opt,name=header,proto3" json:"header,omitempty"`
 	// the current state of the project
 	State ProjectState `protobuf:"varint,3,opt,name=state,proto3,enum=ProjectState" json:"state,omitempty"`
-	// time the project was created expressed as the number of seconds since
+	// time the project was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	CreateTime uint64 `protobuf:"varint,4,opt,name=createTime,proto3" json:"createTime,omitempty"`
 	// a list of previously completed deployment ids which are presently active across all
@@ -1348,7 +1348,7 @@ type EnvironmentDescription struct {
 	Id string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
 	// the environment header
 	Header *EnvironmentHeader `protobuf:"bytes,2,opt,name=header,proto3" json:"header,omitempty"`
-	// time the environment was created expressed as the number of seconds since
+	// time the environment was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	CreateTime uint64 `protobuf:"varint,3,opt,name=createTime,proto3" json:"createTime,omitempty"`
 	// a list of previously completed deployment ids which are presently active in the
@@ -3230,16 +3230,16 @@ type DeploymentDescription struct {
 	State DeploymentState `protobuf:"varint,3,opt,name=state,proto3,enum=DeploymentState" json:"state,omitempty"`
 	// additional detail regarding the deployment's state
 	StateDetail DeploymentStateDetail `protobuf:"varint,4,opt,name=stateDetail,proto3,enum=DeploymentStateDetail" json:"stateDetail,omitempty"`
-	// time the deployment was created expressed as the number of seconds since
+	// time the deployment was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	CreateTime uint64 `protobuf:"varint,5,opt,name=createTime,proto3" json:"createTime,omitempty"`
-	// time the package validation began expressed as the number of seconds since
+	// time the package validation began expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	ValidationStartTime uint64 `protobuf:"varint,6,opt,name=validationStartTime,proto3" json:"validationStartTime,omitempty"`
-	// time the package build began expressed as the number of seconds since
+	// time the package build began expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	BuildStartTime uint64 `protobuf:"varint,7,opt,name=buildStartTime,proto3" json:"buildStartTime,omitempty"`
-	// time the environment deployment began expressed as the number of seconds since
+	// time the environment deployment began expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	DeployStartTime uint64 `protobuf:"varint,8,opt,name=deployStartTime,proto3" json:"deployStartTime,omitempty"`
 	// time the deployment completed
@@ -3662,7 +3662,7 @@ type PackageDescription struct {
 	ProjId    string `protobuf:"bytes,7,opt,name=projId,proto3" json:"projId,omitempty"`       // project id associated with this package
 	// package state
 	State PackageState `protobuf:"varint,8,opt,name=state,proto3,enum=PackageState" json:"state,omitempty"`
-	// time the package was first uploaded expressed as the number of seconds since
+	// time the package was first uploaded expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC
 	UploadTime  uint64 `protobuf:"varint,9,opt,name=uploadTime,proto3" json:"uploadTime,omitempty"`
 	PackageSize uint64 `protobuf:"varint,10,opt,name=packageSize,proto3" json:"packageSize,omitempty"` // size of the compressed package in bytes
@@ -4280,7 +4280,7 @@ type GetLogsRequest struct {
 	// optional; can leave empty for all services otherwise name of a service defined within the Bopmatic project
 	ServiceName string `protobuf:"bytes,2,opt,name=serviceName,proto3" json:"serviceName,omitempty"`
 	StartTime   uint64 `protobuf:"varint,4,opt,name=startTime,proto3" json:"startTime,omitempty"` // earliest log message to retrieve expressed as the number
-	// of seconds since Jan 1, 1970 00:00:00 UTC
+	// of milliseconds since Jan 1, 1970 00:00:00 UTC
 	EndTime uint64 `protobuf:"varint,5,opt,name=endTime,proto3" json:"endTime,omitempty"` // latest log message to retrieve expressed as the number of
 }
 
@@ -4357,7 +4357,7 @@ type GetLogsEntry struct {
 	unknownFields protoimpl.UnknownFields
 
 	Timestamp uint64 `protobuf:"varint,1,opt,name=timestamp,proto3" json:"timestamp,omitempty"` // timestamp of the log message expressed as the number of
-	// seconds since Jan 1, 1970 00:00:00 UTC
+	// milliseconds since Jan 1, 1970 00:00:00 UTC
 	Message string `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"` // log message
 }
 
@@ -4650,9 +4650,9 @@ type GetMetricSamplesRequest struct {
 	// optional; list of metric names to retrieve; can leave empty for all
 	MetricNames []string `protobuf:"bytes,5,rep,name=metricNames,proto3" json:"metricNames,omitempty"`
 	StartTime   uint64   `protobuf:"varint,6,opt,name=startTime,proto3" json:"startTime,omitempty"` // earliest metric to retrieve expressed as the number
-	// of seconds since Jan 1, 1970 00:00:00 UTC
+	// of milliseconds since Jan 1, 1970 00:00:00 UTC
 	EndTime uint64 `protobuf:"varint,7,opt,name=endTime,proto3" json:"endTime,omitempty"` // latest metric to retrieve expressed as the number of
-	// seconds since Jan 1, 1970 00:00:00 UTC
+	// milliseconds since Jan 1, 1970 00:00:00 UTC
 	Format       MetricsFormat `protobuf:"varint,8,opt,name=format,proto3,enum=MetricsFormat" json:"format,omitempty"` // desired output format of the retrieved metrics
 	SamplePeriod uint64        `protobuf:"varint,9,opt,name=samplePeriod,proto3" json:"samplePeriod,omitempty"`        // desired metric sample period in seconds; default is 300s
 }
@@ -4816,7 +4816,7 @@ type CreateApiKeyRequest struct {
 	Name string `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	// a description of the API key
 	Description string `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	// time the key should expire expressed as the number of seconds since
+	// time the key should expire expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
 	ExpireTime uint64 `protobuf:"varint,3,opt,name=expireTime,proto3" json:"expireTime,omitempty"`
 }
@@ -5184,13 +5184,13 @@ type ApiKeyDescription struct {
 	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	// a description of the API key
 	Description string `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
-	// time the key was created expressed as the number of seconds since
+	// time the key was created expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC.
 	CreateTime uint64 `protobuf:"varint,4,opt,name=createTime,proto3" json:"createTime,omitempty"`
-	// time the key should expire expressed as the number of seconds since
+	// time the key should expire expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key should never expire.
 	ExpireTime uint64 `protobuf:"varint,5,opt,name=expireTime,proto3" json:"expireTime,omitempty"`
-	// time the key was last uzed expressed as the number of seconds since
+	// time the key was last uzed expressed as the number of milliseconds since
 	// Jan 1, 1970 00:00:00 UTC. A value of 0 indicates the key was never used.
 	LastUsed uint64 `protobuf:"varint,6,opt,name=lastUsed,proto3" json:"lastUsed,omitempty"`
 }
