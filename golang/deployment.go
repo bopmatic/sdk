@@ -224,12 +224,12 @@ func DescribeDeployment(deployId string,
 }
 
 func convertRESTTimeToInt(timeStr string) uint64 {
-	secs, err := strconv.ParseUint(timeStr, 10, 64)
+	msecs, err := strconv.ParseUint(timeStr, 10, 64)
 	if err != nil {
-		secs = 0
+		msecs = 0
 	}
 
-	return secs
+	return msecs
 }
 
 func convertRESTIntToInt(intStr string) uint64 {

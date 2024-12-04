@@ -31,8 +31,8 @@ func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 		ProjID:      projId,
 		EnvID:       envId,
 		ServiceName: svcName,
-		StartTime:   strconv.FormatInt(startTime.Unix(), 10),
-		EndTime:     strconv.FormatInt(endTime.Unix(), 10),
+		StartTime:   strconv.FormatInt(startTime.UnixMilli(), 10),
+		EndTime:     strconv.FormatInt(endTime.UnixMilli(), 10),
 	}
 
 	getLogsParams := service_runner.NewGetLogsParams().
@@ -63,9 +63,9 @@ func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 	for _, entry := range getLogsReply.Entries {
 		var timeStr = "<unknown_time>"
 
-		secs, err := strconv.ParseInt(entry.Timestamp, 10, 64)
+		msecs, err := strconv.ParseInt(entry.Timestamp, 10, 64)
 		if err == nil {
-			timeStr = fmt.Sprintf("%v", time.Unix(secs, 0).UTC())
+			timeStr = fmt.Sprintf("%v", time.UnixMilli(msecs).UTC())
 		}
 
 		fmt.Fprintf(deployOpts.output, "%v: %v", timeStr, entry.Message)

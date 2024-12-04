@@ -61,7 +61,7 @@ func CreateApiKey(keyName string, desc string, expireTime time.Time,
 	createApiKeyReq := &models.CreateAPIKeyRequest{
 		Name:        keyName,
 		Description: desc,
-		ExpireTime:  strconv.FormatInt(expireTime.Unix(), 10),
+		ExpireTime:  strconv.FormatInt(expireTime.UnixMilli(), 10),
 	}
 
 	createApiKeyParams := service_runner.NewCreateAPIKeyParams().
