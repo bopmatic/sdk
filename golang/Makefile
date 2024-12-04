@@ -81,7 +81,7 @@ pb/signup.bopmatic.json: pb/signup.swagger.json
 	jq '{"host":"api.bopmatic.com"} + .' pb/signup.swagger.json | jq '{"schemes":["https"]} + .' > pb/signup.bopmatic.json
 
 openapi-generator-cli.jar:
-	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.7.0/openapi-generator-cli-7.7.0.jar --output openapi-generator-cli.jar
+	curl -L https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/7.9.0/openapi-generator-cli-7.9.0.jar --output openapi-generator-cli.jar
 
 .PHONY: openapi
 openapi: openapi-generator-cli.jar pb/sr.bopmatic.json
