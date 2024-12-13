@@ -122,21 +122,34 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 	}
 
 	// try to mitigate spurious "file changed as we read it" errors from tar
+	// I still have not been able to find a root cause, but the behavior seems to
+	// be that somehow pending filesystem writes to the bind mount from within
+	// the container are being flushed subsequent to
+	// reading the status channel from
+	// dockerClient.ContainerWait(WaitConditionRemoved).
+	syscall.Sync()
+	time.Sleep(1 * time.Second)
 	syscall.Sync()
 
 	tarFileName := filepath.Join(workPath, "pkg.tar.xz")
-	if pkgOpts.useHostOS {
-		err = util.RunHostCommand(context.Background(),
-			[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
-			stdOut, stdErr)
-	} else {
-		err = util.RunContainerCommand(context.Background(),
-			[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
-			stdOut, stdErr)
-	}
 
+	for retries := 3; retries > 0; retries-- {
+		if pkgOpts.useHostOS {
+			err = util.RunHostCommand(context.Background(),
+				[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
+				stdOut, stdErr)
+		} else {
+			err = util.RunContainerCommand(context.Background(),
+				[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
+				stdOut, stdErr)
+		}
+		if err != nil {
+			_ = os.Remove(tarFileName)
+			continue
+		}
+	}
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Failed to create %v: %w", tarFileName, err)
 	}
 
 	tarFileContent, err := ioutil.ReadFile(tarFileName)
