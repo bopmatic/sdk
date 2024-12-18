@@ -143,10 +143,11 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 				[]string{"tar", "-Jcvf", tarFileName, "-C", workPath, tarRootPath},
 				stdOut, stdErr)
 		}
-		if err != nil {
-			_ = os.Remove(tarFileName)
-			continue
+		if err == nil {
+			break
 		}
+
+		_ = os.Remove(tarFileName)
 	}
 	if err != nil {
 		return nil, fmt.Errorf("Failed to create %v: %w", tarFileName, err)
