@@ -196,16 +196,14 @@ func copyExecAssets(pkgWorkPath string, svc *Service, stdOut io.Writer,
 			return err
 		}
 
+		// strip as best effort
 		dstExePath := filepath.Join(dstExeDir, path.Base(svc.Executable))
 		if pkgOpts.useHostOS {
-			err = util.RunHostCommand(context.Background(),
+			_ = util.RunHostCommand(context.Background(),
 				[]string{"strip", dstExePath}, stdOut, stdErr)
 		} else {
-			err = util.RunContainerCommand(context.Background(),
+			_ = util.RunContainerCommand(context.Background(),
 				[]string{"strip", dstExePath}, stdOut, stdErr)
-		}
-		if err != nil {
-			return err
 		}
 
 		err = os.Chmod(dstExePath, 0755)
