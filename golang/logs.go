@@ -68,7 +68,7 @@ func GetLogs(projId string, envId string, svcName string, startTime time.Time,
 			timeStr = fmt.Sprintf("%v", time.UnixMilli(msecs).UTC())
 		}
 
-		fmt.Fprintf(deployOpts.output, "%v: %v", timeStr, entry.Message)
+		fmt.Fprintf(deployOpts.output, "%v: %v\n", timeStr, entry.Message)
 	}
 
 	return nil
