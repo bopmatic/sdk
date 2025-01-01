@@ -37,7 +37,7 @@ func TestDeployPackage(t *testing.T) {
 			t.Fatalf("Failed to create package: %v", err)
 		}
 
-		derivedPkgId := hex.EncodeToString(pkg.Xsum)[0:8]
+		derivedPkgId := hex.EncodeToString(pkg.Xsum)[0:16]
 		if derivedPkgId != pkg.Id {
 			t.Errorf("Package Id is %v but expected %v", pkg.Id, derivedPkgId)
 		}

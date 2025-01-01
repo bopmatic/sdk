@@ -174,7 +174,7 @@ func NewPackage(pkgName string, proj *Project, stdOut io.Writer,
 
 	pkg := &Package{
 		Proj:        proj,
-		Id:          xsumStr[0:8],
+		Id:          xsumStr[0:16],
 		Name:        pkgName,
 		TarballPath: finalTarFileName,
 		Xsum:        xsum,
@@ -287,7 +287,7 @@ func NewPackageFromExisting(proj *Project, pkgId string) (*Package, error) {
 	}
 	return &Package{
 		Proj:        proj,
-		Id:          actualXsum[0:8],
+		Id:          actualXsum[0:16],
 		TarballPath: pkgFile,
 		Xsum:        xsumVal,
 	}, nil
