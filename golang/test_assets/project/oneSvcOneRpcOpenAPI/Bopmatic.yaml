@@ -1,0 +1,13 @@
+formatversion: "1.0"
+project:
+  name: "Foo"
+  desc: "Foo Project"
+  buildcmd: "make"
+  sitedir: "site"
+  services:
+  - name: "Greeter"
+    desc: "Service for greeting customers"
+    apidef: "openapi/greeter.json"
+    port: 26001
+    executable: "greeter_server"
+

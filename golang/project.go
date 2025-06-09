@@ -8,6 +8,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/base64"
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -68,10 +69,19 @@ type ObjectStore struct {
 // with yaml are parsed from Bopmatic.yaml while the remaining fields are
 // derived once the project is parsed (e.g. when NewProject() returns
 // successfully).
-// Currently the only supported ApiDefinition format is protobuf/GRPC
+// Currently the only supported ApiDefinition formats are protobuf/GRPC and
+// OpenAPI(swagger)
 const (
 	UserAccessAnonPublic = "anon_public"
 	UserAccessNone       = "none"
+)
+
+type ApiType int
+
+const (
+	ApiTypeUnknown ApiType = iota
+	ApiTypeGRPC
+	ApiTypeOpenAPI
 )
 
 type Service struct {
@@ -94,11 +104,16 @@ type Service struct {
 	//                      directly. This is the default.
 	UserAccess string `yaml:"user_access,omitempty"`
 
-	rpcs []string
+	rpcs    []string
+	apiType ApiType
 }
 
 func (svc *Service) GetRpcs() []string {
 	return svc.rpcs
+}
+
+func (svc *Service) GetApiType() ApiType {
+	return svc.apiType
 }
 
 // ProjectDesc see Project for a complete description
@@ -425,7 +440,7 @@ func parseProject(projFile string) (*Project, error) {
 	return &proj, nil
 }
 
-func (svc *Service) populateRpcs(svcName string,
+func (svc *Service) populateRpcsProtobuf(svcName string,
 	protoFileName string,
 	protoFileInput io.Reader) error {
 
@@ -467,6 +482,88 @@ func (svc *Service) populateRpcs(svcName string,
 	}
 
 	return nil
+}
+
+func (svc *Service) populateRpcsOpenAPI(svcName, specFileName string,
+	specFileInput io.Reader) error {
+
+	data, err := io.ReadAll(specFileInput)
+	if err != nil {
+		return fmt.Errorf("Failed to read %v for service %v: %w", specFileName,
+			svcName, err)
+	}
+
+	// Minimal representation of OpenAPI paths we care about
+	var spec struct {
+		Paths map[string]map[string]struct {
+			OperationID string   `json:"operationId"`
+			Tags        []string `json:"tags"`
+		} `json:"paths"`
+	}
+	err = json.Unmarshal(data, &spec)
+	if err != nil {
+		return fmt.Errorf("Failed to parse %v for service %v: %w", specFileName,
+			svcName, err)
+	}
+
+	if len(spec.Paths) == 0 {
+		return fmt.Errorf("%v does not define any paths; looking for service %v",
+			specFileName, svcName)
+	}
+
+	for pathStr, ops := range spec.Paths {
+		for method, op := range ops {
+			// Determine service grouping
+			serviceName := svcName
+			if len(op.Tags) > 0 && op.Tags[0] != "" {
+				serviceName = op.Tags[0]
+			} else {
+				parts := strings.Split(strings.Trim(pathStr, "/"), "/")
+				if len(parts) > 0 && parts[0] != "" {
+					serviceName = parts[0]
+				}
+			}
+			if serviceName != svcName {
+				continue
+			}
+
+			// Determine RPC name
+			rpcName := op.OperationID
+			if rpcName == "" {
+				base := path.Base(pathStr)
+				if base == "" || base == "/" {
+					base = svcName
+				}
+				rpcName = strings.Title(strings.ToLower(method)) +
+					strings.Title(base)
+			}
+
+			svc.rpcs = append(svc.rpcs, rpcName)
+		}
+	}
+
+	if len(svc.rpcs) == 0 {
+		return fmt.Errorf("Service %v in %v must define at least 1 RPC",
+			svcName, specFileName)
+	}
+
+	return nil
+}
+
+func (svc *Service) populateRpcs(svcName string,
+	protoFileName string,
+	protoFileInput io.Reader) error {
+
+	if strings.HasSuffix(protoFileName, ".proto") {
+		svc.apiType = ApiTypeGRPC
+		return svc.populateRpcsProtobuf(svcName, protoFileName, protoFileInput)
+	} else if strings.HasSuffix(protoFileName, ".json") {
+		svc.apiType = ApiTypeOpenAPI
+		return svc.populateRpcsOpenAPI(svcName, protoFileName, protoFileInput)
+	} // else
+
+	return fmt.Errorf("Unrecognized Api definition format in %v", protoFileName)
+
 }
 
 func (proj *Project) validateProject(projFile string, validateSiteAssets bool) error {
