@@ -512,7 +512,7 @@ func (svc *Service) populateRpcsOpenAPI(svcName, specFileName string,
 	}
 
 	for pathStr, ops := range spec.Paths {
-		for method, op := range ops {
+		for _, op := range ops {
 			// Determine service grouping
 			serviceName := svcName
 			if len(op.Tags) > 0 && op.Tags[0] != "" {
@@ -534,8 +534,7 @@ func (svc *Service) populateRpcsOpenAPI(svcName, specFileName string,
 				if base == "" || base == "/" {
 					base = svcName
 				}
-				rpcName = strings.Title(strings.ToLower(method)) +
-					strings.Title(base)
+				rpcName = strings.Title(base)
 			}
 
 			svc.rpcs = append(svc.rpcs, rpcName)

@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Ping API",
+    "version": "1.0.0",
+    "description": "A minimalist API that responds with pong to a name"
+  },
+  "paths": {
+    "/PingPongService/Ping": {
+      "post": {
+        "summary": "Ping",
+        "description": "Accepts a JSON object with a name and responds with a pong containing that name.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful pong response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "pong": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "pong"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -16,6 +16,7 @@ var expectedSuccesses = map[string]string{
 	"oneSvcMultiRpc":          "vU8ae5ZIS51Lf2bGsL8p2pKHrAvwB8kVhYzZoBEvMHU=",
 	"oneSvcOneRpc":            "cTEdYL572lNMeer_JU0K-j44hewJ-v708GE_5XYOVSU=",
 	"oneSvcOneRpcOpenAPI":     "UqzkfbdwQtdNzVmf5WxF2Nv0nhCzkI8J4vYkpr8YEQw=",
+	"oneSvcOneRpcOpenAPIv3":   "XJflHhjNLVRwcl6RFOPH3oBH14AHmBLJEP987iF1B6E=",
 	"staticOnly":              "cFFz0ff1CLvOmjGOVcL0z39SF_NTIeYIyID4Qj2wBm4=",
 	"svcsOnly":                "UzRKDEQ4WFKW7LgrEgU57h1OSrOzB_V70zh5ranwubg=",
 	"oneSvcOneUserGroup":      "uvQSroXeUn4WCw0sTdRNupuKHx4LqZaw9e4ZNZjw0bE=",

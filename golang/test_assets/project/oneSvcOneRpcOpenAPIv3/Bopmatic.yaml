@@ -1,0 +1,13 @@
+formatversion: "1.0"
+project:
+  name: "Foo"
+  desc: "Foo Project"
+  buildcmd: "make"
+  sitedir: "site"
+  services:
+  - name: "PingPongService"
+    desc: "Ping pong service"
+    apidef: "openapi/pingpong.json"
+    port: 8080
+    executable: "foo"
+
