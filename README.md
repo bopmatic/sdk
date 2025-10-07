@@ -1,4 +1,4 @@
-# Bopmatic SDK
+   # Bopmatic SDK
 
 The Bopmatic SDK is a library available for multiple languages that is
 intended to be used by Bopmatic projects and/or tools interacting with
