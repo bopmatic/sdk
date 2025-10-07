@@ -8,4 +8,4 @@ package models
 // ListProjectsRequest list projects request
 //
 // swagger:model ListProjectsRequest
-type ListProjectsRequest interface{}
+type ListProjectsRequest any

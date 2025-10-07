@@ -8,4 +8,4 @@ package models
 // ListAPIKeysRequest list Api keys request
 //
 // swagger:model ListApiKeysRequest
-type ListAPIKeysRequest interface{}
+type ListAPIKeysRequest any

@@ -1,0 +1,11 @@
+formatversion: "1.0"
+project:
+  name: "TaskManager"
+  desc: "Task Manager MCP Project"
+  buildcmd: "make"
+  services:
+  - name: "TaskService"
+    desc: "MCP-based task management service"
+    apidef: "mcp-manifest.json"
+    port: 26001
+    executable: "task_server"

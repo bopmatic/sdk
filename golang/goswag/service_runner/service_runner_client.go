@@ -123,7 +123,7 @@ type ClientService interface {
 CreateAPIKey create Api key API
 */
 func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateAPIKeyOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewCreateAPIKeyParams()
 	}
@@ -143,17 +143,22 @@ func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*CreateAPIKeyOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*CreateAPIKeyDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -161,7 +166,7 @@ func (a *Client) CreateAPIKey(params *CreateAPIKeyParams, authInfo runtime.Clien
 CreateDeployment create deployment API
 */
 func (a *Client) CreateDeployment(params *CreateDeploymentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateDeploymentOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewCreateDeploymentParams()
 	}
@@ -181,17 +186,22 @@ func (a *Client) CreateDeployment(params *CreateDeploymentParams, authInfo runti
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*CreateDeploymentOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*CreateDeploymentDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -199,7 +209,7 @@ func (a *Client) CreateDeployment(params *CreateDeploymentParams, authInfo runti
 CreateEnvironment create environment API
 */
 func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateEnvironmentOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewCreateEnvironmentParams()
 	}
@@ -219,17 +229,22 @@ func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, authInfo run
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*CreateEnvironmentOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*CreateEnvironmentDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -237,7 +252,7 @@ func (a *Client) CreateEnvironment(params *CreateEnvironmentParams, authInfo run
 CreateProject create project API
 */
 func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*CreateProjectOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewCreateProjectParams()
 	}
@@ -257,17 +272,22 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*CreateProjectOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*CreateProjectDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -275,7 +295,7 @@ func (a *Client) CreateProject(params *CreateProjectParams, authInfo runtime.Cli
 DeactivateProject deactivate project API
 */
 func (a *Client) DeactivateProject(params *DeactivateProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeactivateProjectOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDeactivateProjectParams()
 	}
@@ -295,17 +315,22 @@ func (a *Client) DeactivateProject(params *DeactivateProjectParams, authInfo run
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DeactivateProjectOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DeactivateProjectDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -313,7 +338,7 @@ func (a *Client) DeactivateProject(params *DeactivateProjectParams, authInfo run
 DeleteAPIKey delete Api key API
 */
 func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteAPIKeyOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDeleteAPIKeyParams()
 	}
@@ -333,17 +358,22 @@ func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DeleteAPIKeyOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DeleteAPIKeyDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -351,7 +381,7 @@ func (a *Client) DeleteAPIKey(params *DeleteAPIKeyParams, authInfo runtime.Clien
 DeleteEnvironment delete environment API
 */
 func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteEnvironmentOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDeleteEnvironmentParams()
 	}
@@ -371,17 +401,22 @@ func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, authInfo run
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DeleteEnvironmentOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DeleteEnvironmentDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -389,7 +424,7 @@ func (a *Client) DeleteEnvironment(params *DeleteEnvironmentParams, authInfo run
 DeletePackage delete package API
 */
 func (a *Client) DeletePackage(params *DeletePackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeletePackageOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDeletePackageParams()
 	}
@@ -409,17 +444,22 @@ func (a *Client) DeletePackage(params *DeletePackageParams, authInfo runtime.Cli
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DeletePackageOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DeletePackageDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -427,7 +467,7 @@ func (a *Client) DeletePackage(params *DeletePackageParams, authInfo runtime.Cli
 DeleteProject delete project API
 */
 func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DeleteProjectOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDeleteProjectParams()
 	}
@@ -447,17 +487,22 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DeleteProjectOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DeleteProjectDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -465,7 +510,7 @@ func (a *Client) DeleteProject(params *DeleteProjectParams, authInfo runtime.Cli
 DescribeAPIKey describe Api key API
 */
 func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeAPIKeyOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeAPIKeyParams()
 	}
@@ -485,17 +530,22 @@ func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, authInfo runtime.C
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeAPIKeyOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeAPIKeyDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -503,7 +553,7 @@ func (a *Client) DescribeAPIKey(params *DescribeAPIKeyParams, authInfo runtime.C
 DescribeDatabase describe database API
 */
 func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDatabaseOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeDatabaseParams()
 	}
@@ -523,17 +573,22 @@ func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, authInfo runti
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeDatabaseOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeDatabaseDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -541,7 +596,7 @@ func (a *Client) DescribeDatabase(params *DescribeDatabaseParams, authInfo runti
 DescribeDatastore describe datastore API
 */
 func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDatastoreOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeDatastoreParams()
 	}
@@ -561,17 +616,22 @@ func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, authInfo run
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeDatastoreOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeDatastoreDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -579,7 +639,7 @@ func (a *Client) DescribeDatastore(params *DescribeDatastoreParams, authInfo run
 DescribeDeployment describe deployment API
 */
 func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeDeploymentOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeDeploymentParams()
 	}
@@ -599,17 +659,22 @@ func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, authInfo r
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeDeploymentOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeDeploymentDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -617,7 +682,7 @@ func (a *Client) DescribeDeployment(params *DescribeDeploymentParams, authInfo r
 DescribeEnvironment describe environment API
 */
 func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeEnvironmentOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeEnvironmentParams()
 	}
@@ -637,17 +702,22 @@ func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, authInfo
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeEnvironmentOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeEnvironmentDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -655,7 +725,7 @@ func (a *Client) DescribeEnvironment(params *DescribeEnvironmentParams, authInfo
 DescribePackage describe package API
 */
 func (a *Client) DescribePackage(params *DescribePackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribePackageOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribePackageParams()
 	}
@@ -675,17 +745,22 @@ func (a *Client) DescribePackage(params *DescribePackageParams, authInfo runtime
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribePackageOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribePackageDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -693,7 +768,7 @@ func (a *Client) DescribePackage(params *DescribePackageParams, authInfo runtime
 DescribeProject describe project API
 */
 func (a *Client) DescribeProject(params *DescribeProjectParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeProjectOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeProjectParams()
 	}
@@ -713,17 +788,22 @@ func (a *Client) DescribeProject(params *DescribeProjectParams, authInfo runtime
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeProjectOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeProjectDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -731,7 +811,7 @@ func (a *Client) DescribeProject(params *DescribeProjectParams, authInfo runtime
 DescribeService describe service API
 */
 func (a *Client) DescribeService(params *DescribeServiceParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeServiceOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeServiceParams()
 	}
@@ -751,17 +831,22 @@ func (a *Client) DescribeService(params *DescribeServiceParams, authInfo runtime
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeServiceOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeServiceDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -769,7 +854,7 @@ func (a *Client) DescribeService(params *DescribeServiceParams, authInfo runtime
 DescribeSite describe site API
 */
 func (a *Client) DescribeSite(params *DescribeSiteParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*DescribeSiteOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewDescribeSiteParams()
 	}
@@ -789,17 +874,22 @@ func (a *Client) DescribeSite(params *DescribeSiteParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*DescribeSiteOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*DescribeSiteDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -807,7 +897,7 @@ func (a *Client) DescribeSite(params *DescribeSiteParams, authInfo runtime.Clien
 GetLogs get logs API
 */
 func (a *Client) GetLogs(params *GetLogsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetLogsOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewGetLogsParams()
 	}
@@ -827,17 +917,22 @@ func (a *Client) GetLogs(params *GetLogsParams, authInfo runtime.ClientAuthInfoW
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*GetLogsOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*GetLogsDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -845,7 +940,7 @@ func (a *Client) GetLogs(params *GetLogsParams, authInfo runtime.ClientAuthInfoW
 GetMetricSamples get metric samples API
 */
 func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetMetricSamplesOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewGetMetricSamplesParams()
 	}
@@ -865,17 +960,22 @@ func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, authInfo runti
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*GetMetricSamplesOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*GetMetricSamplesDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -883,7 +983,7 @@ func (a *Client) GetMetricSamples(params *GetMetricSamplesParams, authInfo runti
 GetUploadURL get upload URL API
 */
 func (a *Client) GetUploadURL(params *GetUploadURLParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*GetUploadURLOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewGetUploadURLParams()
 	}
@@ -903,17 +1003,22 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*GetUploadURLOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*GetUploadURLDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -921,7 +1026,7 @@ func (a *Client) GetUploadURL(params *GetUploadURLParams, authInfo runtime.Clien
 ListAPIKeys list Api keys API
 */
 func (a *Client) ListAPIKeys(params *ListAPIKeysParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListAPIKeysOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListAPIKeysParams()
 	}
@@ -941,17 +1046,22 @@ func (a *Client) ListAPIKeys(params *ListAPIKeysParams, authInfo runtime.ClientA
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListAPIKeysOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListAPIKeysDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -959,7 +1069,7 @@ func (a *Client) ListAPIKeys(params *ListAPIKeysParams, authInfo runtime.ClientA
 ListDatabases list databases API
 */
 func (a *Client) ListDatabases(params *ListDatabasesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDatabasesOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListDatabasesParams()
 	}
@@ -979,17 +1089,22 @@ func (a *Client) ListDatabases(params *ListDatabasesParams, authInfo runtime.Cli
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListDatabasesOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListDatabasesDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -997,7 +1112,7 @@ func (a *Client) ListDatabases(params *ListDatabasesParams, authInfo runtime.Cli
 ListDatastores list datastores API
 */
 func (a *Client) ListDatastores(params *ListDatastoresParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDatastoresOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListDatastoresParams()
 	}
@@ -1017,17 +1132,22 @@ func (a *Client) ListDatastores(params *ListDatastoresParams, authInfo runtime.C
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListDatastoresOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListDatastoresDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1035,7 +1155,7 @@ func (a *Client) ListDatastores(params *ListDatastoresParams, authInfo runtime.C
 ListDeployments list deployments API
 */
 func (a *Client) ListDeployments(params *ListDeploymentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListDeploymentsOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListDeploymentsParams()
 	}
@@ -1055,17 +1175,22 @@ func (a *Client) ListDeployments(params *ListDeploymentsParams, authInfo runtime
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListDeploymentsOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListDeploymentsDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1073,7 +1198,7 @@ func (a *Client) ListDeployments(params *ListDeploymentsParams, authInfo runtime
 ListEnvironments list environments API
 */
 func (a *Client) ListEnvironments(params *ListEnvironmentsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListEnvironmentsOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListEnvironmentsParams()
 	}
@@ -1093,17 +1218,22 @@ func (a *Client) ListEnvironments(params *ListEnvironmentsParams, authInfo runti
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListEnvironmentsOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListEnvironmentsDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1111,7 +1241,7 @@ func (a *Client) ListEnvironments(params *ListEnvironmentsParams, authInfo runti
 ListMetrics list metrics API
 */
 func (a *Client) ListMetrics(params *ListMetricsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListMetricsOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListMetricsParams()
 	}
@@ -1131,17 +1261,22 @@ func (a *Client) ListMetrics(params *ListMetricsParams, authInfo runtime.ClientA
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListMetricsOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListMetricsDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1149,7 +1284,7 @@ func (a *Client) ListMetrics(params *ListMetricsParams, authInfo runtime.ClientA
 ListPackages list packages API
 */
 func (a *Client) ListPackages(params *ListPackagesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListPackagesOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListPackagesParams()
 	}
@@ -1169,17 +1304,22 @@ func (a *Client) ListPackages(params *ListPackagesParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListPackagesOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListPackagesDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1187,7 +1327,7 @@ func (a *Client) ListPackages(params *ListPackagesParams, authInfo runtime.Clien
 ListProjects list projects API
 */
 func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListProjectsOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListProjectsParams()
 	}
@@ -1207,17 +1347,22 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListProjectsOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListProjectsDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1225,7 +1370,7 @@ func (a *Client) ListProjects(params *ListProjectsParams, authInfo runtime.Clien
 ListServices list services API
 */
 func (a *Client) ListServices(params *ListServicesParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*ListServicesOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewListServicesParams()
 	}
@@ -1245,17 +1390,22 @@ func (a *Client) ListServices(params *ListServicesParams, authInfo runtime.Clien
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*ListServicesOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*ListServicesDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 
@@ -1263,7 +1413,7 @@ func (a *Client) ListServices(params *ListServicesParams, authInfo runtime.Clien
 UploadPackage upload package API
 */
 func (a *Client) UploadPackage(params *UploadPackageParams, authInfo runtime.ClientAuthInfoWriter, opts ...ClientOption) (*UploadPackageOK, error) {
-	// TODO: Validate the params before sending
+	// NOTE: parameters are not validated before sending
 	if params == nil {
 		params = NewUploadPackageParams()
 	}
@@ -1283,17 +1433,22 @@ func (a *Client) UploadPackage(params *UploadPackageParams, authInfo runtime.Cli
 	for _, opt := range opts {
 		opt(op)
 	}
-
 	result, err := a.transport.Submit(op)
 	if err != nil {
 		return nil, err
 	}
+
+	// only one success response has to be checked
 	success, ok := result.(*UploadPackageOK)
 	if ok {
 		return success, nil
 	}
-	// unexpected success response
+
+	// unexpected success response.
+	//
+	// a default response is provided: fill this and return an error
 	unexpectedSuccess := result.(*UploadPackageDefault)
+
 	return nil, runtime.NewAPIError("unexpected success response: content available as default response in error", unexpectedSuccess, unexpectedSuccess.Code())
 }
 

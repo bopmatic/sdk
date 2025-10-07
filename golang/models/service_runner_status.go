@@ -60,7 +60,7 @@ const (
 )
 
 // for schema
-var serviceRunnerStatusEnum []interface{}
+var serviceRunnerStatusEnum []any
 
 func init() {
 	var res []ServiceRunnerStatus

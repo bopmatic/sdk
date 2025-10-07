@@ -41,7 +41,7 @@ const (
 )
 
 // for schema
-var metricsFormatEnum []interface{}
+var metricsFormatEnum []any
 
 func init() {
 	var res []MetricsFormat

@@ -50,7 +50,7 @@ const (
 )
 
 // for schema
-var metricsScopeEnum []interface{}
+var metricsScopeEnum []any
 
 func init() {
 	var res []MetricsScope

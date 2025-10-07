@@ -25,6 +25,7 @@ var expectedSuccesses = map[string]string{
 	"oneSvcWithRuntimeConfig": "26suPRpTK8lssw3TEz-_mVKhSLGoJvZ6GfnVQT93LwM=",
 	"oneSvcOneObjStore":       "3IrKn2JkDzJAj1CqwLOZsTV7J_FSqzAEomnbCHDV4_c=",
 	"multiSvcMultiObjStore":   "_os6gjbOovAEQMM3fMgkSgI4QXsWE7aFF55H9pIE1EI=",
+	"mcpOnly":                 "DMHOx97Io0bVip3ykeotdHMO7DeWCPtwfzrtg0xppk0=",
 }
 
 func TestProjectParse(t *testing.T) {

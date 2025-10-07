@@ -73,7 +73,7 @@ const (
 )
 
 // for schema
-var packageStateEnum []interface{}
+var packageStateEnum []any
 
 func init() {
 	var res []PackageState

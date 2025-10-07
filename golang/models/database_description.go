@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	stderrors "errors"
 	"strconv"
 
 	"github.com/go-openapi/errors"
@@ -54,11 +55,15 @@ func (m *DatabaseDescription) validateDatabaseHeader(formats strfmt.Registry) er
 
 	if m.DatabaseHeader != nil {
 		if err := m.DatabaseHeader.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("databaseHeader")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("databaseHeader")
 			}
+
 			return err
 		}
 	}
@@ -78,11 +83,15 @@ func (m *DatabaseDescription) validateTables(formats strfmt.Registry) error {
 
 		if m.Tables[i] != nil {
 			if err := m.Tables[i].Validate(formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
+				ve := new(errors.Validation)
+				if stderrors.As(err, &ve) {
 					return ve.ValidateName("tables" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
+				}
+				ce := new(errors.CompositeError)
+				if stderrors.As(err, &ce) {
 					return ce.ValidateName("tables" + "." + strconv.Itoa(i))
 				}
+
 				return err
 			}
 		}
@@ -119,11 +128,15 @@ func (m *DatabaseDescription) contextValidateDatabaseHeader(ctx context.Context,
 		}
 
 		if err := m.DatabaseHeader.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("databaseHeader")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("databaseHeader")
 			}
+
 			return err
 		}
 	}
@@ -142,11 +155,15 @@ func (m *DatabaseDescription) contextValidateTables(ctx context.Context, formats
 			}
 
 			if err := m.Tables[i].ContextValidate(ctx, formats); err != nil {
-				if ve, ok := err.(*errors.Validation); ok {
+				ve := new(errors.Validation)
+				if stderrors.As(err, &ve) {
 					return ve.ValidateName("tables" + "." + strconv.Itoa(i))
-				} else if ce, ok := err.(*errors.CompositeError); ok {
+				}
+				ce := new(errors.CompositeError)
+				if stderrors.As(err, &ce) {
 					return ce.ValidateName("tables" + "." + strconv.Itoa(i))
 				}
+
 				return err
 			}
 		}

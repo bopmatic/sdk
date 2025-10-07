@@ -5,6 +5,7 @@
 package golang
 
 import (
+	"bytes"
 	"context"
 	"crypto/sha256"
 	"encoding/base64"
@@ -82,6 +83,7 @@ const (
 	ApiTypeUnknown ApiType = iota
 	ApiTypeGRPC
 	ApiTypeOpenAPI
+	ApiTypeMCP
 )
 
 type Service struct {
@@ -549,6 +551,69 @@ func (svc *Service) populateRpcsOpenAPI(svcName, specFileName string,
 	return nil
 }
 
+func (svc *Service) populateRpcsMCP(svcName, manifestFileName string,
+	manifestFileInput io.Reader) error {
+
+	data, err := io.ReadAll(manifestFileInput)
+	if err != nil {
+		return fmt.Errorf("Failed to read %v for service %v: %w", manifestFileName,
+			svcName, err)
+	}
+
+	// MCP manifest structure - we're interested in tools and resources
+	var manifest struct {
+		Tools []struct {
+			Name        string `json:"name"`
+			Description string `json:"description"`
+		} `json:"tools"`
+		Resources []struct {
+			Name        string `json:"name"`
+			Description string `json:"description"`
+			URI         string `json:"uri"`
+		} `json:"resources"`
+		Prompts []struct {
+			Name        string `json:"name"`
+			Description string `json:"description"`
+		} `json:"prompts"`
+	}
+
+	err = json.Unmarshal(data, &manifest)
+	if err != nil {
+		return fmt.Errorf("Failed to parse MCP manifest %v for service %v: %w",
+			manifestFileName, svcName, err)
+	}
+
+	// Collect tools as RPCs
+	for _, tool := range manifest.Tools {
+		if tool.Name != "" {
+			svc.rpcs = append(svc.rpcs, tool.Name)
+		}
+	}
+
+	// Collect resources as RPCs (they can be accessed via read operations)
+	for _, resource := range manifest.Resources {
+		if resource.Name != "" {
+			// Prefix resources with "resource_" to distinguish from tools
+			svc.rpcs = append(svc.rpcs, "resource_"+resource.Name)
+		}
+	}
+
+	// Collect prompts as RPCs
+	for _, prompt := range manifest.Prompts {
+		if prompt.Name != "" {
+			// Prefix prompts with "prompt_" to distinguish from tools
+			svc.rpcs = append(svc.rpcs, "prompt_"+prompt.Name)
+		}
+	}
+
+	if len(svc.rpcs) == 0 {
+		return fmt.Errorf("MCP manifest %v for service %v must define at least 1 tool, resource, or prompt",
+			manifestFileName, svcName)
+	}
+
+	return nil
+}
+
 func (svc *Service) populateRpcs(svcName string,
 	protoFileName string,
 	protoFileInput io.Reader) error {
@@ -557,8 +622,29 @@ func (svc *Service) populateRpcs(svcName string,
 		svc.apiType = ApiTypeGRPC
 		return svc.populateRpcsProtobuf(svcName, protoFileName, protoFileInput)
 	} else if strings.HasSuffix(protoFileName, ".json") {
+		// Check if this is an MCP manifest by attempting to parse it as MCP first
+		// We'll need to peek at the content
+		data, err := io.ReadAll(protoFileInput)
+		if err != nil {
+			return fmt.Errorf("Failed to read %v: %w", protoFileName, err)
+		}
+
+		// Try to detect if it's an MCP manifest by looking for MCP-specific fields
+		var peek struct {
+			Tools     json.RawMessage `json:"tools"`
+			Resources json.RawMessage `json:"resources"`
+			Prompts   json.RawMessage `json:"prompts"`
+		}
+		if json.Unmarshal(data, &peek) == nil &&
+			(peek.Tools != nil || peek.Resources != nil || peek.Prompts != nil) {
+			// This looks like an MCP manifest
+			svc.apiType = ApiTypeMCP
+			return svc.populateRpcsMCP(svcName, protoFileName, bytes.NewReader(data))
+		}
+
+		// Otherwise treat as OpenAPI
 		svc.apiType = ApiTypeOpenAPI
-		return svc.populateRpcsOpenAPI(svcName, protoFileName, protoFileInput)
+		return svc.populateRpcsOpenAPI(svcName, protoFileName, bytes.NewReader(data))
 	} // else
 
 	return fmt.Errorf("Unrecognized Api definition format in %v", protoFileName)

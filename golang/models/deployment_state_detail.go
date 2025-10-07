@@ -55,7 +55,7 @@ const (
 )
 
 // for schema
-var deploymentStateDetailEnum []interface{}
+var deploymentStateDetailEnum []any
 
 func init() {
 	var res []DeploymentStateDetail

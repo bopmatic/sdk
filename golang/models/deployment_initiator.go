@@ -47,7 +47,7 @@ const (
 )
 
 // for schema
-var deploymentInitiatorEnum []interface{}
+var deploymentInitiatorEnum []any
 
 func init() {
 	var res []DeploymentInitiator

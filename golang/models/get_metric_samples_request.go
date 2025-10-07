@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	stderrors "errors"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -77,11 +78,15 @@ func (m *GetMetricSamplesRequest) validateFormat(formats strfmt.Registry) error 
 
 	if m.Format != nil {
 		if err := m.Format.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("format")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("format")
 			}
+
 			return err
 		}
 	}
@@ -96,11 +101,15 @@ func (m *GetMetricSamplesRequest) validateScope(formats strfmt.Registry) error {
 
 	if m.Scope != nil {
 		if err := m.Scope.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("scope")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("scope")
 			}
+
 			return err
 		}
 	}
@@ -135,11 +144,15 @@ func (m *GetMetricSamplesRequest) contextValidateFormat(ctx context.Context, for
 		}
 
 		if err := m.Format.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("format")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("format")
 			}
+
 			return err
 		}
 	}
@@ -156,11 +169,15 @@ func (m *GetMetricSamplesRequest) contextValidateScope(ctx context.Context, form
 		}
 
 		if err := m.Scope.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("scope")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("scope")
 			}
+
 			return err
 		}
 	}

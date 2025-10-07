@@ -1,0 +1,105 @@
+{
+  "version": "1.0",
+  "name": "example-mcp-server",
+  "description": "Example MCP server for testing",
+  "tools": [
+    {
+      "name": "create_task",
+      "description": "Create a new task in the task management system",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Task title"
+          },
+          "description": {
+            "type": "string",
+            "description": "Task description"
+          },
+          "priority": {
+            "type": "string",
+            "enum": ["low", "medium", "high"],
+            "description": "Task priority level"
+          }
+        },
+        "required": ["title"]
+      }
+    },
+    {
+      "name": "list_tasks",
+      "description": "List all tasks, optionally filtered by status",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed"],
+            "description": "Filter tasks by status"
+          }
+        }
+      }
+    },
+    {
+      "name": "update_task",
+      "description": "Update an existing task",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Task ID"
+          },
+          "title": {
+            "type": "string",
+            "description": "New task title"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["pending", "in_progress", "completed"],
+            "description": "New task status"
+          }
+        },
+        "required": ["id"]
+      }
+    }
+  ],
+  "resources": [
+    {
+      "name": "tasks",
+      "description": "Access to the tasks database",
+      "uri": "tasks://local/db",
+      "mimeType": "application/json"
+    },
+    {
+      "name": "config",
+      "description": "Server configuration settings",
+      "uri": "config://server/settings",
+      "mimeType": "application/json"
+    }
+  ],
+  "prompts": [
+    {
+      "name": "summarize_tasks",
+      "description": "Generate a summary of all tasks",
+      "arguments": [
+        {
+          "name": "format",
+          "description": "Output format (markdown, plain, json)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "create_report",
+      "description": "Create a detailed task report",
+      "arguments": [
+        {
+          "name": "period",
+          "description": "Time period for the report",
+          "required": true
+        }
+      ]
+    }
+  ]
+}

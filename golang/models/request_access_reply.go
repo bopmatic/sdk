@@ -8,4 +8,4 @@ package models
 // RequestAccessReply request access reply
 //
 // swagger:model RequestAccessReply
-type RequestAccessReply interface{}
+type RequestAccessReply any

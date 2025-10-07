@@ -7,6 +7,7 @@ package models
 
 import (
 	"context"
+	stderrors "errors"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/strfmt"
@@ -43,11 +44,15 @@ func (m *DescribeServiceRequest) validateSvcHeader(formats strfmt.Registry) erro
 
 	if m.SvcHeader != nil {
 		if err := m.SvcHeader.Validate(formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("svcHeader")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("svcHeader")
 			}
+
 			return err
 		}
 	}
@@ -78,11 +83,15 @@ func (m *DescribeServiceRequest) contextValidateSvcHeader(ctx context.Context, f
 		}
 
 		if err := m.SvcHeader.ContextValidate(ctx, formats); err != nil {
-			if ve, ok := err.(*errors.Validation); ok {
+			ve := new(errors.Validation)
+			if stderrors.As(err, &ve) {
 				return ve.ValidateName("svcHeader")
-			} else if ce, ok := err.(*errors.CompositeError); ok {
+			}
+			ce := new(errors.CompositeError)
+			if stderrors.As(err, &ce) {
 				return ce.ValidateName("svcHeader")
 			}
+
 			return err
 		}
 	}
